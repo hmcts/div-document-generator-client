@@ -1,0 +1,108 @@
+server:
+  port: ${DIV_DOCUMENT_GENERATOR_PORT:4007}
+
+service:
+  pdf-service:
+    uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/pdfs
+    health:
+      uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/health
+  evidence-management-client-api:
+    uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/uploadFilesWithS2SAuthToken
+    health:
+      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/status/health
+  service-auth-provider:
+    health:
+      context-path: /health
+      uri: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}${service.service-auth-provider.health.context-path}
+
+auth:
+  provider:
+    service:
+      client:
+          port: 4502
+          baseUrl: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
+          tokenTimeToLiveInSeconds: 900
+
+idam:
+  s2s-auth:
+    microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:sscs}
+    totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:AAAAAAAAAAAAAAAA}
+    url: ${auth.provider.service.client.baseUrl}
+
+http:
+  connect:
+    timeout: 60000
+    request:
+      timeout: 60000
+
+info:
+  app:
+    name: ${spring.application.name}
+
+pdf:
+  test:
+    enabled: true
+
+service-auth-provider:
+  service:
+    stub:
+      enabled: false
+
+evidence-management-api:
+  service:
+    stub:
+      enabled: false
+
+documentation:
+  swagger:
+    enabled: true
+
+spring:
+  resources:
+    static-locations:
+
+# GENERAL SPRING BOOT ACTUATOR CONFIG
+# Context path for Spring Boot Actuator endpoints
+# Allow actuator endpoints to be accessed without requiring authentication
+# Enable default health indicators
+# Enable disk space health check
+management:
+  context-path: /status
+  info:
+    defaults:
+      enabled: true
+    security:
+      enabled: false
+  health:
+    defaults:
+      enabled: true
+    diskspace:
+      enabled: true
+  security:
+    enabled: false
+
+
+# HEALTH ENDPOINT CONFIG
+# Enable the health endpoint
+# Enable sensitive health information
+# Defines the URL of the health check to ${management.context-path}/health
+# Caching period in milliseconds of health endpoint
+# METRICS ENDPOINT CONFIG
+# Enable the metrics endpoint
+# Enable sensitive metrics information
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+    id: health
+    time-to-live: 1000
+  metrics:
+    enabled: true
+    sensitive: false
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
+  pattern:
+    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
