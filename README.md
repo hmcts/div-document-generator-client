@@ -1,5 +1,7 @@
 # Document Generator
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cd981ddf1b9648e9957a5035f18a7758)](https://app.codacy.com/app/mthava/div-document-generator-client?utm_source=github.com&utm_medium=referral&utm_content=hmcts/div-document-generator-client&utm_campaign=badger)
+
 This is a document generation and template management service. This allows to generate documents based on a
 given template name and placeholder data in JSON format and will also store the generated document in the
 Evidence Management Store.
