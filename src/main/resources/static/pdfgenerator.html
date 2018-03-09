@@ -1,0 +1,49 @@
+<form action="/test/generateDocument" method="post">
+    <input type="hidden" name="templateName" value="testtemplate"/>
+
+    <table>
+        <tr>
+            <td><label>Applicant Name</label></td>
+            <td><input type=text name="applicant" value="Zoe Elizabeth Dante"></td>
+        </tr>
+        <tr>
+            <td><label>Respondent Name</label></td>
+            <td><input type=text name="respondent" value="John James Dante"></td>
+        </tr>
+        <tr>
+            <td><label>Where the marriage took place</label></td>
+            <td><textArea name="place_of_marriage">At the Holy Trinity Church, in the Parish of Normanton by Derby, in the County of Derby</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Date of marriage</label></td>
+            <td><input type=date name="date_of_marriage" value="10/10/2005"></input></td>
+        </tr>
+        <tr>
+            <td><label>Why the court can deal with the case (jurisdiction)</label></td>
+            <td><textArea name="jurisdiction">Zoe Elizabeth Dante and John James Dante are both habitually resident in England and Wales.
+There are no other ongoing, completed or abandoned court cases related to the marriage, property or children.
+</textarea></td>
+        </tr>
+        <tr>
+            <td><label>Reason for the divorce</label></td>
+            <td><textArea name="reason_for_divorce">The marriage has broken down irretrievably, based on the fact that John James Dante has behaved in such a way that it is unreasonable to expect Zoe Elizabeth Dante to continue to live with them.
+This is supported by the following statement from Zoe Elizabeth Dante.
+My husband is lazy and doesnt do anything around the house. He has refused to get a job and just sits watching TV all day. Despite the fact that I am the one who works to support us, he has control of the finances and will only give me money to buy food and things for the house. He has not shown any affection towards me in years.
+</textarea></td>
+        </tr>
+        <tr>
+            <td><label>Additional applications</label></td>
+            <td><textArea name="additional_applications">Zoe Elizabeth Dante is also applying to the court to claim the costs of the divorce from John James Dante.
+Zoe Elizabeth Dante is also applying to the court for a financial order in which the court decides on the financial matters of Zoe Elizabeth Dante and John James Dant.</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Statement of truth</label></td>
+            <td><textArea name="statement_of_truth">Zoe Elizabeth Dante believes that the facts stated in this application are true.</textarea>
+            </td>
+        </tr>
+    </table>
+
+    <input type="submit">
+</form>
