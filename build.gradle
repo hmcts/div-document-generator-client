@@ -24,7 +24,7 @@ plugins {
 }
 
 group = 'uk.gov.hmcts.reform.divorce'
-version = '0.0.2'
+version = '0.0.3'
 sourceCompatibility = 1.8
 
 jar {
@@ -120,11 +120,6 @@ task printVersion {
 		print project.version
 	}
 }
-
-/*
-bootRepackage {
-	classifier 'all'
-}*/
 
 pmd {
     toolVersion = "5.8.1"

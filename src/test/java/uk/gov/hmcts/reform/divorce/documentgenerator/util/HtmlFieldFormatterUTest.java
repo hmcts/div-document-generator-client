@@ -43,7 +43,7 @@ public class HtmlFieldFormatterUTest {
     @Test
     public void givenFieldDataContainsSpecialCharacters_whenFormat_thenReturnFormattedData() {
         final String data = "<>&'";
-        final String expected = "&lt;&gt;&amp;&#39;";
+        final String expected = "&lt;&gt;&amp;'";
 
         final String actual = HtmlFieldFormatter.format(data);
 
@@ -52,14 +52,14 @@ public class HtmlFieldFormatterUTest {
 
     @Test
     public void givenFieldDataContainsNewLine_whenFormat_thenReturnFormattedData() {
-        final String data = "<>\n\n&\n'";
-        final String expected = "&lt;&gt;<br /><br />&amp;<br />&#39;";
+        final String data = "<>\n\n&\n'\"£$%§¶•ªº#∂©";
+        final String expected = "&lt;&gt;<br /><br />&amp;<br />'&quot;&#163;$%&#167;&#182;&#8226;"
+                + "&#170;&#186;#&#8706;&#169;";
 
         String actual = HtmlFieldFormatter.format(data);
 
         assertEquals(expected, actual);
     }
-
 
     @Test
     public void givenMapOfDataIsNull_whenFormat_thenReturnNull() {
@@ -85,7 +85,7 @@ public class HtmlFieldFormatterUTest {
         final Object value4 = ">'";
 
         final Object formattedValue2 = "&lt;<br />";
-        final Object formattedValue4 = "&gt;&#39;";
+        final Object formattedValue4 = "&gt;'";
 
         final Map<String, Object> innerMapWithDataToFormat = new HashMap<>(ImmutableMap.of(
                 key1, value1,

@@ -36,6 +36,7 @@
             .single-block {page-break-inside: avoid;}
             h2 {page-break-after: avoid;}
             h1 {page-break-after: avoid;}
+            .signature {page-break-before: avoid;}
         }
 
         .heading-small {
@@ -101,7 +102,7 @@
             font-style: italic;
             font-size: 10pt;
             margin-top: -10px;
-        }   
+        }
 
     </style>
 </head>
@@ -125,8 +126,10 @@
 
 {% set husbandOrWifeNamed = caseDetails.case_data.D8DerivedPetitionerCurrentFullName %}
 {% set respondentsName = caseDetails.case_data.D8DerivedRespondentCurrentName | default("") %}
+{% set petitionerConfidential = caseDetails.case_data.D8PetitionerContactDetailsConfidential | default("") %}
 {% set husbandOrWife = caseDetails.case_data.D8DivorceWho %}
 {% set petitionerName = caseDetails.case_data.D8MarriagePetitionerName %}
+{% set respondentMarriageName = caseDetails.case_data.D8MarriageRespondentName %}
 {% set dateOfMarriage = caseDetails.case_data.D8MarriageDate |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set placeOfMarriage = caseDetails.case_data.D8MarriagePlaceOfMarriage | default("") %}
 {% set reasonForDivorce = caseDetails.case_data.D8ReasonForDivorce %}
@@ -139,18 +142,23 @@
 {% set adulteryDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryDetails | default("") %}
 {% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | default("NO") %}
 {% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | default("NO") %}
-{% set adulteryWhenDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhenDetails | default("") %}
-{% set adulteryWhereDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhereDetails | default("") %}
+{% set adulteryWhenDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhenDetails | default("The applicant does not know when the adultery took place") %}
+{% set adulteryWhereDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhereDetails | default("The applicant does not know where the adultery took place") %}
 {% set legalProceedings = caseDetails.case_data.D8LegalProceedings | default("NO") %}
 {% set legalProceedingsDetails = caseDetails.case_data.D8LegalProceedingsDetails | default("") %}
 {% set applicantsAddress = caseDetails.case_data.D8DerivedPetitionerCorrespondenceAddr  %}
 {% set respondentsAddress = caseDetails.case_data.D8DerivedRespondentCorrespondenceAddr %}
+{% set respondentsSolicitorDetails = caseDetails.case_data.D8DerivedRespondentSolicitorDetails | default("") %}
+{% set respondentsUseAddress = caseDetails.case_data.D8RespondentCorrespondenceUseHomeAddress | default ("No") %}
 {% set financialOrderFor = caseDetails.case_data.D8FinancialOrderFor %}
 {% set claimFrom = caseDetails.case_data.D8DivorceClaimFrom %}
-{% set statementOfCase = caseDetails.case_data.D8DerivedStatementOfCase | default("") %}
+{% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
+{% set desertionDate = caseDetails.case_data.D8ReasonForDivorceDesertionDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set separationDate = caseDetails.case_data.D8ReasonForDivorceSeperationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
+{% set statementOfCase = caseDetails.case_data.D8DerivedStatementOfCase | default("") %}
 
 <p class="response-text">
+    {% autoescape false %}
     {% if costClaims == "YES" and financialOrder == "YES" %}
     {% if claimFrom contains "respondent" and claimFrom contains "correspondent" %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, to order {{ respondentsName }} and {{ correspondentName }} to pay some or all of the divorce costs, and for financial orders.
@@ -173,6 +181,7 @@
     {% else %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}.
     {% endif %}
+    {% endautoescape %}
 </p>
 
 <p class="heading-small">Issued</p>
@@ -183,28 +192,40 @@
 
 <p class="heading-small">Applicant</p>
 <p class="response-text">
+    {% autoescape false %}
     {{ husbandOrWifeNamed }}
+    {% endautoescape %}
 </p>
 
 <p class="heading-small">Respondent</p>
 <p class="response-text">
+    {% autoescape false %}
     {{ respondentsName }}
+    {% endautoescape %}
 </p>
 
 {% if isCorrespondentNamed == "YES" %}
 <p class="heading-small">Co-respondent</p>
-<p class="response-text">{{ correspondentName }}</p>
+<p class="response-text">
+    {% autoescape false %}
+    {{ correspondentName }}
+    {% endautoescape %}
+</p>
 {% endif %}
 
 <h2 class="heading-medium">About the marriage</h2>
 <p class="heading-small">Who the marriage is between</p>
 <p class="response-text">
-    {{ husbandOrWifeNamed }}{% if petitionerName is not empty %} (formerly {{ petitionerName }}){% endif %} and {{ respondentsName }} (as shown on the marriage certificate)
+    {% autoescape false %}
+    {{ petitionerName }} and {{ respondentMarriageName }} (as shown on the marriage certificate)
+    {% endautoescape %}
 </p>
 
 <p class="heading-small">Where the marriage took place</p>
 <p class="response-text">
+    {% autoescape false %}
     {{ placeOfMarriage }}
+    {% endautoescape %}
 </p>
 
 <p class="heading-small">Date of marriage</p>
@@ -215,84 +236,84 @@
 
 <h2 class="heading-medium">Why the court can deal with the case (jurisdiction)</h2>
 <p class="response-text">
-{% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
-<ul class="list-bullet">
-{% endif %}
-
-
-{% if jurisdictionConnection contains "A" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
-    <li>
+<ul class="list-bullet">
     {% endif %}
 
-    The applicant and respondent are habitually resident in England and Wales.
+
+    {% if jurisdictionConnection contains "A" %}
+    {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
+    <li>
+        {% endif %}
+
+        The applicant and respondent are habitually resident in England and Wales.
         {% if jurisdictionConnection|length > 1  and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "B" %}
+    {% if jurisdictionConnection contains "B" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The applicant and respondent were last habitually resident in England and Wales and one of them still resides there.
+        The applicant and respondent were last habitually resident in England and Wales and one of them still resides there.
         {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "C" and (not (jurisdictionConnection contains "A")) %}
+    {% if jurisdictionConnection contains "C" and (not (jurisdictionConnection contains "A")) %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The respondent is habitually resident in England and Wales.
+        The respondent is habitually resident in England and Wales.
         {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "D" %}
+    {% if jurisdictionConnection contains "D" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The applicant is habitually resident in England and Wales and has resided there for at least a year immediately prior to the presentation of the application.
+        The applicant is habitually resident in England and Wales and has resided there for at least a year immediately prior to the presentation of the application.
         {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "E" %}
+    {% if jurisdictionConnection contains "E" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The applicant is domiciled and habitually resident in England and Wales and has resided there for at least six months immediately prior to the application.
+        The applicant is domiciled and habitually resident in England and Wales and has resided there for at least six months immediately prior to the application.
         {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "F" %}
+    {% if jurisdictionConnection contains "F" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The applicant and respondent are both domiciled in England and Wales.
+        The applicant and respondent are both domiciled in England and Wales.
         {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     </li>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% if jurisdictionConnection contains "G" %}
+    {% if jurisdictionConnection contains "G" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
     <li>
         {% endif %}
-    The courts of England and Wales have residual jurisdiction, meaning either: no other court in any EU Member State has jurisdiction and either the Petitioner or the Respondent is domiciled in England and Wales; or (for same sex couples only) the Petitioner or the Respondent married each other in England and Wales, no other court in any EU Member State has jurisdiction, and it would be in the interests of justice for the court to assume jurisdiction in this case.
+        The courts of England and Wales have residual jurisdiction, meaning either: no other court in any EU Member State has jurisdiction and either the Petitioner or the Respondent is domiciled in England and Wales; or (for same sex couples only) the Petitioner or the Respondent married each other in England and Wales, no other court in any EU Member State has jurisdiction, and it would be in the interests of justice for the court to assume jurisdiction in this case.
+
+        {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
 
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
-    </li>
-{% endif %}
-{% endif %}
-
-{% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
 </ul>
 {% endif %}
 </p>
@@ -308,7 +329,9 @@
     The applicant has given the following court cases which are related to the marriage, property or children.
 </p>
 <p class="response-text">
-"{{ legalProceedingsDetails }}"
+    {% autoescape false %}
+    "{{ legalProceedingsDetails }}"
+    {% endautoescape %}
 </p>
 {% endif %}
 </p>
@@ -372,19 +395,31 @@
     {% endautoescape %}
 </p>
 
-{% if adulteryPlaceKnown == "YES" %}
 <p class="heading-small">Where the adultery took place</p>
 <p class="response-text">
+    {% if adulteryPlaceKnown == "YES" %}
+    {% autoescape false %}
     "{{ adulteryWhereDetails }}"
+    {% endautoescape %}
+    {% else %}
+    {% autoescape false %}
+    {{ adulteryWhereDetails }}
+    {% endautoescape %}
+    {% endif %}
 </p>
-{% endif %}
 
-{% if adulteryDateKnown == "YES" %}
 <p class="heading-small">When the adultery took place</p>
 <p class="response-text">
+    {% if adulteryDateKnown == "YES" %}
+    {% autoescape false %}
     "{{ adulteryWhenDetails }}"
+    {% endautoescape %}
+    {% else %}
+    {% autoescape false %}
+    {{ adulteryWhenDetails }}
+    {% endautoescape %}
+    {% endif %}
 </p>
-{% endif %}
 
 {% endif %}
 
@@ -396,7 +431,7 @@
 
 <p class="response-text">
     {% autoescape false %}
-    "{{ reasonForDivorceBehaviourDetails }}"
+    "{{ statementOfCase }}"
     {% endautoescape %}
 </p>
 
@@ -405,7 +440,7 @@
 {% if reasonForDivorce == "separation-2-years" %}
 
 <p class="response-text">
-    The applicant has given the separation date as "{{ separationDate }}".
+    The applicant has given the separation date as {{ separationDate }}.
 </p>
 
 {% endif %}
@@ -413,7 +448,7 @@
 {% if reasonForDivorce == "separation-5-years" %}
 
 <p class="response-text">
-    The applicant has given the separation date as "{{ separationDate }}".
+    The applicant has given the separation date as {{ separationDate }}.
 </p>
 
 
@@ -422,12 +457,16 @@
 {% if reasonForDivorce == "desertion" %}
 
 <p class="response-text">
+    The applicant has given the date of desertion as {{ desertionDate }}.
+</p>
+
+<p class="response-text">
     This is supported by the following statement from the applicant.
 </p>
 
 <p class="response-text">
     {% autoescape false %}
-    "{{ statementOfCase }}"
+    "{{ reasonForDivorceDesertionDetails }}"
     {% endautoescape %}
 </p>
 
@@ -486,6 +525,7 @@
 {% endif %}
 </p>
 
+{% if petitionerConfidential == "share" %}
 <p class="single-block">
 <h2 class="heading-medium">Applicant's correspondence address</h2>
 <p class="response-text">
@@ -494,13 +534,20 @@
     {% endautoescape %}
 </p>
 </p>
+{% endif %}
 
 <p class="single-block">
 <h2 class="heading-medium">Respondent's correspondence address</h2>
 <p class="response-text">
+    {% if respondentsUseAddress == 'Solicitor' %}
+    {% autoescape false %}
+    {{ respondentsSolicitorDetails }}
+    {% endautoescape %}
+    {% else %}
     {% autoescape false %}
     {{ respondentsAddress }}
     {% endautoescape %}
+    {% endif %}
 </p>
 </p>
 
@@ -510,7 +557,9 @@
     "I believe that the facts stated in this application are true."
 </p>
 <p class="signature">
-{{ husbandOrWifeNamed }}
+    {% autoescape false %}
+    {{ husbandOrWifeNamed }}
+    {% endautoescape %}
 </p>
 </p>
 </body>
