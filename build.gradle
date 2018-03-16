@@ -121,11 +121,6 @@ task printVersion {
 	}
 }
 
-/*
-bootRepackage {
-	classifier 'all'
-}*/
-
 pmd {
     toolVersion = "5.8.1"
     ignoreFailures = true
