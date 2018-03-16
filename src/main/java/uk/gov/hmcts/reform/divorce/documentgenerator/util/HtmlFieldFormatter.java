@@ -38,14 +38,14 @@ public final class HtmlFieldFormatter {
             return fieldData;
         }
 
-        fieldData.entrySet().forEach(entry -> {
-                    if (entry.getValue() instanceof Map) {
-                        entry.setValue(format((Map) entry.getValue()));
-                    } else {
-                        entry.setValue(format(entry.getValue()));
-                    }
+        fieldData.entrySet().forEach(
+            entry -> {
+                if (entry.getValue() instanceof Map) {
+                    entry.setValue(format((Map) entry.getValue()));
+                } else {
+                    entry.setValue(format(entry.getValue()));
                 }
-        );
+            });
 
         return fieldData;
     }
