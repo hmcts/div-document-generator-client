@@ -1,0 +1,27 @@
+#!groovy
+
+properties([
+    [
+        $class: 'GithubProjectProperty',
+        displayName: 'Divorce Document Generator Client',
+        projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
+    ],
+    pipelineTriggers([
+        [$class: 'GitHubPushTrigger']
+    ])
+])
+
+@Library("Infrastructure")
+
+def type = "java"
+def product = "div"
+def component = "doc-generator"
+
+def channel = '#div-dev'
+
+withPipeline(type , product, component) {
+    after('checkout') {
+        echo '${product}-${component} checked out'
+    }
+    enableSlackNotifications(channel)
+}

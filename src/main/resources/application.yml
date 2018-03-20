@@ -67,7 +67,6 @@ spring:
 # Enable default health indicators
 # Enable disk space health check
 management:
-  context-path: /status
   info:
     defaults:
       enabled: true
