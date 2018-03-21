@@ -1,6 +1,8 @@
 locals {
   ase_name     = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url}-${var.env}.service.${local.ase_name}.internal"
+  #evidence_management_client_api_url = "http://${var.evidence_management_client_api_url}-${var.env}.service.${local.ase_name}.internal"
+  #tactical
+  evidence_management_client_api_url = "http://betaDevBdivorceAppLB.reform.hmcts.net:4016"
   pdf_service_url = "http://${var.pdf_service_url}-${var.env}.service.${local.ase_name}.internal"
 }
 

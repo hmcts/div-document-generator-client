@@ -35,7 +35,7 @@ variable "evidence_management_client_api_url" {
 }
 
 variable "evidence_management_client_api_health_endpoint" {
-  default = "/health"
+  default = "/status/health"
 }
 
 variable "subscription" {}
