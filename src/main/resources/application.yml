@@ -9,7 +9,8 @@ service:
   evidence-management-client-api:
     uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/uploadFilesWithS2SAuthToken
     health:
-      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/status/health
+      context-path: ${EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT:/health}
+      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}${service.evidence-management-client-api.health.context-path}
   service-auth-provider:
     health:
       context-path: /health

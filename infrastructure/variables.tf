@@ -34,6 +34,10 @@ variable "evidence_management_client_api_url" {
   type = "string"
 }
 
+variable "evidence_management_client_api_health_endpoint" {
+  default = "/health"
+}
+
 variable "subscription" {}
 
 variable "location" {
