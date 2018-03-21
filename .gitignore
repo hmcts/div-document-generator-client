@@ -9,6 +9,11 @@ out
 *.iws
 
 .idea
+.classpath
+.project
+.settings/
+.vscode/
+bin/
 
 src/main/resources/version
 java-rpm-packaging/

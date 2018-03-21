@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import uk.gov.hmcts.reform.emclient.category.SmokeTest;
+import uk.gov.hmcts.reform.divorce.documentgenerator.category.SmokeTest;
 
 @RunWith(SpringRunner.class)
 @Category(SmokeTest.class)
