@@ -24,7 +24,7 @@ plugins {
 }
 
 group = 'uk.gov.hmcts.reform.divorce'
-version = '0.0.3'
+version = '2.2.0'
 sourceCompatibility = 1.8
 
 jar {
