@@ -94,7 +94,7 @@ public class HealthCheckITest {
 
     @Before
     public void setUp() {
-        healthUrl = "http://localhost:" + String.valueOf(port) + "/status/health";
+        healthUrl = "http://localhost:" + String.valueOf(port) + "/health";
         originalRequestFactory = restTemplate.getRequestFactory();
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
     }
