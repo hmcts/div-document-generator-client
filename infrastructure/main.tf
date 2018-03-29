@@ -1,13 +1,14 @@
 locals {
-  ase_name     = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url}-${var.env}.service.${local.ase_name}.internal"
+  ase_name                           = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
+
   #tactical
   #evidence_management_client_api_url = "http://betaDevBdivorceAppLB.reform.hmcts.net:4016"
-  pdf_service_url = "http://${var.pdf_service_url}-${var.env}.service.${local.ase_name}.internal"
+  pdf_service_url = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
 }
 
 module "div-document-generator" {
-  source       = "git@github.com:contino/moj-module-webapp.git?ref=master"
+  source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
   product      = "${var.reform_team}-${var.reform_service_name}"
   location     = "${var.location}"
   env          = "${var.env}"
