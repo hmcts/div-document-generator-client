@@ -21,6 +21,7 @@ plugins {
 	id 'com.github.ben-manes.versions' version '0.17.0'
 	id 'jacoco'
 	id 'pmd'
+    id 'info.solidsoft.pitest' version '1.3.0'
 }
 
 group = 'uk.gov.hmcts.reform.divorce'
@@ -84,7 +85,7 @@ def versions = [
 		powerMock: '1.7.3',
 		puppyCrawl: '7.6',
 		logstashLogBackEncoder: '4.8',
-		jacksonCore: '2.9.4',
+		jacksonCore: '2.9.5',
 		wiremockVersion: '2.8.0'
 ]
 
@@ -135,6 +136,15 @@ def sonarExclusions = [
         '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
 		'**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
 ]
+
+pitest {
+    targetClasses = ['uk.gov.hmcts.reform.divorce.documentgenerator.*']
+    excludedClasses = ['uk.gov.hmcts.reform.divorce.documentgenerator.config.*']
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    mutationThreshold = 50
+}
 
 sonarqube {
 	properties {
