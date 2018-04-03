@@ -64,6 +64,12 @@ timestamps {
                     }
                 }
 
+                stage('Mutation Testing (Pitest)') {
+                    onPR {
+                        sh "./gradlew pitest"
+                    }
+                }
+
                 stage('Sonar') {
                     onPR {
                         sh "./gradlew -Dsonar.analysis.mode=preview -Dsonar.host.url=$SONARQUBE_URL sonarqube"
@@ -82,7 +88,7 @@ timestamps {
                 stage('Package (Docker)') {
                     divorceDocumentGeneratorVersion = dockerImage imageName: 'divorce/div-document-generator'
                 }
-              
+
                 stage('Package (RPM)') {
 
                     if(onDevelopOrMaster) {
