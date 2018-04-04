@@ -1,9 +1,10 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("squid:S1118")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

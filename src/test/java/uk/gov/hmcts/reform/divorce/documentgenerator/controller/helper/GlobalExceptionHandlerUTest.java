@@ -1,13 +1,14 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.controller.helper;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.ErrorLoadingTemplateException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
-
-import static org.junit.Assert.assertEquals;
 
 public class GlobalExceptionHandlerUTest {
 

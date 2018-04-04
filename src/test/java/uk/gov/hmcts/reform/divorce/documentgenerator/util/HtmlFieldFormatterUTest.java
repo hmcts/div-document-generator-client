@@ -1,7 +1,8 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.util;
 
-import com.google.common.collect.ImmutableMap;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -9,9 +10,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 public class HtmlFieldFormatterUTest {
 

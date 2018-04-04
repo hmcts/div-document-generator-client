@@ -1,9 +1,10 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.impl;
 
-import org.junit.Test;
-import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 public class ServiceTokenGeneratorStubUTest {
 

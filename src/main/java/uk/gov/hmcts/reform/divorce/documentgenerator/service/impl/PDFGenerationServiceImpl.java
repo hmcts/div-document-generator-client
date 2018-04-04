@@ -1,8 +1,9 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -10,15 +11,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @Slf4j

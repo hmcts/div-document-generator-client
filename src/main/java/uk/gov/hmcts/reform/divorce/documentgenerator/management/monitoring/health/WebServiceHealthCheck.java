@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.monitoring.health;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.http.HttpEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class WebServiceHealthCheck implements HealthIndicator {

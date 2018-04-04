@@ -1,9 +1,10 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.domain.response;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @Data
 @RequiredArgsConstructor

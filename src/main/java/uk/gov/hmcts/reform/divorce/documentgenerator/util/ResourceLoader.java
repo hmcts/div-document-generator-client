@@ -1,8 +1,9 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.util;
 
+import org.apache.commons.io.IOUtils;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.io.IOUtils;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.ErrorLoadingTemplateException;
 
 @SuppressWarnings("squid:S1118")

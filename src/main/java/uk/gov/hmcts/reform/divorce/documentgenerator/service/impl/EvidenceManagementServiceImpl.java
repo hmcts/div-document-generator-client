@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,13 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.DocumentStorageException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
-
-import java.util.List;
 
 @Service
 @Slf4j

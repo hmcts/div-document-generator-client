@@ -1,7 +1,8 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.ResourceLoader;
