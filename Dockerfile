@@ -1,7 +1,5 @@
 FROM openjdk:8-jre-alpine
 
-LABEL maintainer="mathan.thavachelvam@hmcts.net"
-
 COPY build/install/div-document-generator /opt/app/
 
 WORKDIR /opt/app

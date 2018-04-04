@@ -1,10 +1,11 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.util;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import com.google.common.collect.ImmutableMap;
 
 @SuppressWarnings("squid:S1118")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

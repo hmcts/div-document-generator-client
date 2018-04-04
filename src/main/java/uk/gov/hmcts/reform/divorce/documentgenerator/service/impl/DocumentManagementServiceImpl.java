@@ -1,8 +1,15 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
+import java.text.SimpleDateFormat;
+import java.time.Clock;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
@@ -10,12 +17,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementS
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
-
-import java.text.SimpleDateFormat;
-import java.time.Clock;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 @Service
 @Slf4j

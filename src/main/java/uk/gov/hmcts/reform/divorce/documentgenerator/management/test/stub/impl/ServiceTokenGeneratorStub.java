@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.impl;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 @Component

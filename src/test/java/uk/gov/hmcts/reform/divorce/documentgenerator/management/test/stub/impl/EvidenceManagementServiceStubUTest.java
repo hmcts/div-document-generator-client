@@ -1,5 +1,16 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.util.Map;
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
@@ -7,18 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.util.Map;
-import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 public class EvidenceManagementServiceStubUTest {
     private static final String TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH = "/test/documents/";

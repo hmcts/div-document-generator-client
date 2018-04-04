@@ -1,11 +1,12 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.controller.helper;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
+
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.DocumentStorageException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.ErrorLoadingTemplateException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;

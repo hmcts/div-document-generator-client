@@ -1,18 +1,19 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.impl;
 
+import java.time.Clock;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.DocumentDownloadService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
-
-import java.time.Clock;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @ConditionalOnProperty(value = "evidence-management-api.service.stub.enabled", havingValue = "true")
