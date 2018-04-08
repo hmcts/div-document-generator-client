@@ -47,8 +47,21 @@ compileTestJava {
 }
 
 repositories {
-	mavenLocal()
-	jcenter()
+    mavenLocal()
+    jcenter()
+
+    maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+distributions {
+    main {
+        contents {
+            from(file("$projectDir/lib/AI-Agent.xml")) {
+                into "lib"
+            }
+        }
+    }
 }
 
 checkstyle.toolVersion = '7.2'
@@ -79,9 +92,10 @@ def versions = [
 		commonsLang3: '3.7',
 		commonsIo: '2.5',
 		serviceTokenGenerator: '0.4.2',
-		reformsJavaLogging : '1.2.0',
-		reformsJavaLoggingSpring: '1.2.0',
-		reformsJavaLoggingHttpComponents: '1.2.1',
+		reformsJavaLogging : '2.0.2',
+        reformsJavaLoggingAppInsights: '2.0.2',
+		reformsJavaLoggingSpring: '2.0.2',
+		reformsJavaLoggingHttpComponents: '2.0.2',
 		lombok: '1.16.16',
 		powerMock: '1.7.3',
 		puppyCrawl: '7.6',
@@ -102,6 +116,7 @@ dependencies {
 	compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
 	compile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
 	compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
+	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLoggingAppInsights
 	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLoggingSpring
 	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLoggingHttpComponents
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
