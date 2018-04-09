@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class AppInsightsTest {
     @Test
     public void test() {
-        TelemetryContext telemetryContext =new TelemetryContext();
+        TelemetryContext telemetryContext = new TelemetryContext();
         telemetryContext.setInstrumentationKey("key");
 
         TelemetryClient telemetryClient = mock(TelemetryClient.class);
