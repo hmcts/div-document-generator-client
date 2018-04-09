@@ -93,9 +93,6 @@ def versions = [
 		commonsIo: '2.5',
 		serviceTokenGenerator: '0.4.2',
 		reformsJavaLogging : '2.0.2',
-        reformsJavaLoggingAppInsights: '2.0.2',
-		reformsJavaLoggingSpring: '2.0.2',
-		reformsJavaLoggingHttpComponents: '2.0.2',
 		lombok: '1.16.16',
 		powerMock: '1.7.3',
 		puppyCrawl: '7.6',
@@ -116,9 +113,9 @@ dependencies {
 	compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
 	compile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
 	compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLoggingAppInsights
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLoggingSpring
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLoggingHttpComponents
+	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
+	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
+	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
 	compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
 	compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
