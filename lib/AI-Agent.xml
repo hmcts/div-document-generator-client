@@ -5,8 +5,19 @@
         <BuiltIn enabled="true">
             <HTTP enabled="true"/>
         </BuiltIn>
-        <Class name="uk.gov.hmcts.reform.emclient.service.EvidenceManagementDownloadServiceImpl">
-            <Method name="downloadFile" reportCaughtExceptions="true" reportExecutionTime="true"/>
+        <Class name="uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocumentManagementServiceImpl">
+            <Method name="generateAndStoreDocument" reportCaughtExceptions="true" reportExecutionTime="true"/>
+            <Method name="storeDocument" reportCaughtExceptions="true" reportExecutionTime="true"/>
+            <Method name="generateDocument" reportCaughtExceptions="true" reportExecutionTime="true"/>
+        </Class>
+        <Class name="uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.EvidenceManagementServiceImpl">
+            <Method name="storeDocumentAndGetInfo" reportCaughtExceptions="true" reportExecutionTime="true"/>
+        </Class>
+        <Class name="uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.PDFGenerationServiceImpl">
+            <Method name="generateFromHtml" reportCaughtExceptions="true" reportExecutionTime="true"/>
+        </Class>
+        <Class name="uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.TemplateManagementService">
+            <Method name="getTemplateByName" reportCaughtExceptions="true" reportExecutionTime="true"/>
         </Class>
     </Instrumentation>
 </ApplicationInsightsAgent>
