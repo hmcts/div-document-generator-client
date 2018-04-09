@@ -59,6 +59,8 @@ documentation:
     enabled: true
 
 spring:
+  application:
+    name: div-document-generator
   resources:
     static-locations:
 
@@ -106,3 +108,6 @@ logging:
     uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
   pattern:
     console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
+
+azure:
+  app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
