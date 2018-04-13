@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="1" failures="0" name="uk.gov.hmcts.reform.divorce.GeneratePDFIntegrationTest" skipped="0" tests="1" time="0.0" timestamp="2018-04-12T12:41:11.078+01:00[Europe/London]"><testcase classname="uk.gov.hmcts.reform.divorce.GeneratePDFIntegrationTest" name="Initialisation"><error message="Failed to load ApplicationContext" type="java.lang.IllegalStateException">Failed to load ApplicationContext</error><system-err>Failed to load ApplicationContext
-org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
-org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
-org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
-org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
-org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
-</system-err></testcase></testsuite>
