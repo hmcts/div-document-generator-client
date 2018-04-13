@@ -28,7 +28,7 @@ import java.util.List;
 @Slf4j
 @ConditionalOnProperty(value = "evidence-management-api.service.stub.enabled", havingValue = "false")
 public class EvidenceManagementServiceImpl implements EvidenceManagementService {
-    private static final String AUTHORIZATION_HEADER = "authorizationToken";
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String FILE_PARAMETER = "file";
     private static final String DEFAULT_NAME_FOR_PDF_FILE = "D8MiniPetition.pdf";
 
@@ -42,11 +42,11 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
     private RestTemplate restTemplate;
 
     @Override
-    public FileUploadResponse storeDocumentAndGetInfo(byte[] document) {
+    public FileUploadResponse storeDocumentAndGetInfo(byte[] document, String authorizationToken) {
         log.info("Save document call to evidence management is made document of size [{}]", document.length);
 
         try {
-            FileUploadResponse fileUploadResponse = storeDocument(document);
+            FileUploadResponse fileUploadResponse = storeDocument(document, authorizationToken);
 
             if (fileUploadResponse.getStatus() == HttpStatus.OK) {
                 return fileUploadResponse;
@@ -58,14 +58,14 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
         }
     }
 
-    private FileUploadResponse storeDocument(byte[] document) {
+    private FileUploadResponse storeDocument(byte[] document, String authorizationToken) {
         NullOrEmptyValidator.requireNonEmpty(document);
 
         ResponseEntity<List<FileUploadResponse>> responseEntity = restTemplate.exchange(evidenceManagementEndpoint,
                 HttpMethod.POST,
                 new HttpEntity<>(
-                        buildRequest(document, DEFAULT_NAME_FOR_PDF_FILE),
-                        getHttpHeaders(serviceTokenGenerator.generate())),
+                        buildRequest(document, DEFAULT_NAME_FOR_PDF_FILE)
+                       , getHttpHeaders(authorizationToken)),
                 new ParameterizedTypeReference<List<FileUploadResponse>>() {
                 });
 

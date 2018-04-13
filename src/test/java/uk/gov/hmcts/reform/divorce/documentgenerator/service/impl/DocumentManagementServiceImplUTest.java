@@ -71,7 +71,7 @@ public class DocumentManagementServiceImplUTest {
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "storeDocument", byte[].class)).withArguments(data);
 
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, "test");
 
         assertEquals(expected, actual);
 
@@ -88,14 +88,14 @@ public class DocumentManagementServiceImplUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data)).thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test")).thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
-        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data);
+        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test");
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data);
+        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test");
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
