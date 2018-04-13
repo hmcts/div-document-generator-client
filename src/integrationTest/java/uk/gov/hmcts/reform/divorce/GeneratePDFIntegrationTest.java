@@ -1,8 +1,7 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.WithTag;
+import static net.serenitybdd.rest.SerenityRest.given;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +18,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
-import uk.gov.hmcts.reform.divorce.EvidenceManagementUtil;
-import uk.gov.hmcts.reform.divorce.ResourceLoader;
 
-import static net.serenitybdd.rest.SerenityRest.given;
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 
 @Lazy
 @RunWith(SerenityRunner.class)

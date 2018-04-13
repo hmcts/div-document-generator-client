@@ -1,13 +1,13 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.response.Response;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import static net.serenitybdd.rest.SerenityRest.given;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.serenitybdd.rest.SerenityRest.given;
+import io.restassured.response.Response;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EvidenceManagementUtil {
@@ -24,24 +24,5 @@ public final class EvidenceManagementUtil {
                 .when()
                 .get(uri)
                 .andReturn();
-    }
-
-    /**
-     * Given the uri it will update the url to corresponding localhost url for testing with docker
-     *
-     * @param uri the link to be updated
-     * @return updated url
-     */
-    //this is a hack to make this work with the docker container
-    public static String getDocumentStoreURI(String uri, String documentManagementURL) {
-        if (uri.contains("http://em-api-gateway-web:3404")) {
-            return uri.replace("http://em-api-gateway-web:3404", documentManagementURL);
-        }
-
-        if (uri.contains("document-management-store:8080")) {
-            return uri.replace("http://document-management-store:8080", documentManagementURL);
-        }
-
-        return uri;
     }
 }
