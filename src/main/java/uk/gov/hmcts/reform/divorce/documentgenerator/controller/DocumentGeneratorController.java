@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -37,11 +38,12 @@ public class DocumentGeneratorController {
                     response = String.class)
         })
     @PostMapping("/version/1/generatePDF")
-    public GeneratedDocumentInfo generatePDF(@RequestBody @Valid @ApiParam(value = "JSON object containing the "
+    public GeneratedDocumentInfo generatePDF(@RequestHeader(value = "Authorization", required = false)
+                                                     String authorizationToken, @RequestBody @Valid @ApiParam(value = "JSON object containing the "
             + "templateName and the placeholder text map", required = true) GenerateDocumentRequest templateData) {
         //This service is internal to Divorce system. No need to do service authentication here
         log.info("Document generation requested with templateName [{}], placeholders map of size[{}]",
                 templateData.getTemplate(), templateData.getValues().size());
-        return documentManagementService.generateAndStoreDocument(templateData.getTemplate(), templateData.getValues());
+        return documentManagementService.generateAndStoreDocument(templateData.getTemplate(), templateData.getValues(), authorizationToken);
     }
 }

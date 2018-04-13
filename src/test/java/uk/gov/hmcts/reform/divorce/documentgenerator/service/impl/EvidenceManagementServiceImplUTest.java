@@ -73,7 +73,7 @@ public class EvidenceManagementServiceImplUTest {
                 .withArguments(data);
 
         try {
-            classUnderTest.storeDocumentAndGetInfo(data);
+            classUnderTest.storeDocumentAndGetInfo(data, "test");
             fail();
         } catch (DocumentStorageException exception) {
             assertEquals(documentStorageException, exception.getCause());
@@ -91,7 +91,7 @@ public class EvidenceManagementServiceImplUTest {
                 MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class))
                 .withArguments(data);
 
-        classUnderTest.storeDocumentAndGetInfo(data);
+        classUnderTest.storeDocumentAndGetInfo(data, "testToken");
 
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data);
     }
@@ -105,7 +105,7 @@ public class EvidenceManagementServiceImplUTest {
                 MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class))
                 .withArguments(data);
 
-        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(data);
+        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(data, "testToken");
 
         assertEquals(expected, actual);
 

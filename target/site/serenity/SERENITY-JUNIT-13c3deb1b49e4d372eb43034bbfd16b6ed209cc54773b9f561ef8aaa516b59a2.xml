@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="1" name="uk.gov.hmcts.reform.divorce.DivDocumentGenerationTest" skipped="0" tests="1" time="13.11" timestamp="2018-04-13T10:37:14.402+01:00[Europe/London]"><testcase classname="uk.gov.hmcts.reform.divorce.DivDocumentGenerationTest" name="Given all the right parameters when generate PDF then generated PDF should be stored in EM store"><failure message="expected:&lt;200&gt; but was:&lt;403&gt;" type="java.lang.AssertionError">expected:&lt;200&gt; but was:&lt;403&gt;</failure><system-err>expected:&lt;200&gt; but was:&lt;403&gt;
+uk.gov.hmcts.reform.divorce.DivDocumentGenerationTest.givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore(DivDocumentGenerationTest.java:84)
+org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+</system-err></testcase></testsuite>
