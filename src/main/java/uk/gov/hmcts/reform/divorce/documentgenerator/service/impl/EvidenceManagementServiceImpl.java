@@ -54,7 +54,8 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
                 throw new DocumentStorageException("Failed to store document");
             }
         } catch (Exception e) {
-            throw new DocumentStorageException("Error storing document " + e.getMessage(), e);
+            throw new DocumentStorageException(
+                "Error storing document " + e.getMessage() + " " + evidenceManagementEndpoint, e);
         }
     }
 
