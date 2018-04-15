@@ -102,12 +102,16 @@ public class D8MiniPetitionTest extends IntegrationTest {
     private Response callDivDocumentGenerator(String requestBody) {
         System.out.println("divDocumentGeneratorURI: " + divDocumentGeneratorURI);
 
-        return given()
+        Response response = given()
             .contentType("application/json")
             .body(requestBody)
             .when()
             .post(divDocumentGeneratorURI)
             .andReturn();
+
+        System.out.println("response: " + response);
+
+        return response;
     }
 
     /**
