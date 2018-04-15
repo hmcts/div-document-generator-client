@@ -43,7 +43,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 @PrepareForTest({EvidenceManagementServiceImpl.class, NullOrEmptyValidator.class})
 public class EvidenceManagementServiceImplUTest {
     private static final String EVIDENCE_MANAGEMENT_ENDPOINT = "evidence_management_endpoint";
-    private static final String AUTHORIZATION_HEADER = "authorizationToken";
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String FILE_PARAMETER = "file";
     private static final String DEFAULT_NAME_FOR_PDF_FILE = "D8MiniPetition.pdf";
 
@@ -66,56 +66,63 @@ public class EvidenceManagementServiceImplUTest {
     @Test
     public void givenStoreDocumentThrowsException_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
         final byte[] data = {1};
+        final String authToken = "someToken";
+
         final RuntimeException documentStorageException = new RuntimeException();
 
         doThrow(documentStorageException).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class))
-                .withArguments(data);
+                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class, String.class))
+                .withArguments(data, authToken);
 
         try {
-            classUnderTest.storeDocumentAndGetInfo(data, "test");
+            classUnderTest.storeDocumentAndGetInfo(data, authToken);
             fail();
         } catch (DocumentStorageException exception) {
             assertEquals(documentStorageException, exception.getCause());
         }
 
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data);
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data, authToken);
     }
 
     @Test(expected = DocumentStorageException.class)
     public void givenStoreDocumentReturnsNon200HttpStatus_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
         final byte[] data = {1};
+        final String authToken = "someToken";
+
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.SERVICE_UNAVAILABLE);
 
         doReturn(fileUploadResponse).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class))
-                .withArguments(data);
+                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class, String.class))
+                .withArguments(data, authToken);
 
-        classUnderTest.storeDocumentAndGetInfo(data, "testToken");
+        classUnderTest.storeDocumentAndGetInfo(data, authToken);
 
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data);
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data, authToken);
     }
 
     @Test
     public void givenStoreDocumentReturns200HttpStatus_whenStoreDocumentAndGetInfo_thenProceedAsExpected() throws Exception {
         final byte[] data = {1};
+        final String authToken = "someToken";
+
         final FileUploadResponse expected = new FileUploadResponse(HttpStatus.OK);
 
         doReturn(expected).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class))
-                .withArguments(data);
+                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument", byte[].class, String.class))
+                .withArguments(data, authToken);
 
-        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(data, "testToken");
+        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(data, authToken);
 
         assertEquals(expected, actual);
 
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data);
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument", data, authToken);
     }
 
     @Test
     public void givenDocument_whenStoreDocument_thenProceedAsExpected() throws Exception {
         final byte[] document = {1};
-        final String serviceToken = "serviceToken";
+        final String authToken = "someToken";
+
         final FileUploadResponse expected = new FileUploadResponse(HttpStatus.OK);
 
         final ParameterizedTypeReference<List<FileUploadResponse>> parameterizedTypeReference =
@@ -133,14 +140,13 @@ public class EvidenceManagementServiceImplUTest {
         doReturn(request).when(classUnderTest,
                 MemberMatcher.method(EvidenceManagementServiceImpl.class, "buildRequest", byte[].class, String.class))
                 .withArguments(document, DEFAULT_NAME_FOR_PDF_FILE);
-        doReturn(serviceToken).when(serviceTokenGenerator).generate();
         doReturn(httpHeaders).when(classUnderTest,
                 MemberMatcher.method(EvidenceManagementServiceImpl.class, "getHttpHeaders", String.class))
-                .withArguments(serviceToken);
+                .withArguments(authToken);
         doReturn(responseEntity).when(restTemplate).exchange(EVIDENCE_MANAGEMENT_ENDPOINT, HttpMethod.POST, httpEntity,
                 parameterizedTypeReference);
 
-        FileUploadResponse actual = storeDocument(document);
+        FileUploadResponse actual = storeDocument(document, authToken);
 
         assertEquals(expected, actual);
 
@@ -148,8 +154,7 @@ public class EvidenceManagementServiceImplUTest {
         NullOrEmptyValidator.requireNonEmpty(document);
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("buildRequest", document,
                 DEFAULT_NAME_FOR_PDF_FILE);
-        Mockito.verify(serviceTokenGenerator, Mockito.times(1)).generate();
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("getHttpHeaders", serviceToken);
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("getHttpHeaders", authToken);
         Mockito.verify(restTemplate, Mockito.times(1)).exchange(EVIDENCE_MANAGEMENT_ENDPOINT,
                 HttpMethod.POST, httpEntity, parameterizedTypeReference);
     }
@@ -180,9 +185,9 @@ public class EvidenceManagementServiceImplUTest {
 
     }
 
-    private FileUploadResponse storeDocument(byte[] document) {
+    private FileUploadResponse storeDocument(byte[] document, String authToken) {
         try {
-            return Whitebox.invokeMethod(classUnderTest, "storeDocument", document);
+            return Whitebox.invokeMethod(classUnderTest, "storeDocument", document, authToken);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

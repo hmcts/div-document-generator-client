@@ -63,22 +63,23 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
+        final String authToken = "someToken";
 
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class)).withArguments(data);
+                "storeDocument", byte[].class, String.class)).withArguments(data, authToken);
 
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, "test");
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
 
         verifyPrivate(classUnderTest, Mockito.times(1))
                 .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", new Object[]{data});
+                .invoke("storeDocument", data, authToken);
     }
 
     @Test
