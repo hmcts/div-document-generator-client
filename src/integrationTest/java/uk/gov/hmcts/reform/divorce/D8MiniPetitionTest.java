@@ -109,7 +109,7 @@ public class D8MiniPetitionTest extends IntegrationTest {
             .post(divDocumentGeneratorURI)
             .andReturn();
 
-        System.out.println("response: " + response);
+        System.out.println("response: " + response.getBody());
 
         return response;
     }

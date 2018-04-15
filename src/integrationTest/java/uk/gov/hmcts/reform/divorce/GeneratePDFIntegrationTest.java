@@ -61,12 +61,18 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
     }
 
     private Response callDivDocumentGenerator(String requestBody) {
-        return given()
+        System.out.println("divDocumentGeneratorURI: " +  divDocumentGeneratorURI);
+
+        Response response = given()
             .contentType("application/json")
             .body(requestBody)
             .when()
             .post(divDocumentGeneratorURI)
             .andReturn();
+
+        System.out.println("response callDiv :" + response.getBody());
+
+        return response;
     }
 
     private String loadJSON(final String fileName) throws Exception {
