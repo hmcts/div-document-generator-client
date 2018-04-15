@@ -31,6 +31,6 @@ withPipeline(type , product, component) {
     after('checkout') {
         echo '${product}-${component} checked out'
     }
-    
+
     enableSlackNotifications(channel)
 }

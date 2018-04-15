@@ -5,8 +5,10 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 
@@ -71,9 +73,5 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
 
     private String loadJSON(final String fileName) throws Exception {
         return ResourceLoader.loadJSON("documentgenerator/" + fileName);
-    }
-
-    private Response readDataFromEvidenceManagement(String uri) {
-        return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, "addtoken");
     }
 }

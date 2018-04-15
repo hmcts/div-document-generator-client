@@ -9,8 +9,10 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -121,9 +123,5 @@ public class D8MiniPetitionTest extends IntegrationTest {
         }
 
         return uri;
-    }
-
-    private Response readDataFromEvidenceManagement(String uri) {
-        return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, "addcaseworkertoken");
     }
 }
