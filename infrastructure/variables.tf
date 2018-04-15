@@ -19,7 +19,7 @@ variable "auth_provider_service_client_baseurl" {
 }
 
 variable "auth_provider_service_client_microservice" {
-  default = "divorce_ccd_submission"
+  default = "divorce_document_generator"
 }
 
 variable "auth_provider_service_client_tokentimetoliveinseconds" {
