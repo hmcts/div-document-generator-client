@@ -12,7 +12,7 @@ import static net.serenitybdd.rest.SerenityRest.given;
 
 
 @RunWith(SerenityRunner.class)
-public class GeneratePDFIntegrationTest extends TestContextConfiguration {
+public class GeneratePDFIntegrationTest extends IntegrationTest {
 
     private static final String INVALID_TEMPLATE_NAME_JSON = "invalid-template-name.json";
 
