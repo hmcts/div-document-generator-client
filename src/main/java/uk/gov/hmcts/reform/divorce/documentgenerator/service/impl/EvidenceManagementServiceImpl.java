@@ -64,8 +64,8 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
         ResponseEntity<List<FileUploadResponse>> responseEntity = restTemplate.exchange(evidenceManagementEndpoint,
                 HttpMethod.POST,
                 new HttpEntity<>(
-                        buildRequest(document, DEFAULT_NAME_FOR_PDF_FILE)
-                       , getHttpHeaders(authorizationToken)),
+                        buildRequest(document, DEFAULT_NAME_FOR_PDF_FILE),
+                    getHttpHeaders(authorizationToken)),
                 new ParameterizedTypeReference<List<FileUploadResponse>>() {
                 });
 

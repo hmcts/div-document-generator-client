@@ -33,7 +33,8 @@ public class DocumentGeneratorControllerUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(documentManagementService.generateAndStoreDocument(templateName, placeholder, "testToken")).thenReturn(expected);
+        when(documentManagementService.generateAndStoreDocument(templateName, placeholder, "testToken"))
+            .thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest
                 .generatePDF("testToken", new GenerateDocumentRequest(templateName, placeholder));

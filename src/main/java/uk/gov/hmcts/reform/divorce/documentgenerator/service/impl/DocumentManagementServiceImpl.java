@@ -35,7 +35,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Override
-    public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders, String authorizationToken) {
+    public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
+                                                          String authorizationToken) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
                 templateName, placeholders.size());
 
@@ -49,7 +50,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken) {
         log.debug("Store document requested with document of size [{}]", document.length);
         return GeneratedDocumentInfoMapper
-                .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document, authorizationToken));
+                .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document,
+                    authorizationToken));
     }
 
     @Override
