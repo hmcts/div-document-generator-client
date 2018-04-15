@@ -26,8 +26,8 @@ auth:
 
 idam:
   s2s-auth:
-    microservice: sscs
-    totp_secret: AAAAAAAAAAAAAAAA
+    microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:sscs}
+    totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:AAAAAAAAAAAAAAAA}
     url: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
 
 http:
