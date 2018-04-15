@@ -22,9 +22,10 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGeneratorFactory;
 @Lazy
 @Configuration
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.divorce", "uk.gov.hmcts.auth.provider.service"})
-@ContextConfiguration(classes = {ServiceContextConfiguration.class, ServiceAuthorisationApi.class})
+@ContextConfiguration(classes = {ServiceContextConfiguration.class})
 @ImportAutoConfiguration({RibbonAutoConfiguration.class,HttpMessageConvertersAutoConfiguration.class,
     FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
+@EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
 @PropertySource({"classpath:application.properties"})
 @PropertySource({"classpath:application-${env}.properties"})
 public class ServiceContextConfiguration {
