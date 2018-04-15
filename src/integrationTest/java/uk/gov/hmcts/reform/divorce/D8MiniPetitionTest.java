@@ -20,7 +20,6 @@ import java.util.Collection;
 import static net.serenitybdd.rest.SerenityRest.given;
 
 @RunWith(SerenityParameterizedRunner.class)
-@Concurrent
 public class D8MiniPetitionTest extends IntegrationTest {
     private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/d8minipetition/jsoninput/%s.json";
     private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/d8minipetition/pdfoutput/%s.pdf";
