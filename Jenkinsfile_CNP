@@ -20,6 +20,10 @@ def component = "document-generator"
 def channel = '#div-dev'
 
 withPipeline(type , product, component) {
+    after('functionalTest:aat') {
+        error('Halting pipeline before prod stages')
+    }
+
     after('checkout') {
         echo '${product}-${component} checked out'
     }

@@ -1,28 +1,26 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
-	}
-	repositories {
-		mavenLocal()
-		jcenter()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-
-
 plugins {
-	id 'application'
-	id 'checkstyle'
-	id 'org.springframework.boot' version'1.5.9.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.3.RELEASE'
-	id 'org.owasp.dependencycheck' version '3.1.2'
-	id 'org.sonarqube' version '2.5'
-	id 'com.github.ben-manes.versions' version '0.17.0'
-	id 'jacoco'
-	id 'pmd'
+    id 'application'
+    id 'checkstyle'
+    id 'org.springframework.boot' version'1.5.9.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.3.RELEASE'
+    id 'org.owasp.dependencycheck' version '1.4.5.1'
+    id 'org.sonarqube' version '2.5'
+    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'jacoco'
+    id 'pmd'
 }
 
 group = 'uk.gov.hmcts.reform.divorce'
@@ -32,42 +30,20 @@ targetCompatibility = 1.8
 jar.archiveName = 'div-document-generator.jar'
 
 jar {
-	manifest {
-		attributes 'Implementation-Title': project.name,
-				'Implementation-Version': project.version
-	}
-}
-
-sourceSets {
-    integrationTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir('src/integrationTest/java')
-        }
-        resources {
-            srcDir('src/integrationTest/resources')
-        }
+    manifest {
+        attributes 'Implementation-Title': project.name,
+            'Implementation-Version': project.version
     }
-}
-
-dependencies {
-    integrationTestCompile(sourceSets.test.output)
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
 
 compileJava {
-	options.compilerArgs << '-parameters' << '-Xlint:deprecation'
+    options.compilerArgs << '-parameters' << '-Xlint:deprecation'
 }
 
 compileTestJava {
-	options.compilerArgs << '-Xlint:deprecation'
-}
-
-configurations {
-    integrationTestCompile.extendsFrom testCompile
-    integrationTestRuntime.extendsFrom testRuntime
+    options.compilerArgs << '-Xlint:deprecation'
 }
 
 repositories {
@@ -93,43 +69,69 @@ checkstyle.configFile = new File(rootDir, "checkstyle.xml")
 
 // make build fail on Checkstyle issues (https://github.com/gradle/gradle/issues/881)
 tasks.withType(Checkstyle).each { checkstyleTask ->
-	checkstyleTask.doLast {
-        /*
-		reports.all { report ->
-			def outputFile = report.destination
-			if (outputFile.exists() && outputFile.text.contains("<error ")) {
-				throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
-			}
-		}
-		*/
-	}
+    checkstyleTask.doLast {
+        reports.all { report ->
+            def outputFile = report.destination
+            if (outputFile.exists() && outputFile.text.contains("<error ")) {
+                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
+            }
+        }
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
 }
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
 dependencyCheck {
-
-	// Specifies if the build should be failed if a CVSS score above a specified level is identified.
-	// range of 0-10 fails the build, anything greater and it doesn't fail the build
-	failBuildOnCVSS = System.getProperty('dependencyCheck.failBuild') == 'true' ? 0 : 11
-	suppressionFile = 'dependency-check-suppressions.xml'
+    // Specifies if the build should be failed if a CVSS score above a specified level is identified.
+    // range of 0-10 fails the build, anything greater and it doesn't fail the build
+    failBuildOnCVSS = System.getProperty('dependencyCheck.failBuild') == 'true' ? 0 : 11
+    suppressionFile = 'dependency-check-suppressions.xml'
 }
 
 def versions = [
-		springfoxSwagger: '2.7.0',
-		commonsLang3: '3.7',
-		commonsIo: '2.5',
-		serviceTokenGenerator: '0.4.2',
-		reformsJavaLogging : '2.0.2',
-		lombok: '1.16.16',
-		powerMock: '1.7.3',
-		puppyCrawl: '7.6',
-		logstashLogBackEncoder: '4.8',
-		jacksonCore: '2.9.4',
-		wiremockVersion: '2.8.0'
+    springfoxSwagger: '2.7.0',
+    commonsLang3: '3.7',
+    commonsIo: '2.5',
+    serviceTokenGenerator: '0.4.2',
+    reformsJavaLogging : '2.0.2',
+    lombok: '1.16.16',
+    powerMock: '1.7.3',
+    puppyCrawl: '7.6',
+    logstashLogBackEncoder: '4.8',
+    jacksonCore: '2.9.4',
+    wiremockVersion: '2.8.0'
 ]
 
 dependencies {
-
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-actuator-docs')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
+    compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
+    compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
+    compile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
+    compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
+    compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
+    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
+    testCompile group: 'org.powermock', name:'powermock-api-mockito', version:versions.powerMock
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+    runtime('org.springframework.boot:spring-boot-devtools')
 
     //integration test
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: '1.5.2'
@@ -150,30 +152,23 @@ dependencies {
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '5.1'
     integrationTestCompile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.8'
 
+}
 
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-actuator-docs')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
-	compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
-	compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
-	compile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
-	compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springFoxSwagger
-	compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
-	compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
-	compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-	testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
-	testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
-	testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
-	testCompile group: 'org.powermock', name:'powermock-api-mockito', version:versions.powerMock
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
-	runtime('org.springframework.boot:spring-boot-devtools')
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir('src/integrationTest/java')
+        }
+        resources {
+            srcDir('src/integrationTest/resources')
+        }
+    }
+}
+
+dependencies {
+    integrationTestCompile(sourceSets.test.output)
 }
 
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
@@ -182,20 +177,15 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
     }
 }
 
-/*
-task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
-    include "uk.gov.hmcts.reform.divorce.documentgenerator.functionaltest/**"
-}*/
-
-task printVersion {
-	doLast {
-		print project.version
-	}
-}
-
 task functional(type: Test, description: 'Runs the functional tests', group: 'Verification') {
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
+}
+
+task printVersion {
+    doLast {
+        print project.version
+    }
 }
 
 pmd {
@@ -207,25 +197,25 @@ pmd {
 }
 
 def sonarExclusions = [
-		'**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
-        '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
-        '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
-		'**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
 ]
 
 sonarqube {
-	properties {
-		property "sonar.projectKey", "DivorceDocumentGenerator"
-		property "sonar.projectName", "Divorce :: document-generator"
-		property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-		property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/apiTest.exec"
-		property "sonar.exclusions", sonarExclusions.join(", ")
-	}
+    properties {
+        property "sonar.projectKey", "DivorceDocumentGenerator"
+        property "sonar.projectName", "Divorce :: document-generator"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/apiTest.exec"
+        property "sonar.exclusions", sonarExclusions.join(", ")
+    }
 }
 
 
 task developAddRelaseSuffix() {
-  version = "${version}-SNAPSHOT"
+    version = "${version}-SNAPSHOT"
 }
 
 jacocoTestReport {
@@ -244,7 +234,7 @@ jacocoTestReport {
 
 def debug = System.getProperty("debug")
 run {
-	if (debug == 'true') {
-		jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5010']
-	}
+    if (debug == 'true') {
+        jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5010']
+    }
 }

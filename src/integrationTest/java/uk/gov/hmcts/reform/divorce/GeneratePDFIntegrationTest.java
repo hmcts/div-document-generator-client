@@ -31,6 +31,7 @@ import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
 @EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
 @PropertySource({"classpath:application.properties"})
+@PropertySource({"classpath:application-${env}.properties"})
 public class GeneratePDFIntegrationTest  {
 
     private static final String INVALID_TEMPLATE_NAME_JSON = "invalid-template-name.json";
