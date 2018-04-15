@@ -2,17 +2,14 @@ package uk.gov.hmcts.reform.divorce;
 
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.Concurrent;
 import net.thucydides.junit.annotations.TestData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 import java.util.Arrays;
 import java.util.Collection;
