@@ -78,6 +78,9 @@ public class D8MiniPetitionTest extends IntegrationTest {
 
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
 
+        System.out.println("resource pdf " + readPdf(ResourceLoader.loadResource(expectedOutput)));
+        System.out.println("response pdf " + readPdf(responseFromEvidenceManagement.asByteArray()));
+
         Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)), readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 
