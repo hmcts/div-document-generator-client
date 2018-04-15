@@ -17,6 +17,8 @@ public final class EvidenceManagementUtil {
         headers.put("ServiceAuthorization", serviceAuthToken);
         headers.put("user-id", userId);
         headers.put("user-roles", "caseworker-divorce");
+        headers.put("Content-Type", "multipart/form-data");
+
         return given()
             .contentType("application/json")
             .headers(headers)
