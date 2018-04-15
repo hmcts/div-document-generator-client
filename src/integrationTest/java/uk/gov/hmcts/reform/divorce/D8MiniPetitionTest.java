@@ -95,12 +95,11 @@ public class D8MiniPetitionTest  {
         return text;
     }
 
-    protected static final String DOCUMENT_URL_KEY = "url";
-    protected static final String MIME_TYPE_KEY = "mimeType";
-    protected static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
-    static final String X_PATH_TO_URL = "_links.self.href";
+    private static final String DOCUMENT_URL_KEY = "url";
+    private static final String MIME_TYPE_KEY = "mimeType";
+    private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
 
-    @Value("${document.generator.generate.pdf.uri}")
+    @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
 
     @Value("${document.management.store.baseUrl}")
