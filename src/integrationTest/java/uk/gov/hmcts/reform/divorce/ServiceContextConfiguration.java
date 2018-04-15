@@ -23,15 +23,10 @@ public class ServiceContextConfiguration {
 
     @Bean
     public AuthTokenGenerator serviceAuthTokenGenerator(
-            @Value("${idam.auth.secret}") final String secret,
-            @Value("${idam.auth.microservice}") final String microService,
-            final ServiceAuthorisationApi serviceAuthorisationApi
+        @Value("${idam.auth.secret}") final String secret,
+        @Value("${idam.auth.microservice}") final String microService,
+        final ServiceAuthorisationApi serviceAuthorisationApi
     ) {
         return AuthTokenGeneratorFactory.createDefaultGenerator(secret, microService, serviceAuthorisationApi);
-    }
-
-    @Bean
-    public IDAMUtils getIDAMUtil() {
-       return new IDAMUtils();
     }
 }

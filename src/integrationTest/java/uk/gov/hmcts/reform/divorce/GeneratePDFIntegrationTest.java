@@ -1,38 +1,18 @@
 package uk.gov.hmcts.reform.divorce;
 
-import static net.serenitybdd.rest.SerenityRest.given;
-
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.cloud.netflix.feign.FeignAutoConfiguration;
-import org.springframework.cloud.netflix.feign.ribbon.FeignRibbonClientAutoConfiguration;
-import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ContextConfiguration;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityRunner;
-import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
+import static net.serenitybdd.rest.SerenityRest.given;
 
-@Lazy
+
 @RunWith(SerenityRunner.class)
-@ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.emclient", "uk.gov.hmcts.auth.provider.service"})
-@ImportAutoConfiguration({RibbonAutoConfiguration.class,HttpMessageConvertersAutoConfiguration.class,
-    FeignRibbonClientAutoConfiguration.class, FeignAutoConfiguration.class})
-@ContextConfiguration(classes = {ServiceContextConfiguration.class})
-@EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
-@PropertySource({"classpath:application.properties"})
-@PropertySource({"classpath:application-${env}.properties"})
-public class GeneratePDFIntegrationTest  {
+public class GeneratePDFIntegrationTest extends TestContextConfiguration {
 
     private static final String INVALID_TEMPLATE_NAME_JSON = "invalid-template-name.json";
 
@@ -43,19 +23,13 @@ public class GeneratePDFIntegrationTest  {
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
 
-    @Value("${document.management.store.baseUrl}")
-    private String documentManagementURL;
+    private static final String DOCUMENT_URL_KEY = "url";
 
-    @Autowired
-    private IDAMUtils idamUtils;
+    private static final String MIME_TYPE_KEY = "mimeType";
 
-    protected static final String DOCUMENT_URL_KEY = "url";
+    private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
 
-    protected static final String MIME_TYPE_KEY = "mimeType";
-
-    protected static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
-
-    static final String X_PATH_TO_URL = "_links.self.href";
+    private static final String X_PATH_TO_URL = "_links.self.href";
 
     @Test
     public void givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore() throws Exception {
@@ -86,7 +60,7 @@ public class GeneratePDFIntegrationTest  {
         Assert.assertEquals(HttpStatus.SERVICE_UNAVAILABLE.value(), response.getStatusCode());
     }
 
-    protected Response callDivDocumentGenerator(String requestBody) {
+    private Response callDivDocumentGenerator(String requestBody) {
         return given()
             .contentType("application/json")
             .body(requestBody)
@@ -95,11 +69,11 @@ public class GeneratePDFIntegrationTest  {
             .andReturn();
     }
 
-    String loadJSON(final String fileName) throws Exception {
+    private String loadJSON(final String fileName) throws Exception {
         return ResourceLoader.loadJSON("documentgenerator/" + fileName);
     }
 
-    protected Response readDataFromEvidenceManagement(String uri) {
+    private Response readDataFromEvidenceManagement(String uri) {
         return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, "addtoken");
     }
 }

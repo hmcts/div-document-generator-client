@@ -1,41 +1,35 @@
 package uk.gov.hmcts.reform.divorce;
 
-import static net.serenitybdd.rest.SerenityRest.given;
-
-import java.util.Arrays;
-import java.util.Collection;
-
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.thucydides.junit.annotations.Concurrent;
+import net.thucydides.junit.annotations.TestData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.Concurrent;
-import net.thucydides.junit.annotations.TestData;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static net.serenitybdd.rest.SerenityRest.given;
 
 @RunWith(SerenityParameterizedRunner.class)
 @Concurrent
-public class D8MiniPetitionTest  {
+public class D8MiniPetitionTest extends TestContextConfiguration {
     private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/d8minipetition/jsoninput/%s.json";
     private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/d8minipetition/pdfoutput/%s.pdf";
 
     private final String inputJson;
     private final String expectedOutput;
 
-    @Autowired
-    private IDAMUtils idamUtils;
-
     public D8MiniPetitionTest(String fileName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, fileName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, fileName);
     }
-
 
     @TestData
     public static Collection<Object[]> testData() {
@@ -105,7 +99,7 @@ public class D8MiniPetitionTest  {
     @Value("${document.management.store.baseUrl}")
     private String documentManagementURL;
 
-    protected Response callDivDocumentGenerator(String requestBody) {
+    private Response callDivDocumentGenerator(String requestBody) {
         return given()
             .contentType("application/json")
             .body(requestBody)
@@ -121,7 +115,7 @@ public class D8MiniPetitionTest  {
      * @return updated url
      */
     //this is a hack to make this work with the docker container
-    protected String getDocumentStoreURI(String uri) {
+    private String getDocumentStoreURI(String uri) {
         if (uri.contains("document-management-store:8080")) {
             return uri.replace("http://document-management-store:8080", documentManagementURL);
         }
@@ -129,7 +123,7 @@ public class D8MiniPetitionTest  {
         return uri;
     }
 
-    protected Response readDataFromEvidenceManagement(String uri) {
+    private Response readDataFromEvidenceManagement(String uri) {
         return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, "addcaseworkertoken");
     }
 }
