@@ -100,6 +100,8 @@ public class D8MiniPetitionTest extends IntegrationTest {
     private String documentManagementURL;
 
     private Response callDivDocumentGenerator(String requestBody) {
+        System.out.println("divDocumentGeneratorURI: " + divDocumentGeneratorURI);
+
         return given()
             .contentType("application/json")
             .body(requestBody)
