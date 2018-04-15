@@ -54,7 +54,7 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
                     buildRequest(serviceTokenGenerator.generate(), template, placeholders),
                     byte[].class);
         } catch (Exception e) {
-            throw new PDFGenerationException("Failed to request PDF from REST endpoint", e);
+            throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }
     }
 
