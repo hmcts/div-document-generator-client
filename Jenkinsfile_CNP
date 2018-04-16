@@ -24,13 +24,13 @@ withPipeline(type , product, component) {
         env.TEST_ENVIRONMENT = "aat"
     }
 
-//    before('smokeTest:aat') {
-//        error('Halting pipeline before prod stages')
-//    }
+    before('smokeTest:aat') {
+        error('Halting pipeline before prod stages')
+    }
 
     after('checkout') {
         echo '${product}-${component} checked out'
     }
 
-   // enableSlackNotifications(channel)
+    enableSlackNotifications(channel)
 }
