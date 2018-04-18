@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.12.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -14,9 +14,9 @@ buildscript {
 plugins {
     id 'application'
     id 'checkstyle'
-    id 'org.springframework.boot' version'1.5.9.RELEASE'
+    id 'org.springframework.boot' version '1.5.12.RELEASE'
     id 'io.spring.dependency-management' version '1.0.3.RELEASE'
-    id 'org.owasp.dependencycheck' version '1.4.5.1'
+    id 'org.owasp.dependencycheck' version '3.1.2'
     id 'org.sonarqube' version '2.5'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'jacoco'
@@ -102,7 +102,7 @@ def versions = [
     powerMock: '1.7.3',
     puppyCrawl: '7.6',
     logstashLogBackEncoder: '4.8',
-    jacksonCore: '2.9.4',
+    jacksonCore: '2.9.5',
     wiremockVersion: '2.8.0'
 ]
 
@@ -116,7 +116,12 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
     compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
-    compile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
+    compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
+        exclude group: 'io.reactivex', module: 'rxnetty'
+        exclude group: 'io.reactivex', module: 'rxnetty-servo'
+        exclude group: 'io.reactivex', module: 'io.reactivex'
+        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+    }
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: versions.reformsJavaLogging
