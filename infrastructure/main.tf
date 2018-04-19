@@ -7,7 +7,7 @@ locals {
   pdf_service_url = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
 }
 
-module "div-document-generator" {
+module "div-doc-gen" {
   source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
   product      = "${var.reform_team}-${var.reform_service_name}"
   location     = "${var.location}"
