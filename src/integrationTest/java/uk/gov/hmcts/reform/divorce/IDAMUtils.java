@@ -1,12 +1,14 @@
 package uk.gov.hmcts.reform.divorce;
 
-import com.nimbusds.jwt.JWTParser;
-import io.restassured.RestAssured;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.text.ParseException;
 import java.util.Base64;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import io.restassured.RestAssured;
+
+import com.nimbusds.jwt.JWTParser;
 
 class IDAMUtils {
 
@@ -67,5 +69,4 @@ class IDAMUtils {
 
         return "Bearer " + token;
     }
-
 }

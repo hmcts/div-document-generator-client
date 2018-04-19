@@ -106,12 +106,6 @@ public class D8MiniPetitionTest extends IntegrationTest {
             .andReturn();
     }
 
-    /**
-     * Given the uri it will update the url to corresponding localhost url for testing with docker
-     *
-     * @param uri the link to be updated
-     * @return updated url
-     */
     //this is a hack to make this work with the docker container
     private String getDocumentStoreURI(String uri) {
         if (uri.contains("document-management-store:8080")) {
