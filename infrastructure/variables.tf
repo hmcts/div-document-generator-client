@@ -1,5 +1,5 @@
 variable "reform_service_name" {
-  default = "document-generator"
+  default = "doc-gen"
 }
 
 variable "reform_team" {
