@@ -15,7 +15,7 @@ properties([
 
 def type = "java"
 def product = "div"
-def component = "document-generator"
+def component = "doc-gen"
 
 def channel = '#div-dev'
 
