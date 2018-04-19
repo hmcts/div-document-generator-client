@@ -3,4 +3,4 @@ subscription = "nonprod"
 vault_env = "preprod"
 
 auth_provider_service_client_baseurl = "https://preprod-s2s-api.reform.hmcts.net:3511"
-pdf_service_baseurl = "https://testpdfservicelb.moneyclaim.reform.hmcts.net:4302"
+pdf_service_baseurl = "http://cmc-pdf-service-demo.service.core-compute-demo.internal"
