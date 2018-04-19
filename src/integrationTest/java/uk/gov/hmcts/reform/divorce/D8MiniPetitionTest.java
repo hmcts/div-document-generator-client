@@ -58,22 +58,14 @@ public class D8MiniPetitionTest extends IntegrationTest {
 
         //check PDF is generated
         Response response = callDivDocumentGenerator(requestBody);
-
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-
         String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-
         documentUri = getDocumentStoreURI(documentUri);
-
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-
         //check the data present in the evidence management
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-
         Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)), readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 

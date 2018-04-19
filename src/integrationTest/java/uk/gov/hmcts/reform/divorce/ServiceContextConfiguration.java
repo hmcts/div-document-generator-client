@@ -18,7 +18,6 @@ import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGeneratorFactory;
 
-
 @Lazy
 @Configuration
 @ComponentScan(basePackages = {"uk.gov.hmcts.reform.divorce.divorce", "uk.gov.hmcts.auth.provider.service"})
