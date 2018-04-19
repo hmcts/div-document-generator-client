@@ -1,8 +1,10 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.TestData;
+import static net.serenitybdd.rest.SerenityRest.given;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
@@ -11,10 +13,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import static net.serenitybdd.rest.SerenityRest.given;
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.thucydides.junit.annotations.TestData;
 
 @RunWith(SerenityParameterizedRunner.class)
 public class D8MiniPetitionTest extends IntegrationTest {
