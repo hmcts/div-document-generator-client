@@ -32,7 +32,7 @@ module "div-document-generator" {
 # region save DB details to Azure Key Vault
 module "key-vault" {
     source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-    name                = "${var.reform_team}-${var.reform_service_name}-${var.env}"
+    name                = "${var.reform_team}-dgs-${var.env}"
     product             = "${var.product}"
     env                 = "${var.env}"
     tenant_id           = "${var.tenant_id}"
