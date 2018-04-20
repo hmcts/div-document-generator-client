@@ -26,8 +26,4 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
     loadVaultSecrets(secrets)
-
-    before('functionalTest:aat') {
-        env.TEST_ENVIRONMENT = "aat"
-    }
 }
