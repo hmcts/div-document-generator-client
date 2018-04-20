@@ -63,22 +63,23 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
+        final String authToken = "someToken";
 
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class)).withArguments(data);
+                "storeDocument", byte[].class, String.class)).withArguments(data, authToken);
 
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
 
         verifyPrivate(classUnderTest, Mockito.times(1))
                 .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", new Object[]{data});
+                .invoke("storeDocument", data, authToken);
     }
 
     @Test
@@ -88,14 +89,14 @@ public class DocumentManagementServiceImplUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data)).thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test")).thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
-        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data);
+        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test");
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data);
+        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test");
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }

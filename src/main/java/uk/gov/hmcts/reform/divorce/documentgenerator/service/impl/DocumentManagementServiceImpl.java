@@ -35,21 +35,23 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Override
-    public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders) {
+    public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
+                                                          String authorizationToken) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
                 templateName, placeholders.size());
 
         placeholders.put(CURRENT_DATE_KEY,
                 new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date.from(clock.instant())));
 
-        return storeDocument(generateDocument(templateName, placeholders));
+        return storeDocument(generateDocument(templateName, placeholders), authorizationToken);
     }
 
     @Override
-    public GeneratedDocumentInfo storeDocument(byte[] document) {
+    public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken) {
         log.debug("Store document requested with document of size [{}]", document.length);
         return GeneratedDocumentInfoMapper
-                .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document));
+                .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document,
+                    authorizationToken));
     }
 
     @Override

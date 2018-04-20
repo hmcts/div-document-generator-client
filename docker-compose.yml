@@ -2,31 +2,6 @@
 version: '3'
 
 services:
-  document-generator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    healthcheck:
-        disable: true
-    ports:
-      - 4007:4007
-    environment:
-      - AUTH_PROVIDER_SERVICE_CLIENT_BASEURL=http://service-auth-provider-api:8080
-      - PDF_SERVICE_BASEURL=http://pdf-service-api:5500
-      - EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL=http://evidence-management-client-api:4006
-    links:
-     - pdf-service-api
-     - service-auth-provider-api
-     - evidence-management-client-api
-    depends_on:
-     - pdf-service-api
-     - service-auth-provider-api
-     - evidence-management-client-api
-
   pdf-service-api:
     image: docker.artifactory.reform.hmcts.net/cmc/pdf-service-api
     ports:
@@ -57,61 +32,6 @@ services:
           "auth.provider.service.server.microserviceKeys.sscs" : "AAAAAAAAAAAAAAAA",
           "auth.provider.service.server.microserviceKeys.em_gw" : "AAAAAAAAAAAAAAAA"
       }'
-
-  evidence-management-client-api:
-    image: docker.artifactory.reform.hmcts.net/divorce/evidence-management-client-api:latest
-    ports:
-      - "4006:4006"
-    expose:
-      - "4006"
-    environment:
-      - AUTH_PROVIDER_SERVICE_CLIENT_BASEURL=http://service-auth-provider-api:8080
-      - EVIDENCE_MANAGEMENT_UPLOAD_FILE_URL=http://em-api-gateway-web:3404/documents
-      - EVIDENCE_MANAGEMENT_HEALTH_URL=http://em-api-gateway-web:3404/health
-      - DOCUMENT_MANAGEMENT_STORE_URL=http://document-management-store:8080
-    links:
-     - em-api-gateway-web
-     - idam-api
-     - service-auth-provider-api
-     - document-management-store
-    depends_on:
-     - em-api-gateway-web
-     - idam-api
-     - service-auth-provider-api
-     - document-management-store
-
-  em-api-gateway-web:
-    image: docker.artifactory.reform.hmcts.net/evidence/document-management-store-api-gateway-web:latest
-    environment:
-     - NODE_ENV=development
-     - PORT=3404
-     - EM_API_URL=http://document-management-store:8080
-     - IDAM_BASE_URL=http://idam-api:8080
-     - IDAM_S2S_URL=http://service-auth-provider-api:8080
-     - IDAM_SERVICE_KEY=AAAAAAAAAAAAAAAA
-     - IDAM_SERVICE_NAME=sscs
-     - CORS_ORIGIN_METHODS=GET,POST,PUT,DELETE,OPTIONS
-     - CORS_ORIGIN_WHITELIST=http://document-management-store:8080
-     #      logging env vars
-     - ROOT_APPENDER=JSON_CONSOLE
-     - JSON_CONSOLE_PRETTY_PRINT=false
-     - REFORM_SERVICE_TYPE=node
-     - REFORM_SERVICE_NAME=em-api-gateway-web
-     - REFORM_TEAM=cc
-     - REFORM_ENVIRONMENT=docker
-     - XFWD=true
-    ports:
-     - 3404:3404
-    expose:
-     - 3404
-    links:
-     - document-management-store
-     - idam-api
-     - service-auth-provider-api
-    depends_on:
-     - document-management-store
-     - idam-api
-     - service-auth-provider-api
 
   document-management-store:
     image: docker.artifactory.reform.hmcts.net/evidence/document-management-store:latest

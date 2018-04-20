@@ -7,9 +7,10 @@ service:
     health:
       uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/health
   evidence-management-client-api:
-    uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/uploadFilesWithS2SAuthToken
+    uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/upload
     health:
-      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/status/health
+      context-path: ${EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT:/health}
+      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}${service.evidence-management-client-api.health.context-path}
   service-auth-provider:
     health:
       context-path: /health
@@ -27,7 +28,7 @@ idam:
   s2s-auth:
     microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:sscs}
     totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:AAAAAAAAAAAAAAAA}
-    url: ${auth.provider.service.client.baseUrl}
+    url: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
 
 http:
   connect:
@@ -58,6 +59,8 @@ documentation:
     enabled: true
 
 spring:
+  application:
+    name: div-document-generator
   resources:
     static-locations:
 
@@ -67,7 +70,6 @@ spring:
 # Enable default health indicators
 # Enable disk space health check
 management:
-  context-path: /status
   info:
     defaults:
       enabled: true
@@ -106,3 +108,6 @@ logging:
     uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
   pattern:
     console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
+
+azure:
+  app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}

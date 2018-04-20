@@ -1,0 +1,51 @@
+#!groovy
+
+properties([
+    [
+        $class: 'GithubProjectProperty',
+        displayName: 'Divorce Document Generator Client',
+        projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
+    ],
+    pipelineTriggers([
+        [$class: 'GitHubPushTrigger']
+    ])
+])
+
+@Library("Infrastructure")
+
+def type = "java"
+def product = "div"
+def component = "document-generator"
+
+def channel = '#div-dev'
+
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type , product, component) {
+    loadVaultSecrets(secrets)
+
+    before('functionalTest:aat') {
+        env.TEST_ENVIRONMENT = "aat"
+    }
+
+    after('functionalTest:aat') {
+        error('Halting pipeline before prod stages')
+    }
+
+    after('checkout') {
+        echo '${product}-${component} checked out'
+    }
+
+    enableSlackNotifications(channel)
+}

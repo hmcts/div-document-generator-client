@@ -51,7 +51,7 @@ public class EvidenceManagementServiceStubUTest {
 
         dataStore.clear();
 
-        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(NEW_FILE);
+        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(NEW_FILE, "testToken");
 
         Map.Entry<String, byte[]> entry = dataStore.entrySet().iterator().next();
 

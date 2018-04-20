@@ -26,6 +26,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -54,6 +55,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
         "feign.hystrix.enabled=true",
         "eureka.client.enabled=false"
     })
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class HealthCheckITest {
 
     private static final String HEALTH_UP_RESPONSE = "{ \"status\": \"UP\"}";
@@ -94,7 +96,7 @@ public class HealthCheckITest {
 
     @Before
     public void setUp() {
-        healthUrl = "http://localhost:" + String.valueOf(port) + "/status/health";
+        healthUrl = "http://localhost:" + String.valueOf(port) + "/health";
         originalRequestFactory = restTemplate.getRequestFactory();
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
     }

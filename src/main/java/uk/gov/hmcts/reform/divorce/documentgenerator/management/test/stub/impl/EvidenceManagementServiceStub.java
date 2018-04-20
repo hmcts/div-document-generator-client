@@ -25,7 +25,7 @@ public class EvidenceManagementServiceStub implements EvidenceManagementService,
     private final Clock clock = Clock.systemDefaultZone();
 
     @Override
-    public FileUploadResponse storeDocumentAndGetInfo(byte[] document) {
+    public FileUploadResponse storeDocumentAndGetInfo(byte[] document, String authorizationToken) {
         String fileName = UUID.randomUUID().toString();
 
         DATA_STORE.put(fileName, document);
