@@ -7,15 +7,26 @@ variable "reform_team" {
 }
 
 variable "env" {
-  type = "string"
+    type = "string"
 }
 
-variable "div_document_generator_port" {
-  default = "4007"
+variable "product" {
+    type    = "string"
 }
 
-variable "auth_provider_service_client_baseurl" {
-  type = "string"
+variable "client_id" {
+    description = "(Required) The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. This is usually sourced from environment variables and not normally required to be specified."
+}
+
+variable "tenant_id" {}
+
+variable "jenkins_AAD_objectId" {
+    type        = "string"
+    description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
+}
+
+variable "idam_s2s_url_prefix" {
+    default = "rpe-service-auth-provider"
 }
 
 variable "auth_provider_service_client_microservice" {
@@ -29,10 +40,6 @@ variable "auth_provider_service_client_tokentimetoliveinseconds" {
 variable "pdf_service_url_part" {
   default = "cmc-pdf-service"
 }
-
-variable "pdf_service_baseurl" {
-}
-
 
 variable "evidence_management_client_api_url_part" {
   default = "div-em-client-api"

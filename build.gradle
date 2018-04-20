@@ -103,7 +103,7 @@ def versions = [
     reformsJavaLogging: '2.0.2',
     serenity: '1.5.2',
     serenityCucumber: '1.1.3',
-    serviceTokenGenerator: '0.4.2',
+    serviceTokenGenerator: '0.6.0',
     springfoxSwagger: '2.7.0',
     wiremockVersion: '2.8.0'
 ]

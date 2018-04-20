@@ -19,14 +19,25 @@ def component = "document-generator"
 
 def channel = '#div-dev'
 
-withPipeline(type , product, component) {
-    before('functionalTest:aat') {
-        env.TEST_ENVIRONMENT = "aat"
-    }
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
+]
 
-    after('functionalTest:aat') {
-        error('Halting pipeline before prod stages')
-    }
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type , product, component) {
+    loadVaultSecrets(secrets)
+
+//    after('functionalTest:aat') {
+//        error('Halting pipeline before prod stages')
+//    }
 
     after('checkout') {
         echo '${product}-${component} checked out'
