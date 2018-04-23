@@ -15,7 +15,7 @@ properties([
 
 def type = "java"
 def product = "div"
-def component = "document-generator"
+def component = "dgs"
 
 def channel = '#div-dev'
 
@@ -37,10 +37,6 @@ withPipeline(type , product, component) {
 
     before('functionalTest:aat') {
         env.TEST_ENVIRONMENT = "aat"
-    }
-
-    after('functionalTest:aat') {
-        error('Halting pipeline before prod stages')
     }
 
     after('checkout') {

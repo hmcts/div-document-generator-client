@@ -60,7 +60,7 @@ documentation:
 
 spring:
   application:
-    name: div-document-generator
+    name: div-dgs
   resources:
     static-locations:
 
