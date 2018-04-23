@@ -1,32 +1,36 @@
 variable "reform_service_name" {
-  default = "document-generator"
+  default = "dgs"
 }
 
 variable "reform_team" {
   default = "div"
 }
 
+variable "component" {
+  type = "string"
+}
+
 variable "env" {
-    type = "string"
+  type = "string"
 }
 
 variable "product" {
-    type    = "string"
+  type = "string"
 }
 
 variable "client_id" {
-    description = "(Required) The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. This is usually sourced from environment variables and not normally required to be specified."
+  description = "(Required) The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. This is usually sourced from environment variables and not normally required to be specified."
 }
 
 variable "tenant_id" {}
 
 variable "jenkins_AAD_objectId" {
-    type        = "string"
-    description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
+  type        = "string"
+  description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
 }
 
 variable "idam_s2s_url_prefix" {
-    default = "rpe-service-auth-provider"
+  default = "rpe-service-auth-provider"
 }
 
 variable "auth_provider_service_client_microservice" {
@@ -42,7 +46,7 @@ variable "pdf_service_url_part" {
 }
 
 variable "evidence_management_client_api_url_part" {
-  default = "div-em-client-api"
+  default = "div-emca"
 }
 
 variable "evidence_management_client_api_health_endpoint" {
