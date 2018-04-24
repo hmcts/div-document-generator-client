@@ -1,8 +1,10 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.TestData;
+import static net.serenitybdd.rest.SerenityRest.given;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
@@ -11,10 +13,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import static net.serenitybdd.rest.SerenityRest.given;
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.thucydides.junit.annotations.TestData;
 
 @RunWith(SerenityParameterizedRunner.class)
 public class D8MiniPetitionTest extends IntegrationTest {
@@ -58,22 +59,14 @@ public class D8MiniPetitionTest extends IntegrationTest {
 
         //check PDF is generated
         Response response = callDivDocumentGenerator(requestBody);
-
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-
         String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-
         documentUri = getDocumentStoreURI(documentUri);
-
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-
         //check the data present in the evidence management
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-
         Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)), readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 
@@ -106,12 +99,6 @@ public class D8MiniPetitionTest extends IntegrationTest {
             .andReturn();
     }
 
-    /**
-     * Given the uri it will update the url to corresponding localhost url for testing with docker
-     *
-     * @param uri the link to be updated
-     * @return updated url
-     */
     //this is a hack to make this work with the docker container
     private String getDocumentStoreURI(String uri) {
         if (uri.contains("document-management-store:8080")) {

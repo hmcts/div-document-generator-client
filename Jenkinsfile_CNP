@@ -15,17 +15,28 @@ properties([
 
 def type = "java"
 def product = "div"
-def component = "doc-gen"
+def component = "dgs"
 
 def channel = '#div-dev'
 
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
 withPipeline(type , product, component) {
+    loadVaultSecrets(secrets)
+
     before('functionalTest:aat') {
         env.TEST_ENVIRONMENT = "aat"
-    }
-
-    before('smokeTest:aat') {
-        error('Halting pipeline before prod stages')
     }
 
     after('checkout') {
