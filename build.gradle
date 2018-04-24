@@ -112,6 +112,7 @@ def versions = [
     springfoxSwagger: '2.7.0',
     unirest: '1.4.9',
     wiremockVersion: '2.8.0'
+    
 ]
 
 dependencies {
