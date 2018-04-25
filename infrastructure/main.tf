@@ -4,11 +4,8 @@ locals {
     evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
     pdf_service_url = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
     idam_s2s_url = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
-
     local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
-
     dm_store_url = "http://dm-store-${local.local_env}.service.core-compute-${local.local_env}.internal"
-    idam_s2s_url = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 
     previewVaultName = "${var.product}-${var.reform_service_name}"
     nonPreviewVaultName = "${var.reform_team}-${var.reform_service_name}-${var.env}"
