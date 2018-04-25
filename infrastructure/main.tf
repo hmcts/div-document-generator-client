@@ -19,7 +19,7 @@ locals {
 module "div-dgs" {
   source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
   product      = "${var.reform_team}-${var.reform_service_name}"
-  location     = "${var.product}"
+  location     = "${var.location}"
   env          = "${var.env}"
   ilbIp        = "${var.ilbIp}"
   subscription = "${var.subscription}"
@@ -31,7 +31,7 @@ module "div-dgs" {
     REFORM_ENVIRONMENT                                    = "${var.env}"
     AUTH_PROVIDER_SERVICE_CLIENT_BASEURL                  = "${local.idam_s2s_url}"
     AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE             = "${var.auth_provider_service_client_microservice}"
-    AUTH_PROVIDER_SERVICE_CLIENT_KEY = "${data.vault_generic_secret.ccd-submission-s2s-auth-secret.data["value"]}"
+    AUTH_PROVIDER_SERVICE_CLIENT_KEY                      = "${data.vault_generic_secret.div-doc-s2s-auth-secret.data["value"]}"
     AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS = "${var.auth_provider_service_client_tokentimetoliveinseconds}"
     PDF_SERVICE_BASEURL                                   = "${local.pdf_service_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
@@ -55,10 +55,6 @@ module "key-vault" {
 
 provider "vault" {
   address = "https://vault.reform.hmcts.net:6200"
-}
-
-data "vault_generic_secret" "ccd-submission-s2s-auth-secret" {
-    path = "secret/${var.vault_env}/ccidam/service-auth-provider/api/microservice-keys/divorceCcdSubmission"
 }
 
 data "vault_generic_secret" "div-doc-s2s-auth-secret" {
