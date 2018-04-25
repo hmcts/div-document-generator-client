@@ -1,9 +1,9 @@
 locals {
-  ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+    ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
 
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
-  pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
-  idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+    evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
+    pdf_service_url = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
+    idam_s2s_url = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 
     local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
 
