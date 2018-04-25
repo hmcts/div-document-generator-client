@@ -19,10 +19,6 @@ def component = "dgs"
 
 def channel = '#div-dev'
 
-List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -32,11 +28,19 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "DGS_IDAM_AUTH_SECRET")
+]
+
 withPipeline(type , product, component) {
     loadVaultSecrets(secrets)
 
     before('functionalTest:aat') {
         env.TEST_ENVIRONMENT = "aat"
+    }
+
+    before('functionalTest:preview') {
+        env.TEST_ENVIRONMENT = "preview"
     }
 
     after('checkout') {

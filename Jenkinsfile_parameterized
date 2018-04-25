@@ -12,7 +12,7 @@ properties([
 ])
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
+    secret("div-doc-s2s-auth-secret", "DGS_IDAM_AUTH_SECRET")
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
