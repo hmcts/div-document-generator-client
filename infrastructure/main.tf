@@ -1,9 +1,19 @@
 locals {
-  ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+    ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
 
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
-  pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
-  idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+    evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
+    pdf_service_url = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
+    idam_s2s_url = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
+    dm_store_url = "http://dm-store-${local.local_env}.service.core-compute-${local.local_env}.internal"
+
+    previewVaultName = "${var.product}-${var.reform_service_name}"
+    nonPreviewVaultName = "${var.reform_team}-${var.reform_service_name}-${var.env}"
+    vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
+
+    nonPreviewVaultUri = "${module.key-vault.key_vault_uri}"
+    previewVaultUri = "https://div-${var.reform_service_name}-aat.vault.azure.net/"
+    vaultUri = "${var.env == "preview"? local.previewVaultUri : local.nonPreviewVaultUri}"
 }
 
 module "div-dgs" {
@@ -32,7 +42,7 @@ module "div-dgs" {
 # region save DB details to Azure Key Vault
 module "key-vault" {
   source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "${var.product}-${var.component}-${var.env}"
+  name                = "${local.vaultName}"
   product             = "${var.product}"
   env                 = "${var.env}"
   tenant_id           = "${var.tenant_id}"
