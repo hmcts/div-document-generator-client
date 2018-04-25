@@ -11,10 +11,6 @@ properties([
     ])
 ])
 
-List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "DGS_IDAM_AUTH_SECRET")
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -23,6 +19,10 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
       envVariable: envVar
     ]
 }
+
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "DGS_IDAM_AUTH_SECRET")
+]
 
 withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
     loadVaultSecrets(secrets)
