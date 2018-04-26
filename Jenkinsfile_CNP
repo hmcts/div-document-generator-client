@@ -39,6 +39,10 @@ withPipeline(type , product, component) {
         env.TEST_ENVIRONMENT = "aat"
     }
 
+    before('functionalTest:preview') {
+        env.TEST_ENVIRONMENT = "preview"
+    }
+
     after('checkout') {
         echo '${product}-${component} checked out'
     }
