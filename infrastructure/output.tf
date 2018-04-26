@@ -1,11 +1,11 @@
 output "vaultName" {
-    value = "${module.key-vault.key_vault_name}"
+    value = "${local.vaultName}"
 }
 
 output "vaultUri" {
-    value = "${module.key-vault.key_vault_uri}"
+    value = "${local.vaultUri}"
 }
 
 output "idam_s2s_url" {
-    value = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+    value = "${local.idam_s2s_url}}"
 }
