@@ -1,10 +1,10 @@
 locals {
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
 
-  local_env         = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
-  emca_url          = "http://${var.emca_url_part}-${var.env}.service.${local.ase_name}.internal"
-  pdf_service_url   = "http://${var.pdf_service_url_part}-${local.local_env}.service.${local.local_env}.internal"
-  idam_s2s_url      = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.${local.local_env}.internal"
+  evidence_management_client_api_url = "http://${var.emca_url_part}-${var.env}.service.${local.ase_name}.internal"
+  pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
+  idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+
 }
 
 module "div-dgs" {
@@ -27,7 +27,7 @@ module "div-dgs" {
     PDF_SERVICE_BASEURL                                   = "${local.pdf_service_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.emca_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.emca_health_endpoint}"
-  }
+      }
 }
 
 # region save DB details to Azure Key Vault
