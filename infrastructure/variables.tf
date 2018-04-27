@@ -45,11 +45,11 @@ variable "pdf_service_url_part" {
   default = "cmc-pdf-service"
 }
 
-variable "evidence_management_client_api_url_part" {
+variable "emca_url_part" {
   default = "div-emca"
 }
 
-variable "evidence_management_client_api_health_endpoint" {
+variable "emca_health_endpoint" {
   default = "/health"
 }
 
