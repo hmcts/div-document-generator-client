@@ -1,7 +1,7 @@
 locals {
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
 
-  evidence_management_client_api_url = "http://${var.emca_url_part}-${var.env}.service.${local.ase_name}.internal"
+  emca_url = "http://${var.emca_url_part}-${var.env}.service.${local.ase_name}.internal"
   pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
   idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
 
