@@ -1,14 +1,15 @@
 locals {
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
 
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
+  emca_url = "http://${var.emca_url_part}-${var.env}.service.${local.ase_name}.internal"
   pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
   idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+
 }
 
 module "div-dgs" {
   source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
-  product      = "${var.reform_team}-${var.reform_service_name}"
+  product      = "${var.product}-${var.reform_service_name}"
   location     = "${var.location}"
   env          = "${var.env}"
   ilbIp        = "${var.ilbIp}"
@@ -24,15 +25,15 @@ module "div-dgs" {
     AUTH_PROVIDER_SERVICE_CLIENT_KEY                      = "${data.vault_generic_secret.div-doc-s2s-auth-secret.data["value"]}"
     AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS = "${var.auth_provider_service_client_tokentimetoliveinseconds}"
     PDF_SERVICE_BASEURL                                   = "${local.pdf_service_url}"
-    EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
-    EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.evidence_management_client_api_health_endpoint}"
-  }
+    EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.emca_url}"
+    EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.emca_health_endpoint}"
+      }
 }
 
 # region save DB details to Azure Key Vault
 module "key-vault" {
   source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "${var.product}-${var.component}-${var.env}"
+  name                = "${var.product}-${var.reform_service_name}-${var.env}"
   product             = "${var.product}"
   env                 = "${var.env}"
   tenant_id           = "${var.tenant_id}"
