@@ -29,6 +29,7 @@ module "div-dgs" {
   }
 }
 
+
 # region save DB details to Azure Key Vault
 module "key-vault" {
   source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
