@@ -7,5 +7,9 @@ output "vaultUri" {
 }
 
 output "idam_s2s_url" {
-    value = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+    value = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.${local.ase_name}.internal"
+}
+
+output "test_environment" {
+    value = "${local.local_env}"
 }
