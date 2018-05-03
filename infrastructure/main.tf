@@ -9,7 +9,7 @@ locals {
 
 module "div-dgs" {
   source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
-  product      = "${var.reform_team}-${var.reform_service_name}"
+  product      = "${var.product}-${var.component}"
   location     = "${var.location}"
   env          = "${var.env}"
   ilbIp        = "${var.ilbIp}"
