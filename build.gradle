@@ -146,7 +146,7 @@ pitest {
     excludedClasses = ['uk.gov.hmcts.reform.divorce.documentgenerator.config.*']
     threads = 4
     outputFormats = ['XML', 'HTML']
-    timestampedReports = false
+    timestampedReports = true
     mutationThreshold = 50
 }
 
@@ -165,8 +165,6 @@ sonarqube {
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
 }
-
-
 
 task developAddRelaseSuffix() {
   version = "${version}-SNAPSHOT"
