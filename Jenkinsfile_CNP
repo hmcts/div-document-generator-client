@@ -35,10 +35,6 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withPipeline(type , product, component) {
     loadVaultSecrets(secrets)
 
-    before('functionalTest:aat') {
-        env.TEST_ENVIRONMENT = "aat"
-    }
-
     after('checkout') {
         echo '${product}-${component} checked out'
     }

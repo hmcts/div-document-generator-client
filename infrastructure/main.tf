@@ -1,14 +1,15 @@
 locals {
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
 
-  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${var.env}.service.${local.ase_name}.internal"
-  pdf_service_url                    = "http://${var.pdf_service_url_part}-${var.env}.service.${local.ase_name}.internal"
-  idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${var.env}.service.${local.ase_name}.internal"
+  evidence_management_client_api_url = "http://${var.evidence_management_client_api_url_part}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+  pdf_service_url                    = "http://${var.pdf_service_url_part}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+  idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 }
 
 module "div-dgs" {
   source       = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
-  product      = "${var.reform_team}-${var.reform_service_name}"
+  product      = "${var.product}-${var.component}"
   location     = "${var.location}"
   env          = "${var.env}"
   ilbIp        = "${var.ilbIp}"
