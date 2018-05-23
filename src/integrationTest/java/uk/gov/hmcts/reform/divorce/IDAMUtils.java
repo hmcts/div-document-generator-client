@@ -1,15 +1,15 @@
 package uk.gov.hmcts.reform.divorce;
 
+import com.nimbusds.jwt.JWTParser;
+import io.restassured.RestAssured;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.util.Base64;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import io.restassured.RestAssured;
-
-import com.nimbusds.jwt.JWTParser;
-
+@Service
 class IDAMUtils {
 
     @Value("${auth.idam.client.baseUrl}")
@@ -54,7 +54,7 @@ class IDAMUtils {
 
     private String loginUrl() {
         return idamUserBaseUrl + "/oauth2/authorize?response_type=token&client_id=divorce&redirect_uri="
-                            + "https://case-worker-web.test.ccd.reform.hmcts.net/oauth2redirect";
+                            + "https://www.preprod.ccd.reform.hmcts.net/oauth2redirect";
     }
 
     String generateUserTokenWithNoRoles(String username, String password) {

@@ -8,8 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import static net.serenitybdd.rest.SerenityRest.given;
-
 @RunWith(SerenityRunner.class)
 public class GeneratePDFIntegrationTest extends IntegrationTest {
 
@@ -51,15 +49,6 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
         String requestBody = loadJSON(INVALID_TEMPLATE_DATA_JSON);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.SERVICE_UNAVAILABLE.value(), response.getStatusCode());
-    }
-
-    private Response callDivDocumentGenerator(String requestBody) {
-        return given()
-            .contentType("application/json")
-            .body(requestBody)
-            .when()
-            .post(divDocumentGeneratorURI)
-            .andReturn();
     }
 
     private String loadJSON(final String fileName) throws Exception {
