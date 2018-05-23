@@ -19,7 +19,7 @@ import static net.serenitybdd.rest.SerenityRest.given;
 @EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
 public abstract class IntegrationTest {
 
-    private static final String CITIZEN_USER_NAME = "CitizenUserTest";
+    private static final String CITIZEN_USER_NAME = "CaseWorkerTest";
     private static final String CITIZEN_USER_PASSWORD = "password";
 
 
@@ -45,11 +45,11 @@ public abstract class IntegrationTest {
     }
 
     Response readDataFromEvidenceManagement(String uri) {
-        idamTestSupportUtil.createDivorceCaseworkerUserInIdam("CaseWorkerTest", "password");
+        getUserToken();
         return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, authTokenGenerator.generate(), "CaseWorkerTest");
     }
 
-    protected Response callDivDocumentGenerator(String requestBody) {
+    Response callDivDocumentGenerator(String requestBody) {
         return given()
             .contentType("application/json")
             .header("Authorization", getUserToken())
@@ -60,7 +60,7 @@ public abstract class IntegrationTest {
     }
 
     //this is a hack to make this work with the docker container
-    protected String getDocumentStoreURI(String uri) {
+    String getDocumentStoreURI(String uri) {
         if (uri.contains("document-management-store:8080")) {
             return uri.replace("http://document-management-store:8080", documentManagementURL);
         }
@@ -68,9 +68,9 @@ public abstract class IntegrationTest {
         return uri;
     }
 
-    protected synchronized String getUserToken(){
+    private synchronized String getUserToken(){
         if(userToken == null){
-            idamTestSupportUtil.createUserInIdam(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
+            idamTestSupportUtil.createDivorceCaseworkerUserInIdam(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
 
             userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
         }
