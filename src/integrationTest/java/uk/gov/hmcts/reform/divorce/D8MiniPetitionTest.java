@@ -1,24 +1,24 @@
 package uk.gov.hmcts.reform.divorce;
 
-import static net.serenitybdd.rest.SerenityRest.given;
-
-import java.util.Arrays;
-import java.util.Collection;
-
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.thucydides.junit.annotations.TestData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
-import io.restassured.response.Response;
-import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.TestData;
+import java.util.Arrays;
+import java.util.Collection;
 
 @RunWith(SerenityParameterizedRunner.class)
 public class D8MiniPetitionTest extends IntegrationTest {
+    private static final String DOCUMENT_URL_KEY = "url";
+    private static final String MIME_TYPE_KEY = "mimeType";
+    private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
+
     private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/d8minipetition/jsoninput/%s.json";
     private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/d8minipetition/pdfoutput/%s.pdf";
 
@@ -78,33 +78,5 @@ public class D8MiniPetitionTest extends IntegrationTest {
         document.close();
 
         return text;
-    }
-
-    private static final String DOCUMENT_URL_KEY = "url";
-    private static final String MIME_TYPE_KEY = "mimeType";
-    private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
-
-    @Value("${divorce.document.generator.uri}")
-    private String divDocumentGeneratorURI;
-
-    @Value("${document.management.store.baseUrl}")
-    private String documentManagementURL;
-
-    private Response callDivDocumentGenerator(String requestBody) {
-        return given()
-            .contentType("application/json")
-            .body(requestBody)
-            .when()
-            .post(divDocumentGeneratorURI)
-            .andReturn();
-    }
-
-    //this is a hack to make this work with the docker container
-    private String getDocumentStoreURI(String uri) {
-        if (uri.contains("document-management-store:8080")) {
-            return uri.replace("http://document-management-store:8080", documentManagementURL);
-        }
-
-        return uri;
     }
 }
