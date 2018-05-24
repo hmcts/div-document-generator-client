@@ -1,13 +1,13 @@
 package uk.gov.hmcts.reform.divorce;
 
-import static net.serenitybdd.rest.SerenityRest.given;
+import io.restassured.response.Response;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.restassured.response.Response;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import static net.serenitybdd.rest.SerenityRest.given;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EvidenceManagementUtil {
