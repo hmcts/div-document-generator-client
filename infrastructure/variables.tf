@@ -6,6 +6,10 @@ variable "reform_team" {
   default = "div"
 }
 
+variable "capacity" {
+    default = "1"
+}
+
 variable "component" {
   type = "string"
 }

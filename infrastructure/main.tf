@@ -15,6 +15,7 @@ module "div-dgs" {
   ilbIp                           = "${var.ilbIp}"
   subscription                    = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
+  capacity                        = "${var.capacity}"
   is_frontend                     = false
 
   app_settings = {
