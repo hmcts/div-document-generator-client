@@ -39,14 +39,13 @@ withPipeline(type , product, component) {
         echo '${product}-${component} checked out'
     }
 
-
-        after('test') {
+     after('test') {
             try {
                 sh './gradlew pitest'
             } finally {
                 steps.archiveArtifacts "build/reports/pitest/**/*.*"
             }
-        
+
     }
 
     enableSlackNotifications(channel)
