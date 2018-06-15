@@ -228,8 +228,7 @@ pitest {
 def sonarExclusions = [
     '**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*'
 ]
 
 sonarqube {
@@ -243,6 +242,13 @@ sonarqube {
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
+}
+
+sonarqube {
+  properties {
+    property "sonar.pitest.mode", "reuseReport"
+    property "sonar.pitest.reportsDirectory", "build/reports/pitest"
+  }
 }
 
 task developAddRelaseSuffix() {
