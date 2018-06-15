@@ -40,14 +40,5 @@ withPipeline(type , product, component) {
     }
 
 
-        after('test') {
-            try {
-                sh './gradlew pitest'
-            } finally {
-                steps.archiveArtifacts "build/reports/pitest/**/*.*"
-            }
-        
-    }
-
     enableSlackNotifications(channel)
 }
