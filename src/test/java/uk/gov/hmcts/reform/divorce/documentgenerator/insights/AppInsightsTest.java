@@ -7,9 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.Assert;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

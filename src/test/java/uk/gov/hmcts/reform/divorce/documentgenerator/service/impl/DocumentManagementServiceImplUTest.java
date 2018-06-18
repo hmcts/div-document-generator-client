@@ -65,6 +65,10 @@ public class DocumentManagementServiceImplUTest {
         final Instant instant = Instant.now();
         final String authToken = "someToken";
 
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,

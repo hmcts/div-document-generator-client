@@ -48,9 +48,6 @@ public class EvidenceManagementServiceImplUTest {
     private static final String DEFAULT_NAME_FOR_PDF_FILE = "D8MiniPetition.pdf";
 
     @Mock
-    private AuthTokenGenerator serviceTokenGenerator;
-
-    @Mock
     private RestTemplate restTemplate;
 
     @InjectMocks

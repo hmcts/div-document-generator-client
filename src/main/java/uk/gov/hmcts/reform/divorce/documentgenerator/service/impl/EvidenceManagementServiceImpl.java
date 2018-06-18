@@ -36,9 +36,6 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
     private String evidenceManagementEndpoint;
 
     @Autowired
-    private AuthTokenGenerator serviceTokenGenerator;
-
-    @Autowired
     private RestTemplate restTemplate;
 
     @Override
