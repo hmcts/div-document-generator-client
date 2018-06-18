@@ -114,7 +114,7 @@ def versions = [
     springfoxSwagger: '2.7.0',
     unirest: '1.4.9',
     wiremockVersion: '2.8.0',
-    pitest: '1.3.2',
+    pitest: '1.3.0',
     gradlePitest: '1.3.0',
     sonarPitest: '0.5'
 ]
@@ -220,10 +220,8 @@ pitest {
     targetClasses = ['**uk.gov.hmcts.reform.divorce.documentgenerator.*']
     excludedClasses = ['uk.gov.hmcts.reform.divorce.documentgenerator.config.*']
     threads = 16
-    historyInputFile = ['**build/reports/pitest/fastermutationtesting.txt']
-    historyOutputFile = ['**build/reports/pitest/fastermutationtesting.txt']
     outputFormats = ['XML', 'HTML']
-    timestampedReports = true
+    timestampedReports = false
     mutationThreshold = 90
 }
 
