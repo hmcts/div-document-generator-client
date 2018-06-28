@@ -7,7 +7,6 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '2.6.2'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
@@ -114,7 +113,7 @@ def versions = [
     springfoxSwagger: '2.7.0',
     unirest: '1.4.9',
     wiremockVersion: '2.8.0',
-    pitest: '1.3.0',
+    pitest: '1.3.2',
     gradlePitest: '1.3.0',
     sonarPitest: '0.5'
 ]
@@ -219,16 +218,17 @@ pmd {
 pitest {
     targetClasses = ['**uk.gov.hmcts.reform.divorce.documentgenerator.*']
     excludedClasses = ['uk.gov.hmcts.reform.divorce.documentgenerator.config.*']
-    threads = 16
+    threads = 10
     outputFormats = ['XML', 'HTML']
-    timestampedReports = false
+    timestampedReports = true
     mutationThreshold = 90
 }
 
 def sonarExclusions = [
     '**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*'
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
 ]
 
 sonarqube {
@@ -238,17 +238,9 @@ sonarqube {
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
         property "sonar.projectKey", "DivorceDocumentGenerator"
         property "sonar.projectName", "Divorce :: document-generator"
-        property "sonar.host.url", "https://sonar.reform.hmcts.net/"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
-}
-
-sonarqube {
-  properties {
-    property "sonar.pitest.mode", "reuseReport"
-    property "sonar.pitest.reportsDirectory", "build/reports/pitest"
-  }
 }
 
 task developAddRelaseSuffix() {
