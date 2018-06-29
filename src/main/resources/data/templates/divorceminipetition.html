@@ -155,8 +155,8 @@
 {% set applicantsAddress = caseDetails.case_data.D8DerivedPetitionerCorrespondenceAddr  %}
 {% set respondentsAddress = caseDetails.case_data.D8DerivedRespondentCorrespondenceAddr %}
 {% set correspondentsAddress = caseDetails.case_data.D8DerivedReasonForDivorceAdultery3rdAddr %}
-{% set respondentsSolicitorName = caseDetails.case_data.D8RespondentSolicitorName %}
-{% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany %}
+{% set respondentsSolicitorName = caseDetails.case_data.D8RespondentSolicitorName | default("") %}
+{% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
 {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
 {% set respondentsUseAddress = caseDetails.case_data.D8RespondentCorrespondenceUseHomeAddress | default ("No") %}
 {% set financialOrderFor = caseDetails.case_data.D8FinancialOrderFor %}
@@ -548,11 +548,21 @@
 <h2 class="heading-medium">Respondent's correspondence address</h2>
 <p class="response-text">
     {% if respondentsUseAddress == 'Solicitor' %}
+    <div>
     {% autoescape false %}
     {{ respondentsSolicitorName }}
+    {% endautoescape %}
+    </div>
+    <div>
+    {% autoescape false %}
     {{ respondentsSolicitorCompany }}
+    {% endautoescape %}
+    </div>
+    <div>
+    {% autoescape false %}
     {{ respondentsSolicitorAddress }}
     {% endautoescape %}
+    </div>
     {% else %}
     {% autoescape false %}
     {{ respondentsAddress }}
