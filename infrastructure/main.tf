@@ -17,6 +17,7 @@ module "div-dgs" {
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity                        = "${var.capacity}"
   is_frontend                     = false
+  common_tags                     = "${var.common_tags}"
 
   app_settings = {
     REFORM_SERVICE_NAME                                   = "${var.reform_service_name}"
