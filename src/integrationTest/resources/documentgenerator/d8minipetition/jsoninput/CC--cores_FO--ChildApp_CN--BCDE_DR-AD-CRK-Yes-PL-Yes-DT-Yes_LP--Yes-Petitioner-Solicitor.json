@@ -152,7 +152,7 @@
           "D8InferredPetitionerGender": "female",
           "D8JurisdictionHabituallyResLast6Months": "NO",
           "PetitionerSolicitorName": "Mister",
-          "PetitionerSolicitorCompany": "Solictors",
+          "PetitionerSolicitorFirm": "Solictors",
           "DerivedPetitionerSolicitorAddr": "99 Landor Road\nLondon\nSW9 9PE"
         },
         "data_classification": {
@@ -288,7 +288,7 @@
           "D8InferredPetitionerGender": "PUBLIC",
           "D8JurisdictionHabituallyResLast6Months": "PUBLIC",
           "PetitionerSolicitorName": "PUBLIC",
-          "PetitionerSolicitorCompany": "PUBLIC",
+          "PetitionerSolicitorFirm": "PUBLIC",
           "DerivedPetitionerSolicitorAddr": "PUBLIC"
         },
         "after_submit_callback_response": null,
@@ -427,7 +427,7 @@
           "D8InferredPetitionerGender": "PUBLIC",
           "D8JurisdictionHabituallyResLast6Months": "PUBLIC",
           "PetitionerSolicitorName": "PUBLIC",
-          "PetitionerSolicitorCompany": "PUBLIC",
+          "PetitionerSolicitorFirm": "PUBLIC",
           "DerivedPetitionerSolicitorAddr": "PUBLIC"
         }
       }
