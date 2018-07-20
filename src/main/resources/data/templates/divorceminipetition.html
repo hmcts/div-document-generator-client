@@ -540,7 +540,7 @@
 <p class="single-block">
 <h2 class="heading-medium">Applicant's correspondence address</h2>
 <p class="response-text">
-    {% if petitionersSolicitorName != "" %}
+    {% if petitionersSolicitorName != "" and applicantsAddress is null %}
     <div>
     {% autoescape false %}
     {{ petitionersSolicitorName }}
