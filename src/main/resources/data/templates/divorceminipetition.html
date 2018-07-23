@@ -161,7 +161,6 @@
 {% set respondentsSolicitorName = caseDetails.case_data.D8RespondentSolicitorName | default("") %}
 {% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
 {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
-{% set respondentsUseAddress = caseDetails.case_data.D8RespondentCorrespondenceUseHomeAddress | default ("No") %}
 {% set financialOrderFor = caseDetails.case_data.D8FinancialOrderFor %}
 {% set claimFrom = caseDetails.case_data.D8DivorceClaimFrom %}
 {% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
@@ -540,7 +539,7 @@
 <p class="single-block">
 <h2 class="heading-medium">Applicant's correspondence address</h2>
 <p class="response-text">
-    {% if petitionersSolicitorName != "" and applicantsAddress is null or applicantsAddress == "" %}
+    {% if petitionersSolicitorName != "" and applicantsAddress is empty %}
     <div>
     {% autoescape false %}
     {{ petitionersSolicitorName }}
@@ -568,7 +567,7 @@
 <p class="single-block">
 <h2 class="heading-medium">Respondent's correspondence address</h2>
 <p class="response-text">
-    {% if respondentsUseAddress == 'Solicitor' %}
+    {% if respondentsSolicitorAddress is not empty %}
     <div>
     {% autoescape false %}
     {{ respondentsSolicitorName }}
