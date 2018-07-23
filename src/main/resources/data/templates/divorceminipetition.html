@@ -124,8 +124,12 @@
 {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
 {% set referenceNo = caseDetails.case_data.D8caseReference  %}
 
-{% set husbandOrWifeNamed = caseDetails.case_data.D8DerivedPetitionerCurrentFullName %}
-{% set respondentsName = caseDetails.case_data.D8DerivedRespondentCurrentName | default("") %}
+{% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
+{% set petitionerLastName = caseDetails.case_data.D8PetitionerLastName | default("") %}
+{% set husbandOrWifeNamed = petitionerFirstName + " " + petitionerLastName %}
+{% set respondentFirstName = caseDetails.case_data.D8RespondentFirstName | default("") %}
+{% set respondentLastName = caseDetails.case_data.D8RespondentLastName | default("") %}
+{% set respondentsName = respondentFirstName + " " + respondentLastName %}
 {% set petitionerConfidential = caseDetails.case_data.D8PetitionerContactDetailsConfidential | default("") %}
 {% set husbandOrWife = caseDetails.case_data.D8DivorceWho %}
 {% set petitionerName = caseDetails.case_data.D8MarriagePetitionerName %}
@@ -138,7 +142,9 @@
 {% set financialOrder = caseDetails.case_data.D8FinancialOrder | default("NO") %}
 {% set jurisdictionConnection = caseDetails.case_data.D8JurisdictionConnection %}
 {% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName| default("NO") %}
-{% set correspondentName = caseDetails.case_data.D8DerivedReasonForDivorceAdultery3dPtyNm | default("") %}
+{% set correspondentFirstName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyFName | default("") %}
+{% set correspondentLastName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyLName | default("") %}
+{% set correspondentName = correspondentFirstName + " " + correspondentLastName %}
 {% set adulteryDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryDetails | default("") %}
 {% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | default("NO") %}
 {% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | default("NO") %}
@@ -149,14 +155,15 @@
 {% set applicantsAddress = caseDetails.case_data.D8DerivedPetitionerCorrespondenceAddr  %}
 {% set respondentsAddress = caseDetails.case_data.D8DerivedRespondentCorrespondenceAddr %}
 {% set correspondentsAddress = caseDetails.case_data.D8DerivedReasonForDivorceAdultery3rdAddr %}
-{% set respondentsSolicitorDetails = caseDetails.case_data.D8DerivedRespondentSolicitorDetails | default("") %}
+{% set respondentsSolicitorName = caseDetails.case_data.D8RespondentSolicitorName | default("") %}
+{% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
+{% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
 {% set respondentsUseAddress = caseDetails.case_data.D8RespondentCorrespondenceUseHomeAddress | default ("No") %}
 {% set financialOrderFor = caseDetails.case_data.D8FinancialOrderFor %}
 {% set claimFrom = caseDetails.case_data.D8DivorceClaimFrom %}
 {% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
 {% set desertionDate = caseDetails.case_data.D8ReasonForDivorceDesertionDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set separationDate = caseDetails.case_data.D8ReasonForDivorceSeperationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
-{% set statementOfCase = caseDetails.case_data.D8DerivedStatementOfCase | default("") %}
 
 <p class="response-text">
     {% autoescape false %}
@@ -432,7 +439,7 @@
 
 <p class="response-text">
     {% autoescape false %}
-    "{{ statementOfCase }}"
+    "{{ reasonForDivorceBehaviourDetails }}"
     {% endautoescape %}
 </p>
 
@@ -541,9 +548,21 @@
 <h2 class="heading-medium">Respondent's correspondence address</h2>
 <p class="response-text">
     {% if respondentsUseAddress == 'Solicitor' %}
+    <div>
     {% autoescape false %}
-    {{ respondentsSolicitorDetails }}
+    {{ respondentsSolicitorName }}
     {% endautoescape %}
+    </div>
+    <div>
+    {% autoescape false %}
+    {{ respondentsSolicitorCompany }}
+    {% endautoescape %}
+    </div>
+    <div>
+    {% autoescape false %}
+    {{ respondentsSolicitorAddress }}
+    {% endautoescape %}
+    </div>
     {% else %}
     {% autoescape false %}
     {{ respondentsAddress }}

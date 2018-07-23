@@ -49,7 +49,8 @@ public class D8MiniPetitionTest extends IntegrationTest {
                 {"CC--Res_FO--ChildApp_CN--CDEF_DR-UB-CRK-No-PL-No-DT-No_LP--No"},
                 {"CC--No_FO--App_CN--EF_DR-S2Y-CRK-No-PL-No-DT-No_LP--No"},
                 {"CC--No_FO--Child_CN--BCF_DR-S5Y-CRK-No-PL-No-DT-No_LP--No"},
-                {"CC--No_FO--ChildApp_CN--ABCDEFG_DR-DES-CRK-No-PL-No-DT-No_LP--No"}
+                {"CC--No_FO--ChildApp_CN--ABCDEFG_DR-DES-CRK-No-PL-No-DT-No_LP--No"},
+                {"CC--cores_FO--ChildApp_CN--BCDE_DR-UB-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Long-SoC-Solicitors"}
         });
     }
 
