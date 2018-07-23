@@ -22,7 +22,6 @@
           "F"
         ],
         "D8ReasonForDivorce": "separation-2-years",
-        "D8DerivedStatementOfCase": "I have been deserted by my wife on the 01 January 2011.\nMy Wife is having an affair this week",
         "D8ReasonForDivorceBehaviourDetails": "My wife is having an affair this week.",
         "D8ReasonForDivorceAdulteryWishToName" : "NO",
         "D8ReasonForDivorceAdulteryKnowWhere" : "NO",
@@ -93,7 +92,6 @@
           }
         ],
         "D8ResidualJurisdictionEligible": "YES",
-        "D8DerivedRespondentCurrentName": "Jane Jamed",
         "D8ReasonForDivorceLimitReasons": "NO",
         "D8PetitionerEmail": "email@email.com",
         "D8ReasonForDivorceClaiming5YearSeparatio": "NO",
@@ -142,7 +140,6 @@
         "D8RespondentCorrespondenceAddress": {
           "PostCode": "SW9 9PE"
         },
-        "D8DerivedPetitionerCurrentFullName": "John Smith",
         "D8InferredPetitionerGender": "female",
         "D8JurisdictionHabituallyResLast6Months": "NO"
       },
@@ -171,7 +168,6 @@
         "D8InferredRespondentGender": "PUBLIC",
         "D8ReasonForDivorceEnableAdultery": "PUBLIC",
         "D8ReasonForDivorceShowAdultery": "PUBLIC",
-        "D8DerivedStatementOfCase": "PUBLIC",
         "D8LivingArrangementsLiveTogether": "PUBLIC",
         "D8ReasonForDivorceHasMarriage": "PUBLIC",
         "D8RespondentCorrespondenceUseHomeAddress": "PUBLIC",
@@ -223,7 +219,6 @@
           "classification": "PUBLIC"
         },
         "D8ResidualJurisdictionEligible": "PUBLIC",
-        "D8DerivedRespondentCurrentName": "PUBLIC",
         "D8ReasonForDivorceLimitReasons": "PUBLIC",
         "D8PetitionerEmail": "PUBLIC",
         "D8ReasonForDivorceBehaviourDetails": "PUBLIC",
@@ -278,7 +273,6 @@
           "classification": "PUBLIC"
         },
         "D8ReasonForDivorce": "PUBLIC",
-        "D8DerivedPetitionerCurrentFullName": "PUBLIC",
         "D8InferredPetitionerGender": "PUBLIC",
         "D8JurisdictionHabituallyResLast6Months": "PUBLIC"
       },
@@ -310,7 +304,6 @@
         "D8InferredRespondentGender": "PUBLIC",
         "D8ReasonForDivorceEnableAdultery": "PUBLIC",
         "D8ReasonForDivorceShowAdultery": "PUBLIC",
-        "D8DerivedStatementOfCase": "PUBLIC",
         "D8LivingArrangementsLiveTogether": "PUBLIC",
         "D8ReasonForDivorceHasMarriage": "PUBLIC",
         "D8RespondentCorrespondenceUseHomeAddress": "PUBLIC",
@@ -362,7 +355,6 @@
           "classification": "PUBLIC"
         },
         "D8ResidualJurisdictionEligible": "PUBLIC",
-        "D8DerivedRespondentCurrentName": "PUBLIC",
         "D8ReasonForDivorceLimitReasons": "PUBLIC",
         "D8PetitionerEmail": "PUBLIC",
         "D8ReasonForDivorceBehaviourDetails": "PUBLIC",
@@ -417,7 +409,6 @@
           "classification": "PUBLIC"
         },
         "D8ReasonForDivorce": "PUBLIC",
-        "D8DerivedPetitionerCurrentFullName": "PUBLIC",
         "D8InferredPetitionerGender": "PUBLIC",
         "D8JurisdictionHabituallyResLast6Months": "PUBLIC"
       }
