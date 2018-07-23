@@ -3,9 +3,10 @@ package uk.gov.hmcts.reform.divorce;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
+import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
-import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
+import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +38,7 @@ public class ServiceContextConfiguration {
     }
 
     @Bean
-    public IDAMUtils getIDAMUtil() {
-        return new IDAMUtils();
+    public IdamUtils getIdamUtil() {
+        return new IdamUtils();
     }
 }

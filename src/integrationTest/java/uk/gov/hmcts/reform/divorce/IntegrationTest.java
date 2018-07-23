@@ -33,7 +33,7 @@ public abstract class IntegrationTest {
     private AuthTokenGenerator authTokenGenerator;
 
     @Autowired
-    private IDAMUtils idamTestSupportUtil;
+    private IdamUtils idamTestSupportUtil;
 
     @Rule
     public SpringIntegrationMethodRule springMethodIntegration;
@@ -46,7 +46,8 @@ public abstract class IntegrationTest {
 
     Response readDataFromEvidenceManagement(String uri) {
         getUserToken();
-        return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, authTokenGenerator.generate(), "CaseWorkerTest");
+        return EvidenceManagementUtil.readDataFromEvidenceManagement(
+            uri, authTokenGenerator.generate(), "CaseWorkerTest");
     }
 
     Response callDivDocumentGenerator(String requestBody) {
@@ -68,8 +69,8 @@ public abstract class IntegrationTest {
         return uri;
     }
 
-    private synchronized String getUserToken(){
-        if(userToken == null){
+    private synchronized String getUserToken() {
+        if (userToken == null) {
             idamTestSupportUtil.createDivorceCaseworkerUserInIdam(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
 
             userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);

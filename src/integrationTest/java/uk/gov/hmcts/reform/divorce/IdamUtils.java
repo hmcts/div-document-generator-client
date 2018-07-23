@@ -10,7 +10,7 @@ import java.util.Base64;
 import java.util.Map;
 
 @Service
-class IDAMUtils {
+class IdamUtils {
 
     @Value("${auth.idam.client.baseUrl}")
     private String idamUserBaseUrl;
@@ -29,12 +29,12 @@ class IDAMUtils {
     }
 
     void createUserInIdam(String username, String password) {
-        String s = "{\"email\":\"" + username + "@test.com\", \"forename\":\"" + username +
-            "\",\"surname\":\"User\",\"password\":\"" + password + "\"}";
+        String body = "{\"email\":\"" + username + "@test.com\", \"forename\":\"" + username
+            + "\",\"surname\":\"User\",\"password\":\"" + password + "\"}";
 
         RestAssured.given()
                 .header("Content-Type", "application/json")
-                .body(s)
+                .body(body)
                 .post(idamCreateUrl());
     }
 

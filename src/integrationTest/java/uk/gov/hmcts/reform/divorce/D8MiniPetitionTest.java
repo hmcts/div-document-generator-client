@@ -55,7 +55,7 @@ public class D8MiniPetitionTest extends IntegrationTest {
 
     @Test
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
-        String requestBody = ResourceLoader.loadJSON(inputJson);
+        String requestBody = ResourceLoader.loadJson(inputJson);
 
         //check PDF is generated
         Response response = callDivDocumentGenerator(requestBody);
@@ -67,7 +67,8 @@ public class D8MiniPetitionTest extends IntegrationTest {
         //check the data present in the evidence management
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)), readPdf(responseFromEvidenceManagement.asByteArray()));
+        Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)),
+            readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 
     private String readPdf(byte[] pdf) throws Exception {
