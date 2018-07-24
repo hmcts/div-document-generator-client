@@ -124,7 +124,7 @@ def versions = [
     logstashLogBackEncoder: '4.8',
     nimbus: '5.1',
     pdfbox: '2.0.8',
-    powerMock: '1.7.4',
+    powerMock: '2.0.0-beta.2',
     puppyCrawl: '7.6',
     reformsJavaLogging: '3.0.1',
     restAssured: '3.0.3',
@@ -192,7 +192,7 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version: '1.7.4'
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')

@@ -60,7 +60,7 @@ documentation:
 
 spring:
   application:
-    name: div-dgs
+    name: "div-dgs"
   resources:
     static-locations:
 
