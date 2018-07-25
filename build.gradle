@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -117,14 +117,13 @@ dependencyCheck {
 def versions = [
     commonsLang3: '3.7',
     commonsIo: '2.5',
-    jacksonCore: '2.9.5',
     jsonAssert: '1.2.3',
     junit: '4.12',
     lombok: '1.16.16',
-    logstashLogBackEncoder: '4.8',
     nimbus: '5.1',
     pdfbox: '2.0.8',
-    powerMock: '2.0.0-beta.2',
+    mockito: '2.8.9',
+    powerMock: '1.7.3',
     puppyCrawl: '7.6',
     reformsJavaLogging: '3.0.1',
     restAssured: '3.0.3',
@@ -162,17 +161,13 @@ dependencies {
     integrationTestCompile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
 
     compile('org.springframework.boot:spring-boot-starter-actuator')
-//    compile('org.springframework.boot:spring-boot-actuator-docs')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonCore
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonCore
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions.springOpenFeign
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
-    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: versions.logstashLogBackEncoder
     compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
@@ -192,8 +187,10 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version: '1.7.4'
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
+    testCompile group: 'org.mockito', name: 'mockito-core', version: versions.mockito
+
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }

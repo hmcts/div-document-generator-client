@@ -58,7 +58,6 @@ public class WebServiceHealthCheckUTest {
         when(httpEntityFactory.createRequestEntityForHealthCheck()).thenReturn(httpEntity);
 
         HttpServerErrorException exception = mock(HttpServerErrorException.class);
-        when(exception.getStatusCode()).thenReturn(HttpStatus.SERVICE_UNAVAILABLE);
 
         doThrow(exception).when(restTemplate)
                 .exchange(eq(URI), eq(HttpMethod.GET), eq(httpEntity), eq(Object.class), eq(new HashMap<>()));

@@ -92,17 +92,15 @@ management:
     diskspace:
       enabled: true
   endpoint:
-      health:
-        enabled: true
-        cache:
-          time-to-live: 5000
-      metrics:
-        enabled: true
+    health:
+      enabled: true
+      cache:
+        time-to-live: 5000
+    metrics:
+      enabled: true
     endpoints:
       web:
         base-path: /
-
-
 
 logging:
   level:

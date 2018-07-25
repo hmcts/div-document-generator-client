@@ -44,15 +44,15 @@ public class TemplateManagementServiceImplUTest {
     @Test
     public void givenATemplateName_whenGetResourcePath_thenReturnResourcePath() {
 
-        assertEquals(RESOURCE_PATH, getResourcePath(TEMPLATE_NAME));
+        assertEquals(RESOURCE_PATH, getResourcePath());
 
         verifyStatic(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonBlank(TEMPLATE_NAME);
     }
 
-    private String getResourcePath(String templateName) {
+    private String getResourcePath() {
         try {
-            return Whitebox.invokeMethod(classUnderTest, "getResourcePath", templateName);
+            return Whitebox.invokeMethod(classUnderTest, "getResourcePath", TemplateManagementServiceImplUTest.TEMPLATE_NAME);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
