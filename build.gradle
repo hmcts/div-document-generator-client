@@ -158,8 +158,12 @@ dependencies {
     integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    integrationTestCompile group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator
-
+    integrationTestCompile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
+        exclude group: 'io.reactivex', module: 'io.reactivex'
+        exclude group: 'io.reactivex', module: 'rxnetty'
+        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+        exclude group: 'io.reactivex', module: 'rxnetty-servo'
+    }
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
