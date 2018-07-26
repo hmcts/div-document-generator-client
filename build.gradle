@@ -170,7 +170,13 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions.springOpenFeign
+    compile (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions.springOpenFeign){
+        exclude group: 'io.reactivex', module: 'io.reactivex'
+        exclude group: 'io.reactivex', module: 'rxnetty'
+        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
+        exclude group: 'io.reactivex', module: 'rxnetty-servo'
+    }
+
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformsJavaLogging
