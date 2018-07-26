@@ -221,7 +221,7 @@ pitest {
     threads = 10
     outputFormats = ['XML', 'HTML']
     timestampedReports = true
-    mutationThreshold = 50
+    mutationThreshold = 90
 }
 
 def sonarExclusions = [
