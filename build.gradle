@@ -206,6 +206,8 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test')
     runtime('org.springframework.boot:spring-boot-devtools')
 
+    runtime("org.springframework.boot:spring-boot-properties-migrator")
+
 }
 
 sourceSets {
