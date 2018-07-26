@@ -117,11 +117,16 @@ public class HealthCheckITest {
         String body = EntityUtils.toString(response.getEntity());
 
         assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
-        assertThat(JsonPath.read(body, "$.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.evidenceManagementClientHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.PDFServiceHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.serviceAuthProviderHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.diskSpace.status").toString(), equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+            equalTo("UP"));
     }
 
     @Test
@@ -133,12 +138,17 @@ public class HealthCheckITest {
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
 
-        assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
+        assertThat(response.getStatusLine().getStatusCode(),
+            equalTo(503));
         assertThat(JsonPath.read(body, "$.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.evidenceManagementClientHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.PDFServiceHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.serviceAuthProviderHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.diskSpace.status").toString(), equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+            equalTo("UP"));
     }
 
     @Test
@@ -150,12 +160,18 @@ public class HealthCheckITest {
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
 
-        assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
-        assertThat(JsonPath.read(body, "$.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.evidenceManagementClientHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.PDFServiceHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.serviceAuthProviderHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.diskSpace.status").toString(), equalTo("UP"));
+        assertThat(response.getStatusLine().getStatusCode(),
+            equalTo(503));
+        assertThat(JsonPath.read(body, "$.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+            equalTo("UP"));
     }
 
     @Test
@@ -168,11 +184,16 @@ public class HealthCheckITest {
         String body = EntityUtils.toString(response.getEntity());
 
         assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
-        assertThat(JsonPath.read(body, "$.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.evidenceManagementClientHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.PDFServiceHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.serviceAuthProviderHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.diskSpace.status").toString(), equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+            equalTo("UP"));
     }
 
     @Test
@@ -185,11 +206,16 @@ public class HealthCheckITest {
         String body = EntityUtils.toString(response.getEntity());
 
         assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
-        assertThat(JsonPath.read(body, "$.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.evidenceManagementClientHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.PDFServiceHealthCheck.status").toString(), equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.serviceAuthProviderHealthCheck.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.diskSpace.status").toString(), equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+            equalTo("UP"));
+        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+            equalTo("DOWN"));
+        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+            equalTo("UP"));
     }
 
     private void mockEndpointAndResponse(String requestUrl, boolean serviceUp) {

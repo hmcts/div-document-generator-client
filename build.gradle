@@ -135,7 +135,7 @@ def versions = [
     springOpenFeign: '2.0.0.RELEASE',
     springHateoas: '0.24.0.RELEASE',
     unirest: '1.4.9',
-    wiremockVersion: '2.8.0',
+    wiremockVersion: '2.18.0',
     pitest: '1.3.2',
     gradlePitest: '1.3.0',
     sonarPitest: '0.5'
@@ -186,6 +186,7 @@ dependencies {
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+//    testCompile group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: '2.0.0.M5'
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock

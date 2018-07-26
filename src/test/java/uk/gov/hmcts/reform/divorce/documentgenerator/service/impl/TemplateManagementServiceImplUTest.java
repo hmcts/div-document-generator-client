@@ -52,7 +52,9 @@ public class TemplateManagementServiceImplUTest {
 
     private String getResourcePath() {
         try {
-            return Whitebox.invokeMethod(classUnderTest, "getResourcePath", TemplateManagementServiceImplUTest.TEMPLATE_NAME);
+            return Whitebox.invokeMethod(classUnderTest,
+                            "getResourcePath",
+                                            TemplateManagementServiceImplUTest.TEMPLATE_NAME);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
