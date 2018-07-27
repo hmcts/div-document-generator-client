@@ -91,7 +91,6 @@ management:
       exposure:
         include: info, health, metrics
 
-
 logging:
   level:
     org.springframework.web: ERROR
