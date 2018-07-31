@@ -56,7 +56,7 @@ class IdamUtils {
 
     private String loginUrl() {
         return idamUserBaseUrl + "/oauth2/authorize?response_type=token&client_id=divorce&redirect_uri="
-                            + redirectUri;
+                            + idamRedirectUri;
     }
 
     String generateUserTokenWithNoRoles(String username, String password) {
