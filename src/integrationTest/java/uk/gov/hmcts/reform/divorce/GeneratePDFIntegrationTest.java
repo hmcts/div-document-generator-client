@@ -24,7 +24,7 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
 
     @Test
     public void givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore() throws Exception {
-        String requestBody = loadJSON(VALID_INPUT_JSON);
+        String requestBody = loadJson(VALID_INPUT_JSON);
         //check PDF is generated
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
@@ -39,19 +39,19 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
 
     @Test
     public void givenTemplateIsNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
-        String requestBody = loadJSON(INVALID_TEMPLATE_NAME_JSON);
+        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
     }
 
     @Test
     public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus503() throws Exception {
-        String requestBody = loadJSON(INVALID_TEMPLATE_DATA_JSON);
+        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.SERVICE_UNAVAILABLE.value(), response.getStatusCode());
     }
 
-    private String loadJSON(final String fileName) throws Exception {
-        return ResourceLoader.loadJSON("documentgenerator/" + fileName);
+    private String loadJson(final String fileName) throws Exception {
+        return ResourceLoader.loadJson("documentgenerator/" + fileName);
     }
 }

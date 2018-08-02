@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -383,7 +382,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Clock clock = mock(Clock.class);
         when(clock.instant()).thenReturn(instant);
 
-        Whitebox.setInternalState(documentManagementService, "clock", clock);
+        ReflectionTestUtils.setField(documentManagementService, "clock", clock);
     }
 
     private void mockPDFService(HttpStatus expectedResponse, byte[] body) {

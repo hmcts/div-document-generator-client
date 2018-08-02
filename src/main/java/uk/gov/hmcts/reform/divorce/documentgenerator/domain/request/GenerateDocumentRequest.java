@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Value;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Map;
+import javax.validation.constraints.NotBlank;
 
 @Value
 @ApiModel(description = "Request body model for Document Generation Request")
