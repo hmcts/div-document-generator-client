@@ -41,7 +41,7 @@
                 font-size: 12pt;
                 font-family: "Open Sans";
                 font-style: normal;
-                margin-top: 5px;
+                margin-top: 20px;
                 margin-bottom: 0px;
                 padding-bottom: 0px;
             }
@@ -53,11 +53,20 @@
                 vertical-align: baseline;
                 font-size: 10pt;
                 font-family: "Open Sans";
-                line-height: 1;
+                line-height: 1.15;
                 font-style: normal;
-                margin-top: 5px;
-                margin-bottom: 20px;
+                margin-top: 10px;
+                margin-bottom: 7px;
                 padding: 0px;
+            }
+
+            .bold-small {
+                font-family: "Open Sans";
+                font-weight: 700;
+                text-transform: none;
+                line-height: 1.15;
+                font-size: 11pt;
+                margin-bottom: 0px;
             }
 
             .address {
@@ -67,10 +76,10 @@
                 vertical-align: baseline;
                 font-size: 10pt;
                 font-family: "Open Sans";
-                line-height: 1;
+                line-height: 1.15;
                 font-style: normal;
                 margin-top: 5px;
-                margin-bottom: 20px;
+                margin-bottom: 5px;
                 padding: 0px;
                 text-align: right;
             }
@@ -88,9 +97,11 @@
 
             .list-bullet-counter {
                 padding-left: 0px;
+                margin-top: 0px;
             }
 
             .list-no-bullet {
+                margin-top: 0px;
                 list-style-type: none;
                 padding-left: 0px;
             }
@@ -132,7 +143,7 @@
     {% set rdcSouthWestContactDetails = "South West Regional Divorce Centre<br/>PO Box 1792<br/>Southampton<br/>SO15 9GG<br/>Email: sw-region-divorce@hmcts.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
     {% set rdcNorthWestContactDetails = "North West Regional Divorce Centre<br/>Liverpool Civil &amp; Family Court<br/>35 Vernon Street<br/>Liverpool<br/>L2 2BX<br/>Email: family@liverpool.countycourt.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
 
-    <p class="address">
+    <div class="address">
     {% autoescape false %}
     {% if divorceUnit == "eastMidlands" %}
         {{ rdcEastMidlandsContactDetails }}
@@ -144,9 +155,9 @@
         {{ rdcNorthWestContactDetails }}
     {% endif %}
     {% endautoescape %}
-    </p>
+    </div>
 
-    <p class="response-text">
+    <div class="response-text">
         {% autoescape false %}
             {{ respondentsName }}
         {% endautoescape %}
@@ -177,31 +188,31 @@
                 {% endautoescape %}
             </div>
         {% endif %}
-    </p>
+    </div>
 
-    <p class="address">
+    <div class="address">
         Case number: {{ referenceNo }}
-    </p>
-    <p class="address">
-        {{ issueDate }}
-    </p>
+        <div>
+            {{ issueDate }}
+        </div>
+    </div>
 
-    <p class="response-text">
+    <div class="response-text">
         Dear {% autoescape false %}{{ respondentsName }}{% endautoescape %},
-    </p>
-    <p class="response-text">
+    </div>
+    <div class="response-text">
         Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has applied for a divorce. You can find a copy of the application included with this letter. You need to respond within 7 days of receiving this letter. If you don’t respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
-    </p>
-    <p class="response-text">
+    </div>
+    <div class="response-text">
         If the 7 days have passed, contact your regional divorce centre to find out what you can do next.
-    </p>
-    <p class="response-text">
+    </div>
+    <div class="response-text">
         You can find further guidance when you set up an online account using the following instructions, or by visiting www.gov.uk/divorce.
-    </p>
+    </div>
 
-    <p class="heading-small">
+    <h2 class="heading-small">
         How to respond
-    </p>
+    </h2>
 
     <ol class="list-bullet">
         <li class="list-bullet-counter">
@@ -222,9 +233,9 @@
         If you can’t use the online service, please contact your regional divorce centre.
     </p>
 
-    <p class="heading-small">
+    <h2 class="heading-small">
         Getting help
-    </p>
+    </h2>
     <p class="response-text">
         The online service is written in plain English and is designed to be used by citizens without any legal background. However, if you want to use a legal representative, you must give them this letter as soon as possible so that they can respond on your behalf.
     </p>
@@ -240,15 +251,20 @@
         </li>
     </ul>
 
-    <p class="heading-small">
+    <p class="bold-small">
         You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you access this service illegally.
     </p>
 
-    <br/>
-
-    <p class="heading-small">
-        HM Courts and Tribunals Service
+    <h2 class="heading-small">
+        If you're a solicitor
+    </h2>
+    <p class="response-text">
+        We're still working on the online divorce service for solicitors. For now, you'll need to respond to this divorce application using the paper forms. Please contact the divorce centre to have these sent to you.
     </p>
+
+    <h2 class="heading-small">
+        HM Courts and Tribunals Service
+    </h2>
     </body>
 
 </html>
