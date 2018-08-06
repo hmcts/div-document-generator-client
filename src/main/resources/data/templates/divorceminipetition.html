@@ -138,10 +138,10 @@
 {% set placeOfMarriage = caseDetails.case_data.D8MarriagePlaceOfMarriage | default("") %}
 {% set reasonForDivorce = caseDetails.case_data.D8ReasonForDivorce %}
 {% set reasonForDivorceBehaviourDetails = caseDetails.case_data.D8ReasonForDivorceBehaviourDetails | default("") %}
-{% set costClaims = caseDetails.case_data.D8DivorceCostsClaim | default("NO") %}
-{% set financialOrder = caseDetails.case_data.D8FinancialOrder | default("NO") %}
+{% set costClaims = caseDetails.case_data.D8DivorceCostsClaim | upper | default("NO") %}
+{% set financialOrder = caseDetails.case_data.D8FinancialOrder | upper | default("NO") %}
 {% set jurisdictionConnection = caseDetails.case_data.D8JurisdictionConnection %}
-{% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName| default("NO") %}
+{% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName | default("NO") %}
 {% set correspondentFirstName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyFName | default("") %}
 {% set correspondentLastName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyLName | default("") %}
 {% set correspondentName = correspondentFirstName + " " + correspondentLastName %}
