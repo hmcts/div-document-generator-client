@@ -138,19 +138,19 @@
 {% set placeOfMarriage = caseDetails.case_data.D8MarriagePlaceOfMarriage | default("") %}
 {% set reasonForDivorce = caseDetails.case_data.D8ReasonForDivorce %}
 {% set reasonForDivorceBehaviourDetails = caseDetails.case_data.D8ReasonForDivorceBehaviourDetails | default("") %}
-{% set costClaims = caseDetails.case_data.D8DivorceCostsClaim | default("NO") %}
-{% set financialOrder = caseDetails.case_data.D8FinancialOrder | default("NO") %}
+{% set costClaims = caseDetails.case_data.D8DivorceCostsClaim | default(false) %}
+{% set financialOrder = caseDetails.case_data.D8FinancialOrder | default(false) %}
 {% set jurisdictionConnection = caseDetails.case_data.D8JurisdictionConnection %}
-{% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName| default("NO") %}
+{% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName| default(false) %}
 {% set correspondentFirstName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyFName | default("") %}
 {% set correspondentLastName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyLName | default("") %}
 {% set correspondentName = correspondentFirstName + " " + correspondentLastName %}
 {% set adulteryDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryDetails | default("") %}
-{% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | default("NO") %}
-{% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | default("NO") %}
+{% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | default(false) %}
+{% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | default(false) %}
 {% set adulteryWhenDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhenDetails | default("The applicant does not know when the adultery took place") %}
 {% set adulteryWhereDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhereDetails | default("The applicant does not know where the adultery took place") %}
-{% set legalProceedings = caseDetails.case_data.D8LegalProceedings | default("NO") %}
+{% set legalProceedings = caseDetails.case_data.D8LegalProceedings | default(false) %}
 {% set legalProceedingsDetails = caseDetails.case_data.D8LegalProceedingsDetails | default("") %}
 {% set applicantsAddress = caseDetails.case_data.D8DerivedPetitionerCorrespondenceAddr  %}
 {% set petitionersSolicitorName = caseDetails.case_data.PetitionerSolicitorName | default("") %}
@@ -169,7 +169,7 @@
 
 <p class="response-text">
     {% autoescape false %}
-    {% if costClaims == "YES" and financialOrder == "YES" %}
+    {% if costClaims and financialOrder %}
     {% if claimFrom contains "respondent" and claimFrom contains "correspondent" %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, to order {{ respondentsName }} and {{ correspondentName }} to pay some or all of the divorce costs, and for financial orders.
     {% elseif claimFrom contains "correspondent" %}
@@ -178,7 +178,7 @@
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, to order {{ respondentsName }} to pay some or all of the divorce costs, and for financial orders.
     {% endif %}
 
-    {% elseif costClaims == "YES" %}
+    {% elseif costClaims %}
     {% if claimFrom contains "respondent" and claimFrom contains "correspondent" %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, and to order {{ respondentsName }} and {{ correspondentName }} to pay some or all of the divorce costs.
     {% elseif claimFrom contains "correspondent" %}
@@ -186,7 +186,7 @@
     {% else %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, and to order {{ respondentsName }} to pay some or all of the divorce costs.
     {% endif %}
-    {% elseif financialOrder == "YES" %}
+    {% elseif financialOrder %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}, and for financial orders.
     {% else %}
     {{ husbandOrWifeNamed }} is applying to the court for a decree of divorce from {{ respondentsName }}.
@@ -214,7 +214,7 @@
     {% endautoescape %}
 </p>
 
-{% if isCorrespondentNamed == "YES" %}
+{% if isCorrespondentNamed %}
 <p class="heading-small">Co-respondent</p>
 <p class="response-text">
     {% autoescape false %}
@@ -334,7 +334,7 @@
     There are no other ongoing, completed or abandoned court cases related to the marriage, property or children.
 </p>
 
-{% elseif legalProceedings == "YES" %}
+{% elseif legalProceedings %}
 <p class="response-text">
     The applicant has given the following court cases which are related to the marriage, property or children.
 </p>
@@ -352,7 +352,7 @@
 {% if reasonForDivorce == "adultery" %}
 
 <p class="response-text">
-    {% if isCorrespondentNamed == "YES" %}
+    {% if isCorrespondentNamed %}
     The marriage has broken down irretrievably, based on the fact that the respondent committed adultery with the co-respondent, and the applicant finds it intolerable (unbearable) to live with the respondent.
     {% else %}
     The marriage has broken down irretrievably, based on the fact that the respondent committed adultery, and the applicant finds it intolerable (unbearable) to live with the respondent.
@@ -407,7 +407,7 @@
 
 <p class="heading-small">Where the adultery took place</p>
 <p class="response-text">
-    {% if adulteryPlaceKnown == "YES" %}
+    {% if adulteryPlaceKnown %}
     {% autoescape false %}
     "{{ adulteryWhereDetails }}"
     {% endautoescape %}
@@ -420,7 +420,7 @@
 
 <p class="heading-small">When the adultery took place</p>
 <p class="response-text">
-    {% if adulteryDateKnown == "YES" %}
+    {% if adulteryDateKnown %}
     {% autoescape false %}
     "{{ adulteryWhenDetails }}"
     {% endautoescape %}
@@ -487,7 +487,7 @@
 <h2 class="heading-medium">Additional applications</h2>
 
 <h3 class="heading-small">Costs orders</h3>
-{% if costClaims == "YES" %}
+{% if costClaims %}
 
 {% if claimFrom contains "respondent" and claimFrom contains "correspondent" %}
 <p class="response-text">
@@ -512,7 +512,7 @@
 {% endif %}
 
 <h3 class="heading-small">Financial orders</h3>
-{% if financialOrder == "YES" %}
+{% if financialOrder %}
 
 {% if financialOrderFor contains "petitioner" and financialOrderFor contains "children" %}
 <p class="response-text">
@@ -591,7 +591,7 @@
 </p>
 </p>
 
-{% if isCorrespondentNamed == "YES" and correspondentsAddress is not empty %}
+{% if isCorrespondentNamed and correspondentsAddress is not empty %}
 <p class="single-block">
 <h2 class="heading-medium">Co-respondent's correspondence address</h2>
 <p class="response-text">
