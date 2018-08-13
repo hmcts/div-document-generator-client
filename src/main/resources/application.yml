@@ -60,7 +60,7 @@ documentation:
 
 spring:
   application:
-    name: div-dgs
+    name: "div-dgs"
   resources:
     static-locations:
 
@@ -69,21 +69,6 @@ spring:
 # Allow actuator endpoints to be accessed without requiring authentication
 # Enable default health indicators
 # Enable disk space health check
-management:
-  info:
-    defaults:
-      enabled: true
-    security:
-      enabled: false
-  health:
-    defaults:
-      enabled: true
-    diskspace:
-      enabled: true
-  security:
-    enabled: false
-
-
 # HEALTH ENDPOINT CONFIG
 # Enable the health endpoint
 # Enable sensitive health information
@@ -92,15 +77,19 @@ management:
 # METRICS ENDPOINT CONFIG
 # Enable the metrics endpoint
 # Enable sensitive metrics information
-endpoints:
-  health:
-    enabled: true
-    sensitive: false
-    id: health
-    time-to-live: 1000
-  metrics:
-    enabled: true
-    sensitive: false
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+      cache:
+        time-to-live: 5000
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        health: health
+      exposure:
+        include: info, health, metrics
 
 logging:
   level:

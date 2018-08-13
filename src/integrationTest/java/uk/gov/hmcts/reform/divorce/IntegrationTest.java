@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
@@ -33,7 +33,7 @@ public abstract class IntegrationTest {
     private AuthTokenGenerator authTokenGenerator;
 
     @Autowired
-    private IDAMUtils idamTestSupportUtil;
+    private IdamUtils idamTestSupportUtil;
 
     @Rule
     public SpringIntegrationMethodRule springMethodIntegration;
@@ -46,7 +46,8 @@ public abstract class IntegrationTest {
 
     Response readDataFromEvidenceManagement(String uri) {
         getUserToken();
-        return EvidenceManagementUtil.readDataFromEvidenceManagement(uri, authTokenGenerator.generate(), "CaseWorkerTest");
+        return EvidenceManagementUtil.readDataFromEvidenceManagement(
+            uri, authTokenGenerator.generate(), "CaseWorkerTest");
     }
 
     Response callDivDocumentGenerator(String requestBody) {
@@ -68,8 +69,8 @@ public abstract class IntegrationTest {
         return uri;
     }
 
-    private synchronized String getUserToken(){
-        if(userToken == null){
+    private synchronized String getUserToken() {
+        if (userToken == null) {
             idamTestSupportUtil.createDivorceCaseworkerUserInIdam(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
 
             userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(CITIZEN_USER_NAME, CITIZEN_USER_PASSWORD);
