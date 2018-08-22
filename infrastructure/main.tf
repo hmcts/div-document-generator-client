@@ -7,8 +7,8 @@ locals {
   idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 
 
-  previewVaultName = "${var.product}-${var.reform_service_name}"
-  nonPreviewVaultName = "${var.reform_team}-${var.reform_service_name}-${var.env}"
+  previewVaultName = "${var.reform_team}-aat"
+  nonPreviewVaultName = "${var.reform_team}-${var.env}"
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
 }
 
@@ -50,10 +50,6 @@ module "key-vault" {
 
   # dcd_cc-dev group object ID
   product_group_object_id = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-}
-
-provider "vault" {
-  address = "https://vault.reform.hmcts.net:6200"
 }
 
 data "azurerm_key_vault" "div_key_vault" {
