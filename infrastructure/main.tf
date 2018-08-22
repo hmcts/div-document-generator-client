@@ -10,6 +10,7 @@ locals {
   previewVaultName = "${var.reform_team}-aat"
   nonPreviewVaultName = "${var.reform_team}-${var.env}"
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
+  vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 }
 
 module "div-dgs" {
