@@ -15,6 +15,8 @@ class IdamUtils {
     @Value("${auth.idam.client.baseUrl}")
     private String idamUserBaseUrl;
 
+    @Value("${auth.idam.client.redirectUri}")
+    private String idamRedirectUri;
 
     public String getUserId(String encodedJwt) {
         String jwt = encodedJwt.replaceFirst("Bearer ", "");
@@ -54,7 +56,7 @@ class IdamUtils {
 
     private String loginUrl() {
         return idamUserBaseUrl + "/oauth2/authorize?response_type=token&client_id=divorce&redirect_uri="
-                            + "https://www.preprod.ccd.reform.hmcts.net/oauth2redirect";
+                            + idamRedirectUri;
     }
 
     String generateUserTokenWithNoRoles(String username, String password) {
