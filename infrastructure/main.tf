@@ -36,6 +36,7 @@ module "div-dgs" {
     PDF_SERVICE_BASEURL                                   = "${local.pdf_service_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.evidence_management_client_api_health_endpoint}"
+    AUTH_IDAM_CLIENT_SECRET                               = "${data.azurerm_key_vault_secret.idam-secret.value}"
   }
 }
 
@@ -46,5 +47,10 @@ data "azurerm_key_vault" "div_key_vault" {
 
 data "azurerm_key_vault_secret" "div-doc-s2s-auth-secret" {
     name      = "div-doc-s2s-auth-secret"
+    vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+}
+
+data "azurerm_key_vault_secret" "idam-secret" {
+    name      = "idam-secret"
     vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 }
