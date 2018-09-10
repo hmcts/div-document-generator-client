@@ -70,12 +70,10 @@ public class IdamUtils {
             .userGroup(UserCode.builder().code("caseworker").build())
             .build();
 
-        System.out.println("before logger support to debug user creation url: " + idamCreateUrl());
         RestAssured.given()
             .header("Content-Type", "application/json")
             .body(ResourceLoader.objectToJson(userRequest))
             .post(idamCreateUrl());
-        System.out.println("post logger support to debug user creation url: " + idamCreateUrl());    
     }
 
     private String idamCreateUrl() {
