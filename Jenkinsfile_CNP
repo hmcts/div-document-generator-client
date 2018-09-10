@@ -22,8 +22,7 @@ def channel = '#div-dev'
 List<LinkedHashMap<String, Object>> secrets = [
     secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
     secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
-    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
-    secret("auth_idam_client_secret", "AUTH_IDAM_CLIENT_SECRET") 
+    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY")
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
