@@ -1,4 +1,4 @@
-FROM hmcts/cnp-java-base:openjdk-jre-8-alpine-1.1
+FROM hmcts/cnp-java-base:openjdk-jre-8-alpine-1.4
 
 ENV APP div-document-generator.jar
 ENV APPLICATION_TOTAL_MEMORY 512M
