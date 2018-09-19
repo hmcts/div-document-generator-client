@@ -1,0 +1,51 @@
+#!groovy
+
+properties([
+    parameters([
+        string(name: 'LIB_VERSION', defaultValue: 'master', description: 'Branch name of pipeline library to use')
+    ]),
+    [
+        $class: 'GithubProjectProperty',
+        displayName: 'Divorce Document Generator Client',
+        projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
+    ],
+    pipelineTriggers([
+        [$class: 'GitHubPushTrigger']
+    ])
+])
+
+library "Infrastructure@${params.LIB_VERSION}"
+
+def type = "java"
+def product = "div"
+def component = "dgs"
+
+def channel = '#div-dev'
+
+List<LinkedHashMap<String, Object>> secrets = [
+    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
+    secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
+    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY")
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type , product, component) {
+    enableDockerBuild()
+    enableDeployToAKS()
+    loadVaultSecrets(secrets)
+    setVaultName('div')
+
+    after('checkout') {
+        echo '${product}-${component} checked out'
+    }
+
+    enableSlackNotifications(channel)
+}
