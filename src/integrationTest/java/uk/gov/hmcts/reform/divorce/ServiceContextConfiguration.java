@@ -34,6 +34,7 @@ public class ServiceContextConfiguration {
         @Value("${idam.auth.microservice}") final String microService,
         final ServiceAuthorisationApi serviceAuthorisationApi
     ) {
+        System.out.println("S2S Secret "+ secret);
         return AuthTokenGeneratorFactory.createDefaultGenerator(secret, microService, serviceAuthorisationApi);
     }
 

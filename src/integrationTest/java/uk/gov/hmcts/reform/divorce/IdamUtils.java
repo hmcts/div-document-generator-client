@@ -38,6 +38,7 @@ public class IdamUtils {
     }
 
     private void createUserInIdam(String username, String password) {
+        System.out.println("IDAM AUTH SECRET " + idamSecret);
         CreateUserRequest userRequest = CreateUserRequest.builder()
             .email(username)
             .password(password)
@@ -110,6 +111,7 @@ public class IdamUtils {
     }
 
     private String idamTokenUrl(String code) {
+
         return idamUserBaseUrl + "/oauth2/token"
             + "?code=" + code
             + "&client_id=divorce"
