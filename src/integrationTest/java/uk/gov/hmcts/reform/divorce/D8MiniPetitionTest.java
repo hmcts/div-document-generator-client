@@ -62,8 +62,6 @@ public class D8MiniPetitionTest extends IntegrationTest {
 
     @Test
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
-        System.out.print(" All the Environment values");
-        System.getenv().forEach((key, value) -> System.out.println(key + ":" + value));
 
         String requestBody = ResourceLoader.loadJson(inputJson);
         //check PDF is generated

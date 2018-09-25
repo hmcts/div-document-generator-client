@@ -38,7 +38,6 @@ public class IdamUtils {
     }
 
     private void createUserInIdam(String username, String password) {
-        System.out.println("IDAM AUTH SECRET " + idamSecret);
         CreateUserRequest userRequest = CreateUserRequest.builder()
             .email(username)
             .password(password)
