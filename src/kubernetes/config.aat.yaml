@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${SERVICE_NAME}-config
+  namespace: ${NAMESPACE}
+data:
+  APPLICATION_INSIGHTS_IKEY : "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
+  AUTH_PROVIDER_SERVICE_CLIENT_BASEURL : "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+  SLOT : "PRODUCTION"
+  REFORM_ENVIRONMENT : "aat"
+  AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE : "divorce_document_generator"
+  PDF_SERVICE_BASEURL : "http://cmc-pdf-service-aat.service.core-compute-aat.internal"
+  REFORM_SERVICE_NAME : "dgs"
+  EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT : "/health"
+  EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL : "http://div-emca-aat.service.core-compute-aat.internal"
+  AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS : "900"
+  REFORM_TEAM : "div"
+  TEST_ENVIRONMENT : "aat"
+  VAULTNAME : "div-aat"
+  AUTH_PROVIDER_SERVICE_CLIENT_KEY : ${AUTH_PROVIDER_SERVICE_CLIENT_KEY}
+  VAULTURI : "https://div-aat.vault.azure.net/"
+  IDAM_S2S_URL : "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+  APPINSIGHTS_INSTRUMENTATIONKEY : "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
