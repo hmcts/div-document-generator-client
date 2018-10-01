@@ -15,7 +15,7 @@ data:
   EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL : "http://div-emca-aat.service.core-compute-aat.internal"
   AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS : "900"
   REFORM_TEAM : "div"
-  TEST_ENVIRONMENT : "aat"
+  ENVIRONMENT_NAME : "aat"
   VAULTNAME : "div-aat"
   AUTH_PROVIDER_SERVICE_CLIENT_KEY : ${AUTH_PROVIDER_SERVICE_CLIENT_KEY}
   VAULTURI : "https://div-aat.vault.azure.net/"
