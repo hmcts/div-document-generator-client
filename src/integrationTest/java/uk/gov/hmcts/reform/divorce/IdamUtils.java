@@ -110,6 +110,7 @@ public class IdamUtils {
     }
 
     private String idamTokenUrl(String code) {
+
         return idamUserBaseUrl + "/oauth2/token"
             + "?code=" + code
             + "&client_id=divorce"
