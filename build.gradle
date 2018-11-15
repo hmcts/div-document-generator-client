@@ -132,6 +132,7 @@ def versions = [
     serviceTokenGenerator: '1.0.0',
     springBoot: '2.0.5.RELEASE',
     springfoxSwagger: '2.7.0',
+    springOpenFeign: '2.0.0.RELEASE',
     springHateoas: '0.24.0.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
@@ -170,7 +171,7 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
-    compile (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'){
+    compile (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign',  version: versions.springOpenFeign){
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
