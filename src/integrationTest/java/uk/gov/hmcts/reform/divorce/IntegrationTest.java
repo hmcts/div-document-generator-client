@@ -6,10 +6,8 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 import java.util.UUID;
@@ -18,7 +16,6 @@ import static net.serenitybdd.rest.SerenityRest.given;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
-@EnableFeignClients(basePackageClasses = ServiceAuthorisationApi.class)
 public abstract class IntegrationTest {
 
     @Value("${divorce.document.generator.uri}")
@@ -39,7 +36,7 @@ public abstract class IntegrationTest {
     private static String userToken = null;
     private String username;
 
-    public IntegrationTest() {
+    IntegrationTest() {
         this.springMethodIntegration = new SpringIntegrationMethodRule();
     }
 
