@@ -116,6 +116,10 @@
                 margin-top: 100px;
             }
 
+            .date-format {
+                padding-bottom: 15px;
+            }
+
             .section-header {
                 position: absolute;
                 width: 100%;
@@ -224,10 +228,14 @@
         </div>
 
         <div class="address">
-            Case number: {{ referenceNo }}
+            <strong>Notice of proceedings</strong>
             <div>
-                {{ issueDate }}
+                Case number: {{ referenceNo }}
             </div>
+        </div>
+
+        <div class="response-text date-format">
+            {{ issueDate }}
         </div>
 
         <div class="response-text">
@@ -238,7 +246,7 @@
         </div>
 
         <div class="response-text">
-            You need to respond within 7 days. If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+            <strong>You need to respond within 7 days.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
         </div>
 
         <h2 class="heading-small">
@@ -253,10 +261,10 @@
                 Create an account using your email address
             </li>
             <li class="list-bullet-counter">
-                Enter this reference number: {{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}
+                Enter this reference number: <strong>{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</strong>
             </li>
             <li class="list-bullet-counter">
-                Enter your access code: {{ accessCode }}
+                Enter your access code: <strong>{{ accessCode }}</strong>
             </li>
         
         </ol>
