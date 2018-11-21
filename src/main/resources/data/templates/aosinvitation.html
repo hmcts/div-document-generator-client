@@ -39,7 +39,7 @@
                 font-weight: 700;
                 text-decoration: none;
                 vertical-align: baseline;
-                font-size: 12pt;
+                font-size: 10pt;
                 font-family: "Open Sans";
                 font-style: normal;
                 margin-top: 18px;
@@ -54,9 +54,9 @@
                 vertical-align: baseline;
                 font-size: 10pt;
                 font-family: "Open Sans";
-                line-height: 1.15;
+                line-height: 1.25;
                 font-style: normal;
-                margin-top: 10px;
+                margin-top: 5px;
                 margin-bottom: 7px;
                 padding: 0px;
             }
@@ -65,8 +65,8 @@
                 font-family: "Open Sans";
                 font-weight: 700;
                 text-transform: none;
-                line-height: 1.15;
-                font-size: 11pt;
+                line-height: 1.25;
+                font-size: 10pt;
                 margin-bottom: 0px;
             }
 
@@ -77,12 +77,16 @@
                 vertical-align: baseline;
                 font-size: 10pt;
                 font-family: "Open Sans";
-                line-height: 1.15;
+                line-height: 1.25;
                 font-style: normal;
                 margin-top: 5px;
                 margin-bottom: 5px;
                 padding: 0px;
                 text-align: right;
+            }
+
+            .list-bullet {
+                margin-top: 10px;
             }
 
             .list-bullet li {
@@ -108,7 +112,6 @@
             }
 
             .user-address {
-                margin-left: 12px;
                 font-size: 12px;
             }
 
@@ -128,6 +131,8 @@
             .section-content {
                 position: absolute;
                 margin-top: 180px;
+                margin-left: 12px;
+                margin-right: 12px;
             }
 
             .table {
@@ -294,8 +299,8 @@
             </li>
         </ul>
 
-        <p class="bold-small">
-            You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you access this service illegally.
+        <p class="response-text">
+            You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. <span class="bold-small">You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
         </p>
 
         <h2 class="heading-small">
@@ -306,7 +311,7 @@
         </p>
 
         <h2 class="heading-small">
-            HM Courts and Tribunals Service
+            HM Courts {{ "&" | escape }} Tribunals Service
         </h2>
     </section>
     </body>
