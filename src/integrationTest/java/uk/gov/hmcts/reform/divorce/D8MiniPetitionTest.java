@@ -54,9 +54,9 @@ public class D8MiniPetitionTest extends IntegrationTest {
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-UB-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Long-SoC-Solicitors"},
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Petitioner-Solicitor"},
                 {"AOS_Hus_Res-Addr_DivUnit-EM"},
+                {"AOS_Hus_Res-Addr_DivUnit-SC"},
                 {"AOS_Wife_Sol-Addr_DivUnit-WM"},
-                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Name"},
-                {"AOS_Wife_Sol-Addr_DivUnit-NW_No-Sol-Name_No-SolComp-Name"}
+                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"}
         });
     }
 
