@@ -182,11 +182,7 @@
         {% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
         {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
 
-        {% set rdcEastMidlandsContactDetails = "East Midlands Regional Divorce Centre<br/>PO Box 10447<br/>Nottingham<br/>NG2 9QN<br/>Email: eastmidlandsdivorce@hmcts.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
-        {% set rdcWestMidlandsContactDetails = "West Midlands Regional Divorce Centre<br/>PO Box 3650<br/>Stoke-on-Trent<br/>ST4 9NH<br/>Email: westmidlandsdivorce@hmcts.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
-        {% set rdcSouthWestContactDetails = "South West Regional Divorce Centre<br/>PO Box 1792<br/>Southampton<br/>SO15 9GG<br/>Email: sw-region-divorce@hmcts.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
-        {% set rdcNorthWestContactDetails = "North West Regional Divorce Centre<br/>Liverpool Civil &amp; Family Court<br/>35 Vernon Street<br/>Liverpool<br/>L2 2BX<br/>Email: family@liverpool.countycourt.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
-        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c\o East Midlands Regional Divorce Centre<br/>PO Box 10447<br/>Nottingham<br/>NG2 9QN<br/>Email: eastmidlandsdivorce@hmcts.gsi.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
+        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c\o East Midlands Regional Divorce Centre<br/>PO Box 10447<br/>Nottingham<br/>NG2 9QN<br/>Email: divorce@justice.gov.uk<br/>Phone: 0300 303 0642 (from 8.30am to 5pm)" %}
 
         <section class="section-header">
             <table class="table">
@@ -200,17 +196,7 @@
                     <td>
                         <div class="address court-address">
                             {% autoescape false %}
-                            {% if divorceUnit == "eastMidlands" %}
-                            {{ rdcEastMidlandsContactDetails }}
-                            {% elseif divorceUnit == "westMidlands" %}
-                            {{ rdcWestMidlandsContactDetails }}
-                            {% elseif divorceUnit == "southWest" %}
-                            {{ rdcSouthWestContactDetails }}
-                            {% elseif divorceUnit == "northWest" %}
-                            {{ rdcNorthWestContactDetails }}
-                            {% else %}
                             {{ rdcServiceCentreContactDetails }}
-                            {% endif %}
                             {% endautoescape %}
                         </div>
                     </td>
