@@ -132,7 +132,7 @@
 
             .section-address {
                 position: absolute;
-                margin-top: 170px;
+                margin-top: 180px;
                 margin-left: 12px;
                 margin-right: 12px;
             }
@@ -205,35 +205,33 @@
         </section>
         <section class="section-address">
             <div class="response-text user-address">
-                {% if respondentsSolicitorAddress is not empty %}
                 {% if respondentsSolicitorName is not empty %}
-                <div>
-                    {% autoescape false %}
-                    {{ respondentsSolicitorName }}
-                    {% endautoescape %}
-                </div>
-                {% endif %}
-                {% if respondentsSolicitorCompany is not empty %}
-                <div>
-                    {% autoescape false %}
-                    {{ respondentsSolicitorCompany }}
-                    {% endautoescape %}
-                </div>
-                {% endif %}
-                <div>
-                    {% autoescape false %}
-                    {{ respondentsSolicitorAddress }}
-                    {% endautoescape %}
-                </div>
+                    <div>
+                        {% autoescape false %}
+                        {{ respondentsSolicitorName }}
+                        {% endautoescape %}
+                    </div>
+                    {% if respondentsSolicitorCompany is not empty %}
+                    <div>
+                        {% autoescape false %}
+                        {{ respondentsSolicitorCompany }}
+                        {% endautoescape %}
+                    </div>
+                    {% endif %}
+                    <div>
+                        {% autoescape false %}
+                        {{ respondentsSolicitorAddress }}
+                        {% endautoescape %}
+                    </div>
                 {% else %}
-                {% autoescape false %}
-                {{ respondentsName }}
-                {% endautoescape %}
-                <div>
                     {% autoescape false %}
-                    {{ respondentsAddress }}
+                    {{ respondentsName }}
                     {% endautoescape %}
-                </div>
+                    <div>
+                        {% autoescape false %}
+                        {{ respondentsAddress }}
+                        {% endautoescape %}
+                    </div>
                 {% endif %}
             </div>
         </section>
