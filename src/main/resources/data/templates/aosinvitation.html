@@ -219,9 +219,6 @@
         </section>
         <section class="section-address">
             <div class="response-text user-address">
-                {% autoescape false %}
-                {{ respondentsName }}
-                {% endautoescape %}
                 {% if respondentsSolicitorAddress is not empty %}
                 {% if respondentsSolicitorName is not empty %}
                 <div>
@@ -243,6 +240,9 @@
                     {% endautoescape %}
                 </div>
                 {% else %}
+                {% autoescape false %}
+                {{ respondentsName }}
+                {% endautoescape %}
                 <div>
                     {% autoescape false %}
                     {{ respondentsAddress }}
