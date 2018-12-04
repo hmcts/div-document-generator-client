@@ -26,25 +26,24 @@
                     "E"
                 ],
                 "D8ReasonForDivorce": "adultery",
-                "D8ReasonForDivorceBehaviourDetails": "My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week. My wife is having an affair this week.",
-                "D8ReasonForDivorceAdulteryDetails" : "Adultery Details's",
+                "D8ReasonForDivorceBehaviourDetails": "My wife is having an affair this week.",
+                "D8ReasonForDivorceAdulteryDetails" : "Adultery Details",
                 "D8ReasonForDivorceAdulteryWishToName" : "YES",
-                "D8ReasonForDivorceAdultery3rdPartyFName": "Beni'O",
-                "D8ReasonForDivorceAdultery3rdPartyLName" : "Stark'Y",
+                "D8ReasonForDivorceAdultery3rdPartyFName": "Ben",
+                "D8ReasonForDivorceAdultery3rdPartyLName" : "Stark",
                 "D8DerivedReasonForDivorceAdultery3rdAddr" : "Headquarters 1120 N Street Sacramento 916-654-5266\t\nP.O. Box 942873 Sacramento, CA 94273-0001",
                 "D8ReasonForDivorceAdulteryKnowWhere" : "YES",
                 "D8ReasonForDivorceAdulteryKnowWhen" : "YES",
-                "D8ReasonForDivorceAdulteryWhenDetails" : "Last Friday's",
-                "D8ReasonForDivorceAdulteryWhereDetails" : "On the street's",
+                "D8ReasonForDivorceAdulteryWhenDetails" : "Last Friday",
+                "D8ReasonForDivorceAdulteryWhereDetails" : "On the street",
                 "D8LegalProceedings": "YES",
-                "D8LegalProceedingsDetails": "Insert proper text for the legal proceeding details's",
-                "D8DerivedRespondentHomeAddress": "82 Landor's Road\nLondon\nSW9 9PE",
-                "D8DerivedRespondentSolicitorAddr": "77 Landor's Road\nLondon\nSW9 9PE",
-                "D8RespondentSolicitorCompany": "Solicitor4U",
+                "D8LegalProceedingsDetails": "Insert proper text for the legal proceeding details",
+
+                "D8DerivedRespondentHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
                 "D8PetitionerNameChangedHow": [
                     "marriageCertificate"
                 ],
-                "D8DerivedPetitionerHomeAddress": "82 Landor's Road\nLondon\nSW9 9PE",
+                "D8DerivedPetitionerHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
                 "D8RespondentHomeAddress": {
                     "PostCode": "SW9 9PE"
                 },
@@ -60,7 +59,7 @@
                 "D8ReasonForDivorceShowAdultery": "YES",
                 "D8LivingArrangementsLiveTogether": "YES",
                 "D8ReasonForDivorceHasMarriage": "YES",
-                "D8RespondentCorrespondenceUseHomeAddress": "Solicitor",
+                "D8RespondentCorrespondenceUseHomeAddress": "No",
                 "D8JurisdictionRespondentDomicile": "NO",
                 "D8Connections": {
                     "A": "The Petitioner and the Respondent are habitually resident in England and Wales",
@@ -74,12 +73,12 @@
                 "D8PetitionerCorrespondenceAddress": {
                     "PostCode": "SW9 9PE"
                 },
-                "D8RespondentLastName": "Jamed'O",
+                "D8RespondentLastName": "Jamed",
                 "D8PetitionerNameDifferentToMarriageCert": "YES",
                 "D8LegalProceedingsRelated": [
                     "children"
                 ],
-                "D8PetitionerLastName": "Smith'O",
+                "D8PetitionerLastName": "Smith",
                 "D8ReasonForDivorceAdulteryIsNamed": "NO",
                 "D8PetitionerPhoneNumber": "01234567890",
                 "D8ClaimsCostsAppliedForFees": "NO",
@@ -106,10 +105,10 @@
                 "D8ReasonForDivorceLimitReasons": "NO",
                 "D8PetitionerEmail": "email@email.com",
                 "D8ReasonForDivorceClaiming5YearSeparatio": "NO",
-                "D8DivorceUnit": "southWest",
+                "D8DivorceUnit": "serviceCentre",
                 "D8ReasonForDivorceShowDesertion": "YES",
-                "D8DerivedRespondentCorrespondenceAddr": "82 Landor's Road\nLondon\nSW9 9PE",
-                "D8MarriagePetitionerName": "John'Y Doe-Mick",
+                "D8DerivedRespondentCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
+                "D8MarriagePetitionerName": "John Doe",
                 "D8Cohort": "onlineSubmissionPrivateBeta",
                 "D8MarriageIsSameSexCouple": "YES",
                 "D8ReasonForDivorceShowFiveYearsSeparatio": "YES",
@@ -117,11 +116,11 @@
                 "D8caseReference": "LV17D80100",
                 "D8HelpWithFeesNeedHelp": "NO",
                 "D8JurisdictionRespondentResidence": "NO",
-                "D8DivorceWho": "wife",
+                "D8DivorceWho": "husband",
                 "D8MarriageCanDivorce": "YES",
                 "D8ScreenHasPrinter": "YES",
                 "D8ConnectionSummary": "Manual",
-                "D8RespondentFirstName": "Jane'Y",
+                "D8RespondentFirstName": "Jane",
                 "D8ReasonForDivorceShowUnreasonableBehavi": "YES",
                 "D8DocumentsUploaded": [
                     {
@@ -140,14 +139,14 @@
                         }
                     }
                 ],
-                "D8DerivedPetitionerCorrespondenceAddr": "82 Landor-s Road\nLondon\nSW9 9PE",
+                "D8DerivedPetitionerCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
                 "D8JurisdictionPetitionerResidence": "NO",
                 "D8ReasonForDivorceClaimingAdultery": "NO",
-                "D8PetitionerFirstName": "T'John",
-                "D8MarriageRespondentName": "Jenny O'Benny",
-                "D8PetitionerContactDetailsConfidential": "keep",
+                "D8PetitionerFirstName": "ČĆĐŁukasz John",
+                "D8MarriageRespondentName": "Jenny Benny",
+                "D8PetitionerContactDetailsConfidential": "share",
                 "createdDate": "2018-02-05",
-                "D8MarriagePlaceOfMarriage": "In a church-town",
+                "D8MarriagePlaceOfMarriage": "In a church",
                 "D8RespondentCorrespondenceAddress": {
                     "PostCode": "SW9 9PE"
                 },
@@ -156,9 +155,6 @@
             },
             "data_classification": {
                 "D8DerivedRespondentHomeAddress": "PUBLIC",
-                "D8DerivedRespondentSolicitorAddr": "PUBLIC",
-                "D8RespondentSolicitorName": "PUBLIC",
-                "D8RespondentSolicitorCompany": "PUBLIC",
                 "D8PetitionerNameChangedHow": "PUBLIC",
                 "D8DerivedPetitionerHomeAddress": "PUBLIC",
                 "D8RespondentHomeAddress": {
