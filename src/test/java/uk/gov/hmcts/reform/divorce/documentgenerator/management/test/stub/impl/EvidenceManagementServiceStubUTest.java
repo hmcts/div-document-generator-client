@@ -12,11 +12,9 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadR
 import java.time.Clock;
 import java.time.Instant;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -46,33 +44,24 @@ public class EvidenceManagementServiceStubUTest {
 
     @Test
     public void givenADocument_whenStoreDocumentAndGetInfo_thenReturnInfo() {
+        final String testFileName = "testFileName";
         final Instant instant = Instant.now();
         mockAndSetClock(instant);
 
         dataStore.clear();
 
-        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(NEW_FILE, "testToken");
+        FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(NEW_FILE, "testToken", testFileName);
 
         Map.Entry<String, byte[]> entry = dataStore.entrySet().iterator().next();
 
         String fileName = entry.getKey();
 
-        verifyUuid(fileName);
-
+        assertEquals(testFileName, fileName);
         assertEquals(NEW_FILE, entry.getValue());
         assertEquals(EXPECTED_FILE_URL_PREFIX + fileName, actual.getFileUrl());
         assertEquals(MediaType.APPLICATION_PDF_VALUE, actual.getMimeType());
         assertEquals(instant.toString(), actual.getCreatedOn());
         assertEquals(CREATED_BY, actual.getCreatedBy());
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void verifyUuid(String uuidString) {
-        try {
-            UUID.fromString(uuidString);
-        } catch (IllegalArgumentException exception) {
-            fail("Not a valid UUID String");
-        }
     }
 
     @Test

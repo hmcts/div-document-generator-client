@@ -22,6 +22,7 @@ import java.util.Map;
 public class DocumentManagementServiceImpl implements DocumentManagementService {
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
+    private static final String DEFAULT_NAME_FOR_PDF_FILE = "DivorceDocument.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -43,15 +44,17 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         placeholders.put(CURRENT_DATE_KEY,
                 new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date.from(clock.instant())));
 
-        return storeDocument(generateDocument(templateName, placeholders), authorizationToken);
+        String fileName = getFileNameFromTemplateName(templateName);
+
+        return storeDocument(generateDocument(templateName, placeholders), authorizationToken, fileName);
     }
 
     @Override
-    public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken) {
+    public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken, String fileName) {
         log.debug("Store document requested with document of size [{}]", document.length);
         return GeneratedDocumentInfoMapper
                 .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document,
-                    authorizationToken));
+                    authorizationToken, fileName));
     }
 
     @Override
@@ -64,5 +67,16 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
 
         return pdfGenerationService.generateFromHtml(templateBytes, formattedPlaceholders);
+    }
+
+    private String getFileNameFromTemplateName(String templateName) {
+        String fileName = DEFAULT_NAME_FOR_PDF_FILE;
+
+        switch(templateName) {
+            case "aosinvitation" : fileName = "DivorceResponse.pdf"; break;
+            case "divorceminipetition" : fileName = "DivorcePetition.pdf";
+        }
+
+        return fileName;
     }
 }
