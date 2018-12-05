@@ -70,11 +70,14 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     }
 
     private String getFileNameFromTemplateName(String templateName) {
-        String fileName = DEFAULT_NAME_FOR_PDF_FILE;
+        String fileName = null;
 
-        switch(templateName) {
-            case "aosinvitation" : fileName = "DivorceResponse.pdf"; break;
+        switch (templateName) {
+            case "aosinvitation" : fileName = "DivorceResponse.pdf";
+                break;
             case "divorceminipetition" : fileName = "DivorcePetition.pdf";
+                break;
+            default : fileName = DEFAULT_NAME_FOR_PDF_FILE;
         }
 
         return fileName;

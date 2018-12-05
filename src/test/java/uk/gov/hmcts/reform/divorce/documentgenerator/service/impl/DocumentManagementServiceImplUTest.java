@@ -79,7 +79,8 @@ public class DocumentManagementServiceImplUTest {
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class)).withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
@@ -111,7 +112,8 @@ public class DocumentManagementServiceImplUTest {
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class)).withArguments(data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
@@ -143,7 +145,8 @@ public class DocumentManagementServiceImplUTest {
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class)).withArguments(data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
@@ -162,14 +165,16 @@ public class DocumentManagementServiceImplUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE)).thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE))
+                .thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test", DEFAULT_NAME_FOR_PDF_FILE);
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE);
+        Mockito.verify(evidenceManagementService, Mockito.times(1))
+                .storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE);
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
