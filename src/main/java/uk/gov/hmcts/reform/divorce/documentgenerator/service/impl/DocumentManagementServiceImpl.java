@@ -24,7 +24,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String DEFAULT_NAME_FOR_PDF_FILE = "DivorceDocument.pdf";
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
-    private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "DivorceResponse.pdf";
+    private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
