@@ -11,7 +11,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementS
 
 import java.time.Clock;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -25,9 +24,7 @@ public class EvidenceManagementServiceStub implements EvidenceManagementService,
     private final Clock clock = Clock.systemDefaultZone();
 
     @Override
-    public FileUploadResponse storeDocumentAndGetInfo(byte[] document, String authorizationToken) {
-        String fileName = UUID.randomUUID().toString();
-
+    public FileUploadResponse storeDocumentAndGetInfo(byte[] document, String authorizationToken, String fileName) {
         DATA_STORE.put(fileName, document);
 
         FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);

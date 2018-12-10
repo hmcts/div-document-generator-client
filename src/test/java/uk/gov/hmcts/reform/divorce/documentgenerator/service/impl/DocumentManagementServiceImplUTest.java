@@ -37,6 +37,11 @@ import static org.powermock.api.mockito.PowerMockito.when;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
 public class DocumentManagementServiceImplUTest {
+
+    private static final String DEFAULT_NAME_FOR_PDF_FILE = "DivorceDocument.pdf";
+    private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
+    private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
+
     @Mock
     private TemplateManagementService templateManagementService;
 
@@ -74,7 +79,8 @@ public class DocumentManagementServiceImplUTest {
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class)).withArguments(data, authToken);
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
@@ -83,7 +89,73 @@ public class DocumentManagementServiceImplUTest {
         verifyPrivate(classUnderTest, Mockito.times(1))
                 .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", data, authToken);
+                .invoke("storeDocument", data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAosInvitation_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = "aosinvitation";
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("storeDocument", data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsMiniPetition_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = "divorceminipetition";
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "storeDocument", byte[].class, String.class, String.class))
+                        .withArguments(data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("storeDocument", data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
     }
 
     @Test
@@ -93,14 +165,16 @@ public class DocumentManagementServiceImplUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test")).thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE))
+                .thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
-        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test");
+        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test", DEFAULT_NAME_FOR_PDF_FILE);
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test");
+        Mockito.verify(evidenceManagementService, Mockito.times(1))
+                .storeDocumentAndGetInfo(data, "test", DEFAULT_NAME_FOR_PDF_FILE);
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
