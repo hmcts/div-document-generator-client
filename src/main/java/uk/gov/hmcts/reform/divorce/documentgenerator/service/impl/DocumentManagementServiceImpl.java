@@ -80,6 +80,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
             case "divorceminipetition" : fileName = MINI_PETITION_NAME_FOR_PDF_FILE;
                 break;
             default : fileName = DEFAULT_NAME_FOR_PDF_FILE;
+                break;
         }
 
         return fileName;
