@@ -378,6 +378,90 @@ public class DocumentGenerateAndStoreE2ETest {
         mockRestServiceServer.verify();
     }
 
+    @Test
+    public void givenAllGoesWellForAosInvitation_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String template = "aosinvitation";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+
+        final String fileURL = "fileURL";
+        final String mimeType = "mimeType";
+        final String createdOn = "createdOn";
+        final String createdBy = "createdBy";
+
+        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
+        fileUploadResponse.setFileUrl(fileURL);
+        fileUploadResponse.setMimeType(mimeType);
+        fileUploadResponse.setCreatedOn(createdOn);
+        fileUploadResponse.setCreatedBy(createdBy);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
+        generatedDocumentInfo.setUrl(fileURL);
+        generatedDocumentInfo.setMimeType(mimeType);
+        generatedDocumentInfo.setCreatedOn(createdOn);
+
+        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+                result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceMiniPetition_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String template = "divorceminipetition";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+
+        final String fileURL = "fileURL";
+        final String mimeType = "mimeType";
+        final String createdOn = "createdOn";
+        final String createdBy = "createdBy";
+
+        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
+        fileUploadResponse.setFileUrl(fileURL);
+        fileUploadResponse.setMimeType(mimeType);
+        fileUploadResponse.setCreatedOn(createdOn);
+        fileUploadResponse.setCreatedBy(createdBy);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
+        generatedDocumentInfo.setUrl(fileURL);
+        generatedDocumentInfo.setMimeType(mimeType);
+        generatedDocumentInfo.setCreatedOn(createdOn);
+
+        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+                result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
     private void mockAndSetClock(Instant instant) {
         final Clock clock = mock(Clock.class);
         when(clock.instant()).thenReturn(instant);
