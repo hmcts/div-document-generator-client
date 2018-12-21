@@ -166,6 +166,9 @@
 {% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
 {% set desertionDate = caseDetails.case_data.D8ReasonForDivorceDesertionDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set separationDate = caseDetails.case_data.D8ReasonForDivorceSeperationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
+{% set mentalSeparationDate = caseDetails.case_data.D8MentalSeparationDate %}
+{% set physicalSeparationDate = caseDetails.case_data.D8PhysicalSeparationDate %}
+
 
 <p class="response-text">
     {% autoescape false %}
@@ -347,7 +350,7 @@
 </p>
 
 <p class="single-block">
-<h2 class="heading-medium">Reason for the divorce</h2>
+<h2 class="heading-medium">Reason for the divorce (and supporting information)</h2>
 
 {% if reasonForDivorce == "adultery" %}
 
@@ -458,7 +461,15 @@
 {% if reasonForDivorce == "separation-5-years" %}
 
 <p class="response-text">
-    The applicant has given the separation date as {{ separationDate }}.
+    {% if mentalSeparationDate is empty %}
+        The applicant has given the separation date as {{ separationDate }}.
+    {% else %}
+        <ul class="list-bullet">
+            <li>the applicant decided that the marriage was over on {{ mentalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+            <li>the applicant and the respondent started living apart on {{ physicalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+        </ul>
+        The most recent date is considered legally to be the date of separation.
+    {% endif %}
 </p>
 
 
