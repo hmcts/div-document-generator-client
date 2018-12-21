@@ -8,7 +8,6 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
