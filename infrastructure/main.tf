@@ -12,8 +12,8 @@ locals {
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
   vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
     
-  asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
-  asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
+  asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-2-${var.env}"}"
+  asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-2-${var.env}"}"
 }
 
 module "div-dgs" {
