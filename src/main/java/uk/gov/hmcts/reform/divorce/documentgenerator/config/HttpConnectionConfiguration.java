@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -36,12 +36,6 @@ public class HttpConnectionConfiguration {
                     "vnd.uk.gov.hmcts.dm.document-collection.v1+hal+json",
                     MappingJackson2HttpMessageConverter.DEFAULT_CHARSET);
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private MappingJackson2HttpMessageConverter jackson2HttpCoverter;
-
     @Value("${http.connect.timeout}")
     private int httpConnectTimeout;
 
@@ -55,60 +49,62 @@ public class HttpConnectionConfiguration {
     private int healthCheckHttpConnectRequestTimeout;
 
     @Bean
-    public RestTemplate restTemplate() {
+    @Primary
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(
+        @Autowired ObjectMapper objectMapper) {
+
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.registerModule(new Jackson2HalModule());
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
-        jackson2HttpCoverter.setObjectMapper(objectMapper);
-        jackson2HttpCoverter.setSupportedMediaTypes(ImmutableList.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
+        MappingJackson2HttpMessageConverter jackson2HttpConverter
+            = new MappingJackson2HttpMessageConverter(objectMapper);
+        jackson2HttpConverter.setObjectMapper(objectMapper);
+        jackson2HttpConverter.setSupportedMediaTypes(ImmutableList.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
 
-        RestTemplate restTemplate = new RestTemplate(asList(jackson2HttpCoverter,
-                new FormHttpMessageConverter(),
-                new ResourceHttpMessageConverter(),
-                new ByteArrayHttpMessageConverter(),
-                new StringHttpMessageConverter()));
-
-        restTemplate.setRequestFactory(getClientHttpRequestFactory(httpConnectTimeout, httpConnectRequestTimeout));
-
-        return restTemplate;
+        return jackson2HttpConverter;
     }
 
     @Bean
-    public RestTemplate healthCheckRestTemplate() {
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.registerModule(new Jackson2HalModule());
-        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+    public RestTemplate restTemplate(@Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter) {
+        return getRestTemplate(jackson2HttpConverter, httpConnectTimeout, httpConnectRequestTimeout);
+    }
 
-        jackson2HttpCoverter.setObjectMapper(objectMapper);
-        jackson2HttpCoverter.setSupportedMediaTypes(ImmutableList.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
+    @Bean
+    public RestTemplate healthCheckRestTemplate(@Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter) {
+        return getRestTemplate(
+            jackson2HttpConverter,
+            healthCheckHttpConnectTimeout,
+            healthCheckHttpConnectRequestTimeout
+        );
+    }
 
-        RestTemplate restTemplate = new RestTemplate(asList(jackson2HttpCoverter,
+    private RestTemplate getRestTemplate(
+        @Autowired MappingJackson2HttpMessageConverter jackson2HttpConverter,
+        int connectTimeout,
+        int connectRequestTimeout) {
+        RestTemplate restTemplate = new RestTemplate(asList(jackson2HttpConverter,
             new FormHttpMessageConverter(),
             new ResourceHttpMessageConverter(),
             new ByteArrayHttpMessageConverter(),
             new StringHttpMessageConverter()));
 
-        restTemplate.setRequestFactory(getClientHttpRequestFactory(healthCheckHttpConnectTimeout, healthCheckHttpConnectRequestTimeout));
-
-        return restTemplate;
-    }
-
-    private ClientHttpRequestFactory getClientHttpRequestFactory(int connectTimeout, int requestConnectTimeout) {
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(connectTimeout)
-                .setConnectionRequestTimeout(requestConnectTimeout)
-                .build();
+            .setConnectTimeout(connectTimeout)
+            .setConnectionRequestTimeout(connectRequestTimeout)
+            .build();
 
         CloseableHttpClient client = HttpClientBuilder
-                .create()
-                .useSystemProperties()
-                .addInterceptorFirst(new OutboundRequestIdSettingInterceptor())
-                .addInterceptorFirst((HttpRequestInterceptor) new OutboundRequestLoggingInterceptor())
-                .addInterceptorLast((HttpResponseInterceptor) new OutboundRequestLoggingInterceptor())
-                .setDefaultRequestConfig(config)
-                .build();
+            .create()
+            .useSystemProperties()
+            .addInterceptorFirst(new OutboundRequestIdSettingInterceptor())
+            .addInterceptorFirst((HttpRequestInterceptor) new OutboundRequestLoggingInterceptor())
+            .addInterceptorLast((HttpResponseInterceptor) new OutboundRequestLoggingInterceptor())
+            .setDefaultRequestConfig(config)
+            .build();
 
-        return new HttpComponentsClientHttpRequestFactory(client);
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(client));
+
+        return restTemplate;
     }
 }

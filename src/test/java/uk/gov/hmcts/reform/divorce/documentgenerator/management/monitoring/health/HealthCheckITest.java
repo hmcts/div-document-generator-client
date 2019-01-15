@@ -15,6 +15,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -80,6 +81,7 @@ public class HealthCheckITest {
     public static WireMockClassRule serviceAuthServer = new WireMockClassRule(4502);
 
     @Autowired
+    @Qualifier("healthCheckRestTemplate")
     private RestTemplate restTemplate;
 
     private String healthUrl;

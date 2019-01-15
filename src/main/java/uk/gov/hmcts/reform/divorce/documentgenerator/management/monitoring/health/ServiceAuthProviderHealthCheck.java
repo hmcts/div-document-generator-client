@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ServiceAuthProviderHealthCheck extends WebServiceHealthCheck {
     @Autowired
-    public ServiceAuthProviderHealthCheck(HttpEntityFactory httpEntityFactory, @Qualifier("healthCheckRestTemplate") RestTemplate restTemplate,
+    public ServiceAuthProviderHealthCheck(HttpEntityFactory httpEntityFactory,
+                                          @Qualifier("healthCheckRestTemplate") RestTemplate restTemplate,
                                           @Value("${service.service-auth-provider.health.uri}") String uri) {
         super(httpEntityFactory, restTemplate, uri);
     }

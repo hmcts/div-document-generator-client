@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class PDFServiceHealthCheck extends WebServiceHealthCheck {
     @Autowired
-    public PDFServiceHealthCheck(HttpEntityFactory httpEntityFactory, @Qualifier("healthCheckRestTemplate") RestTemplate restTemplate,
+    public PDFServiceHealthCheck(HttpEntityFactory httpEntityFactory,
+                                 @Qualifier("healthCheckRestTemplate") RestTemplate restTemplate,
                                  @Value("${service.pdf-service.health.uri}") String uri) {
         super(httpEntityFactory, restTemplate, uri);
     }
