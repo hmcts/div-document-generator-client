@@ -48,6 +48,12 @@ public class HttpConnectionConfiguration {
     @Value("${http.connect.request.timeout}")
     private int httpConnectRequestTimeout;
 
+    @Value("${health.check.http.connect.timeout}")
+    private int healthCheckHttpConnectTimeout;
+
+    @Value("${health.check.http.connect.timeout}")
+    private int healthCheckHttpConnectRequestTimeout;
+
     @Bean
     public RestTemplate restTemplate() {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -63,15 +69,35 @@ public class HttpConnectionConfiguration {
                 new ByteArrayHttpMessageConverter(),
                 new StringHttpMessageConverter()));
 
-        restTemplate.setRequestFactory(getClientHttpRequestFactory());
+        restTemplate.setRequestFactory(getClientHttpRequestFactory(httpConnectTimeout, httpConnectRequestTimeout));
 
         return restTemplate;
     }
 
-    private ClientHttpRequestFactory getClientHttpRequestFactory() {
+    @Bean
+    public RestTemplate healthCheckRestTemplate() {
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.registerModule(new Jackson2HalModule());
+        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+        jackson2HttpCoverter.setObjectMapper(objectMapper);
+        jackson2HttpCoverter.setSupportedMediaTypes(ImmutableList.of(MEDIA_TYPE_HAL_JSON, MediaType.APPLICATION_JSON));
+
+        RestTemplate restTemplate = new RestTemplate(asList(jackson2HttpCoverter,
+            new FormHttpMessageConverter(),
+            new ResourceHttpMessageConverter(),
+            new ByteArrayHttpMessageConverter(),
+            new StringHttpMessageConverter()));
+
+        restTemplate.setRequestFactory(getClientHttpRequestFactory(healthCheckHttpConnectTimeout, healthCheckHttpConnectRequestTimeout));
+
+        return restTemplate;
+    }
+
+    private ClientHttpRequestFactory getClientHttpRequestFactory(int connectTimeout, int requestConnectTimeout) {
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(httpConnectTimeout)
-                .setConnectionRequestTimeout(httpConnectRequestTimeout)
+                .setConnectTimeout(connectTimeout)
+                .setConnectionRequestTimeout(requestConnectTimeout)
                 .build();
 
         CloseableHttpClient client = HttpClientBuilder
