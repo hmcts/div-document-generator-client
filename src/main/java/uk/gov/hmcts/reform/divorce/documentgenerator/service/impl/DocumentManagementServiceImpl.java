@@ -23,6 +23,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String DEFAULT_NAME_FOR_PDF_FILE = "DivorceDocument.pdf";
+    private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
+    private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -73,11 +75,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         String fileName = null;
 
         switch (templateName) {
-            case "aosinvitation" : fileName = "DivorceResponse.pdf";
+            case "aosinvitation" : fileName = AOS_INVITATION_NAME_FOR_PDF_FILE;
                 break;
-            case "divorceminipetition" : fileName = "DivorcePetition.pdf";
+            case "divorceminipetition" : fileName = MINI_PETITION_NAME_FOR_PDF_FILE;
                 break;
             default : fileName = DEFAULT_NAME_FOR_PDF_FILE;
+                break;
         }
 
         return fileName;
