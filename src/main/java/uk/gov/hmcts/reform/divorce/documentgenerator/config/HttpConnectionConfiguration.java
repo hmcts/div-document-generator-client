@@ -45,7 +45,7 @@ public class HttpConnectionConfiguration {
     @Value("${health.check.http.connect.timeout}")
     private int healthCheckHttpConnectTimeout;
 
-    @Value("${health.check.http.connect.timeout}")
+    @Value("${health.check.http.connect.request.timeout}")
     private int healthCheckHttpConnectRequestTimeout;
 
     @Bean
