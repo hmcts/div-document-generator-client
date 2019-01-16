@@ -92,6 +92,7 @@ public class HttpConnectionConfiguration {
         RequestConfig config = RequestConfig.custom()
             .setConnectTimeout(connectTimeout)
             .setConnectionRequestTimeout(connectRequestTimeout)
+            .setSocketTimeout(connectRequestTimeout)
             .build();
 
         CloseableHttpClient client = HttpClientBuilder
