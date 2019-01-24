@@ -166,6 +166,10 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
     }
     compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.8') {
+        force = true
+    }
+
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
