@@ -1,6 +1,8 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.controller.helper;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -9,6 +11,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationExce
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(BlockJUnit4ClassRunner.class)
 public class GlobalExceptionHandlerUTest {
 
     private final GlobalExceptionHandler classUnderTest = new GlobalExceptionHandler();
