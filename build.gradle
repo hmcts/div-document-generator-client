@@ -139,7 +139,8 @@ def versions = [
     pitest: '1.3.2',
     gradlePitest: '1.3.0',
     sonarPitest: '0.5',
-    feignHttpClient: '9.5.1'
+    feignHttpClient: '9.5.1',
+    guava: '27.0.1-jre'
 ]
 
 dependencies {
@@ -165,6 +166,11 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
     }
+
+    integrationTestCompile (group: 'com.google.guava', name:'guava', version: versions.guava) {
+        force = true
+    }
+
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
@@ -177,9 +183,11 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'org.bouncycastle'
-
     }
 
+    compile (group: 'com.google.guava', name:'guava', version: versions.guava) {
+        force = true
+    }
     compile group: 'io.github.openfeign', name: 'feign-httpclient', version: versions.feignHttpClient
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
