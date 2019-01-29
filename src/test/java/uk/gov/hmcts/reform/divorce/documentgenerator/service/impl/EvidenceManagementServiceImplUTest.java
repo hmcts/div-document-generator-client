@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.powermock.api.support.membermodification.MemberMatcher;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
@@ -38,6 +39,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
+@PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EvidenceManagementServiceImpl.class, NullOrEmptyValidator.class})
 public class EvidenceManagementServiceImplUTest {
