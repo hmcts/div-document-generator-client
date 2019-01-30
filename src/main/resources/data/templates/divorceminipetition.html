@@ -356,9 +356,9 @@
 
 <p class="response-text">
     {% if isCorrespondentNamed == "YES" %}
-    The marriage has broken down irretrievably, based on the fact that the respondent committed adultery with the co-respondent, and the applicant finds it intolerable (unbearable) to live with the respondent.
+    The marriage has broken down irretrievably, based on the fact that the respondent committed adultery with the co-respondent, and the applicant finds it intolerable to live with the respondent.
     {% else %}
-    The marriage has broken down irretrievably, based on the fact that the respondent committed adultery, and the applicant finds it intolerable (unbearable) to live with the respondent.
+    The marriage has broken down irretrievably, based on the fact that the respondent committed adultery, and the applicant finds it intolerable to live with the respondent.
     {% endif %}
 </p>
 
@@ -375,7 +375,7 @@
 {% if reasonForDivorce == "separation-2-years" %}
 
 <p class="response-text">
-    The marriage has broken down irretrievably, based on the fact that the parties to the marriage have lived apart for a continuous period of at least two years immediately preceding the presentation of the application and the respondent consents to a decree being granted.
+    The marriage has broken down irretrievably, based on the fact that the applicant and respondent have lived apart for a continuous period of at least two years immediately preceding the presentation of the application, and the respondent consents to a decree being granted.
 </p>
 
 {% endif %}
@@ -383,7 +383,7 @@
 {% if reasonForDivorce == "separation-5-years" %}
 
 <p class="response-text">
-    The marriage has broken down irretrievably, based on the fact that the applicant and the respondent have been separated for 5 years.
+    The marriage has broken down irretrievably, based on the fact that the applicant and respondent have lived apart for a continuous period of at least five years immediately preceding the presentation of the application.
 </p>
 
 {% endif %}
@@ -465,8 +465,8 @@
         The applicant has given the separation date as {{ separationDate }}.
     {% else %}
         <ul class="list-bullet">
-            <li>the applicant decided that the marriage was over on {{ mentalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
-            <li>the applicant and the respondent started living apart on {{ physicalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+            <li>The applicant decided that the marriage was over on {{ mentalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+            <li>The applicant and respondent started living apart on {{ physicalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
         </ul>
         The most recent date is considered legally to be the date of separation.
     {% endif %}
