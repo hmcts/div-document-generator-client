@@ -124,7 +124,7 @@ def versions = [
     pdfbox: '2.0.8',
     mockito: '2.8.9',
     powerMock: '1.7.3',
-    puppyCrawl: '7.6',
+    puppyCrawl: '8.17',
     reformsJavaLogging: '4.0.1',
     restAssured: '3.0.3',
     serenity: '1.5.2',
