@@ -3,7 +3,6 @@ package uk.gov.hmcts.reform.divorce;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.model.CreateUserRequest;
 import uk.gov.hmcts.reform.divorce.model.UserCode;
 
