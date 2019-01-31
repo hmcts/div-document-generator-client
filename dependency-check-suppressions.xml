@@ -34,7 +34,7 @@
         <notes>
             <![CDATA[
             file name: jersey-apache-client4-1.19.1.jar
-             Depending on Swagger, which if updated, makes the build fail
+             Depending on springOpenFeign, which if updated, makes the build fail
             ]]>
         </notes>
         <gav regex="true">.*</gav>
