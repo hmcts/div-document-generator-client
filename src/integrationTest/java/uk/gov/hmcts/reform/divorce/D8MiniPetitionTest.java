@@ -8,7 +8,6 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
@@ -56,7 +55,8 @@ public class D8MiniPetitionTest extends IntegrationTest {
                 {"AOS_Hus_Res-Addr_DivUnit-EM"},
                 {"AOS_Hus_Res-Addr_DivUnit-SC"},
                 {"AOS_Wife_Sol-Addr_DivUnit-WM"},
-                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"}
+                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
+                {"5YearSeparationWithMentalSeparationDate"}
         });
     }
 
