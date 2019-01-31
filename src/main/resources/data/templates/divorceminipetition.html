@@ -465,8 +465,8 @@
         The applicant has given the separation date as {{ separationDate }}.
     {% else %}
         <ul class="list-bullet">
-            <li>the applicant decided that the marriage was over on {{ mentalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
-            <li>the applicant and the respondent started living apart on {{ physicalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+            <li>The applicant decided that the marriage was over on {{ mentalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
+            <li>The applicant and respondent started living apart on {{ physicalSeparationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") }}.</li>
         </ul>
         The most recent date is considered legally to be the date of separation.
     {% endif %}
