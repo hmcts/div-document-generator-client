@@ -64,6 +64,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String API_URL = "/version/1/generatePDF";
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
+    private static final String A_TEMPLATE = "divorceminipetition";
 
     @Autowired
     private MockMvc webClient;
@@ -140,10 +141,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToAuthService_whenGenerateAndStoreDocument_thenReturnHttp503() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         when(serviceTokenGenerator.generate()).thenThrow(new HttpClientErrorException(HttpStatus.SERVICE_UNAVAILABLE));
 
@@ -156,10 +156,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAuthServiceReturnAuthenticationError_whenGenerateAndStoreDocument_thenReturnHttp401() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         when(serviceTokenGenerator.generate()).thenThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED));
 
@@ -176,7 +175,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
         ReflectionTestUtils.setField(pdfGenerationService, "objectMapper", objectMapper);
 
-        final String template = "testtemplate";
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
         final String securityToken = "securityToken";
@@ -187,10 +185,10 @@ public class DocumentGenerateAndStoreE2ETest {
         valuesWithDate.put(CURRENT_DATE_KEY, new SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
                 .format(Date.from(instant)));
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         final GenerateDocumentRequest requestToPDFService =
-                new GenerateDocumentRequest(new String(templateManagementService.getTemplateByName(template)),
+                new GenerateDocumentRequest(new String(templateManagementService.getTemplateByName(A_TEMPLATE)),
                         valuesWithDate);
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -207,11 +205,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToPDFService_whenGenerateAndStoreDocument_thenReturnHttp503() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.BAD_REQUEST, new byte[]{1});
 
@@ -228,11 +225,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenPDFServiceReturnNon2xxStatus_whenGenerateAndStoreDocument_thenReturnSameStatus() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.INTERNAL_SERVER_ERROR, new byte[]{1});
 
@@ -249,11 +245,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenPDFServiceReturnNull_whenGenerateAndStoreDocument_thenReturn400() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.OK, null);
 
@@ -270,11 +265,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToEMClientAPI_whenGenerateAndStoreDocument_thenReturn503() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.BAD_REQUEST, null);
@@ -292,11 +286,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenEMClientAPIReturnNon2xxStatus_whenGenerateAndStoreDocument_thenReturnSameStatus() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.UNAUTHORIZED, null);
@@ -314,13 +307,12 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenEMClientAPIReturnDataContainsNon200Status_whenGenerateAndStoreDocument_thenReturn500() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.INTERNAL_SERVER_ERROR);
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
@@ -338,11 +330,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWell_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String template = "testtemplate";
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         final String fileURL = "fileURL";
         final String mimeType = "mimeType";

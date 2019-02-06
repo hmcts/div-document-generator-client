@@ -50,7 +50,7 @@ configurations {
 bootJar {
     manifest {
         attributes 'Implementation-Title': project.name,
-            'Implementation-Version': project.version
+                   'Implementation-Version': project.version
     }
     archiveName 'div-document-generator.jar'
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 @RunWith(SerenityRunner.class)
-public class GeneratePDFIntegrationTest extends IntegrationTest {
+public class EMStoreIntegrationTest extends IntegrationTest {
 
     private static final String INVALID_TEMPLATE_NAME_JSON = "invalid-template-name.json";
     private static final String INVALID_TEMPLATE_DATA_JSON = "invalid-template-data.json";
@@ -45,10 +45,10 @@ public class GeneratePDFIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus503() throws Exception {
+    public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
         Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.SERVICE_UNAVAILABLE.value(), response.getStatusCode());
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
     }
 
     private String loadJson(final String fileName) throws Exception {

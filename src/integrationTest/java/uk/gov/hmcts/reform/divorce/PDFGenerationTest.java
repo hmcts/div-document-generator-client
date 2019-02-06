@@ -14,18 +14,18 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(SerenityParameterizedRunner.class)
-public class D8MiniPetitionTest extends IntegrationTest {
+public class PDFGenerationTest extends IntegrationTest {
     private static final String DOCUMENT_URL_KEY = "url";
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
 
-    private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/d8minipetition/jsoninput/%s.json";
-    private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/d8minipetition/pdfoutput/%s.pdf";
+    private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/documents/jsoninput/%s.json";
+    private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/documents/pdfoutput/%s.pdf";
 
     private final String inputJson;
     private final String expectedOutput;
 
-    public D8MiniPetitionTest(String fileName) {
+    public PDFGenerationTest(String fileName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, fileName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, fileName);
     }
@@ -56,7 +56,9 @@ public class D8MiniPetitionTest extends IntegrationTest {
                 {"AOS_Hus_Res-Addr_DivUnit-SC"},
                 {"AOS_Wife_Sol-Addr_DivUnit-WM"},
                 {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
-                {"5YearSeparationWithMentalSeparationDate"}
+                {"5YearSeparationWithMentalSeparationDate"},
+                {"AOS_Co-respondent_Online"},
+                {"AOS_Co-respondent_Paper"}
         });
     }
 

@@ -22,9 +22,9 @@ import java.util.Map;
 public class DocumentManagementServiceImpl implements DocumentManagementService {
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
-    private static final String DEFAULT_NAME_FOR_PDF_FILE = "DivorceDocument.pdf";
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
+    private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -72,17 +72,16 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     }
 
     private String getFileNameFromTemplateName(String templateName) {
-        String fileName = null;
 
         switch (templateName) {
-            case "aosinvitation" : fileName = AOS_INVITATION_NAME_FOR_PDF_FILE;
-                break;
-            case "divorceminipetition" : fileName = MINI_PETITION_NAME_FOR_PDF_FILE;
-                break;
-            default : fileName = DEFAULT_NAME_FOR_PDF_FILE;
-                break;
+            case "aosinvitation" :
+                return AOS_INVITATION_NAME_FOR_PDF_FILE;
+            case "divorceminipetition" :
+                return MINI_PETITION_NAME_FOR_PDF_FILE;
+            case "co-respondentinvitation" :
+                return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
+            default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
 
-        return fileName;
     }
 }
