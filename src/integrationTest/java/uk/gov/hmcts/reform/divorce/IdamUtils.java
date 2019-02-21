@@ -3,11 +3,11 @@ package uk.gov.hmcts.reform.divorce;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.divorce.model.CreateUserRequest;
 import uk.gov.hmcts.reform.divorce.model.UserCode;
 
 import java.util.Base64;
-import java.util.Locale;
 import java.util.UUID;
 
 public class IdamUtils {
@@ -31,7 +31,7 @@ public class IdamUtils {
 
     public String generateNewUserAndReturnToken() {
         String username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        String password = UUID.randomUUID().toString().toUpperCase(Locale.UK);
+        String password = "genericPassword123";
         createUserInIdam(username, password);
         return generateUserTokenWithNoRoles(username, password);
     }
@@ -54,7 +54,7 @@ public class IdamUtils {
 
     private void createUserInIdam() {
         idamUsername = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        idamPassword = UUID.randomUUID().toString();
+        idamPassword = "genericPassword123";
 
         createUserInIdam(idamUsername, idamPassword);
     }
@@ -95,6 +95,7 @@ public class IdamUtils {
 
         response = RestAssured.given()
             .relaxedHTTPSValidation()
+            .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
             .post(idamTokenUrl(response.getBody().path("code")));
 
         String token = response.getBody().path("access_token");
