@@ -12,7 +12,9 @@ properties([
 ])
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET")
+    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
+    secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
+    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY")
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -26,4 +28,9 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
     loadVaultSecrets(secrets)
+    setVaultName('div')
+
+    after('functionalTest:saat') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
 }

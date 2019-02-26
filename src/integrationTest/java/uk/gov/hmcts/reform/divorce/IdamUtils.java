@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import net.serenitybdd.rest.SerenityRest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.divorce.model.CreateUserRequest;
@@ -69,7 +70,7 @@ public class IdamUtils {
             .userGroup(UserCode.builder().code("caseworker").build())
             .build();
 
-        RestAssured.given()
+        SerenityRest.given()
             .header("Content-Type", "application/json")
             .body(ResourceLoader.objectToJson(userRequest))
             .post(idamCreateUrl());
@@ -83,7 +84,7 @@ public class IdamUtils {
         String userLoginDetails = String.join(":", username, password);
         final String authHeader = "Basic " + new String(Base64.getEncoder().encode((userLoginDetails).getBytes()));
 
-        Response response = RestAssured.given()
+        Response response = SerenityRest.given()
             .header("Authorization", authHeader)
             .relaxedHTTPSValidation()
             .post(idamCodeUrl());
@@ -93,7 +94,7 @@ public class IdamUtils {
                 + " body: " + response.getBody().prettyPrint());
         }
 
-        response = RestAssured.given()
+        response = SerenityRest.given()
             .relaxedHTTPSValidation()
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
             .post(idamTokenUrl(response.getBody().path("code")));
