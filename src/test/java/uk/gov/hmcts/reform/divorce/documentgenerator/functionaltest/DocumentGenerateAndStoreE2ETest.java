@@ -66,6 +66,11 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
 
+    private static final String FILE_URL = "fileURL";
+    private static final String MIME_TYPE = "mimeType";
+    private static final String CREATED_ON = "createdOn";
+    private static final String CREATED_BY = "createdBy";
+
     @Autowired
     private MockMvc webClient;
 
@@ -91,6 +96,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private DocumentManagementServiceImpl documentManagementService;
 
     private MockRestServiceServer mockRestServiceServer;
+
 
     @Before
     public void before() {
@@ -335,21 +341,11 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        final String fileURL = "fileURL";
-        final String mimeType = "mimeType";
-        final String createdOn = "createdOn";
-        final String createdBy = "createdBy";
 
-        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
-        fileUploadResponse.setFileUrl(fileURL);
-        fileUploadResponse.setMimeType(mimeType);
-        fileUploadResponse.setCreatedOn(createdOn);
-        fileUploadResponse.setCreatedBy(createdBy);
 
-        final GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
-        generatedDocumentInfo.setUrl(fileURL);
-        generatedDocumentInfo.setMimeType(mimeType);
-        generatedDocumentInfo.setCreatedOn(createdOn);
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
@@ -377,21 +373,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
 
-        final String fileURL = "fileURL";
-        final String mimeType = "mimeType";
-        final String createdOn = "createdOn";
-        final String createdBy = "createdBy";
 
-        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
-        fileUploadResponse.setFileUrl(fileURL);
-        fileUploadResponse.setMimeType(mimeType);
-        fileUploadResponse.setCreatedOn(createdOn);
-        fileUploadResponse.setCreatedBy(createdBy);
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
-        final GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
-        generatedDocumentInfo.setUrl(fileURL);
-        generatedDocumentInfo.setMimeType(mimeType);
-        generatedDocumentInfo.setCreatedOn(createdOn);
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
@@ -419,21 +404,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
 
-        final String fileURL = "fileURL";
-        final String mimeType = "mimeType";
-        final String createdOn = "createdOn";
-        final String createdBy = "createdBy";
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
-        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
-        fileUploadResponse.setFileUrl(fileURL);
-        fileUploadResponse.setMimeType(mimeType);
-        fileUploadResponse.setCreatedOn(createdOn);
-        fileUploadResponse.setCreatedBy(createdBy);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
-        generatedDocumentInfo.setUrl(fileURL);
-        generatedDocumentInfo.setMimeType(mimeType);
-        generatedDocumentInfo.setCreatedOn(createdOn);
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
         mockPDFService(HttpStatus.OK, new byte[]{1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
@@ -451,6 +424,53 @@ public class DocumentGenerateAndStoreE2ETest {
                 result.getResponse().getContentAsString());
 
         mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCoRespondentAos_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String coRespondentTemplate = "co-respondentinvitation";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(coRespondentTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus){
+        final FileUploadResponse fileUploadResponse = new FileUploadResponse(httpStatus);
+        fileUploadResponse.setFileUrl(FILE_URL);
+        fileUploadResponse.setMimeType(MIME_TYPE);
+        fileUploadResponse.setCreatedOn(CREATED_ON);
+        fileUploadResponse.setCreatedBy(CREATED_BY);
+        return fileUploadResponse;
+    }
+
+    private GeneratedDocumentInfo getGeneratedDocumentInfo() {
+        GeneratedDocumentInfo generatedDocumentInfo = new GeneratedDocumentInfo();
+        generatedDocumentInfo.setUrl(FILE_URL);
+        generatedDocumentInfo.setMimeType(MIME_TYPE);
+        generatedDocumentInfo.setCreatedOn(CREATED_ON);
+        return generatedDocumentInfo;
     }
 
     private void mockAndSetClock(Instant instant) {
