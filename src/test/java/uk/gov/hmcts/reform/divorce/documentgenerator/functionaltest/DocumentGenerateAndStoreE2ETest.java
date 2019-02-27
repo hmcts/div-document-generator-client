@@ -432,7 +432,8 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = Collections.emptyMap();
         final String securityToken = "securityToken";
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(coRespondentTemplate, values);
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(coRespondentTemplate, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -456,7 +457,7 @@ public class DocumentGenerateAndStoreE2ETest {
         mockRestServiceServer.verify();
     }
 
-    private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus){
+    private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus) {
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(httpStatus);
         fileUploadResponse.setFileUrl(FILE_URL);
         fileUploadResponse.setMimeType(MIME_TYPE);
