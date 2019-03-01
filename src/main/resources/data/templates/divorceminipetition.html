@@ -166,6 +166,7 @@
 {% set claimFrom = caseDetails.case_data.D8DivorceClaimFrom %}
 {% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
 {% set desertionDate = caseDetails.case_data.D8ReasonForDivorceDesertionDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
+{% set reasonForDivorceDesertionAgreed = caseDetails.case_data.D8ReasonForDivorceDesertionAgreed | upper | default("NO") %}
 {% set separationDate = caseDetails.case_data.D8ReasonForDivorceSeperationDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set mentalSeparationDate = caseDetails.case_data.D8MentalSeparationDate %}
 {% set physicalSeparationDate = caseDetails.case_data.D8PhysicalSeparationDate %}
@@ -473,7 +474,6 @@
     {% endif %}
 </p>
 
-
 {% endif %}
 
 {% if reasonForDivorce == "desertion" %}
@@ -481,6 +481,12 @@
 <p class="response-text">
     The applicant has given the date of desertion as {{ desertionDate }}.
 </p>
+
+{% if reasonForDivorceDesertionAgreed == "YES" %}
+    <p class="response-text">
+        The applicant stated that the respondent left without their agreement.
+    </p>
+{% endif %}
 
 <p class="response-text">
     This is supported by the following statement from the applicant.
