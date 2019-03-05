@@ -58,7 +58,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
-                {"AOS_Co-respondent_Paper"}
+                {"AOS_Co-respondent_Paper"},
+                {"Desertion"}
         });
     }
 
