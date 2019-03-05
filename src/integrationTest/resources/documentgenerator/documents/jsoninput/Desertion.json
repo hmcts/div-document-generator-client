@@ -31,6 +31,7 @@
         "D8LegalProceedings": "NO",
         "D8LegalProceedingsDetails": "Insert proper text for the legal proceeding details",
         "D8DerivedPetitionerCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
+        "D8DerivedRespondentCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
         "D8FinancialOrderFor": [
           "children"
         ],
