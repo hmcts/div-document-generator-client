@@ -48,7 +48,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
         String fileName = getFileNameFromTemplateName(templateName);
 
-        return storeDocument(generateDocument(templateName, placeholders), authorizationToken, fileName);
+        byte[] generatedDocument = generateDocument(templateName, placeholders);
+        return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
     @Override

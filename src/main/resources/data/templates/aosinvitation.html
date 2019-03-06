@@ -146,6 +146,12 @@
                 margin-top: 12px;
             }
 
+            .access-code {
+              font-weight: bold;
+              font-family: "Courier New", Courier, monospace;
+              letter-spacing: 1px;
+            }
+
         </style>
     </head>
     <body>
@@ -289,7 +295,7 @@
                     Enter this reference number: <strong>{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</strong>
                 </li>
                 <li class="list-bullet-counter">
-                    Enter your access code: <strong>{{ accessCode }}</strong>
+                    Enter your access code: <span class="access-code">{{ accessCode }}</span>
                 </li>
             </ol>
 
