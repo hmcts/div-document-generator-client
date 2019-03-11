@@ -44,7 +44,7 @@ public class IdamUtils {
             .forename("Test")
             .surname("User")
             .roles(new UserCode[] { UserCode.builder().code("citizen").build() })
-            .userGroup(UserCode.builder().code("divorce-private-beta").build())
+            .userGroup(UserCode.builder().code("citizens").build())
             .build();
 
         RestAssured.given()
