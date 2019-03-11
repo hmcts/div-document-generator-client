@@ -86,6 +86,7 @@ public class IdamUtils {
 
         Response response = SerenityRest.given()
             .header("Authorization", authHeader)
+            .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
             .relaxedHTTPSValidation()
             .post(idamCodeUrl());
 
