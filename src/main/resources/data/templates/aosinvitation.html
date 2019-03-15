@@ -172,7 +172,7 @@
         {% set respondentLastName = caseDetails.case_data.D8RespondentLastName | default("") %}
         {% set respondentsName = respondentFirstName + " " + respondentLastName %}
 
-        {% set husbandOrWife = caseDetails.case_data.D8DivorceWho == "husband" ? "wife" : "husband" %}
+        {% set husbandOrWife = caseDetails.case_data.D8InferredPetitionerGender == "female" ? "wife" : "husband" %}
 
         {% set divorceUnit = caseDetails.case_data.D8DivorceUnit %}
         {% set respondentsAddress = caseDetails.case_data.D8DerivedRespondentCorrespondenceAddr %}
