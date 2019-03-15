@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +46,7 @@ public class IdamUtils {
             .userGroup(UserCode.builder().code("citizens").build())
             .build();
 
-        RestAssured.given()
+        SerenityRest.given()
             .header("Content-Type", "application/json")
             .body(ResourceLoader.objectToJson(userRequest))
             .post(idamCreateUrl());
