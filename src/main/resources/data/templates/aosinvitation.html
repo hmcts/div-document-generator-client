@@ -146,6 +146,10 @@
                 margin-top: 12px;
             }
 
+            .readable-user-case-credentials {
+              font-family: "Courier New", Courier, monospace;
+            }
+
         </style>
     </head>
     <body>
@@ -168,7 +172,7 @@
         {% set respondentLastName = caseDetails.case_data.D8RespondentLastName | default("") %}
         {% set respondentsName = respondentFirstName + " " + respondentLastName %}
 
-        {% set husbandOrWife = caseDetails.case_data.D8DivorceWho == "husband" ? "wife" : "husband" %}
+        {% set husbandOrWife = caseDetails.case_data.D8InferredPetitionerGender == "female" ? "wife" : "husband" %}
 
         {% set divorceUnit = caseDetails.case_data.D8DivorceUnit %}
         {% set respondentsAddress = caseDetails.case_data.D8DerivedRespondentCorrespondenceAddr %}
@@ -286,10 +290,10 @@
                     Create an account using your email address
                 </li>
                 <li class="list-bullet-counter">
-                    Enter this reference number: <strong>{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</strong>
+                    Enter this reference number: <span class="readable-user-case-credentials">{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</span>
                 </li>
                 <li class="list-bullet-counter">
-                    Enter your access code: <strong>{{ accessCode }}</strong>
+                    Enter your access code: <span class="readable-user-case-credentials">{{ accessCode }}</span>
                 </li>
             </ol>
 

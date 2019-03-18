@@ -38,10 +38,13 @@ public class DocumentGeneratorController {
                     response = String.class)
         })
     @PostMapping("/version/1/generatePDF")
-    public GeneratedDocumentInfo generatePDF(@RequestHeader(value = "Authorization", required = false)
-                                                     String authorizationToken, @RequestBody @Valid
+    public GeneratedDocumentInfo generatePDF(
+        @RequestHeader(value = "Authorization", required = false)
+            String authorizationToken,
         @ApiParam(value = "JSON object containing the templateName and the placeholder text map", required = true)
-        GenerateDocumentRequest templateData) {
+        @RequestBody
+        @Valid
+            GenerateDocumentRequest templateData) {
         //This service is internal to Divorce system. No need to do service authentication here
         log.info("Document generation requested with templateName [{}], placeholders map of size[{}]",
                 templateData.getTemplate(), templateData.getValues().size());
