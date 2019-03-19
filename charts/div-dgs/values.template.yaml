@@ -1,0 +1,17 @@
+java:
+    applicationPort: 4007
+    # Don't modify below here
+    image: ${IMAGE_NAME}
+    ingressHost: ${SERVICE_FQDN}
+    environment:
+        REFORM_SERVICE_NAME: "dgs"
+        REFORM_TEAM: "div"
+        AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: "divorce_document_generator"
+        AUTH_PROVIDER_SERVICE_CLIENT_KEY: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY}
+        AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS: "900"
+        VAULTNAME: "div-${ENVIRONMENT_NAME}"
+        EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT: "/health"
+
+
+
+
