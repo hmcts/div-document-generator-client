@@ -17,6 +17,7 @@ import static net.serenitybdd.rest.SerenityRest.given;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
 public abstract class IntegrationTest {
+    private static final String GENERIC_PASSWORD = "genericPassword123";
 
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
@@ -67,12 +68,11 @@ public abstract class IntegrationTest {
 
     private synchronized String getUserToken() {
         username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        String password = UUID.randomUUID().toString();
 
         if (userToken == null) {
-            idamTestSupportUtil.createCaseworkerUserInIdam(username, password);
+            idamTestSupportUtil.createCaseworkerUserInIdam(username, GENERIC_PASSWORD);
 
-            userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(username, password);
+            userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(username, GENERIC_PASSWORD);
         }
 
         return userToken;
