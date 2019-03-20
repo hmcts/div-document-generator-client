@@ -11,6 +11,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class IdamUtils {
+    private static final String GENERIC_PASSWORD = "genericPassword123";
 
     @Value("${auth.idam.client.baseUrl}")
     private String idamUserBaseUrl;
@@ -31,7 +32,7 @@ public class IdamUtils {
 
     public String generateNewUserAndReturnToken() {
         String username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        String password = "genericPassword123";
+        String password = GENERIC_PASSWORD;
         createUserInIdam(username, password);
         return generateUserTokenWithNoRoles(username, password);
     }
@@ -54,7 +55,7 @@ public class IdamUtils {
 
     private void createUserInIdam() {
         idamUsername = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        idamPassword = "genericPassword123";
+        idamPassword = GENERIC_PASSWORD;
 
         createUserInIdam(idamUsername, idamPassword);
     }
