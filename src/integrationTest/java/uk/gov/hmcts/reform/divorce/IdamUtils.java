@@ -32,9 +32,8 @@ public class IdamUtils {
 
     public String generateNewUserAndReturnToken() {
         String username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        String password = GENERIC_PASSWORD;
-        createUserInIdam(username, password);
-        return generateUserTokenWithNoRoles(username, password);
+        createUserInIdam(username, GENERIC_PASSWORD);
+        return generateUserTokenWithNoRoles(username, GENERIC_PASSWORD);
     }
 
     private void createUserInIdam(String username, String password) {
@@ -55,9 +54,8 @@ public class IdamUtils {
 
     private void createUserInIdam() {
         idamUsername = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-        idamPassword = GENERIC_PASSWORD;
 
-        createUserInIdam(idamUsername, idamPassword);
+        createUserInIdam(idamUsername, GENERIC_PASSWORD);
     }
 
     public void createCaseworkerUserInIdam(String username, String password) {
