@@ -3,7 +3,7 @@ version: '3'
 
 services:
   pdf-service-api:
-    image: docker.artifactory.reform.hmcts.net/cmc/pdf-service-api
+    image: hmcts.azurecr.io/hmcts/cmc-pdf-service
     ports:
       - 5500:5500
     environment:
@@ -24,7 +24,7 @@ services:
     healthcheck:
       disable: true
     ports:
-      - 4502:8080
+      - 4502:8489
     environment:
       - 'SPRING_APPLICATION_JSON={
           "auth.provider.service.testing-support.enabled" : true,

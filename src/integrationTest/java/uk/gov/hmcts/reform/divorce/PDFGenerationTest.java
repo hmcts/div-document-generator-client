@@ -60,7 +60,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Same-Sex-Male"},
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
-                {"AOS_Co-respondent_Paper"}
+                {"AOS_Co-respondent_Paper"},
+                {"Desertion"}
         });
     }
 
