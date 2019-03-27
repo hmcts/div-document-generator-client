@@ -47,5 +47,18 @@ withPipeline(type , product, component) {
         echo '${product}-${component} checked out'
     }
 
+    // Kubernetes does not retrieve variables from the output terraform
+    before('functionalTest:preview') {
+        env.test_environment = 'aat'
+    }
+
+    after('functionalTest:preview') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
+    after('functionalTest:aat') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
     enableSlackNotifications(channel)
 }
