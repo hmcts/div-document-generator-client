@@ -112,8 +112,7 @@ public class HealthCheckITest {
     public void givenAllDependenciesAreUp_whenCheckHealth_thenReturnStatusUp() throws Exception {
         mockEndpointAndResponse(evidenceManagementClientHealthUrl, true);
         mockEndpointAndResponse(pdfServiceHealthUrl, true);
-        mockEndpointAndResponse(serviceAuthHealthUrl, true);
-        mockServiceAuthFeignHealthCheck();
+        mockServiceAuthFeignHealthCheck(true);
 
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
@@ -125,7 +124,7 @@ public class HealthCheckITest {
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.details.serviceAuth.status").toString(),
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
             equalTo("UP"));
@@ -135,7 +134,7 @@ public class HealthCheckITest {
     public void givenAllDependenciesAreDown_whenCheckHealth_thenReturnStatusDown() throws Exception {
         mockEndpointAndResponse(evidenceManagementClientHealthUrl, false);
         mockEndpointAndResponse(pdfServiceHealthUrl, false);
-        mockEndpointAndResponse(serviceAuthHealthUrl, false);
+        mockServiceAuthFeignHealthCheck(false);
 
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
@@ -147,7 +146,7 @@ public class HealthCheckITest {
             equalTo("DOWN"));
         assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.details.serviceAuth.status").toString(),
             equalTo("DOWN"));
         assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
             equalTo("UP"));
@@ -157,7 +156,7 @@ public class HealthCheckITest {
     public void givenPDFServiceIsDown_whenCheckHealth_thenReturnStatusDown() throws Exception {
         mockEndpointAndResponse(evidenceManagementClientHealthUrl, true);
         mockEndpointAndResponse(pdfServiceHealthUrl, false);
-        mockEndpointAndResponse(serviceAuthHealthUrl, true);
+        mockServiceAuthFeignHealthCheck(true);
 
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
@@ -170,7 +169,7 @@ public class HealthCheckITest {
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.details.serviceAuth.status").toString(),
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
             equalTo("UP"));
@@ -180,7 +179,7 @@ public class HealthCheckITest {
     public void givenEvidenceManagementClientIsDown_whenCheckHealth_thenReturnStatusDown() throws Exception {
         mockEndpointAndResponse(evidenceManagementClientHealthUrl, false);
         mockEndpointAndResponse(pdfServiceHealthUrl, true);
-        mockEndpointAndResponse(serviceAuthHealthUrl, true);
+        mockServiceAuthFeignHealthCheck(true);
 
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
@@ -192,7 +191,7 @@ public class HealthCheckITest {
             equalTo("DOWN"));
         assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.details.serviceAuth.status").toString(),
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
             equalTo("UP"));
@@ -202,7 +201,7 @@ public class HealthCheckITest {
     public void givenAuthServiceIsDown_whenCheckHealth_thenReturnStatusDown() throws Exception {
         mockEndpointAndResponse(evidenceManagementClientHealthUrl, true);
         mockEndpointAndResponse(pdfServiceHealthUrl, true);
-        mockEndpointAndResponse(serviceAuthHealthUrl, false);
+        mockServiceAuthFeignHealthCheck(false);
 
         HttpResponse response = getHealth();
         String body = EntityUtils.toString(response.getEntity());
@@ -214,7 +213,7 @@ public class HealthCheckITest {
             equalTo("UP"));
         assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.details.serviceAuth.status").toString(),
             equalTo("DOWN"));
         assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
             equalTo("UP"));
@@ -227,10 +226,10 @@ public class HealthCheckITest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
-    private void mockServiceAuthFeignHealthCheck() {
+    private void mockServiceAuthFeignHealthCheck(boolean serviceUp) {
         serviceAuthServer.stubFor(get(serviceAuthHealthContextPath)
                 .willReturn(aResponse()
-                        .withStatus(HttpStatus.OK.value())
+                        .withStatus(serviceUp ? HttpStatus.OK.value() : HttpStatus.SERVICE_UNAVAILABLE.value())
                         .withHeader(CONTENT_TYPE, APPLICATION_JSON_UTF8_VALUE)
                         .withBody(HEALTH_UP_RESPONSE)));
     }
