@@ -155,6 +155,8 @@
 {% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | upper | default("NO") %}
 {% set adulteryWhenDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhenDetails | default("The applicant does not know when the adultery took place") %}
 {% set adulteryWhereDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhereDetails | default("The applicant does not know where the adultery took place") %}
+{% set adulterySecondHandInfoDetails = caseDetails.case_data.D8ReasonForDivorceAdultery2ndHandDetails | default("") %}
+{% set adulterySecondHandInfo = caseDetails.case_data.D8ReasonForDivorceAdulteryAnyInfo2ndHand | upper | default("NO") %}
 {% set legalProceedings = caseDetails.case_data.D8LegalProceedings | upper | default("NO") %}
 {% set legalProceedingsDetails = caseDetails.case_data.D8LegalProceedingsDetails | default("") %}
 {% set applicantsAddress = caseDetails.case_data.D8DerivedPetitionerCorrespondenceAddr  %}
@@ -421,6 +423,19 @@
     "{{ adulteryDetails }}"
     {% endautoescape %}
 </p>
+
+{% if adulterySecondHandInfo == "YES" %}
+<p class="response-text">
+    {% autoescape false %}
+    "The applicant stated that some of this information was given to them by another person and provided the following details:"
+    {% endautoescape %}
+</p>
+<p class="response-text">
+    {% autoescape false %}
+    "{{ adulterySecondHandInfoDetails }}"
+    {% endautoescape %}
+</p>
+{% endif %}
 
 <p class="heading-small">Where the adultery took place</p>
 <p class="response-text">

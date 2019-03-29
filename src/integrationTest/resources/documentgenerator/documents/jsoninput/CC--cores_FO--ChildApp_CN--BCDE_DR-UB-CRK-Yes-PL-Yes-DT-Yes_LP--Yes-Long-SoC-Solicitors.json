@@ -14,6 +14,8 @@
             "correspondent"
           ],
           "D8FinancialOrder": "YES",
+          "D8ReasonForDivorceAdulteryAnyInfo2ndHand": "YES",
+          "D8ReasonForDivorceAdultery2ndHandDetails": "Someone else told me the adultery happened",
           "D8FinancialOrderFor": [
             "petitioner",
             "children"
