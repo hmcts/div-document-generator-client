@@ -69,8 +69,12 @@
             font-size: 23pt;
             font-weight: 700;
             margin-top: 50px;
-            margin-bottom: 20px;
             text-align: center;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .response-text {
@@ -120,8 +124,8 @@
 ></img>
 
 
-<h1 class="heading-large">Application for divorce</h1>
-
+{% set previousCaseId = caseDetails.case_data.PreviousCaseId  %}
+{% set previousIssueDate = caseDetails.case_data.PreviousIssueDate |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
 {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
 {% set referenceNo = caseDetails.case_data.D8caseReference  %}
 
@@ -173,6 +177,10 @@
 {% set mentalSeparationDate = caseDetails.case_data.D8MentalSeparationDate %}
 {% set physicalSeparationDate = caseDetails.case_data.D8PhysicalSeparationDate %}
 
+<h1 class="heading-large">Divorce application (petition)</h1>
+{% if previousCaseId is not empty %}
+    <h2 class="title heading-small">Amended and reissued {{ issueDate }}</h2>
+{% endif %}
 
 <p class="response-text">
     {% autoescape false %}
@@ -202,7 +210,11 @@
 </p>
 
 <p class="heading-small">Issued</p>
-<p class="response-text">{{ issueDate }}</p>
+{% if previousCaseId is empty %} 
+    <p class="response-text">{{ issueDate }}</p>
+{% else %}
+    <p class="response-text">{{ previousIssueDate }}</p>
+{% endif %}
 
 <p class="heading-small">Reference number</p>
 <p class="response-text">{{ referenceNo }}</p>
