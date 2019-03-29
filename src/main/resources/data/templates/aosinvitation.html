@@ -154,6 +154,7 @@
     </head>
     <body>
 
+        {% set previousCaseId = caseDetails.case_data.PreviousCaseId  %}
         {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
         {% set caseId = caseDetails.id  %}
         {% set referenceNo = caseDetails.case_data.D8caseReference  %}
@@ -263,7 +264,11 @@
             </div>
             {% else %}
             <div class="response-text">
-                Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has applied for a divorce.
+                {% if previousCaseId is not empty %}
+                     Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has submitted an amended petition for divorce.
+                {% else %}
+                     Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has applied for a divorce.
+                {% endif %}
             </div>
 
             <div class="response-text">
