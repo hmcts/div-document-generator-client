@@ -58,7 +58,7 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
                 {"AOS_Same-Sex-Female"},
                 {"AOS_Same-Sex-Male"},
-                {"AOS_Same-Sex-Male-Amend-Case"},
+                {"AOS_Amend_Petition"},
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
                 {"AOS_Co-respondent_Paper"},
