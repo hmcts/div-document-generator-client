@@ -26,6 +26,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
+    private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -83,6 +84,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
             case "respondentAnswers" :
                 return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
+            case "co-respondent-answers" :
+                return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
 

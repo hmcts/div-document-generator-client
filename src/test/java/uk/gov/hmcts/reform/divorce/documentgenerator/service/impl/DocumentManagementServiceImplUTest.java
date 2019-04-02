@@ -49,6 +49,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
+    private static final String CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
 
     @Rule
@@ -182,6 +183,40 @@ public class DocumentManagementServiceImplUTest {
             .invoke("storeDocument", data, authToken, RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE);
     }
 
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoRespondentAnswers_thenProceedAsExpected()
+        throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = "co-respondent-answers";
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE);
+    }
 
     @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsMiniPetition_thenProceedAsExpected() throws Exception {
