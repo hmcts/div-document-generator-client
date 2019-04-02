@@ -12,7 +12,7 @@ data:
   PDF_SERVICE_BASEURL : "http://cmc-pdf-service-aat.service.core-compute-aat.internal"
   REFORM_SERVICE_NAME : "dgs"
   EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT : "/health"
-  EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL : "http://div-emca-aat.service.core-compute-aat.internal"
+  EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL : "http://div-emca-pr-91.service.core-compute-preview.internal"
   AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS : "900"
   REFORM_TEAM : "div"
   ENVIRONMENT_NAME : "aat"
