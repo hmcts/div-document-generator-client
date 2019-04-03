@@ -128,27 +128,27 @@
 {% set reasonForDivorce = caseDetails.case_data.D8ReasonForDivorce %}
 {% set respAdmitOrConsentToFact = caseDetails.case_data.RespAdmitOrConsentToFact | upper | default("") %}
 {% set respHardshipDefenseResponse = caseDetails.case_data.RespHardshipDefenseResponse | upper | default("") %}
-{% set respHardshipDescription = caseDetails.case_data.RespHardshipDescription | upper | default("") %}
+{% set respHardshipDescription = caseDetails.case_data.RespHardshipDescription %}
 {% set respConsiderFinancialSituation = caseDetails.case_data.RespConsiderFinancialSituation | upper | default("") %}
 {% set respJurisdictionAgree = caseDetails.case_data.RespJurisdictionAgree | upper | default("") %}
-{% set respJurisdictionDisagreeReason = caseDetails.case_data.RespJurisdictionDisagreeReason | upper | default("") %}
-{% set respJurisdictionRespCountryOfResidence = caseDetails.case_data.RespJurisdictionRespCountryOfResidence | upper | default("") %}
+{% set respJurisdictionDisagreeReason = caseDetails.case_data.RespJurisdictionDisagreeReason %}
+{% set respJurisdictionRespCountryOfResidence = caseDetails.case_data.RespJurisdictionRespCountryOfResidence %}
 {% set respLegalProceedingsExist = caseDetails.case_data.RespLegalProceedingsExist | upper | default("") %}
-{% set respLegalProceedingsDescription = caseDetails.case_data.RespLegalProceedingsDescription | upper | default("") %}
+{% set respLegalProceedingsDescription = caseDetails.case_data.RespLegalProceedingsDescription %}
 {% set respAgreeToCosts = caseDetails.case_data.RespAgreeToCosts | upper | default("") %}
-{% set respCostsReason = caseDetails.case_data.RespCostsReason | upper | default("") %}
+{% set respCostsReason = caseDetails.case_data.RespCostsReason %}
 
- <h1 class="heading-large">Response to a divorce application</h1>
+<h1 class="heading-large">Response to a divorce application</h1>
 <h2 class="title heading-small">Acknowledgement of service by the respondent</h2>
 
- <p class="heading-small">Issued</p>
+<p class="heading-small">Issued</p>
 <p class="response-text">{{ issueDate }}</p>
 
 
- <p class="heading-small">Reference number</p>
+<p class="heading-small">Reference number</p>
 <p class="response-text">{{ referenceNo }}</p>
 
- <p class="heading-small">Applicant</p>
+<p class="heading-small">Applicant</p>
 <p class="response-text">
     {% autoescape false %}
     {{ husbandOrWifeNamed }}
@@ -162,7 +162,7 @@
     {% endautoescape %}
 </p>
 
- {% if isCorrespondentNamed == "YES" %}
+{% if isCorrespondentNamed == "YES" %}
 <p class="heading-small">Co-respondent</p>
 <p class="response-text">
     {% autoescape false %}
@@ -171,109 +171,147 @@
 </p>
 {% endif %}
 
- <p class="heading-small">How the respondent wants to proceed</p>
-<p class="response-text">
-    {% autoescape false %}
+<p class="heading-small">How the respondent wants to proceed</p>
 
-     {% if respWillDefendDivorce == "NO" %}
+{% autoescape false %}
+    {% if respWillDefendDivorce == "NO" %}
+    <p class="response-text">
         The respondent will try to prevent the divorce based on this application (they intend to 'defend' it).
+    </p>
     {% elseif respWillDefendDivorce == "NONOADMISSION" %}
+    <p class="response-text">
         The respondent will let the divorce proceed (doesn't intend to 'defend' it).
+    </p>
     {% elseif respWillDefendDivorce == "YES" %}
+    <p class="response-text">
         The respondent will let the divorce proceed (doesn't intend to 'defend' it), but doesn't accept the allegations made in the application.
+    </p>
     {% endif %}
 
-     {% if reasonForDivorce == "adultery" %}
+    {% if reasonForDivorce == "adultery" %}
         {% if respAdmitOrConsentToFact == "YES" %}
+        <p class="response-text">
             The respondent admits to committing the adultery.
+        </p>
         {% elseif respAdmitOrConsentToFact == "NO" %}
+        <p class="response-text">
             The respondent does not admit to committing the adultery.
+        </p>
         {% endif %}
     {% endif %}
 
-     {% if reasonForDivorce == "separation-2-years" %}
+    {% if reasonForDivorce == "separation-2-years" %}
         {% if respAdmitOrConsentToFact == "YES" %}
+        <p class="response-text">
            The respondent consents to a divorce.
+        </p>
         {% elseif respAdmitOrConsentToFact == "NO" %}
+        <p class="response-text">
             The respondent does not consent to a divorce.
+        </p>
         {% endif %}
     {% endif %}
 
-     {% if reasonForDivorce == "separation-5-years" and respWillDefendDivorce == "YES" %}
+    {% if reasonForDivorce == "separation-5-years" and respWillDefendDivorce == "YES" %}
         {% if respHardshipDefenseResponse == "YES" %}
+        <p class="response-text">
             The respondent is defending on the basis that it will cause them severe hardship and provided the following explanation: 
-            <p class="response-text">
-                {% autoescape false %}
+        </p>
+        <p class="response-text">
+            {% autoescape false %}
                 "{{ respHardshipDescription }}"
-                {% endautoescape %}
-            </p>
+            {% endautoescape %}
+        </p>
         {% elseif respHardshipDefenseResponse == "NO" %}
+        <p class="response-text">
             The respondent is not defending on the basis that it will cause them severe hardship.
+        </p>
         {% endif %}
     {% endif %}
 
-     {% if reasonForDivorce == "separation-5-years" or reasonForDivorce == "separation-2-years" %}
+    {% if reasonForDivorce == "separation-5-years" or reasonForDivorce == "separation-2-years" %}
         {% if respConsiderFinancialSituation == "YES" %}
+        <p class="response-text">
             The respondent is intending to ask the court to delay the divorce until it’s satisfied with their financial situation.
+        </p>
         {% elseif respConsiderFinancialSituation == "NO" %}
+        <p class="response-text">
             The respondent is not intending to ask the court to delay the divorce until it’s satisfied with their financial situation.
+        </p>
         {% endif %}
     {% endif %}
+{% endautoescape %}
 
-     {% endautoescape %}
-</p>
+<p class="heading-small">Jurisdiction of the court</p>
+{% autoescape false %}
+    {% if respJurisdictionAgree == "YES" %}
+    <p class="response-text">
+        The respondent agrees that the courts of England and Wales have the jurisdiction (the legal power) to grant a divorce.
+    </p>
+    {% elseif respJurisdictionAgree == "NO" %}
+    <p class="response-text">
+        The respondent does not agree that the courts of England and Wales have the jurisdiction (the legal power) to grant a divorce.
+    </p>
+    <p class="response-text">
+        They gave the following statement to support this:
+    </p>
+    <p class="response-text">
+        "{{ respJurisdictionDisagreeReason }}"
+    </p>
+    <p class="response-text">
+        They were asked in which country their life is mainly based. They responded:
+    </p>
+    <p class="response-text">
+        "{{ respJurisdictionRespCountryOfResidence }}"
+    </p>
+    {% endif %}
+{% endautoescape %}
 
- <p class="heading-small">Jurisdiction of the court</p>
-<p class="response-text">
-    {% autoescape false %}
-        {% if respJurisdictionAgree == "YES" %}
-            The respondent agrees that the courts of England and Wales have the jurisdiction (the legal power) to grant a divorce.
-        {% elseif respJurisdictionAgree == "NO" %}
-            The respondent does not agree that the courts of England and Wales have the jurisdiction (the legal power) to grant a divorce.
-            They gave the following statement to support this:
-            {{ respJurisdictionDisagreeReason }}
-            They were asked in which country their life is mainly based. They responded:
-            {{ respJurisdictionRespCountryOfResidence }}
-        {% endif %}
-    {% endautoescape %}
-</p>
+<p class="heading-small">Other court cases that could affect jurisdiction</p>
+{% autoescape false %}
+    {% if respLegalProceedingsExist == "YES" %}
+    <p class="response-text">
+        The respondent said there are other proceedings outside of England and Wales which are related to the marriage or which may affect its validity (how legally binding the marriage is).
+    </p>
+    <p class="response-text">
+        They gave the following statement to support this:
+    </p>
+    <p class="response-text">
+        "{{ respLegalProceedingsDescription }}"
+    </p>
+    {% elseif respLegalProceedingsExist == "NO" %}
+    <p class="response-text">
+        The respondent said there are no other proceedings outside of England and Wales which are related to the marriage or which may affect its validity (how legally binding the marriage is).
+    </p>
+    {% endif %}
+{% endautoescape %}
 
- <p class="heading-small">Other court cases that could affect jurisdiction</p>
-<p class="response-text">
-    {% autoescape false %}
-        {% if respLegalProceedingsExist == "YES" %}
-            The respondent said there are other proceedings outside of England and Wales which are related to the marriage or which may affect its validity (how legally binding the marriage is).
-            They gave the following statement to support this:
-            {{ respLegalProceedingsDescription }}
-        {% elseif respLegalProceedingsExist == "NO" %}
-            The respondent said there are no other proceedings outside of England and Wales which are related to the marriage or which may affect its validity (how legally binding the marriage is).
-        {% endif %}
-    {% endautoescape %}
-</p>
+<p class="heading-small">Costs order</p>
+{% autoescape false %}
+    {% if respAgreeToCosts == "YES" %} 
+    <p class="response-text">
+        The respondent has agreed to pay some or all of the costs of the divorce.
+    </p>
+    {% elseif respAgreeToCosts == "NO" %}
+    <p class="response-text">
+        The respondent has said they should not pay costs and gave the following explanation about why they should not pay:
+    </p>
+    <p class="response-text">
+        "{{ respCostsReason }}"
+    </p>
+    {% endif %}
+{% endautoescape %}
 
- <p class="heading-small">Costs order</p>
-<p class="response-text">
-    {% autoescape false %}
-        {% if respAgreeToCosts == "YES" %}
-            The respondent has agreed to pay some or all of the costs of the divorce.
-        {% elseif respAgreeToCosts == "NO" %}
-            The respondent has said they should not pay costs and gave the following explanation about why they should not pay:
-            They gave the following statement to support this:
-            {{ respCostsReason }}
-        {% endif %}
-    {% endautoescape %}
-</p>
-
- <p class="single-block">
-<h2 class="heading-medium">Statement of truth</h2>
-<p class="response-text">
-    "I believe that the facts stated in this application are true."
-</p>
-<p class="signature">
-    {% autoescape false %}
-    {{ respondentsName }}
-    {% endautoescape %}
-</p>
+<p class="single-block">
+    <h2 class="heading-medium">Statement of truth</h2>
+    <p class="response-text">
+        "I believe that the facts stated in this application are true."
+    </p>
+    <p class="signature">
+        {% autoescape false %}
+        {{ respondentsName }}
+        {% endautoescape %}
+    </p>
 </p>
 
  </body>
