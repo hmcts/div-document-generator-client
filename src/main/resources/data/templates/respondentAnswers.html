@@ -176,15 +176,15 @@
 {% autoescape false %}
     {% if respWillDefendDivorce == "NO" %}
     <p class="response-text">
-        The respondent will try to prevent the divorce based on this application (they intend to 'defend' it).
+        The respondent will let the divorce proceed (doesn't intend to 'defend' it).
     </p>
     {% elseif respWillDefendDivorce == "NONOADMISSION" %}
     <p class="response-text">
-        The respondent will let the divorce proceed (doesn't intend to 'defend' it).
+        The respondent will let the divorce proceed (doesn't intend to 'defend' it), but doesn't accept the allegations made in the application.
     </p>
     {% elseif respWillDefendDivorce == "YES" %}
     <p class="response-text">
-        The respondent will let the divorce proceed (doesn't intend to 'defend' it), but doesn't accept the allegations made in the application.
+        The respondent will try to prevent the divorce based on this application (they intend to 'defend' it).
     </p>
     {% endif %}
 
@@ -303,7 +303,7 @@
 {% endautoescape %}
 
 <p class="single-block">
-    <h2 class="heading-medium">Statement of truth</h2>
+    <h2 class="heading-small">Statement of truth</h2>
     <p class="response-text">
         "I believe that the facts stated in this application are true."
     </p>
