@@ -146,7 +146,7 @@
     {% endautoescape %}
 </p>
 
- <p class="heading-small">Respondent</p>
+<p class="heading-small">Respondent</p>
 <p class="response-text">
     {% autoescape false %}
     {{ respondentsName }}
@@ -162,7 +162,7 @@
 </p>
 {% endif %}
 
-<p class="heading-small">How the respondent wants to proceed</p>
+<p class="heading-medium">How the respondent wants to proceed</p>
 
 {% autoescape false %}
     {% if respWillDefendDivorce == "NO" %}
@@ -233,7 +233,7 @@
     {% endif %}
 {% endautoescape %}
 
-<p class="heading-small">Jurisdiction of the court</p>
+<p class="heading-medium">Jurisdiction of the court</p>
 {% autoescape false %}
     {% if respJurisdictionAgree == "YES" %}
     <p class="response-text">
@@ -258,7 +258,7 @@
     {% endif %}
 {% endautoescape %}
 
-<p class="heading-small">Other court cases that could affect jurisdiction</p>
+<p class="heading-medium">Other court cases that could affect jurisdiction</p>
 {% autoescape false %}
     {% if respLegalProceedingsExist == "YES" %}
     <p class="response-text">
@@ -277,7 +277,7 @@
     {% endif %}
 {% endautoescape %}
 
-<p class="heading-small">Costs order</p>
+<p class="heading-medium">Costs order</p>
 {% autoescape false %}
     {% if respAgreeToCosts == "YES" %} 
     <p class="response-text">
@@ -294,7 +294,7 @@
 {% endautoescape %}
 
 <p class="single-block">
-    <h2 class="heading-small">Statement of truth</h2>
+    <h2 class="heading-medium">Statement of truth</h2>
     <p class="response-text">
         "I believe that the facts stated in this application are true."
     </p>
