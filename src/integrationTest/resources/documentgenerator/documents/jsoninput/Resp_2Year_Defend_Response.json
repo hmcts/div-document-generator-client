@@ -17,7 +17,6 @@
         "D8ReasonForDivorce": "separation-2-years",
         "RespWillDefendDivorce": "YES",
         "RespAdmitOrConsentToFact": "NO",
-        "RespConsiderFinancialSituation": "YES",
         "RespJurisdictionAgree": "YES",
         "RespJurisdictionDisagreeReason": "Dummy respJurisdictionDisagreeReason",
         "RespJurisdictionRespCountryOfResidence": "India",

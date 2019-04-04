@@ -18,7 +18,6 @@
         "RespWillDefendDivorce": "YES",
         "RespHardshipDefenseResponse": "YES",
         "RespHardshipDescription": "Dummy respHardshipDescription",
-        "RespConsiderFinancialSituation": "YES",
         "RespJurisdictionAgree": "YES",
         "RespJurisdictionDisagreeReason": "Dummy respJurisdictionDisagreeReason",
         "RespJurisdictionRespCountryOfResidence": "India",
