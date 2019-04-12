@@ -25,6 +25,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
+    private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -64,7 +65,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     public byte[] generateDocument(String templateName, Map<String, Object> placeholders) {
         log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
                 templateName, placeholders.size());
-
         byte[] templateBytes = templateManagementService.getTemplateByName(templateName);
 
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
@@ -81,6 +81,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return MINI_PETITION_NAME_FOR_PDF_FILE;
             case "co-respondentinvitation" :
                 return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
+            case "respondentAnswers" :
+                return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
 
