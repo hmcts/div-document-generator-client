@@ -1,0 +1,15 @@
+java:
+    applicationPort: 4007
+    environment:
+        REFORM_SERVICE_NAME: "dgs"
+        REFORM_TEAM: "div"
+        AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: "divorce_document_generator"
+        AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS: "900"
+        EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT: "/health"
+    keyVaults:
+        "div":
+            resourceGroup: div   
+            secrets:
+                - div-doc-s2s-auth-secret
+
+
