@@ -49,7 +49,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
-    private static final String CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
+    private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
 
     @Rule
@@ -206,7 +206,7 @@ public class DocumentManagementServiceImplUTest {
             "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "storeDocument", byte[].class, String.class, String.class))
-            .withArguments(data, authToken, CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE);
+            .withArguments(data, authToken, CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
@@ -215,7 +215,7 @@ public class DocumentManagementServiceImplUTest {
         verifyPrivate(classUnderTest, Mockito.times(1))
             .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("storeDocument", data, authToken, CO_RESPONDENT_ANASWERS_NAME_FOR_PDF_FILE);
+            .invoke("storeDocument", data, authToken, CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE);
     }
 
     @Test
