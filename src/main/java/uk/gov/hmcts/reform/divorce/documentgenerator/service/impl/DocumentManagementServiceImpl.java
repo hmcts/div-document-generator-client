@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
@@ -32,6 +33,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private TemplateManagementService templateManagementService;
 
     @Autowired
+    @Qualifier("pdfGenerator")
     private PDFGenerationService pdfGenerationService;
 
     @Autowired
@@ -65,11 +67,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
                 templateName, placeholders.size());
 
-        byte[] templateBytes = templateManagementService.getTemplateByName(templateName);
-
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
 
-        return pdfGenerationService.generateFromHtml(templateBytes, formattedPlaceholders);
+        return pdfGenerationService.generate(templateName, formattedPlaceholders);
     }
 
     private String getFileNameFromTemplateName(String templateName) {
