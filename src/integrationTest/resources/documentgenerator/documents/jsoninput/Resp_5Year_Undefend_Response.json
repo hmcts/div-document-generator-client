@@ -1,0 +1,31 @@
+{ "template" : "respondentAnswers",
+  "values": {
+    "caseDetails" : {
+      "id": "1517833758870511",
+      "jurisdiction": "DIVORCE",
+      "state": "Issued",
+      "case_type_id": "DIVORCE",
+      "created_date": "2018-02-05T12:29:17.81",
+      "last_modified": "2018-02-05T14:57:11.346",
+      "security_classification": "PUBLIC",
+      "case_data": {
+        "D8caseReference": "LV17D80100",
+        "D8PetitionerFirstName": "Petitioner First Name",
+        "D8PetitionerLastName": "Petitioner Last Name",
+        "D8RespondentFirstName": "Respondent First Name",
+        "D8RespondentLastName": "Respondent Last Name",
+        "D8ReasonForDivorce": "separation-5-years",
+        "RespWillDefendDivorce": "NO",
+        "RespHardshipDefenseResponse": "NO",
+        "RespHardshipDescription": "Dummy respHardshipDescription",
+        "RespJurisdictionAgree": "NO",
+        "RespJurisdictionDisagreeReason": "Dummy respJurisdictionDisagreeReason",
+        "RespJurisdictionRespCountryOfResidence": "India",
+        "RespLegalProceedingsExist": "NO",
+        "RespLegalProceedingsDescription": "Dummy respLegalProceedingsDescription",
+        "RespAgreeToCosts": "NO",
+        "RespCostsReason": "Dummy respCostsReason"
+      }
+    }
+  }
+}

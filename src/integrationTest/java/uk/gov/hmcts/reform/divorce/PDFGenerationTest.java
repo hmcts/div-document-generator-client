@@ -62,7 +62,22 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
                 {"AOS_Co-respondent_Paper"},
-                {"Desertion"}
+                {"Desertion"},
+                {"Desertion-Amend-Case"},
+                {"Resp_2Year_Defend_Response"},
+                {"Resp_2Year_Undefend_Response"},
+                {"Resp_5Year_Defend_Response"},
+                {"Resp_5Year_Undefend_Response"},
+                {"Resp_Adultery_Defend_Response"},
+                {"Resp_Adultery_Undefend_Response"},
+                {"Resp_Behaviour_Defend_Response"},
+                {"Resp_Behaviour_Undefend_noAdmit_Response"},
+                {"Resp_Behaviour_Undefend_Response"},
+                {"Resp_Desertion_Defend_Response"},
+                {"Resp_Desertion_Undefend_noAdmit_Response"},
+                {"Resp_Desertion_Undefend_Response"},
+                {"co-respondent-answers-defended-admit-costs"},
+                {"co-respondent-answers-undefended-no-admit-no-costs"}
         });
     }
 

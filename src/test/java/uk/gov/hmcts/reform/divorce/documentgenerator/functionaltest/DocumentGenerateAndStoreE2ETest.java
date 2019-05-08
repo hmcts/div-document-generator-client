@@ -458,6 +458,68 @@ public class DocumentGenerateAndStoreE2ETest {
         mockRestServiceServer.verify();
     }
 
+    @Test
+    public void givenAllGoesWellForDivorceRespondentAnswers_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String respondentAnsTemplate = "respondentAnswers";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(respondentAnsTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCoRespondentAnswers_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String coRespondentTemplate = "co-respondent-answers";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(coRespondentTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
     private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus) {
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(httpStatus);
         fileUploadResponse.setFileUrl(FILE_URL);

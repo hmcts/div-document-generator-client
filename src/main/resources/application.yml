@@ -118,10 +118,8 @@ logging:
 azure:
   app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
 
-
 docmosis:
     service:
         pdf-service:
             uri: "http://localhost:4012"
             accessKey: "23432"
-
