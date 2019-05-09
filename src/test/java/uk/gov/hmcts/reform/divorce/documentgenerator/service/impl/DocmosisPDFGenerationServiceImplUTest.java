@@ -30,6 +30,7 @@ import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 
@@ -85,6 +86,8 @@ public class DocmosisPDFGenerationServiceImplUTest {
             assertEquals(httpClientErrorException, exception.getCause());
         }
         NullOrEmptyValidator.requireNonBlank(template);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("request", template, placeholders);
     }
 
     @Test
