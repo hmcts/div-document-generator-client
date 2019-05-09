@@ -128,6 +128,7 @@
 {% set respLegalProceedingsDescription = caseDetails.case_data.RespLegalProceedingsDescription %}
 {% set respAgreeToCosts = caseDetails.case_data.RespAgreeToCosts | upper | default("") %}
 {% set respCostsReason = caseDetails.case_data.RespCostsReason %}
+ {% set costsBeingClaimed = caseDetails.case_data.D8DivorceCostsClaim | upper | default("NO") %}
 
 <h1 class="heading-large">Response to a divorce application</h1>
 <h2 class="title heading-small">Acknowledgement of service by the respondent</h2>
@@ -206,7 +207,7 @@
     {% if reasonForDivorce == "separation-5-years" and respWillDefendDivorce == "YES" %}
         {% if respHardshipDefenseResponse == "YES" %}
         <p class="response-text">
-            The respondent is defending on the basis that it will cause them severe hardship and provided the following explanation: 
+            The respondent is defending on the basis that it will cause them severe hardship and provided the following explanation:
         </p>
         <p class="response-text">
             {% autoescape false %}
@@ -277,9 +278,11 @@
     {% endif %}
 {% endautoescape %}
 
-<p class="heading-medium">Costs order</p>
+{% if costsBeingClaimed == "YES" %}
+    <p class="heading-medium">Costs order</p>
+{% endif %}
 {% autoescape false %}
-    {% if respAgreeToCosts == "YES" %} 
+    {% if respAgreeToCosts == "YES" %}
     <p class="response-text">
         The respondent has agreed to pay some or all of the costs of the divorce.
     </p>
