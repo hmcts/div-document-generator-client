@@ -58,6 +58,20 @@ API documentation is provided with Swagger:
 
 ## Developing
 
+### Integration tests
+
+To run all integration tests locally:
+
+* Make a copy of `src/main/resources/example-application-aat.yaml` as `src/main/resources/application-aat.yaml`
+* Make a copy of `src/integrationTest/resources/example-application-local.properties` as `src/integrationTest/resources/application-local.properties`
+* Replace the `replace_me` secrets in the _newly created_ files. You can get the values from SCM and Azure secrets key vault (the new files are in .gitignore and should ***not*** be committed to git)
+* Assuming you use IntelliJ, run your application with the following VM options:
+    * `-Dspring.profiles.active=aat -Dhttp.proxyHost=proxyout.reform.hmcts.net -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxyout.reform.hmcts.net -Dhttps.proxyPort=8080`
+    * And then run your gradle functional tests task
+* Or if using command line:
+    * Start the app with AAT config using `./gradlew clean bootRunAat`
+    * Start the test with AAT config using `./gradlew clean functional`
+
 ### Unit tests
 
 To run all unit tests please execute following command:
