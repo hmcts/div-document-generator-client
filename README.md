@@ -66,7 +66,7 @@ To run all integration tests locally:
 * Make a copy of `src/integrationTest/resources/example-application-local.properties` as `src/integrationTest/resources/application-local.properties`
 * Replace the `replace_me` secrets in the _newly created_ files. You can get the values from SCM and Azure secrets key vault (the new files are in .gitignore and should ***not*** be committed to git)
 * Assuming you use IntelliJ, run your application with the following VM options:
-    * `-Dspring.profiles.active=aat -Dhttp.proxyHost=proxyout.reform.hmcts.net -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxyout.reform.hmcts.net -Dhttps.proxyPort=8080`
+    * `http_proxy=http://proxyout.reform.hmcts.net:8080;SPRING_PROFILES_ACTIVE=aat`
     * And then run your gradle functional tests task
 * Or if using command line:
     * Start the app with AAT config using `./gradlew clean bootRunAat`

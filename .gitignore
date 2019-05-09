@@ -21,4 +21,5 @@ target/
 src/main/resources/version
 java-rpm-packaging/
 application-*.yml
+application-*.yaml
 application-local.properties

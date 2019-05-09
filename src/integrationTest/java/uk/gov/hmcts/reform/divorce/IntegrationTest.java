@@ -56,11 +56,14 @@ public abstract class IntegrationTest {
         if (!Strings.isNullOrEmpty(httpProxy)) {
             try {
                 URL proxy = new URL(httpProxy);
-                InetAddress.getByName(proxy.getHost()).isReachable(2000); // check proxy connectivity
-                System.setProperty("http.proxyHost", proxy.getHost());
-                System.setProperty("http.proxyPort", Integer.toString(proxy.getPort()));
-                System.setProperty("https.proxyHost", proxy.getHost());
-                System.setProperty("https.proxyPort", Integer.toString(proxy.getPort()));
+                if (InetAddress.getByName(proxy.getHost()).isReachable(2000)) {
+                    System.setProperty("http.proxyHost", proxy.getHost());
+                    System.setProperty("http.proxyPort", Integer.toString(proxy.getPort()));
+                    System.setProperty("https.proxyHost", proxy.getHost());
+                    System.setProperty("https.proxyPort", Integer.toString(proxy.getPort()));
+                } else {
+                    throw new IOException();
+                }
             } catch (IOException e) {
                 log.error("Error setting up proxy - are you connected to the VPN?", e);
                 throw new RuntimeException(e);
