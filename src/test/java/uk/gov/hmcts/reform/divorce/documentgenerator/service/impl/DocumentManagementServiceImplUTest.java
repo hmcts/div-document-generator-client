@@ -19,7 +19,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDo
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.time.Clock;
@@ -54,9 +53,6 @@ public class DocumentManagementServiceImplUTest {
 
     @Rule
     public ExpectedException expectedException = none();
-
-    @Mock
-    private TemplateManagementService templateManagementService;
 
     @Mock
     private PDFGenerationService pdfGenerationService;
@@ -276,23 +272,21 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void whenGenerateDocument_thenProceedAsExpected() {
         final byte[] expected = {1};
-        final byte[] template = {2};
+        final String template = "2";
         final Map<String, Object> placeholderMap = emptyMap();
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
-        when(templateManagementService.getTemplateByName(A_TEMPLATE)).thenReturn(template);
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
-        when(pdfGenerationService.generateFromHtml(template, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
 
         assertEquals(expected, actual);
 
-        Mockito.verify(templateManagementService, Mockito.times(1)).getTemplateByName(A_TEMPLATE);
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-                .generateFromHtml(template, formattedPlaceholderMap);
+                .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {

@@ -312,7 +312,8 @@ def sonarExclusions = [
     '**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java',
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/service/impl/DocmosisPDFGenerationServiceImpl.java'
 ]
 
 sonarqube {

@@ -52,6 +52,15 @@ pdf:
   test:
     enabled: true
 
+document:
+    pdf:
+        familyCourtImgKey: "familycourt"
+        familyCourtImgVal: "[userImage:familycourt.png]"
+        hmctsImgKey: "hmcts"
+        hmctsImgVal: "[userImage:hmcts.png]"
+        displayTemplateKey: "displayTemplateOnly"
+        displayTemplateVal: "1"
+
 service-auth-provider:
   service:
     stub:
@@ -108,3 +117,9 @@ logging:
 
 azure:
   app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
+
+docmosis:
+    service:
+        pdf-service:
+            uri: "http://localhost:4012"
+            accessKey: "23432"
