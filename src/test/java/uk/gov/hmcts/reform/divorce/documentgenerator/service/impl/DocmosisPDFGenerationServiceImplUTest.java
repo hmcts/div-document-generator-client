@@ -86,8 +86,6 @@ public class DocmosisPDFGenerationServiceImplUTest {
             assertEquals(httpClientErrorException, exception.getCause());
         }
         NullOrEmptyValidator.requireNonBlank(template);
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("request", template, placeholders);
     }
 
     @Test
