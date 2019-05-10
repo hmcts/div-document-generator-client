@@ -42,6 +42,8 @@ module "div-dgs" {
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.evidence_management_client_api_health_endpoint}"
     AUTH_IDAM_CLIENT_SECRET                               = "${data.azurerm_key_vault_secret.idam-secret.value}"
+    DOCMOSIS_SERVICE_BASEURL                              = "${var.docmosis_service_url}"
+    DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
   }
 }
 
@@ -57,5 +59,10 @@ data "azurerm_key_vault_secret" "div-doc-s2s-auth-secret" {
 
 data "azurerm_key_vault_secret" "idam-secret" {
     name      = "idam-secret"
+    vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+}
+
+data "azurerm_key_vault_secret" "docmosis-api-key" {
+    name      = "docmosis-api-key"
     vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 }

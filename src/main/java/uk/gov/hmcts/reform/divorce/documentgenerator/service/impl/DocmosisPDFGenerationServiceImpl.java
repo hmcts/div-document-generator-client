@@ -48,6 +48,8 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             + "and placeholders of size [{}]", templateName, placeholders.size());
 
         try {
+            // Remove this log when tested
+            log.info("Making Docmosis Request From {}", pdfServiceEndpoint);
             ResponseEntity<byte[]> response =
                 restTemplate.postForEntity(pdfServiceEndpoint, request(templateName, placeholders), byte[].class);
             return response.getBody();

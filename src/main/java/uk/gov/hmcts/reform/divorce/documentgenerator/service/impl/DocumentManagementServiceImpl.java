@@ -35,7 +35,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private TemplateManagementService templateManagementService;
 
     @Autowired
-    @Qualifier("pdfGenerator")
+    @Qualifier("docmosisPdfGenerator")
     private PDFGenerationService pdfGenerationService;
 
     @Autowired

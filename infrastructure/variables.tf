@@ -80,3 +80,7 @@ variable "vault_env" {}
 variable "common_tags" {
     type = "map"
 }
+
+variable "docmosis_service_url" {
+    type = "string"
+}
