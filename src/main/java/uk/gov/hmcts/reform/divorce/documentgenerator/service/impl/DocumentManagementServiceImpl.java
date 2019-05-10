@@ -43,7 +43,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Autowired
     @Qualifier("docmosisPdfGenerator")
-    private DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService;
+    private PDFGenerationService docmosisPdfGenerationService;
 
     @Autowired
     private EvidenceManagementService evidenceManagementService;

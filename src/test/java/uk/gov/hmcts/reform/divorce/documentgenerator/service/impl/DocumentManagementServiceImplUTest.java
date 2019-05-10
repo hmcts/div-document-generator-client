@@ -49,13 +49,18 @@ public class DocumentManagementServiceImplUTest {
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
+    private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
+    private static final String COE_TEMPALTE = "CoE";
 
     @Rule
     public ExpectedException expectedException = none();
 
-    @Mock
+    @Mock(name = "pdfGenerationService")
     private PDFGenerationService pdfGenerationService;
+
+    @Mock(name = "docmosisPdfGenerationService")
+    private PDFGenerationService docmosisPdfGenerationService;
 
     @Mock
     private EvidenceManagementService evidenceManagementService;
@@ -248,6 +253,39 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoE_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = "CoE";
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenStoreDocument_thenProceedAsExpected() {
         final byte[] data = {1};
         final String filename = "someFileName";
@@ -272,7 +310,6 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void whenGenerateDocument_thenProceedAsExpected() {
         final byte[] expected = {1};
-        final String template = "2";
         final Map<String, Object> placeholderMap = emptyMap();
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
@@ -287,6 +324,25 @@ public class DocumentManagementServiceImplUTest {
         HtmlFieldFormatter.format(placeholderMap);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
                 .generate(A_TEMPLATE, formattedPlaceholderMap);
+    }
+
+    @Test
+    public void whenGenerateCoEDocumentWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
+
+        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
+        when(docmosisPdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        verifyStatic(HtmlFieldFormatter.class);
+        HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(docmosisPdfGenerationService, Mockito.times(1))
+            .generate(COE_TEMPALTE, formattedPlaceholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
