@@ -28,9 +28,9 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     private static final String COURT_NAME_KEY = "courtName";
     private static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
-    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce " +
-        "Centre\nPO Box 10447\nNottingham<br/>NG2 9QN\nEmail: divorcecase@justice.gov.uk\nPhone: 0300 303" +
-        " 0642 (from 8.30am to 5pm)";
+    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
+        + " Centre\nPO Box 10447\nNottingham<br/>NG2 9QN\nEmail: divorcecase@justice.gov.uk\nPhone: 0300 303"
+        + " 0642 (from 8.30am to 5pm)";
 
     @Autowired
     private RestTemplate restTemplate;
