@@ -28,6 +28,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
+    private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
+    private static final String PDF_GENERATOR_TYPE = "pdfgenerator";
+    private static final String DOCMOSIS_GENERATOR_TYPE = "docmosisgenerator";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -35,8 +38,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private TemplateManagementService templateManagementService;
 
     @Autowired
-    @Qualifier("docmosisPdfGenerator")
+    @Qualifier("pdfGenerator")
     private PDFGenerationService pdfGenerationService;
+
+    @Autowired
+    @Qualifier("docmosisPdfGenerator")
+    private DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService;
 
     @Autowired
     private EvidenceManagementService evidenceManagementService;
@@ -71,11 +78,13 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
 
+        if (DOCMOSIS_GENERATOR_TYPE.equals(getPdfGeneratorTypeFromTemplateName(templateName))) {
+            return docmosisPdfGenerationService.generate(templateName, formattedPlaceholders);
+        }
         return pdfGenerationService.generate(templateName, formattedPlaceholders);
     }
 
     private String getFileNameFromTemplateName(String templateName) {
-
         switch (templateName) {
             case "aosinvitation" :
                 return AOS_INVITATION_NAME_FOR_PDF_FILE;
@@ -87,8 +96,18 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case "co-respondent-answers" :
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
+            case "CoE" :
+                return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
+    }
 
+    private String getPdfGeneratorTypeFromTemplateName(String templateName) {
+        switch (templateName) {
+            case "CoE" :
+                return DOCMOSIS_GENERATOR_TYPE;
+            default :
+                return PDF_GENERATOR_TYPE;
+        }
     }
 }
