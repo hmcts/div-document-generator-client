@@ -121,5 +121,5 @@ azure:
 docmosis:
     service:
         pdf-service:
-            uri: ${DOCMOSIS_SERVICE_BASEURL:http://localhost:5500}
+            uri: ${DOCMOSIS_SERVICE_BASEURL:http://localhost:5501}
             accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:23432}

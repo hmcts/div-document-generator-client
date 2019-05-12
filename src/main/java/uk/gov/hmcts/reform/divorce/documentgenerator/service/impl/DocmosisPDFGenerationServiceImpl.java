@@ -49,8 +49,8 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
         checkArgument(!isNullOrEmpty(templateName), "document generation template cannot be empty");
         checkNotNull(placeholders, "placeholders map cannot be null");
 
-        log.info("Making request to pdf service to generate pdf document with template "
-            + "and placeholders of size [{}]", templateName, placeholders.size());
+        log.info("Making request to pdf service to generate pdf document with template [{}]"
+            + " and placeholders of size [{}]", templateName, placeholders.size());
 
         try {
             // Remove this log when tested

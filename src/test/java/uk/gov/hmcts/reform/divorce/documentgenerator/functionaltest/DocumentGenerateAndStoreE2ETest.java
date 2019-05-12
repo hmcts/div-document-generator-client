@@ -30,6 +30,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocu
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocmosisPDFGenerationServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocumentManagementServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.PDFGenerationServiceImpl;
 
@@ -67,6 +68,9 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
 
+    private static final String CASE_DETAILS = "caseDetails";
+    private static final String CASE_DATA = "case_data";
+
     private static final String FILE_URL = "fileURL";
     private static final String MIME_TYPE = "mimeType";
     private static final String CREATED_ON = "createdOn";
@@ -78,6 +82,9 @@ public class DocumentGenerateAndStoreE2ETest {
     @Value("${service.pdf-service.uri}")
     private String pdfServiceUri;
 
+    @Value("${docmosis.service.pdf-service.uri}")
+    private String docmosisPdfServiceUri;
+
     @Value("${service.evidence-management-client-api.uri}")
     private String emClientAPIUri;
 
@@ -86,6 +93,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Autowired
     private PDFGenerationServiceImpl pdfGenerationService;
+
+    @Autowired
+    private DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService;
 
     @Autowired
     private TemplateManagementService templateManagementService;
@@ -520,6 +530,39 @@ public class DocumentGenerateAndStoreE2ETest {
         mockRestServiceServer.verify();
     }
 
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = "CoE";
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, Collections.EMPTY_MAP));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
     private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus) {
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(httpStatus);
         fileUploadResponse.setFileUrl(FILE_URL);
@@ -549,6 +592,13 @@ public class DocumentGenerateAndStoreE2ETest {
                 .andRespond(withStatus(expectedResponse)
                         .body(ObjectMapperTestUtil.convertObjectToJsonBytes(body))
                         .contentType(MediaType.APPLICATION_JSON));
+    }
+
+    private void mockDocmosisPDFService(HttpStatus expectedResponse, byte[] body) {
+        mockRestServiceServer.expect(once(), requestTo(docmosisPdfServiceUri)).andExpect(method(HttpMethod.POST))
+            .andRespond(withStatus(expectedResponse)
+                .body(ObjectMapperTestUtil.convertObjectToJsonBytes(body))
+                .contentType(MediaType.APPLICATION_JSON));
     }
 
     private void mockEMClientAPI(HttpStatus expectedResponse, List<FileUploadResponse> fileUploadResponse) {
