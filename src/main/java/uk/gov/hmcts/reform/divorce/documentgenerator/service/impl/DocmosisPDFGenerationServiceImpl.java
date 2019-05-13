@@ -4,6 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +33,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     private static final String COURT_NAME_KEY = "courtName";
     private static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
-    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
+    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "co East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<br/>NG2 9QN\nEmail: divorcecase@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
 
@@ -56,10 +60,14 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
         try {
             // Remove this log when tested
             log.info("Making Docmosis Request From {}", pdfServiceEndpoint);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+            HttpEntity<PdfDocumentRequest> httpEntity = new HttpEntity<>(request(templateName, placeholders), headers);
+
             ResponseEntity<byte[]> response =
-                restTemplate.postForEntity(pdfServiceEndpoint, request(templateName, placeholders), byte[].class);
-            log.info("Generated PDF for Docmosis is");
-            log.info(Arrays.toString(response.getBody()));
+                restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
             return response.getBody();
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
@@ -77,11 +85,13 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     @SuppressWarnings("unchecked")
     private Map<String, Object> caseData(Map<String, Object> placeholders) {
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
+        /*
         data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         data.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         data.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         data.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
+        */
         return data;
     }
 
