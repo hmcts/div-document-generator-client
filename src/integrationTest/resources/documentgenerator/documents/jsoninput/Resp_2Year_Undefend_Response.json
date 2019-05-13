@@ -23,7 +23,8 @@
         "RespLegalProceedingsExist": "NO",
         "RespLegalProceedingsDescription": "Dummy respLegalProceedingsDescription",
         "RespAgreeToCosts": "NO",
-        "RespCostsReason": "Dummy respCostsReason"
+        "RespCostsReason": "Dummy respCostsReason",
+        "D8DivorceCostsClaim": "YES"
       }
     }
   }
