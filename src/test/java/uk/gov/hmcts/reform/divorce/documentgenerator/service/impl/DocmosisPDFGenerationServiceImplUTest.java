@@ -25,15 +25,11 @@ import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
@@ -121,7 +117,6 @@ public class DocmosisPDFGenerationServiceImplUTest {
             assertEquals(httpClientErrorException, exception.getCause());
         }
         NullOrEmptyValidator.requireNonBlank(template);
-        verifyStatic(Objects.class, times(1));
     }
 
 }
