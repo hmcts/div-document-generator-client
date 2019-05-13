@@ -16,7 +16,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentR
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -33,7 +32,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     private static final String COURT_NAME_KEY = "courtName";
     private static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
-    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "co East Midlands Regional Divorce"
+    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<br/>NG2 9QN\nEmail: divorcecase@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
 
@@ -85,13 +84,11 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     @SuppressWarnings("unchecked")
     private Map<String, Object> caseData(Map<String, Object> placeholders) {
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
-        /*
         data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         data.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         data.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         data.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
-        */
         return data;
     }
 

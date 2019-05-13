@@ -96,7 +96,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case "co-respondent-answers" :
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case "coe" :
+            case "DIV_CoE.docx" :
                 return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
@@ -104,7 +104,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     private String getPdfGeneratorTypeFromTemplateName(String templateName) {
         switch (templateName) {
-            case "coe" :
+            case "DIV_CoE.docx" :
                 return DOCMOSIS_GENERATOR_TYPE;
             default :
                 return PDF_GENERATOR_TYPE;
