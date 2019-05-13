@@ -532,7 +532,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "CoE";
+        final String certificateOfEntitlementTemplate = "coe";
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 

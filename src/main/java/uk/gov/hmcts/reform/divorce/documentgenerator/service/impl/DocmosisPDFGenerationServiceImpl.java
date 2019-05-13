@@ -12,6 +12,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentR
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -57,6 +58,8 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             log.info("Making Docmosis Request From {}", pdfServiceEndpoint);
             ResponseEntity<byte[]> response =
                 restTemplate.postForEntity(pdfServiceEndpoint, request(templateName, placeholders), byte[].class);
+            log.info("Generated PDF for Docmosis is");
+            log.info(Arrays.toString(response.getBody()));
             return response.getBody();
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
