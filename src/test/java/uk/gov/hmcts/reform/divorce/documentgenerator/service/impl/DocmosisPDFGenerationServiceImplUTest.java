@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
@@ -120,7 +121,7 @@ public class DocmosisPDFGenerationServiceImplUTest {
             assertEquals(httpClientErrorException, exception.getCause());
         }
         NullOrEmptyValidator.requireNonBlank(template);
-        verifyStatic(Objects.class);
+        verifyStatic(Objects.class, times(1));
     }
 
 }
