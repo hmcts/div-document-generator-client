@@ -51,7 +51,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
-    private static final String COE_TEMPALTE = "coe";
+    private static final String COE_TEMPALTE = "DIV_CoE.docx";
 
     @Rule
     public ExpectedException expectedException = none();
@@ -257,7 +257,7 @@ public class DocumentManagementServiceImplUTest {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = "coe";
+        final String templateName = "DIV_CoE.docx";
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();

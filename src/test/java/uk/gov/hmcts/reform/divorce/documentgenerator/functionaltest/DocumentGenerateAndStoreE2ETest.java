@@ -26,6 +26,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -70,6 +71,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
+    private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
+    private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
+    private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
 
     private static final String FILE_URL = "fileURL";
     private static final String MIME_TYPE = "mimeType";
@@ -532,11 +536,163 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "coe";
+        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, Collections.EMPTY_MAP));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithCourtHearing_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final CollectionMember<Map<String, Object>> courtHearingDate = new CollectionMember();
+        courtHearingDate.setValue(Collections.emptyMap());
+        final Map<String, Object> caseData = Collections.singletonMap(
+            COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDate));
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromBoth_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final String[] claimFrom = new String[] { "respondent", "correspondent" };
+        final Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
+        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final String[] claimFrom = new String[] { "respondent" };
+        final Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
+        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final String[] claimFrom = new String[] { "correspondent" };
+        final Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
+        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
             new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
