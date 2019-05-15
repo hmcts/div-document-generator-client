@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -128,11 +129,11 @@ public class PDFGenerationTest extends IntegrationTest {
         return text;
     }
 
-    private void savePdf(byte[] pdf) throws Exception {
-        File someFile = new File("src/integrationTest/resources/" + expectedOutput);
-        FileOutputStream fos = new FileOutputStream(someFile);
-        fos.write(pdf);
-        fos.flush();
-        fos.close();
+    private void savePdf(byte[] pdf) throws IOException {
+        File expectedPdfFile = new File("src/integrationTest/resources/" + expectedOutput);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(expectedPdfFile)) {
+            fileOutputStream.write(pdf);
+            fileOutputStream.flush();
+        }
     }
 }
