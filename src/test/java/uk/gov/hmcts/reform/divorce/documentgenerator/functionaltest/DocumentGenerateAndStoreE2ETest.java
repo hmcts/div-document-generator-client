@@ -69,7 +69,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
-    private static final String COE_TEMPLATE = "DIV_CoE.docx";
+    private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
