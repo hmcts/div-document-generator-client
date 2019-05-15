@@ -2,13 +2,12 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
+import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
@@ -18,19 +17,24 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_TEMPLATE_ID;
+
 @Service
 @Slf4j
 public class DocumentManagementServiceImpl implements DocumentManagementService {
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
-    private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
-    private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
-    private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
-    private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
-    private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
-    private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
-    private static final String PDF_GENERATOR_TYPE = "pdfgenerator";
-    private static final String DOCMOSIS_GENERATOR_TYPE = "docmosisgenerator";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -38,12 +42,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private TemplateManagementService templateManagementService;
 
     @Autowired
-    @Qualifier("pdfGenerator")
-    private PDFGenerationService pdfGenerationService;
-
-    @Autowired
-    @Qualifier("docmosisPdfGenerator")
-    private PDFGenerationService docmosisPdfGenerationService;
+    private PDFGenerationFactory pdfGenerationFactory;
 
     @Autowired
     private EvidenceManagementService evidenceManagementService;
@@ -78,36 +77,24 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
 
-        if (DOCMOSIS_GENERATOR_TYPE.equals(getPdfGeneratorTypeFromTemplateName(templateName))) {
-            return docmosisPdfGenerationService.generate(templateName, formattedPlaceholders);
-        }
-        return pdfGenerationService.generate(templateName, formattedPlaceholders);
+        return pdfGenerationFactory.getGeneratorService(templateName).generate(templateName, formattedPlaceholders);
     }
 
     private String getFileNameFromTemplateName(String templateName) {
         switch (templateName) {
-            case "aosinvitation" :
+            case AOS_INVITATION_TEMPLATE_ID :
                 return AOS_INVITATION_NAME_FOR_PDF_FILE;
-            case "divorceminipetition" :
+            case MINI_PETITION_TEMPLATE_ID :
                 return MINI_PETITION_NAME_FOR_PDF_FILE;
-            case "co-respondentinvitation" :
+            case CO_RESPONDENT_INVITATION_TEMPLATE_ID :
                 return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
-            case "respondentAnswers" :
+            case RESPONDENT_ANSWERS_TEMPLATE_ID :
                 return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case "co-respondent-answers" :
+            case CO_RESPONDENT_ANSWERS_TEMPLATE_ID :
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case "DIV_CoE.docx" :
+            case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID :
                 return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
-        }
-    }
-
-    private String getPdfGeneratorTypeFromTemplateName(String templateName) {
-        switch (templateName) {
-            case "DIV_CoE.docx" :
-                return DOCMOSIS_GENERATOR_TYPE;
-            default :
-                return PDF_GENERATOR_TYPE;
         }
     }
 }

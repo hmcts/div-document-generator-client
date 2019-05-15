@@ -16,6 +16,7 @@ import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
+import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
@@ -56,11 +57,11 @@ public class DocumentManagementServiceImplUTest {
     @Rule
     public ExpectedException expectedException = none();
 
-    @Mock(name = "pdfGenerationService")
-    private PDFGenerationService pdfGenerationService;
+    @Mock
+    private PDFGenerationFactory pdfGenerationFactory;
 
-    @Mock(name = "docmosisPdfGenerationService")
-    private PDFGenerationService docmosisPdfGenerationService;
+    @Mock
+    private PDFGenerationService pdfGenerationService;
 
     @Mock
     private EvidenceManagementService evidenceManagementService;
@@ -314,6 +315,7 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
+        when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
@@ -322,6 +324,8 @@ public class DocumentManagementServiceImplUTest {
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(A_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
                 .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
@@ -333,7 +337,8 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
-        when(docmosisPdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationFactory.getGeneratorService(COE_TEMPALTE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
 
@@ -341,7 +346,9 @@ public class DocumentManagementServiceImplUTest {
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
-        Mockito.verify(docmosisPdfGenerationService, Mockito.times(1))
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(COE_TEMPALTE);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
             .generate(COE_TEMPALTE, formattedPlaceholderMap);
     }
 

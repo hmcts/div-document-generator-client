@@ -43,8 +43,6 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
         log.info("Save document call to evidence management is made document of size [{}]", document.length);
 
         try {
-            log.info("Try to store file with name");
-            log.info(fileName);
             FileUploadResponse fileUploadResponse = storeDocument(document, authorizationToken, fileName);
 
             if (fileUploadResponse.getStatus() == HttpStatus.OK) {

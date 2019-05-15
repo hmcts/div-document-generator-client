@@ -30,6 +30,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
+import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocmosisPDFGenerationServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocumentManagementServiceImpl;
@@ -68,12 +69,14 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
+    private static final String COE_TEMPLATE = "DIV_CoE.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
     private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
     private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
+    private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
 
     private static final String FILE_URL = "fileURL";
     private static final String MIME_TYPE = "mimeType";
@@ -536,7 +539,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -568,8 +571,44 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithDnApprovalDate_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = Collections.singletonMap(
+            DN_APPROVAL_DATE_KEY, "2019-10-10");
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithCourtHearing_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -607,7 +646,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromBoth_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -645,7 +684,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -683,7 +722,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = "DIV_CoE.docx";
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -717,6 +756,27 @@ public class DocumentGenerateAndStoreE2ETest {
             result.getResponse().getContentAsString());
 
         mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenInvalidDnApprovalDateForGenerateCoE_whenGenerateAndStoreDocument_thenThrowException() throws Exception {
+        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
+        final Map<String, Object> values = new HashMap<>();
+
+        final Map<String, Object> caseData = Collections.singletonMap(
+            DN_APPROVAL_DATE_KEY, "invalidDateFormat");
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+
+        webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().is5xxServerError())
+            .andReturn();
     }
 
     private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus) {
