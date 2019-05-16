@@ -144,7 +144,24 @@
                 },
                 "D8ReasonForDivorce":"unreasonable-behaviour",
                 "D8InferredPetitionerGender":"female",
-                "D8JurisdictionHabituallyResLast6Months":"NO"
+                "D8JurisdictionHabituallyResLast6Months":"NO",
+                "DNApprovalDate":"2019-05-30",
+                "DateAndTimeOfHearing": [
+                    {
+                        "id":"null",
+                        "value":{
+                            "DateOfHearing":"2019-09-10",
+                            "TimeOfHearing":"09:30"
+                        }
+                    },
+                    {
+                        "id":"null",
+                        "value":{
+                            "DateOfHearing":"2019-10-10",
+                            "TimeOfHearing":"15:30"
+                        }
+                    }
+                ]
             },
             "data_classification":{
                 "D8DerivedRespondentHomeAddress":"PUBLIC",
