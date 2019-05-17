@@ -9,6 +9,8 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationExce
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -105,11 +107,11 @@ public class TemplateDataMapper {
     private String formatDateFromCCD(String ccdDateString) {
         if (Objects.nonNull(ccdDateString)) {
             try {
-                SimpleDateFormat ccdSdf = new SimpleDateFormat(CCD_DATE_FORMAT);
-                Date ccdDate = ccdSdf.parse(ccdDateString);
+                DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(CCD_DATE_FORMAT);
+                LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
 
-                SimpleDateFormat letterSdf = new SimpleDateFormat(LETTER_DATE_FORMAT);
-                ccdDateString = letterSdf.format(ccdDate);
+                DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
+                ccdDateString = ccdDate.format(letterFormatter);
             } catch (Exception e) {
                 throw new PDFGenerationException("Unable to format CCD Date Type field", e);
             }
