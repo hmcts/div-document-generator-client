@@ -6,10 +6,14 @@ import net.thucydides.junit.annotations.TestData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.HttpStatus;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -99,6 +103,22 @@ public class PDFGenerationTest extends IntegrationTest {
             readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 
+    @Test
+    @Ignore
+    public void ignoreMe_updateGeneratedPdfs() throws Exception  {
+        //this is not really a test, just a utility to re-generate the PDFs after changing a template
+        String requestBody = ResourceLoader.loadJson(inputJson);
+        Response response = callDivDocumentGenerator(requestBody);
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
+        documentUri = getDocumentStoreURI(documentUri);
+        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
+        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
+        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
+        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
+        savePdf(responseFromEvidenceManagement.asByteArray());
+    }
+
     private String readPdf(byte[] pdf) throws Exception {
         PDDocument document = PDDocument.load(pdf);
         PDFTextStripper stripper = new PDFTextStripper();
@@ -107,5 +127,13 @@ public class PDFGenerationTest extends IntegrationTest {
         document.close();
 
         return text;
+    }
+
+    private void savePdf(byte[] pdf) throws IOException {
+        File expectedPdfFile = new File("src/integrationTest/resources/" + expectedOutput);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(expectedPdfFile)) {
+            fileOutputStream.write(pdf);
+            fileOutputStream.flush();
+        }
     }
 }
