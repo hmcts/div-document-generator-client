@@ -110,8 +110,8 @@ public class TemplateDataMapper {
 
                 SimpleDateFormat letterSdf = new SimpleDateFormat(LETTER_DATE_FORMAT);
                 ccdDateString = letterSdf.format(ccdDate);
-            } catch (ParseException e) {
-                throw new PDFGenerationException("Unable to parse court hearing date from CCD format", e);
+            } catch (Exception e) {
+                throw new PDFGenerationException("Unable to format CCD Date Type field", e);
             }
         }
         return ccdDateString;
