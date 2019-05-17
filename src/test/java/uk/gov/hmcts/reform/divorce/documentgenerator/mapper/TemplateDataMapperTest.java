@@ -5,26 +5,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
 
     private static final String CASE_DATA = "case_data";
     private static final String CASE_DETAILS = "caseDetails";
-    private static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
     private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
     private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
     private static final String CORESPONDENT_KEY = "correspondent";
@@ -33,7 +33,6 @@ public class TemplateDataMapperTest {
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
-    private static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
     private static final String RESPONDENT_KEY = "respondent";
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
@@ -44,11 +43,19 @@ public class TemplateDataMapperTest {
     private static final String WHO_PAYS_COSTS_RESPONDENT = "respondent";
     private static final String YES_VALUE = "YES";
 
-    @Spy
-    private ObjectMapper mapper = new ObjectMapper();
+    // Docmosis Base Config Constants
+    private static final String TEMPLATE_KEY = "templateKey";
+    private static final String TEMPLATE_VAL = "templateVal";
+    private static final String FAMILY_IMG_KEY = "familyImgKey";
+    private static final String FAMILY_IMG_VAL = "familyImgVal";
+    private static final String HMCTS_IMG_KEY = "hmctsImgKey";
+    private static final String HMCTS_IMG_VAL = "hmctsImgVal";
 
     @Spy
-    private DocmosisBasePdfConfig docmosisBasePdfConfig = new DocmosisBasePdfConfig();
+    private ObjectMapper mapper;
+
+    @Mock
+    private DocmosisBasePdfConfig docmosisBasePdfConfig;
 
     @InjectMocks
     private TemplateDataMapper templateDataMapper;
@@ -57,6 +64,9 @@ public class TemplateDataMapperTest {
 
     @Before
     public void setup() {
+        // Mock docmosisBasePdfConfig
+        mockDocmosisPdfBaseConfig();
+
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
@@ -185,5 +195,14 @@ public class TemplateDataMapperTest {
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
         assertEquals(expectedData, actual);
+    }
+
+    private void mockDocmosisPdfBaseConfig() {
+        when(docmosisBasePdfConfig.getDisplayTemplateKey()).thenReturn(TEMPLATE_KEY);
+        when(docmosisBasePdfConfig.getDisplayTemplateVal()).thenReturn(TEMPLATE_VAL);
+        when(docmosisBasePdfConfig.getFamilyCourtImgKey()).thenReturn(FAMILY_IMG_KEY);
+        when(docmosisBasePdfConfig.getFamilyCourtImgVal()).thenReturn(FAMILY_IMG_VAL);
+        when(docmosisBasePdfConfig.getHmctsImgKey()).thenReturn(HMCTS_IMG_KEY);
+        when(docmosisBasePdfConfig.getHmctsImgVal()).thenReturn(HMCTS_IMG_VAL);
     }
 }
