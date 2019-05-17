@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import feign.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.TemplateDataMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -45,6 +47,9 @@ public class DocmosisPDFGenerationServiceImplUTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private TemplateDataMapper templateDataMapper;
 
     @InjectMocks
     @Spy
