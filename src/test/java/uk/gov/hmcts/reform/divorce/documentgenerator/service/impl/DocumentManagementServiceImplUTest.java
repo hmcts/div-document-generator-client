@@ -39,6 +39,9 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_ID;
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
@@ -52,7 +55,6 @@ public class DocumentManagementServiceImplUTest {
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
-    private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
 
     @Rule
     public ExpectedException expectedException = none();
@@ -258,7 +260,7 @@ public class DocumentManagementServiceImplUTest {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = COE_TEMPALTE;
+        final String templateName = CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID;
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
@@ -284,6 +286,39 @@ public class DocumentManagementServiceImplUTest {
             .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
             .invoke("storeDocument", data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsDN_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DECREE_NISI_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DECREE_NISI_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, DECREE_NISI_NAME_FOR_PDF_FILE);
     }
 
     @Test
@@ -337,19 +372,19 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
-        when(pdfGenerationFactory.getGeneratorService(COE_TEMPALTE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationFactory.getGeneratorService(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID, formattedPlaceholderMap)).thenReturn(expected);
 
-        byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
+        byte[] actual = classUnderTest.generateDocument(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID, placeholderMap);
 
         assertEquals(expected, actual);
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
         Mockito.verify(pdfGenerationFactory, Mockito.times(1))
-            .getGeneratorService(COE_TEMPALTE);
+            .getGeneratorService(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-            .generate(COE_TEMPALTE, formattedPlaceholderMap);
+            .generate(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID, formattedPlaceholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {

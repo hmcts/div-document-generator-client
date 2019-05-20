@@ -75,7 +75,9 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CASE_DATA = "case_data";
     private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
     private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
+    private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
+    private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
 
     private static final String FILE_URL = "fileURL";
@@ -612,8 +614,12 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
+        final Map<String, Object> courtHearingDateValue = new HashMap<>();
+        courtHearingDateValue.put(COURT_HEARING_DATE_KEY, "2019-10-10");
+        courtHearingDateValue.put(COURT_HEARING_TIME_KEY, "15:30");
+
         final CollectionMember<Map<String, Object>> courtHearingDate = new CollectionMember();
-        courtHearingDate.setValue(Collections.emptyMap());
+        courtHearingDate.setValue(courtHearingDateValue);
         final Map<String, Object> caseData = Collections.singletonMap(
             COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDate));
 

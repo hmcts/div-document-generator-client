@@ -29,32 +29,57 @@ public class TemplateDataMapper {
     private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
+    private static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
+    private static final String DA_APPLICABLE_DATE_KEY = "DecreeAbsoluteApplicableDate";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
+    private static final String DN_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
     private static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
     private static final String RESPONDENT_KEY = "respondent";
+    private static final long ONE_DAY = 1l;
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
+    private static final long SIX_WEEKS = 6l;
     private static final String WHO_PAYS_COSTS_BOTH = "respondentAndCorespondent";
     private static final String WHO_PAYS_COSTS_CORESPONDENT = "corespondent";
     private static final String WHO_PAYS_COSTS_KEY = "whoPaysCosts";
     private static final String WHO_PAYS_COSTS_RESPONDENT = "respondent";
     private static final String YES_VALUE = "YES";
 
-    @Autowired
     private ObjectMapper mapper;
+    private DocmosisBasePdfConfig docmosisBasePdfConfig;
+    private DateTimeFormatter ccdFormatter;
+    private DateTimeFormatter letterFormatter;
 
     @Autowired
-    private DocmosisBasePdfConfig docmosisBasePdfConfig;
+    public TemplateDataMapper(ObjectMapper mapper,
+                              DocmosisBasePdfConfig docmosisBasePdfConfig) {
+        this.mapper = mapper;
+        this.docmosisBasePdfConfig = docmosisBasePdfConfig;
+        ccdFormatter = DateTimeFormatter.ofPattern(CCD_DATE_FORMAT);
+        letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
+    }
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> map(Map<String, Object> placeholders) {
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
 
+        // Setup Formatted D8 Marriage Date if exists
+        if (Objects.nonNull(data.get(D8_MARRIAGE_DATE_KEY))) {
+            data.put(D8_MARRIAGE_DATE_KEY, formatDateFromCCD((String) data.get(D8_MARRIAGE_DATE_KEY)));
+        }
+
         // Setup Formatted DN Approval Date if exists
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
+        }
+
+        // Setup Formatted DN Granted Date if exists
+        if (Objects.nonNull(data.get(DN_GRANTED_DATE_KEY))) {
+            String dnGrantedDateString = (String) data.get(DN_GRANTED_DATE_KEY);
+            data.put(DN_GRANTED_DATE_KEY, formatDateFromCCD(dnGrantedDateString));
+            data.put(DA_APPLICABLE_DATE_KEY, getDaApplicationDate(dnGrantedDateString));
         }
 
         // Setup who is paying costs if claims cost is chosen
@@ -102,17 +127,24 @@ public class TemplateDataMapper {
     }
 
     private String formatDateFromCCD(String ccdDateString) {
-        if (Objects.nonNull(ccdDateString)) {
-            try {
-                DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(CCD_DATE_FORMAT);
-                LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
-
-                DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
-                ccdDateString = ccdDate.format(letterFormatter);
-            } catch (Exception e) {
-                throw new PDFGenerationException("Unable to format CCD Date Type field", e);
-            }
+        try {
+            LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
+            return ccdDate.format(letterFormatter);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to format CCD Date Type field", e);
         }
-        return ccdDateString;
+    }
+
+    private String getDaApplicationDate(String dnGrantedDateString) {
+        try {
+            LocalDate dnGrantedDate = LocalDate.parse(dnGrantedDateString, ccdFormatter);
+
+            // Decree Absolute application date is granted date plus six weeks and one day
+            dnGrantedDate = dnGrantedDate.atStartOfDay().plusWeeks(SIX_WEEKS).plusDays(ONE_DAY).toLocalDate();
+
+            return dnGrantedDate.format(letterFormatter);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to parse Decree Absolute application date", e);
+        }
     }
 }

@@ -32,7 +32,10 @@ public class TemplateDataMapperTest {
     private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
+    private static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
+    private static final String DA_APPLICABLE_DATE_KEY = "DecreeAbsoluteApplicableDate";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
+    private static final String DN_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
     private static final String RESPONDENT_KEY = "respondent";
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
@@ -89,6 +92,23 @@ public class TemplateDataMapperTest {
     }
 
     @Test
+    public void givenValidD8MarriageDate_whenTemplateDataMapperIsCalled_returnFormattedD8MarriageDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_MARRIAGE_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedD8MarriageDate = "30 May 2019";
+        expectedData.put(D8_MARRIAGE_DATE_KEY, expectedFormattedD8MarriageDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
     public void givenValidDnApprovalDate_whenTemplateDataMapperIsCalled_returnFormattedDnApprovalDate() {
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(DN_APPROVAL_DATE_KEY, "2019-05-30");
@@ -99,6 +119,25 @@ public class TemplateDataMapperTest {
 
         String expectedFormattedDNApprovalDate = "30 May 2019";
         expectedData.put(DN_APPROVAL_DATE_KEY, expectedFormattedDNApprovalDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenValidDnGrantedDate_whenTemplateDataMapperIsCalled_returnFormattedDnGrantedDateAndDaApplicableDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DN_GRANTED_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDNGrantedDate = "30 May 2019";
+        String expectedFormattedDaApplicableDate = "12 July 2019";
+        expectedData.put(DN_GRANTED_DATE_KEY, expectedFormattedDNGrantedDate);
+        expectedData.put(DA_APPLICABLE_DATE_KEY, expectedFormattedDaApplicableDate);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

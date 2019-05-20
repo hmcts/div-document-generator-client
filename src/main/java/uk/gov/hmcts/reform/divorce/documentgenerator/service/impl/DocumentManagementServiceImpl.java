@@ -25,6 +25,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
@@ -94,6 +96,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID :
                 return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
+            case DECREE_NISI_TEMPLATE_ID:
+                return DECREE_NISI_NAME_FOR_PDF_FILE;
             default : throw new IllegalArgumentException("Unknown template: " + templateName);
         }
     }
