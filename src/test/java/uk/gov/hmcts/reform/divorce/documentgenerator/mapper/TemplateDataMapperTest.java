@@ -157,60 +157,6 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenClaimCostsForRespondent_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Collections.singletonList(RESPONDENT_KEY));
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_RESPONDENT);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenClaimCostsForCoRespondent_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Collections.singletonList(CORESPONDENT_KEY));
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_CORESPONDENT);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenClaimCostsForBoth_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Arrays.asList(RESPONDENT_KEY, CORESPONDENT_KEY));
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_BOTH);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
     public void givenCourtHearingDateTime_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> courtHearingDateTime = new HashMap<>();
         courtHearingDateTime.put(COURT_HEARING_DATE_KEY, "2019-10-10");

@@ -22,9 +22,6 @@ public class TemplateDataMapper {
     private static final String CASE_DATA = "case_data";
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
-    private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
-    private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
-    private static final String CORESPONDENT_KEY = "correspondent";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
     private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
@@ -34,17 +31,11 @@ public class TemplateDataMapper {
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     private static final String DN_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
     private static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
-    private static final String RESPONDENT_KEY = "respondent";
     private static final long ONE_DAY = 1l;
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham<\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     private static final long SIX_WEEKS = 6l;
-    private static final String WHO_PAYS_COSTS_BOTH = "respondentAndCorespondent";
-    private static final String WHO_PAYS_COSTS_CORESPONDENT = "corespondent";
-    private static final String WHO_PAYS_COSTS_KEY = "whoPaysCosts";
-    private static final String WHO_PAYS_COSTS_RESPONDENT = "respondent";
-    private static final String YES_VALUE = "YES";
 
     private ObjectMapper mapper;
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
@@ -80,18 +71,6 @@ public class TemplateDataMapper {
             String dnGrantedDateString = (String) data.get(DN_GRANTED_DATE_KEY);
             data.put(DN_GRANTED_DATE_KEY, formatDateFromCCD(dnGrantedDateString));
             data.put(DA_APPLICABLE_DATE_KEY, getDaApplicationDate(dnGrantedDateString));
-        }
-
-        // Setup who is paying costs if claims cost is chosen
-        if (YES_VALUE.equals(data.get(CLAIM_COSTS_JSON_KEY))) {
-            List<String> claimFrom = mapper.convertValue(data.get(CLAIM_COSTS_FROM_JSON_KEY), ArrayList.class);
-            if (claimFrom.contains(RESPONDENT_KEY) && claimFrom.contains(CORESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_BOTH);
-            } else if (claimFrom.contains(RESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_RESPONDENT);
-            } else if (claimFrom.contains(CORESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_CORESPONDENT);
-            }
         }
 
         // Setup latest court hearing date and time if exists
