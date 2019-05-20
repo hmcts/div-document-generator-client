@@ -71,6 +71,8 @@ To run all integration tests locally:
 * Or if using command line:
     * Start the app with AAT config using `./gradlew clean bootRunAat`
     * Start the test with AAT config using `./gradlew clean functional`
+    
+If you update content in PDFs, you can regenerate the existing PDFs by running the ignored test in PDFGeneratorTest.java   
 
 ### Unit tests
 
