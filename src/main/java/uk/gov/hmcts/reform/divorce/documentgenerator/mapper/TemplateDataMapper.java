@@ -7,12 +7,9 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfi
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
