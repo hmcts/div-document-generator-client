@@ -30,7 +30,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
-import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocmosisPDFGenerationServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocumentManagementServiceImpl;
@@ -100,9 +99,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Autowired
     private PDFGenerationServiceImpl pdfGenerationService;
-
-    @Autowired
-    private DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService;
 
     @Autowired
     private TemplateManagementService templateManagementService;
