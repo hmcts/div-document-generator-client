@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +30,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocu
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocmosisPDFGenerationServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.DocumentManagementServiceImpl;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.PDFGenerationServiceImpl;
 
@@ -535,14 +533,13 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, Collections.EMPTY_MAP));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -568,7 +565,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithDnApprovalDate_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -578,7 +574,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -604,11 +600,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithCourtHearing_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final CollectionMember<Map<String, Object>> courtHearingDate = new CollectionMember();
+        final CollectionMember<Map<String, Object>> courtHearingDate = new CollectionMember<>();
         courtHearingDate.setValue(Collections.emptyMap());
         final Map<String, Object> caseData = Collections.singletonMap(
             COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDate));
@@ -616,7 +611,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -642,7 +637,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromBoth_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -654,7 +648,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -680,7 +674,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -692,7 +685,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -718,7 +711,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -730,7 +722,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
@@ -756,7 +748,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenInvalidDnApprovalDateForGenerateCoE_whenGenerateAndStoreDocument_thenThrowException() throws Exception {
-        final String certificateOfEntitlementTemplate = COE_TEMPLATE;
         final Map<String, Object> values = new HashMap<>();
 
         final Map<String, Object> caseData = Collections.singletonMap(
@@ -765,7 +756,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(certificateOfEntitlementTemplate, values);
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
 
         webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
