@@ -22,24 +22,17 @@ public class TemplateDataMapper {
     private static final String CASE_DATA = "case_data";
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
-    private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
-    private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
-    private static final String CORESPONDENT_KEY = "correspondent";
+    private static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
     private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     private static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
-    private static final String RESPONDENT_KEY = "respondent";
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
-    private static final String WHO_PAYS_COSTS_BOTH = "respondentAndCorespondent";
-    private static final String WHO_PAYS_COSTS_CORESPONDENT = "corespondent";
-    private static final String WHO_PAYS_COSTS_KEY = "whoPaysCosts";
-    private static final String WHO_PAYS_COSTS_RESPONDENT = "respondent";
-    private static final String YES_VALUE = "YES";
+    private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
 
     @Autowired
     private ObjectMapper mapper;
@@ -57,16 +50,9 @@ public class TemplateDataMapper {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
         }
 
-        // Setup who is paying costs if claims cost is chosen
-        if (YES_VALUE.equals(data.get(CLAIM_COSTS_JSON_KEY))) {
-            List<String> claimFrom = mapper.convertValue(data.get(CLAIM_COSTS_FROM_JSON_KEY), ArrayList.class);
-            if (claimFrom.contains(RESPONDENT_KEY) && claimFrom.contains(CORESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_BOTH);
-            } else if (claimFrom.contains(RESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_RESPONDENT);
-            } else if (claimFrom.contains(CORESPONDENT_KEY)) {
-                data.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_CORESPONDENT);
-            }
+        // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
+        if (Objects.nonNull(data.get(SOLICITOR_IS_NAMED_CO_RESPONDENT))) {
+            data.put(CO_RESPONDENT_WISH_TO_NAME, data.get(SOLICITOR_IS_NAMED_CO_RESPONDENT));
         }
 
         // Setup latest court hearing date and time if exists

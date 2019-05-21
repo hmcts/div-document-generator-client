@@ -12,7 +12,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfi
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,23 +24,16 @@ public class TemplateDataMapperTest {
 
     private static final String CASE_DATA = "case_data";
     private static final String CASE_DETAILS = "caseDetails";
-    private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
-    private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
-    private static final String CORESPONDENT_KEY = "correspondent";
+    private static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
     private static final String COURT_CONTACT_KEY = "CourtContactDetails";
     private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
-    private static final String RESPONDENT_KEY = "respondent";
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
-    private static final String WHO_PAYS_COSTS_BOTH = "respondentAndCorespondent";
-    private static final String WHO_PAYS_COSTS_CORESPONDENT = "corespondent";
-    private static final String WHO_PAYS_COSTS_KEY = "whoPaysCosts";
-    private static final String WHO_PAYS_COSTS_RESPONDENT = "respondent";
-    private static final String YES_VALUE = "YES";
+    private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
 
     // Docmosis Base Config Constants
     private static final String TEMPLATE_KEY = "templateKey";
@@ -118,53 +110,16 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenClaimCostsForRespondent_whenTemplateDataMapperIsCalled_returnFormattedData() {
+    public void givenSolicitorWishToNameCoRespondentField_whenTemplateDataMapperIsCalled_returnDefaultWishToName() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Collections.singletonList(RESPONDENT_KEY));
+        caseData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "YES");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_RESPONDENT);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenClaimCostsForCoRespondent_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Collections.singletonList(CORESPONDENT_KEY));
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_CORESPONDENT);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenClaimCostsForBoth_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(CLAIM_COSTS_JSON_KEY, YES_VALUE);
-        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, Arrays.asList(RESPONDENT_KEY, CORESPONDENT_KEY));
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_KEY, WHO_PAYS_COSTS_BOTH);
+        expectedData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "YES");
+        expectedData.put(CO_RESPONDENT_WISH_TO_NAME, "YES");
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
