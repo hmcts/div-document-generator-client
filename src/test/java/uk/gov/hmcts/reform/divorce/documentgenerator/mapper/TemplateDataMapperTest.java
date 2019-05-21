@@ -35,7 +35,7 @@ public class TemplateDataMapperTest {
     private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     private static final String RESPONDENT_KEY = "respondent";
     private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
-        + " Centre\nPO Box 10447\nNottingham<\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
+        + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     private static final String WHO_PAYS_COSTS_BOTH = "respondentAndCorespondent";
     private static final String WHO_PAYS_COSTS_CORESPONDENT = "corespondent";
