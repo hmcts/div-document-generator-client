@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
-import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
 import java.time.LocalDate;
@@ -63,8 +63,8 @@ public class TemplateDataMapper {
                 mapper.convertValue(data.get(COURT_HEARING_JSON_KEY), ArrayList.class);
 
             // Last element of the list is the most recent court hearing
-            CollectionMember<Map<String, Object>> latestCourtHearing =
-                mapper.convertValue(listOfCourtHearings.get(listOfCourtHearings.size() - 1), CollectionMember.class);
+            CcdCollectionMember<Map<String, Object>> latestCourtHearing =
+                mapper.convertValue(listOfCourtHearings.get(listOfCourtHearings.size() - 1), CcdCollectionMember.class);
 
             data.put(COURT_HEARING_DATE_KEY,
                 formatDateFromCCD((String) latestCourtHearing.getValue().get(COURT_HEARING_DATE_KEY)));

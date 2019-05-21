@@ -25,7 +25,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication;
-import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -603,7 +603,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final CollectionMember<Map<String, Object>> courtHearingDate = new CollectionMember<>();
+        final CcdCollectionMember<Map<String, Object>> courtHearingDate = new CcdCollectionMember<>();
         courtHearingDate.setValue(Collections.emptyMap());
         final Map<String, Object> caseData = Collections.singletonMap(
             COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDate));

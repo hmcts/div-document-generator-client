@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
-import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CollectionMember;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
 import java.util.Collections;
@@ -132,11 +132,11 @@ public class TemplateDataMapperTest {
         courtHearingDateTime.put(COURT_HEARING_DATE_KEY, "2019-10-10");
         courtHearingDateTime.put(COURT_HEARING_TIME_KEY, "10:30");
 
-        CollectionMember<Map<String, Object>> courtHearingDateTimeCollectionMember = new CollectionMember<>();
-        courtHearingDateTimeCollectionMember.setValue(courtHearingDateTime);
+        CcdCollectionMember<Map<String, Object>> courtHearingDateTimeCcdCollectionMember = new CcdCollectionMember<>();
+        courtHearingDateTimeCcdCollectionMember.setValue(courtHearingDateTime);
 
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCollectionMember)
+        caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCcdCollectionMember)
         );
 
         Map<String, Object> requestData = Collections.singletonMap(
