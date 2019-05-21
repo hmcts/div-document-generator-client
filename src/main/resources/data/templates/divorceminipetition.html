@@ -147,12 +147,13 @@
 {% set financialOrder = caseDetails.case_data.D8FinancialOrder | upper | default("NO") %}
 {% set jurisdictionConnection = caseDetails.case_data.D8JurisdictionConnection %}
 {% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName | upper | default("NO") %}
+{% set isCorrespondentNamedBySolicitor = caseDetails.case_data.D8ReasonForDivorceAdulteryIsNamed | upper | default("NO") %}
 {% set correspondentFirstName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyFName | default("") %}
 {% set correspondentLastName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyLName | default("") %}
 {% set correspondentName = correspondentFirstName + " " + correspondentLastName %}
 {% set adulteryDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryDetails | default("") %}
-{% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | upper | default("NO") %}
-{% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | upper | default("NO") %}
+{% set adulteryDateKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhen | upper | default("") %}
+{% set adulteryPlaceKnown = caseDetails.case_data.D8ReasonForDivorceAdulteryKnowWhere | upper | default("") %}
 {% set adulteryWhenDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhenDetails | default("The applicant does not know when the adultery took place") %}
 {% set adulteryWhereDetails = caseDetails.case_data.D8ReasonForDivorceAdulteryWhereDetails | default("The applicant does not know where the adultery took place") %}
 {% set adulterySecondHandInfoDetails = caseDetails.case_data.D8ReasonForDivorceAdultery2ndHandDetails | default("") %}
@@ -233,7 +234,7 @@
     {% endautoescape %}
 </p>
 
-{% if isCorrespondentNamed == "YES" %}
+{% if isCorrespondentNamed == "YES" or isCorrespondentNamedBySolicitor == "YES" %}
 <p class="heading-small">Co-respondent</p>
 <p class="response-text">
     {% autoescape false %}
@@ -371,7 +372,7 @@
 {% if reasonForDivorce == "adultery" %}
 
 <p class="response-text">
-    {% if isCorrespondentNamed == "YES" %}
+    {% if isCorrespondentNamed == "YES" or isCorrespondentNamedBySolicitor == "YES" %}
     The marriage has broken down irretrievably, based on the fact that the respondent committed adultery with the co-respondent, and the applicant finds it intolerable (unbearable) to live with the respondent.
     {% else %}
     The marriage has broken down irretrievably, based on the fact that the respondent committed adultery, and the applicant finds it intolerable (unbearable) to live with the respondent.
@@ -437,6 +438,7 @@
 </p>
 {% endif %}
 
+{% if adulteryPlaceKnown is not empty %}
 <p class="heading-small">Where the adultery took place</p>
 <p class="response-text">
     {% if adulteryPlaceKnown == "YES" %}
@@ -449,7 +451,9 @@
     {% endautoescape %}
     {% endif %}
 </p>
+{% endif %}
 
+{% if adulteryDateKnown is not empty %}
 <p class="heading-small">When the adultery took place</p>
 <p class="response-text">
     {% if adulteryDateKnown == "YES" %}
@@ -462,6 +466,7 @@
     {% endautoescape %}
     {% endif %}
 </p>
+{% endif %}
 
 {% endif %}
 
@@ -636,7 +641,7 @@
 </p>
 </p>
 
-{% if isCorrespondentNamed == "YES" and correspondentsAddress is not empty %}
+{% if (isCorrespondentNamed == "YES" or isCorrespondentNamedBySolicitor == "YES") and correspondentsAddress is not empty %}
 <p class="single-block">
 <h2 class="heading-medium">Co-respondent's correspondence address</h2>
 <p class="response-text">
