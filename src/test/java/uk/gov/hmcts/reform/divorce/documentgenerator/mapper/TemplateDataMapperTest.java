@@ -112,13 +112,13 @@ public class TemplateDataMapperTest {
     @Test
     public void givenSolicitorWishToNameCoRespondentField_whenTemplateDataMapperIsCalled_returnDefaultWishToName() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "YES");
+        caseData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "Yes");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
-        expectedData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "YES");
+        expectedData.put(SOLICITOR_IS_NAMED_CO_RESPONDENT, "Yes");
         expectedData.put(CO_RESPONDENT_WISH_TO_NAME, "YES");
 
         Map<String, Object> actual = templateDataMapper.map(requestData);

@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
@@ -52,7 +53,8 @@ public class TemplateDataMapper {
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
         if (Objects.nonNull(data.get(SOLICITOR_IS_NAMED_CO_RESPONDENT))) {
-            data.put(CO_RESPONDENT_WISH_TO_NAME, data.get(SOLICITOR_IS_NAMED_CO_RESPONDENT));
+            data.put(CO_RESPONDENT_WISH_TO_NAME,
+                StringUtils.upperCase((String) data.get(SOLICITOR_IS_NAMED_CO_RESPONDENT)));
         }
 
         // Setup latest court hearing date and time if exists
