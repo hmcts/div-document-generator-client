@@ -84,3 +84,7 @@ variable "common_tags" {
 variable "docmosis_service_url" {
     type = "string"
 }
+
+variable "docmosis_render_endpoint" {
+    default = "/rs/render"
+}

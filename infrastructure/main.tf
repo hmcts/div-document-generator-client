@@ -42,7 +42,7 @@ module "div-dgs" {
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.evidence_management_client_api_health_endpoint}"
     AUTH_IDAM_CLIENT_SECRET                               = "${data.azurerm_key_vault_secret.idam-secret.value}"
-    DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}/rs/render"
+    DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}${var.docmosis_render_endpoint}"
     DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
   }
 }
