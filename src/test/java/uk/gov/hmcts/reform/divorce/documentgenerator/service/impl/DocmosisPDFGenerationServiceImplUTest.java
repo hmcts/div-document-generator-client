@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import feign.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,11 +13,16 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.TemplateDataMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -41,6 +47,9 @@ public class DocmosisPDFGenerationServiceImplUTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private TemplateDataMapper templateDataMapper;
 
     @InjectMocks
     @Spy
@@ -69,12 +78,17 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .data(placeholders)
             .templateName(template)
             .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<PdfDocumentRequest> expectedEntity = new HttpEntity<>(pdfDocumentRequest, headers);
+
         doReturn(pdfDocumentRequest).when(classUnderTest,
             MemberMatcher.method(DocmosisPDFGenerationServiceImpl.class, "request",
                 String.class, Map.class))
             .withArguments(Mockito.anyString(), Mockito.any(Map.class));
-        doThrow(httpClientErrorException).when(restTemplate).postForEntity(PDF_SERVICE_ENDPOINT,
-            pdfDocumentRequest, byte[].class);
+
+        doThrow(httpClientErrorException).when(restTemplate).exchange(PDF_SERVICE_ENDPOINT, HttpMethod.POST,
+            expectedEntity, byte[].class);
 
         try {
             classUnderTest.generate(template, placeholders);
@@ -100,6 +114,10 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .data(placeholders)
             .templateName(template)
             .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<PdfDocumentRequest> expectedEntity = new HttpEntity<>(pdfDocumentRequest, headers);
+
         doReturn(pdfDocumentRequest).when(classUnderTest,
             MemberMatcher.method(DocmosisPDFGenerationServiceImpl.class, "request",
                 String.class, Map.class))
@@ -107,8 +125,8 @@ public class DocmosisPDFGenerationServiceImplUTest {
         byte[] pdfBytes = "output".getBytes();
         ResponseEntity responseEntity = Mockito.mock(ResponseEntity.class);
         doReturn(pdfBytes).when(responseEntity).getBody();
-        doReturn(responseEntity).when(restTemplate).postForEntity(PDF_SERVICE_ENDPOINT,
-            pdfDocumentRequest, byte[].class);
+        doReturn(responseEntity).when(restTemplate).exchange(PDF_SERVICE_ENDPOINT, HttpMethod.POST,
+            expectedEntity, byte[].class);
 
         try {
             byte[] bytes = classUnderTest.generate(template, placeholders);
