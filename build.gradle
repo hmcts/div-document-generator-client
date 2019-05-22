@@ -125,7 +125,7 @@ def versions = [
     feignHttpClient: '10.2.0',
     gradlePitest: '1.3.0',
     guava: '27.0.1-jre',
-    jacksonDatabind: '2.9.8',
+    jacksonDatabind: '2.9.9',
     jsonAssert: '1.2.3',
     junit: '4.12',
     lombok: '1.16.16',
@@ -325,8 +325,7 @@ def sonarExclusions = [
     '**uk/gov/hmcts/reform/divorce/documentgenerator/domain/**/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/exception/*',
     '**uk/gov/hmcts/reform/divorce/documentgenerator/**/config/**/*',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java',
-    '**uk/gov/hmcts/reform/divorce/documentgenerator/service/impl/DocmosisPDFGenerationServiceImpl.java'
+    '**uk/gov/hmcts/reform/divorce/documentgenerator/DocumentGeneratorApplication.java'
 ]
 
 sonarqube {

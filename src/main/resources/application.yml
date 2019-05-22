@@ -53,6 +53,14 @@ pdf:
     enabled: true
 
 document:
+    templates:
+        map:
+            aosinvitation: "pdfgenerator"
+            co-respondent-answers: "pdfgenerator"
+            co-respondentinvitation: "pdfgenerator"
+            divorceminipetition: "pdfgenerator"
+            FL-DIV-GNO-ENG-00020.docx: "docmosis"
+            respondentAnswers: "pdfgenerator"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -121,5 +129,5 @@ azure:
 docmosis:
     service:
         pdf-service:
-            uri: "http://localhost:4012"
-            accessKey: "23432"
+            uri: ${DOCMOSIS_SERVICE_RENDER_URL:http://localhost:5501/rs/render}
+            accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:23432}
