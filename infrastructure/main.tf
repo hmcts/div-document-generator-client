@@ -44,7 +44,7 @@ module "div-dgs" {
     AUTH_IDAM_CLIENT_SECRET                               = "${data.azurerm_key_vault_secret.idam-secret.value}"
     DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}${var.docmosis_render_endpoint}"
     DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
-    MANAGEMENT_ENDPOINT_CACHE_TIME-TO-LIVE                = "${var.health_check_ttl}"
+    MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE           = "${var.health_check_ttl}"
   }
 }
 
