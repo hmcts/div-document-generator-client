@@ -91,5 +91,5 @@ variable "docmosis_render_endpoint" {
 
 variable "health_check_ttl" {
     type = "string"
-    value = "5000"
+    default = "5000"
 }
