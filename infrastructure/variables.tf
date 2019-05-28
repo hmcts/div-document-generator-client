@@ -81,14 +81,6 @@ variable "common_tags" {
     type = "map"
 }
 
-variable "docmosis_service_url" {
-    type = "string"
-}
-
-variable "docmosis_render_endpoint" {
-    default = "/rs/render"
-}
-
 variable "health_check_ttl" {
     type = "string"
     value = "5000"

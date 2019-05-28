@@ -6,11 +6,15 @@ locals {
   pdf_service_url                    = "http://${var.pdf_service_url_part}-${local.local_env}.service.core-compute-${local.local_env}.internal"
   idam_s2s_url                       = "http://${var.idam_s2s_url_prefix}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 
-
   previewVaultName = "${var.reform_team}-aat"
   nonPreviewVaultName = "${var.reform_team}-${var.env}"
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
   vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+
+  docmosis_prod_key_vault_name = "docmosisiaasprodkv"
+  docmosis_dev_key_vault_name  = "docmosisiaasdevkv"
+  docmosis_key_vault_name      = "${var.env == "prod" ? local.docmosis_prod_key_vault_name : local.docmosis_dev_key_vault_name}"
+  docmosis_key_vault_uri = "https://${local.docmosis_key_vault_name}.vault.azure.net/"
 
   asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
   asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
@@ -42,8 +46,8 @@ module "div-dgs" {
     EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL                = "${local.evidence_management_client_api_url}"
     EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT        = "${var.evidence_management_client_api_health_endpoint}"
     AUTH_IDAM_CLIENT_SECRET                               = "${data.azurerm_key_vault_secret.idam-secret.value}"
-    DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}${var.docmosis_render_endpoint}"
-    DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
+    DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis_api_key.value}"
+    DOCMOSIS_SERVICE_BASE_URL                             = "${data.azurerm_key_vault_secret.docmosis_endpoint.value}"
     MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE           = "${var.health_check_ttl}"
   }
 }
@@ -63,7 +67,12 @@ data "azurerm_key_vault_secret" "idam-secret" {
     vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 }
 
-data "azurerm_key_vault_secret" "docmosis-api-key" {
-    name      = "docmosis-api-key"
-    vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+data "azurerm_key_vault_secret" "docmosis_api_key" {
+  name      = "docmosis-api-key"
+  vault_uri = "${local.docmosis_key_vault_uri}"
+}
+
+data "azurerm_key_vault_secret" "docmosis_endpoint" {
+  name      = "docmosis-endpoint"
+  vault_uri = "${local.docmosis_key_vault_uri}"
 }
