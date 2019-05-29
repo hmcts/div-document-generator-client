@@ -83,5 +83,5 @@ variable "common_tags" {
 
 variable "health_check_ttl" {
     type = "string"
-    value = "5000"
+    default = "5000"
 }
