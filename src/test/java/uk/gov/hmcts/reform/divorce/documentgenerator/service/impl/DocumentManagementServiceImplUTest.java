@@ -16,10 +16,10 @@ import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
+import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.time.Clock;
@@ -50,13 +50,15 @@ public class DocumentManagementServiceImplUTest {
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
+    private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
+    private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
 
     @Rule
     public ExpectedException expectedException = none();
 
     @Mock
-    private TemplateManagementService templateManagementService;
+    private PDFGenerationFactory pdfGenerationFactory;
 
     @Mock
     private PDFGenerationService pdfGenerationService;
@@ -252,6 +254,39 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoE_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = COE_TEMPALTE;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenStoreDocument_thenProceedAsExpected() {
         final byte[] data = {1};
         final String filename = "someFileName";
@@ -276,23 +311,45 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void whenGenerateDocument_thenProceedAsExpected() {
         final byte[] expected = {1};
-        final byte[] template = {2};
         final Map<String, Object> placeholderMap = emptyMap();
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
-        when(templateManagementService.getTemplateByName(A_TEMPLATE)).thenReturn(template);
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
-        when(pdfGenerationService.generateFromHtml(template, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
 
         assertEquals(expected, actual);
 
-        Mockito.verify(templateManagementService, Mockito.times(1)).getTemplateByName(A_TEMPLATE);
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(A_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-                .generateFromHtml(template, formattedPlaceholderMap);
+                .generate(A_TEMPLATE, formattedPlaceholderMap);
+    }
+
+    @Test
+    public void whenGenerateCoEDocumentWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
+
+        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
+        when(pdfGenerationFactory.getGeneratorService(COE_TEMPALTE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        verifyStatic(HtmlFieldFormatter.class);
+        HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(COE_TEMPALTE);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(COE_TEMPALTE, formattedPlaceholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {

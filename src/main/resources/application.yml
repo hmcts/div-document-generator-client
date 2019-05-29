@@ -52,6 +52,23 @@ pdf:
   test:
     enabled: true
 
+document:
+    templates:
+        map:
+            aosinvitation: "pdfgenerator"
+            co-respondent-answers: "pdfgenerator"
+            co-respondentinvitation: "pdfgenerator"
+            divorceminipetition: "pdfgenerator"
+            FL-DIV-GNO-ENG-00020.docx: "docmosis"
+            respondentAnswers: "pdfgenerator"
+    pdf:
+        familyCourtImgKey: "familycourt"
+        familyCourtImgVal: "[userImage:familycourt.png]"
+        hmctsImgKey: "hmcts"
+        hmctsImgVal: "[userImage:hmcts.png]"
+        displayTemplateKey: "displayTemplateOnly"
+        displayTemplateVal: "1"
+
 service-auth-provider:
   service:
     stub:
@@ -108,3 +125,9 @@ logging:
 
 azure:
   app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
+
+docmosis:
+    service:
+        pdf-service:
+            uri: ${DOCMOSIS_SERVICE_RENDER_URL:http://localhost:5501/rs/render}
+            accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:23432}

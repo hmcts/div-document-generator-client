@@ -26,6 +26,7 @@
         "RespJurisdictionRespCountryOfResidence": "India",
         "RespLegalProceedingsExist": "NO",
         "RespLegalProceedingsDescription": "Dummy respLegalProceedingsDescription",
+        "D8DivorceCostsClaim": "YES",
         "RespAgreeToCosts": "NO",
         "RespCostsReason": "Dummy respCostsReason"
       }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -22,6 +24,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@Qualifier("pdfGenerator")
 public class PDFGenerationServiceImpl implements PDFGenerationService {
     private static final MediaType API_VERSION = MediaType
             .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
@@ -40,13 +43,16 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
     @Value("${service.pdf-service.uri}")
     private String pdfServiceEndpoint;
 
-    @Override
-    public byte[] generateFromHtml(byte[] template, Map<String, Object> placeholders) {
-        NullOrEmptyValidator.requireNonEmpty(template);
-        Objects.requireNonNull(placeholders);
+    @Autowired
+    private TemplateManagementService templateManagementService;
 
+    @Override
+    public byte[] generate(String templateName, Map<String, Object> placeholders) {
+        NullOrEmptyValidator.requireNonBlank(templateName);
+        Objects.requireNonNull(placeholders);
+        byte[] template = templateManagementService.getTemplateByName(templateName);
         log.info("Making request to pdf service to generate pdf document with template bytes of size [{}] "
-                + "and placeholders of size [{}]", template.length, placeholders.size());
+              + "and placeholders of size [{}]", template.length, placeholders.size());
 
         try {
             return restTemplate.postForObject(
