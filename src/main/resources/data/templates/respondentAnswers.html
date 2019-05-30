@@ -152,9 +152,10 @@
 {% set respAgreeToCosts = caseDetails.case_data.RespAgreeToCosts | upper | default("") %}
 {% set respCostsReason = caseDetails.case_data.RespCostsReason %}
 {% set costsBeingClaimed = caseDetails.case_data.D8DivorceCostsClaim | upper | default("NO") %}
+{% set respondentSolicitorRepresented = caseDetails.case_data.respondentSolicitorRepresented | upper | default("NO") %}
 
 <h1 class="heading-large">Response to a divorce application</h1>
-<h2 class="title heading-small">Acknowledgement of service by the respondent</h2>
+<h2 class="title heading-small">Acknowledgement of service by the respondent{% if respondentSolicitorRepresented == "YES" %}'s solicitor{% endif %}</h2>
 
 <p class="heading-small">Issued</p>
 <p class="response-text">{{ issueDate }}</p>

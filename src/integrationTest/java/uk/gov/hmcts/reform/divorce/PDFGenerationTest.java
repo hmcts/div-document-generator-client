@@ -81,7 +81,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"Resp_Desertion_Undefend_noAdmit_Response"},
                 {"Resp_Desertion_Undefend_Response"},
                 {"co-respondent-answers-defended-admit-costs"},
-                {"co-respondent-answers-undefended-no-admit-no-costs"}
+                {"co-respondent-answers-undefended-no-admit-no-costs"},
+                {"Resp_Adultery_Undefend_SolicitorRepresented_Response"}
         });
     }
 
@@ -103,6 +104,7 @@ public class PDFGenerationTest extends IntegrationTest {
             readPdf(responseFromEvidenceManagement.asByteArray()));
     }
 
+    // Run all tests in this class if you run across the error "No tests found for given includes"
     @Test
     @Ignore
     public void ignoreMe_updateGeneratedPdfs() throws Exception  {
