@@ -34,6 +34,15 @@ public class TemplateDataMapperTest {
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
+    private static final String TYPE_COSTS_DECISION_JSON_KEY = "typeCostsDecision";
+    private static final String WHO_PAYS_COSTS_JSON_KEY = "whoPaysCosts";
+    private static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
+    private static final String WHO_PAYS_COSTS_CORESPONDENT_VALUE = "corespondent";
+    private static final String TEST_VALUE = "Some Test Value";
+
+    // CCD Case Sensitive Fields
+    private static final String TYPE_COSTS_DECISION_TEMPLATE_KEY = "TypeCostsDecision";
+    private static final String WHO_PAYS_COSTS_TEMPLATE_KEY = "WhoPaysCosts";
 
     // Docmosis Base Config Constants
     private static final String TEMPLATE_KEY = "templateKey";
@@ -62,6 +71,7 @@ public class TemplateDataMapperTest {
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
+        expectedData.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -136,8 +146,7 @@ public class TemplateDataMapperTest {
         courtHearingDateTimeCcdCollectionMember.setValue(courtHearingDateTime);
 
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCcdCollectionMember)
-        );
+        caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCcdCollectionMember));
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
@@ -146,6 +155,40 @@ public class TemplateDataMapperTest {
         expectedData.putAll(caseData);
         expectedData.put(COURT_HEARING_DATE_KEY, "10 October 2019");
         expectedData.put(COURT_HEARING_TIME_KEY, "10:30");
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenTypeCostsDecision_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(TYPE_COSTS_DECISION_JSON_KEY, TEST_VALUE);
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(TYPE_COSTS_DECISION_TEMPLATE_KEY, TEST_VALUE);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

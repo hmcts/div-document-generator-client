@@ -34,6 +34,13 @@ public class TemplateDataMapper {
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
+    private static final String TYPE_COSTS_DECISION_JSON_KEY = "typeCostsDecision";
+    private static final String WHO_PAYS_COSTS_JSON_KEY = "whoPaysCosts";
+    private static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
+
+    // CCD Case Sensitive Fields
+    private static final String TYPE_COSTS_DECISION_TEMPLATE_KEY = "TypeCostsDecision";
+    private static final String WHO_PAYS_COSTS_TEMPLATE_KEY = "WhoPaysCosts";
 
     @Autowired
     private ObjectMapper mapper;
@@ -73,6 +80,17 @@ public class TemplateDataMapper {
 
         // Setup hardcoded service centre court contact details
         data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
+
+        // CoE template is using upperCase variable names compared to whats currently in the CCD configuration
+        if (Objects.nonNull(data.get(WHO_PAYS_COSTS_JSON_KEY))) {
+            data.put(WHO_PAYS_COSTS_TEMPLATE_KEY, data.get(WHO_PAYS_COSTS_JSON_KEY));
+        } else {
+            data.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
+        }
+
+        if (Objects.nonNull(data.get(TYPE_COSTS_DECISION_JSON_KEY))) {
+            data.put(TYPE_COSTS_DECISION_TEMPLATE_KEY, data.get(TYPE_COSTS_DECISION_JSON_KEY));
+        }
 
         // Get page assets
         data.putAll(getPageAssets());
