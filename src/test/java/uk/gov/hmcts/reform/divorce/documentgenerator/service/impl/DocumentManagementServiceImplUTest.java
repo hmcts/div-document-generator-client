@@ -53,6 +53,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00023.docx";
 
     @Rule
     public ExpectedException expectedException = none();
@@ -350,6 +351,28 @@ public class DocumentManagementServiceImplUTest {
             .getGeneratorService(COE_TEMPALTE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
             .generate(COE_TEMPALTE, formattedPlaceholderMap);
+    }
+
+    @Test
+    public void whenGenerateCostsOrderDocumentWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
+
+        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
+        when(pdfGenerationFactory.getGeneratorService(COSTS_ORDER_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(COSTS_ORDER_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(COSTS_ORDER_TEMPLATE, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        verifyStatic(HtmlFieldFormatter.class);
+        HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(COSTS_ORDER_TEMPLATE);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(COSTS_ORDER_TEMPLATE, formattedPlaceholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
