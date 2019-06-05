@@ -18,31 +18,25 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_CLAIM_GRANTED_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_DEFAULT_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
 
-    private static final String CASE_DATA = "case_data";
-    private static final String CASE_DETAILS = "caseDetails";
-    private static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
-    private static final String COURT_CONTACT_KEY = "CourtContactDetails";
-    private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
-    private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
-    private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
-    private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
-    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
-        + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
-        + " 0642 (from 8.30am to 5pm)";
-    private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
-    private static final String TYPE_COSTS_DECISION_JSON_KEY = "typeCostsDecision";
-    private static final String WHO_PAYS_COSTS_JSON_KEY = "whoPaysCosts";
-    private static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
-    private static final String WHO_PAYS_COSTS_CORESPONDENT_VALUE = "corespondent";
-    private static final String TEST_VALUE = "Some Test Value";
-
-    // CCD Case Sensitive Fields
-    private static final String TYPE_COSTS_DECISION_TEMPLATE_KEY = "TypeCostsDecision";
-    private static final String WHO_PAYS_COSTS_TEMPLATE_KEY = "WhoPaysCosts";
+    private static final String WHO_PAYS_COSTS_CORESPONDENT_VALUE = "coRespondent";
 
     // Docmosis Base Config Constants
     private static final String TEMPLATE_KEY = "templateKey";
@@ -71,7 +65,6 @@ public class TemplateDataMapperTest {
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-        expectedData.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -162,16 +155,16 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
+    public void givenCostsClaimedWithNoWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
+        caseData.put(COSTS_CLAIM_GRANTED_JSON_KEY, YES_VALUE);
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
         expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
+        expectedData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
@@ -179,16 +172,32 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenTypeCostsDecision_whenTemplateDataMapperIsCalled_returnFormattedData() {
+    public void givenCostsClaimedWithWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(TYPE_COSTS_DECISION_JSON_KEY, TEST_VALUE);
+        caseData.put(COSTS_CLAIM_GRANTED_JSON_KEY, YES_VALUE);
+        caseData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
         expectedData.putAll(caseData);
-        expectedData.put(TYPE_COSTS_DECISION_TEMPLATE_KEY, TEST_VALUE);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(COURT_CONTACT_KEY, "PlaceHolder Value");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

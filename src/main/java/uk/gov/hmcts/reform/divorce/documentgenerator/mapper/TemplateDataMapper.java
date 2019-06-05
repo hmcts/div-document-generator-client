@@ -16,31 +16,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_CLAIM_GRANTED_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_DEFAULT_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_JSON_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
+
 @Component
 public class TemplateDataMapper {
-
-    // CCD Fields and Values
-    private static final String CASE_DATA = "case_data";
-    private static final String CASE_DETAILS = "caseDetails";
-    private static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
-    private static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
-    private static final String COURT_CONTACT_KEY = "CourtContactDetails";
-    private static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
-    private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
-    private static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
-    private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
-    private static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
-    private static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
-        + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
-        + " 0642 (from 8.30am to 5pm)";
-    private static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
-    private static final String TYPE_COSTS_DECISION_JSON_KEY = "typeCostsDecision";
-    private static final String WHO_PAYS_COSTS_JSON_KEY = "whoPaysCosts";
-    private static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
-
-    // CCD Case Sensitive Fields
-    private static final String TYPE_COSTS_DECISION_TEMPLATE_KEY = "TypeCostsDecision";
-    private static final String WHO_PAYS_COSTS_TEMPLATE_KEY = "WhoPaysCosts";
 
     @Autowired
     private ObjectMapper mapper;
@@ -78,18 +72,15 @@ public class TemplateDataMapper {
             data.put(COURT_HEARING_TIME_KEY, latestCourtHearing.getValue().get(COURT_HEARING_TIME_KEY));
         }
 
-        // Setup hardcoded service centre court contact details
-        data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-
-        // CoE template is using upperCase variable names compared to whats currently in the CCD configuration
-        if (Objects.nonNull(data.get(WHO_PAYS_COSTS_JSON_KEY))) {
-            data.put(WHO_PAYS_COSTS_TEMPLATE_KEY, data.get(WHO_PAYS_COSTS_JSON_KEY));
-        } else {
-            data.put(WHO_PAYS_COSTS_TEMPLATE_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
+        // Setup hardcoded service centre court contact details if missing
+        if (Objects.isNull(data.get(COURT_CONTACT_KEY))) {
+            data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         }
 
-        if (Objects.nonNull(data.get(TYPE_COSTS_DECISION_JSON_KEY))) {
-            data.put(TYPE_COSTS_DECISION_TEMPLATE_KEY, data.get(TYPE_COSTS_DECISION_JSON_KEY));
+        // Set a default value for Who Pays Costs if not set but costs claim is granted
+        if (String.valueOf(data.get(COSTS_CLAIM_GRANTED_JSON_KEY)).equalsIgnoreCase(YES_VALUE)
+                && Objects.isNull(data.get(WHO_PAYS_COSTS_JSON_KEY))) {
+            data.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
         }
 
         // Get page assets

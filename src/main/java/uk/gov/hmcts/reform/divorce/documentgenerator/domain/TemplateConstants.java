@@ -20,4 +20,24 @@ public class TemplateConstants {
     public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
+
+    // Template Data Mapper Constants
+    public static final String CASE_DATA = "case_data";
+    public static final String CASE_DETAILS = "caseDetails";
+    public static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
+    public static final String COSTS_CLAIM_GRANTED_JSON_KEY = "CostsClaimGranted";
+    public static final String COURT_CONTACT_KEY = "CourtContactDetails";
+    public static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
+    public static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
+    public static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
+    public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
+    public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
+    public static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
+        + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
+        + " 0642 (from 8.30am to 5pm)";
+    public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
+    public static final String WHO_PAYS_COSTS_JSON_KEY = "WhoPaysCosts";
+    public static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
+    public static final String YES_VALUE = "Yes";
 }
