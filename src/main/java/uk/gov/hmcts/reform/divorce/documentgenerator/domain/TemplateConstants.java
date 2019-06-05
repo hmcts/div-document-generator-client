@@ -26,7 +26,6 @@ public class TemplateConstants {
     public static final String CASE_DETAILS = "caseDetails";
     public static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
     public static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
-    public static final String COSTS_CLAIM_GRANTED_JSON_KEY = "CostsClaimGranted";
     public static final String COURT_CONTACT_KEY = "CourtContactDetails";
     public static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     public static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
@@ -37,7 +36,4 @@ public class TemplateConstants {
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
-    public static final String WHO_PAYS_COSTS_JSON_KEY = "WhoPaysCosts";
-    public static final String WHO_PAYS_COSTS_DEFAULT_VALUE = "respondent";
-    public static final String YES_VALUE = "Yes";
 }

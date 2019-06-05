@@ -19,7 +19,6 @@ import java.util.Objects;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_FORMAT;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_CLAIM_GRANTED_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
@@ -29,9 +28,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_DEFAULT_VALUE;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_JSON_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @Component
 public class TemplateDataMapper {
@@ -75,12 +71,6 @@ public class TemplateDataMapper {
         // Setup hardcoded service centre court contact details if missing
         if (Objects.isNull(data.get(COURT_CONTACT_KEY))) {
             data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-        }
-
-        // Set a default value for Who Pays Costs if not set but costs claim is granted
-        if (String.valueOf(data.get(COSTS_CLAIM_GRANTED_JSON_KEY)).equalsIgnoreCase(YES_VALUE)
-                && Objects.isNull(data.get(WHO_PAYS_COSTS_JSON_KEY))) {
-            data.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
         }
 
         // Get page assets

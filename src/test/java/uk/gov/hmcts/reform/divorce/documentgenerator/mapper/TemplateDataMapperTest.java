@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_CLAIM_GRANTED_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
@@ -29,14 +28,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_DEFAULT_VALUE;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WHO_PAYS_COSTS_JSON_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
-
-    private static final String WHO_PAYS_COSTS_CORESPONDENT_VALUE = "coRespondent";
 
     // Docmosis Base Config Constants
     private static final String TEMPLATE_KEY = "templateKey";
@@ -148,40 +142,6 @@ public class TemplateDataMapperTest {
         expectedData.putAll(caseData);
         expectedData.put(COURT_HEARING_DATE_KEY, "10 October 2019");
         expectedData.put(COURT_HEARING_TIME_KEY, "10:30");
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenCostsClaimedWithNoWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COSTS_CLAIM_GRANTED_JSON_KEY, YES_VALUE);
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_DEFAULT_VALUE);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
-    public void givenCostsClaimedWithWhoPaysCosts_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COSTS_CLAIM_GRANTED_JSON_KEY, YES_VALUE);
-        caseData.put(WHO_PAYS_COSTS_JSON_KEY, WHO_PAYS_COSTS_CORESPONDENT_VALUE);
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
