@@ -51,6 +51,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
+    private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00023.docx";
@@ -285,6 +286,39 @@ public class DocumentManagementServiceImplUTest {
             .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
             .invoke("storeDocument", data, authToken, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCostsOrder_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = COSTS_ORDER_TEMPLATE;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, COSTS_ORDER_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, COSTS_ORDER_NAME_FOR_PDF_FILE);
     }
 
     @Test
