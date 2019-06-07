@@ -68,6 +68,7 @@ public class TemplateDataMapperTest {
 
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
+        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());

@@ -80,10 +80,10 @@ public class TemplateDataMapper {
             } else {
                 data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
             }
-
-            // We are told to hardcode the Court Name on the templates for now, but will leave as a variable for future change
-            data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         }
+
+        // We are told to hardcode the Court Name on the templates for now, but will leave as a variable for future change
+        data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
 
         // Get page assets
         data.putAll(getPageAssets());
