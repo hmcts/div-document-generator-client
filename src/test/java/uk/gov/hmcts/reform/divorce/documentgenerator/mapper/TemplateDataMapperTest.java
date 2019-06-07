@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,19 +19,28 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
+
+    // Test Values
+    private static final String TEST_COURT_NAME = "Court Name";
+    private static final String TEST_COURT_ADDRESS = "Placeholder Court";
 
     // Docmosis Base Config Constants
     private static final String TEMPLATE_KEY = "templateKey";
@@ -58,7 +68,6 @@ public class TemplateDataMapperTest {
 
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
-        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -149,20 +158,46 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
+    public void givenExistingCourtName_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_CONTACT_KEY, "PlaceHolder Value");
+        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
         expectedData.putAll(caseData);
+        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
         assertEquals(expectedData, actual);
     }
+
+    @Test
+    public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
+        caseData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+
+        String expectedContactAddress = StringUtils.join(
+            CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
+        expectedData.put(COURT_CONTACT_KEY, expectedContactAddress);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+
 
     private void mockDocmosisPdfBaseConfig() {
         when(docmosisBasePdfConfig.getDisplayTemplateKey()).thenReturn(TEMPLATE_KEY);
