@@ -19,5 +19,5 @@ public class PdfDocumentRequest {
 
     private Map<String,Object> data;
 
-    private boolean stylesInText;
+    private String stylesInText;
 }

@@ -77,7 +77,7 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)
             .templateName(template)
-            .stylesInText(true)
+            .stylesInText("true")
             .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -114,7 +114,7 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)
             .templateName(template)
-            .stylesInText(true)
+            .stylesInText("true")
             .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
