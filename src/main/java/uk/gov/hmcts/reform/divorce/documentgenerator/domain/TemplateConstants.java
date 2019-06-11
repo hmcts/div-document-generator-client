@@ -34,7 +34,7 @@ public class TemplateConstants {
     public static final String COURT_NAME_KEY = "CourtName";
     public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
-    public static final String NEWLINE_DELIMITER = "\\n";
+    public static final String NEWLINE_DELIMITER = "\n";
     public static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
     public static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
         + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
