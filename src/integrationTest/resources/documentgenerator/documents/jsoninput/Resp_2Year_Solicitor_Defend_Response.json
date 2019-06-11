@@ -26,7 +26,7 @@
                 "RespAgreeToCosts": "YES",
                 "RespCostsReason": "Dummy respCostsReason",
                 "D8DivorceCostsClaim": "YES",
-                "RespondentSolicitorRepresented": "Yes"
+                "respondentSolicitorRepresented": "Yes"
             }
         }
     }
