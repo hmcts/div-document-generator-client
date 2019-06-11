@@ -128,7 +128,7 @@
 {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
 {% set referenceNo = caseDetails.case_data.D8caseReference %}
 
-{% set respSolicitorRepresented = caseDetails.case_data.RespondentSolicitorRepresented | upper | default("") %}
+{% set respSolicitorRepresented = caseDetails.case_data.respondentSolicitorRepresented | upper | default("") %}
 {% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
 {% set petitionerLastName = caseDetails.case_data.D8PetitionerLastName | default("") %}
 {% set husbandOrWifeNamed = petitionerFirstName + " " + petitionerLastName %}
