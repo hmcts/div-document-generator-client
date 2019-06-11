@@ -18,6 +18,4 @@ public class PdfDocumentRequest {
     private String outputName;
 
     private Map<String,Object> data;
-
-    private String stylesInText;
 }

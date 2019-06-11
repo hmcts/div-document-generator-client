@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TemplateConstants {
+    // Generators
+    public static final String DOCMOSIS_TYPE = "docmosis";
+    public static final String PDF_GENERATOR_TYPE = "pdfgenerator";
+
     // Template Ids
     public static final String AOS_INVITATION_TEMPLATE_ID = "aosinvitation";
     public static final String CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00020.docx";
