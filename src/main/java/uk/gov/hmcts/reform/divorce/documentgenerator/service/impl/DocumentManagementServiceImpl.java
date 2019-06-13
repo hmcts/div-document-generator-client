@@ -29,6 +29,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_TEMPLATE_ID;
 
@@ -77,7 +78,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
                 templateName, placeholders.size());
 
-        Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
+        Map<String, Object> formattedPlaceholders = placeholders;
+
+        // Reform PDF Generator requires formatting for certain characters
+        if (PDF_GENERATOR_TYPE.equals(pdfGenerationFactory.getGeneratorType(templateName))) {
+            formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
+        }
 
         return pdfGenerationFactory.getGeneratorService(templateName).generate(templateName, formattedPlaceholders);
     }

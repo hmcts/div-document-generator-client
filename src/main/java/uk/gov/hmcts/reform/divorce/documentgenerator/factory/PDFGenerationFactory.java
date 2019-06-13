@@ -11,11 +11,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DOCMOSIS_TYPE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
+
 @Component
 public class PDFGenerationFactory {
 
-    private static final String DOCMOSIS_TYPE = "docmosis";
-    private static final String PDF_GENERATOR_TYPE = "pdfgenerator";
+
 
     private TemplateConfiguration templateConfiguration;
     private Map<String, PDFGenerationService> generatorMap;
@@ -35,7 +37,11 @@ public class PDFGenerationFactory {
 
     public PDFGenerationService getGeneratorService(String templateId) {
         return generatorMap.get(
-            templateConfiguration.getMap().getOrDefault(templateId, PDF_GENERATOR_TYPE)
+            getGeneratorType(templateId)
         );
+    }
+
+    public String getGeneratorType(String templateId) {
+        return templateConfiguration.getMap().getOrDefault(templateId, PDF_GENERATOR_TYPE);
     }
 }

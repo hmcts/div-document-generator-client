@@ -128,6 +128,7 @@
 {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
 {% set referenceNo = caseDetails.case_data.D8caseReference %}
 
+{% set respSolicitorRepresented = caseDetails.case_data.respondentSolicitorRepresented | upper | default("") %}
 {% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
 {% set petitionerLastName = caseDetails.case_data.D8PetitionerLastName | default("") %}
 {% set husbandOrWifeNamed = petitionerFirstName + " " + petitionerLastName %}
@@ -154,7 +155,11 @@
 {% set costsBeingClaimed = caseDetails.case_data.D8DivorceCostsClaim | upper | default("NO") %}
 
 <h1 class="heading-large">Response to a divorce application</h1>
-<h2 class="title heading-small">Acknowledgement of service by the respondent</h2>
+{% if respSolicitorRepresented == "YES" %}
+    <h2 class="title heading-small">Acknowledgement of service by the respondent's solicitor</h2>
+{% else %}
+    <h2 class="title heading-small">Acknowledgement of service by the respondent</h2>
+{% endif %}
 
 <p class="heading-small">Issued</p>
 <p class="response-text">{{ issueDate }}</p>
