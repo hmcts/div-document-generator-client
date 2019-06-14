@@ -97,7 +97,7 @@ public class PDFGenerationTest extends IntegrationTest {
     /**
      * This is not really a test, just a utility to re-generate the PDFs after changing a template.
      *
-     * Should be @ignored in master branch.
+     * <p>Should be @ignored in master branch.
      * */
     @Test
     @Ignore
