@@ -389,22 +389,19 @@ public class DocumentManagementServiceImplUTest {
     public void whenGenerateCostsOrderDocumentWithDocmosis_thenProceedAsExpected() {
         final byte[] expected = {1};
         final Map<String, Object> placeholderMap = emptyMap();
-        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
-        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
         when(pdfGenerationFactory.getGeneratorService(COSTS_ORDER_TEMPLATE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(COSTS_ORDER_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationService.generate(COSTS_ORDER_TEMPLATE, placeholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(COSTS_ORDER_TEMPLATE, placeholderMap);
 
         assertEquals(expected, actual);
 
-        verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
         Mockito.verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(COSTS_ORDER_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-            .generate(COSTS_ORDER_TEMPLATE, formattedPlaceholderMap);
+            .generate(COSTS_ORDER_TEMPLATE, placeholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
