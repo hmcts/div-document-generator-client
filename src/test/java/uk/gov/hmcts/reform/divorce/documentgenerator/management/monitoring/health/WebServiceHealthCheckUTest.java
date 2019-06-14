@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.monitoring.health;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
