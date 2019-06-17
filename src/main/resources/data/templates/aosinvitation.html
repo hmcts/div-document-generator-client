@@ -161,6 +161,7 @@
         {% set referenceNo = caseDetails.case_data.D8caseReference  %}
 
         {% set journeyType = caseDetails.case_data.D8DivorceUnit == "serviceCentre" ? "online" : "paper" %}
+        {% set journeyType = caseDetails.case_data.D8DivorceUnit == "eastMidlands" ? "online" : "paper" %}
         {% if caseDetails.case_data.D8RespondentSolicitorName is not empty %}
         {% set journeyType = "solicitor" %}
         {% endif %}
