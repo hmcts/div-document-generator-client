@@ -39,6 +39,7 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
@@ -314,6 +315,7 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> placeholderMap = emptyMap();
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
+        when(pdfGenerationFactory.getGeneratorType(A_TEMPLATE)).thenReturn(PDF_GENERATOR_TYPE);
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
@@ -334,22 +336,18 @@ public class DocumentManagementServiceImplUTest {
     public void whenGenerateCoEDocumentWithDocmosis_thenProceedAsExpected() {
         final byte[] expected = {1};
         final Map<String, Object> placeholderMap = emptyMap();
-        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
-        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
         when(pdfGenerationFactory.getGeneratorService(COE_TEMPALTE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(COE_TEMPALTE, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationService.generate(COE_TEMPALTE, placeholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
 
         assertEquals(expected, actual);
 
-        verifyStatic(HtmlFieldFormatter.class);
-        HtmlFieldFormatter.format(placeholderMap);
         Mockito.verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(COE_TEMPALTE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-            .generate(COE_TEMPALTE, formattedPlaceholderMap);
+            .generate(COE_TEMPALTE, placeholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
