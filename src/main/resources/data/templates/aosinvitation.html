@@ -159,10 +159,14 @@
         {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
         {% set caseId = caseDetails.id  %}
         {% set referenceNo = caseDetails.case_data.D8caseReference  %}
+        {% set divorceUnit = caseDetails.case_data.D8DivorceUnit %}
 
-        {% set journeyType = caseDetails.case_data.D8DivorceUnit == "serviceCentre" ? "online" : "paper" %}
-        {% if caseDetails.case_data.D8RespondentSolicitorName is not empty %}
-        {% set journeyType = "solicitor" %}
+        {% set journeyType = "paper" %}
+
+        {% if divorceUnit == "serviceCentre" or divorceUnit == "eastMidlands" %}
+            {% set journeyType = "online" %}
+        {% elseif caseDetails.case_data.D8RespondentSolicitorName is not empty %}
+            {% set journeyType = "solicitor" %}
         {% endif %}
 
         {% set accessCode = access_code %}
