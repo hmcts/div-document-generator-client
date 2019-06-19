@@ -19,6 +19,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
     private static final String X_PATH_TO_URL = "_links.self.href";
+    private static final String COSTS_ORDER_INPUT_JSON = "costs-order.json";
 
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
@@ -42,6 +43,22 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     public void givenAllTheRightParameters_whenGenerateCoEWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
         String requestBody = loadJson(COE_INPUT_JSON);
+        //check PDF is generated
+        Response response = callDivDocumentGenerator(requestBody);
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
+        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
+        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
+        //check the data present in the evidence management
+        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
+        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
+        Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
+    }
+
+    @Test
+    public void givenAllTheRightParameters_whenGenerateCostsOrderWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
+        throws Exception {
+        String requestBody = loadJson(COSTS_ORDER_INPUT_JSON);
         //check PDF is generated
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
