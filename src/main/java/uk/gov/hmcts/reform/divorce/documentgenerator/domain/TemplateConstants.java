@@ -19,6 +19,7 @@ public class TemplateConstants {
     public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
     public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00060.docx";
+    public static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -30,6 +31,7 @@ public class TemplateConstants {
     public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     public static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
+    public static final String CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE = "CaseListForPronouncement.pdf";
 
     // Template Data Mapper Constants
     public static final String CARE_OF_PREFIX = "c\\o";
