@@ -8,7 +8,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactor
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +26,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
@@ -42,9 +43,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private final Clock clock = Clock.systemDefaultZone();
 
     @Autowired
-    private TemplateManagementService templateManagementService;
-
-    @Autowired
     private PDFGenerationFactory pdfGenerationFactory;
 
     @Autowired
@@ -56,12 +54,17 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
                 templateName, placeholders.size());
 
-        placeholders.put(CURRENT_DATE_KEY,
-                new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date.from(clock.instant())));
+        placeholders.put(
+            CURRENT_DATE_KEY,
+            new SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+                .format(Date.from(clock.instant())
+            )
+        );
 
         String fileName = getFileNameFromTemplateName(templateName);
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
+
         return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
@@ -90,21 +93,24 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     private String getFileNameFromTemplateName(String templateName) {
         switch (templateName) {
-            case AOS_INVITATION_TEMPLATE_ID :
+            case AOS_INVITATION_TEMPLATE_ID:
                 return AOS_INVITATION_NAME_FOR_PDF_FILE;
-            case MINI_PETITION_TEMPLATE_ID :
+            case MINI_PETITION_TEMPLATE_ID:
                 return MINI_PETITION_NAME_FOR_PDF_FILE;
-            case CO_RESPONDENT_INVITATION_TEMPLATE_ID :
+            case DRAFT_MINI_PETITION_TEMPLATE_ID:
+                return DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
+            case CO_RESPONDENT_INVITATION_TEMPLATE_ID:
                 return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
-            case RESPONDENT_ANSWERS_TEMPLATE_ID :
+            case RESPONDENT_ANSWERS_TEMPLATE_ID:
                 return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case CO_RESPONDENT_ANSWERS_TEMPLATE_ID :
+            case CO_RESPONDENT_ANSWERS_TEMPLATE_ID:
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID :
+            case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID:
                 return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
             case COSTS_ORDER_DOCUMENT_ID:
                 return COSTS_ORDER_NAME_FOR_PDF_FILE;
-            default : throw new IllegalArgumentException("Unknown template: " + templateName);
+            default:
+                throw new IllegalArgumentException("Unknown template: " + templateName);
         }
     }
 }

@@ -15,6 +15,7 @@ public class TemplateConstants {
     public static final String CO_RESPONDENT_ANSWERS_TEMPLATE_ID = "co-respondent-answers";
     public static final String CO_RESPONDENT_INVITATION_TEMPLATE_ID = "co-respondentinvitation";
     public static final String MINI_PETITION_TEMPLATE_ID = "divorceminipetition";
+    public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
     public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00023.docx";
 
@@ -24,6 +25,7 @@ public class TemplateConstants {
     public static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
+    public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     public static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
 
