@@ -37,6 +37,7 @@ public class PDFGenerationTest extends IntegrationTest {
     @TestData
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][]{
+                {"mini-petition-draft"},
                 {"CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO"},
                 {"CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
                 {"CC--Corres_FO--No_CN--C_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
@@ -87,26 +88,26 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @Test
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
+        Response actual = generatePdfSuccessfully(inputJson);
+        byte[] expected = ResourceLoader.loadResource(expectedOutput);
 
-        String requestBody = ResourceLoader.loadJson(inputJson);
-        //check PDF is generated
-        Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-        documentUri = getDocumentStoreURI(documentUri);
-        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
-        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)),
-            readPdf(responseFromEvidenceManagement.asByteArray()));
+        Assert.assertEquals(readPdf(expected), readPdf(actual.asByteArray()));
     }
 
+    /**
+     * This is not really a test, just a utility to re-generate the PDFs after changing a template.
+     *
+     * <p>Should be @ignored in master branch.
+     * */
     @Test
     @Ignore
     public void ignoreMe_updateGeneratedPdfs() throws Exception  {
-        //this is not really a test, just a utility to re-generate the PDFs after changing a template
+        Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
+
+        savePdf(responseFromEvidenceManagement.asByteArray());
+    }
+
+    private Response generatePdfSuccessfully(String inputJson) throws Exception {
         String requestBody = ResourceLoader.loadJson(inputJson);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
@@ -116,7 +117,8 @@ public class PDFGenerationTest extends IntegrationTest {
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        savePdf(responseFromEvidenceManagement.asByteArray());
+
+        return responseFromEvidenceManagement;
     }
 
     private String readPdf(byte[] pdf) throws Exception {
