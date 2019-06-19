@@ -1,0 +1,154 @@
+<div class="response-text">
+    {% if journeyType == "solicitor" %}
+        Dear {% autoescape false %}{{ respondentsSolicitorName }}{% endautoescape %},
+    {% else %}
+        Dear {% autoescape false %}{{ respondentsName }}{% endautoescape %},
+    {% endif %}
+</div>
+
+{% if journeyType == "solicitor" %}
+    <div class="response-text">
+        {% autoescape false %}{{ respondentsName }}{% endautoescape %} has named you as representing them in their divorce proceedings. This notice contains the information you need to register as the respondent's solicitor in this case and complete the Acknowledgement of Service on their behalf.
+    </div>
+
+    <div class="response-text">
+        <strong>You need to respond within 7 days.</strong> If you don't respond, the applicant can ask the court to move the divorce forwards without the respondent. They may have to pay extra fees if this happens.
+    </div>
+{% else %}
+    <div class="response-text">
+        {% if previousCaseId is not empty %}
+            Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has submitted an amended petition for divorce.
+        {% else %}
+             Your {{ husbandOrWife }} {% autoescape false %}{{ husbandOrWifeNamed }}{% endautoescape %} has applied for a divorce.
+        {% endif %}
+    </div>
+
+    <div class="response-text">
+        <strong>You need to respond within 7 days.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+    </div>
+{% endif %}
+
+{% if journeyType == "online" %}
+    <h2 class="heading-small">
+        How to respond
+    </h2>
+    <ol class="list-bullet">
+        <li class="list-bullet-counter">
+            Read the application for divorce
+        </li>
+        <li class="list-bullet-counter">
+            Go to www.gov.uk/divorce-respond
+        </li>
+        <li class="list-bullet-counter">
+            Create an account or sign in using your email address
+        </li>
+        <li class="list-bullet-counter">
+            Enter this reference number: <span class="readable-user-case-credentials">{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</span>
+        </li>
+        <li class="list-bullet-counter">
+            Enter your access code: <span class="readable-user-case-credentials">{{ accessCode }}</span>
+        </li>
+    </ol>
+
+    <p class="response-text">
+        Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+    </p>
+
+{% elseif journeyType == "solicitor" %}
+    <h2 class="heading-small">
+        How to register for an account:
+    </h2>
+    <ol class="list-bullet">
+        <li class="list-bullet-counter">
+            Contact the divorce project team to register for an online account at the following address: contactdivorce@justice.gov.uk
+        </li>
+        <li class="list-bullet-counter">
+            Once the account has been created, you will be sent a link to access the system.
+        </li>
+    </ol>
+    <h2 class="heading-small">
+        How to link to your client's existing case:
+    </h2>
+    <ol class="list-bullet">
+        <li class="list-bullet-counter">
+            Click on the link sent to you and log in using the credentials provided to you by the project team
+        </li>
+        <li class="list-bullet-counter">
+            Select 'Create case' on your dashboard.
+            <ol class="list-bullet-alpha">
+                <li class="list-bullet-counter">Select 'Family divorce' under 'Jurisdiction'</li>
+                <li class="list-bullet-counter">Select 'Notice of acting' under 'Case type'</li>
+                <li class="list-bullet-counter">Select 'Link to an existing case' under 'Event'</li>
+                <li class="list-bullet-counter">Press 'Start'</li>
+            </ol>
+        </li>
+        <li class="list-bullet-counter">
+            Enter the respondent's name
+        </li>
+        <li class="list-bullet-counter">
+            Enter this unique pin code: <span class="readable-user-case-credentials">{{ accessCode }}</span>
+        </li>
+        <li class="list-bullet-counter">
+            Enter the case ID: <span class="readable-user-case-credentials">{{ caseId | slice(0,4)}}-{{ caseId | slice(4,8)}}-{{ caseId | slice(8,12)}}-{{ caseId | slice(12,16)}}</span>
+        </li>
+    </ol>
+    <p class="response-text">
+        Once these details have been confirmed, you will see the case details appear on your account dashboard. You can then begin completing the acknowledgement of service.
+    </p>
+    <p class="response-text">
+        Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+    </p>
+{% endif %}
+
+<h2 class="heading-small">
+    Getting help
+</h2>
+
+{% if journeyType == "online" %}
+    <p class="response-text">
+        The online service is written in plain English and designed to be used by citizens. You can find further guidance at:
+    </p>
+    <ul class="list-bullet">
+        <li>
+            www.gov.uk/divorce
+        </li>
+        <li>
+            Citizens Advice (www.citizensadvice.org.uk/family/ending-a-relationship/)
+        </li>
+        <li>
+            Advicenow (www.advicenow.org.uk/divorce)
+        </li>
+        <li>
+            Personal Support Unit (www.thepsu.org)
+        </li>
+    </ul>
+    <p class="response-text">
+        If you disagree with your {{ husbandOrWife }} about these arrangements it is usually cheaper and quicker to resolve this through mediation, rather than through the courts. You can find more information about mediation at www.familymediationcouncil.org.uk.
+    </p>
+    <p class="response-text">
+        You must tell us if you've been married to more than one person during this marriage (polygamy).
+    </p>
+{% else %}
+    <p class="response-text">
+        You can find further guidance at: www.gov.uk/divorce or by e-mailing the project team at contactdivorce@justice.gov.uk
+    </p>
+{% endif %}
+
+
+<p class="response-text next-paragraph">
+    {% if journeyType == "online" %}
+        <span class="bold-small">You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
+    {% elseif journeyType == "solicitor" %}
+        <span class="bold-small">You must only sign in to this service if you are the legal representative of {% autoescape false %}{{ respondentsName }}{% endautoescape %}. You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
+    {% endif %}
+</p>
+
+{% if journeyType != "solicitor" %}
+    <h2 class="heading-small">
+        Solicitors
+    </h2>
+
+    <p class="response-text">
+        If you want to use a solicitor, you must give them this letter as soon as possible.
+    </p>
+{% endif %}

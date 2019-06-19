@@ -46,6 +46,7 @@ module "div-dgs" {
     DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}${var.docmosis_render_endpoint}"
     DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
     MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE           = "${var.health_check_ttl}"
+    FEATURE_RESP_SOLICITOR_DETAILS                        = "${var.feature_resp_solicitor_details}"
   }
 }
 
