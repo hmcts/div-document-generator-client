@@ -11,18 +11,15 @@ Evidence Management Store.
 The service provides a single RESTful endpoint that will generate the document, store it in Evidence Management
 Store and return the link to the stored data.
 
-## Getting started
+## Setup
 
-### Prerequisites
+**Prerequisites**
 
 - [JDK 8](https://www.oracle.com/java)
 - [Docker](https://www.docker.com)
 
-### Flow Diagram
 
-![diagram](docs/DataFlow.png)
-
-### Building
+**Building**
 
 The project uses [Gradle](https://gradle.org) as a build tool but you don't have to install it locally since there is a
 `./gradlew` wrapper script.
@@ -33,13 +30,34 @@ To build project please execute the following command:
     ./gradlew build
 ```
 
-### Running
+**Running**
 
 First you need to create distribution by executing following command:
 
 ```bash
     ./gradlew installDist
 ```
+
+To begin download the azure client cli
+
+```
+brew update && brew install azure-cli
+```
+
+After it has finished downloaded run:
+```
+az login
+```
+
+This should open a browser window for you to login, use your HMCTS account
+
+After logging in run the following command:
+
+```
+az acr login --name hmcts --subscription <ask the team for the secret>
+```
+
+Make sure you are connected to the VPN to before you run docker-compose up otherwise it won't be able to use the image.
 
 When the distribution has been created in `build/install/div-document-generator` directory,
 you can run the application by executing following command:
@@ -51,14 +69,9 @@ you can run the application by executing following command:
 As a result the following container(s) will get created and started:
  - long living container for API application exposing port `4007`
 
-### API documentation
+## Testing
 
-API documentation is provided with Swagger:
- - `http://localhost:4007/swagger-ui.html` - UI to interact with the API resources
-
-## Developing
-
-### Integration tests
+**Integration tests**
 
 To run all integration tests locally:
 
@@ -74,7 +87,7 @@ To run all integration tests locally:
     
 If you update content in PDFs, you can regenerate the existing PDFs by running the ignored test in PDFGeneratorTest.java   
 
-### Unit tests
+**Unit tests**
 
 To run all unit tests please execute following command:
 
@@ -82,14 +95,14 @@ To run all unit tests please execute following command:
     ./gradlew test
 ```
 
-### Coding style tests
+**Coding style tests**
 
 To run all checks (including unit tests) please execute following command:
 
 ```bash
     ./gradlew check
 ```
-### Mutation tests
+**Mutation tests**
 
 To run all mutation tests execute the following command:
 
@@ -97,12 +110,23 @@ To run all mutation tests execute the following command:
     ./gradlew pitest
 ```
 
-## Versioning
+## Developing
+
+**Flow Diagram**
+
+![diagram](docs/DataFlow.png)
+
+**API documentation**
+
+API documentation is provided with Swagger:
+ - `http://localhost:4007/swagger-ui.html` - UI to interact with the API resources
+
+**Versioning**
 
 We use [SemVer](http://semver.org/) for versioning.
 For the versions available, see the tags on this repository.
 
-## Standard API
+**Standard API**
 
 We follow [RESTful API standards](https://hmcts.github.io/restful-api-standards/).
 
