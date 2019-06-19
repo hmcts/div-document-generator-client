@@ -55,7 +55,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
-    private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00023.docx";
+    private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
 
     @Rule
     public ExpectedException expectedException = none();

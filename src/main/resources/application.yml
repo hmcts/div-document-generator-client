@@ -60,7 +60,7 @@ document:
             co-respondentinvitation: "pdfgenerator"
             divorceminipetition: "pdfgenerator"
             FL-DIV-GNO-ENG-00020.docx: "docmosis"
-            FL-DIV-DEC-ENG-00023.docx: "docmosis"
+            FL-DIV-DEC-ENG-00060.docx: "docmosis"
             respondentAnswers: "pdfgenerator"
     pdf:
         familyCourtImgKey: "familycourt"

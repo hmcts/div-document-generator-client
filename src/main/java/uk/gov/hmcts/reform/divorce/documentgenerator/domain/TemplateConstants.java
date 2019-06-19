@@ -17,7 +17,7 @@ public class TemplateConstants {
     public static final String MINI_PETITION_TEMPLATE_ID = "divorceminipetition";
     public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
-    public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00023.docx";
+    public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00060.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
