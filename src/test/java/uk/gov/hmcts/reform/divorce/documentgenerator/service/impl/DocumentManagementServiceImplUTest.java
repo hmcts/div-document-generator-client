@@ -78,7 +78,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsInvalid_thenThrowException() {
+    public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         mockAndSetClock(Instant.now());
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
@@ -88,7 +88,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsAosInvitation_thenProceedAsExpected() throws Exception {
+    public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
@@ -121,7 +121,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoRespondentInvitation_thenProceedAsExpected()
+    public void givenTemplateNameIsCoRespondentInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
@@ -155,7 +155,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsRespondentAnswers_thenProceedAsExpected()
+    public void givenTemplateNameIsRespondentAnswers_whenGenerateAndStoreDocument_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
@@ -190,7 +190,7 @@ public class DocumentManagementServiceImplUTest {
 
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoRespondentAnswers_thenProceedAsExpected()
+    public void givenTemplateNameIsCoRespondentAnswers_whenGenerateAndStoreDocument_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
@@ -224,7 +224,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsMiniPetition_thenProceedAsExpected() throws Exception {
+    public void givenTemplateNameIsMiniPetition_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
@@ -257,7 +257,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsCoE_thenProceedAsExpected() throws Exception {
+    public void givenTemplateNameIsCoE_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
@@ -290,7 +290,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsCostsOrder_thenProceedAsExpected() throws Exception {
+    public void givenTemplateNameIsCostsOrder_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
