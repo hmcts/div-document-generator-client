@@ -57,11 +57,6 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"CC--No_FO--ChildApp_CN--ABCDEFG_DR-DES-CRK-No-PL-No-DT-No_LP--No"},
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-UB-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Long-SoC-Solicitors"},
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Petitioner-Solicitor"},
-                {"AOS_Hus_Res-Addr_DivUnit-SC"},
-                {"AOS_Same-Sex-Female"},
-                {"AOS_Same-Sex-Male"},
-                {"AOS_Amend_Petition"},
-                {"AOS_Solicitor"},
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
                 {"AOS_Co-respondent_Paper"},
@@ -82,6 +77,14 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"co-respondent-answers-defended-admit-costs"},
                 {"co-respondent-answers-undefended-no-admit-no-costs"}
         });
+
+        /* Add these to above list when featureToggleRespSolicitor is enabled. All the pdfs are in place
+                {"AOS_Hus_Res-Addr_DivUnit-SC"},
+                {"AOS_Same-Sex-Female"},
+                {"AOS_Same-Sex-Male"},
+                {"AOS_Amend_Petition"},
+                {"AOS_Solicitor"},
+        */
     }
 
     @Test

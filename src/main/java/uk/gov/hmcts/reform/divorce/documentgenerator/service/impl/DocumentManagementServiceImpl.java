@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -53,7 +54,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    private final boolean featureToggleRespSolicitor;
+    private boolean featureToggleRespSolicitor;
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,

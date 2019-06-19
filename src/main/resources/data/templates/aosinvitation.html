@@ -174,7 +174,7 @@
         {% set referenceNo = caseDetails.case_data.D8caseReference  %}
         {% set divorceUnit = caseDetails.case_data.D8DivorceUnit %}
 
-        {% if featureToggleRespSolicitor %}
+        {% if respSolicitorToggle %}
             {% if caseDetails.case_data.D8RespondentSolicitorName is not empty %}
                 {% set journeyType = "solicitor" %}
             {% else %}
@@ -190,6 +190,7 @@
         {% endif %}
 
         {% set accessCode = access_code %}
+        {% set respSolicitorToggle = featureToggleRespSolicitor %}
 
         {% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
         {% set petitionerLastName = caseDetails.case_data.D8PetitionerLastName | default("") %}
@@ -271,7 +272,7 @@
                 {{ issueDate }}
             </div>
 
-            {% if featureToggleRespSolicitor %}
+            {% if respSolicitorToggle %}
                 {% include "./ccdRespSolicitorFlow.html" %}
             {% else %}
                 {% include "./oldRespSolicitorFlow.html" %}
