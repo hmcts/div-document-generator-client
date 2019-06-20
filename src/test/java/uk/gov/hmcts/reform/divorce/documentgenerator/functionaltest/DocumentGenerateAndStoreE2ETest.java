@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.functionaltest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +53,8 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
@@ -67,6 +70,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -730,6 +734,43 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest =
             new GenerateDocumentRequest(COE_TEMPLATE, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDecreeNisiPronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = ImmutableMap.of(
+            DECREE_NISI_GRANTED_DATE_KEY, "2019-10-10",
+            DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, "2019-11-23"
+        );
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(DECREE_NISI_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
