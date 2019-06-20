@@ -14,6 +14,7 @@ public class TemplateConstants {
     public static final String CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00020.docx";
     public static final String CO_RESPONDENT_ANSWERS_TEMPLATE_ID = "co-respondent-answers";
     public static final String CO_RESPONDENT_INVITATION_TEMPLATE_ID = "co-respondentinvitation";
+    public static final String DECREE_NISI_TEMPLATE_ID = "FL-DIV-GNO-ENG-00021.docx";
     public static final String MINI_PETITION_TEMPLATE_ID = "divorceminipetition";
     public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
@@ -24,6 +25,7 @@ public class TemplateConstants {
     public static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     public static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
+    public static final String DECREE_NISI_TEMPLATE_NAME = "DecreeNisiPronouncement.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
@@ -40,6 +42,9 @@ public class TemplateConstants {
     public static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     public static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
     public static final String COURT_NAME_KEY = "CourtName";
+    public static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
+    public static final String DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY = "DAEligibleFromDate";
+    public static final String DECREE_NISI_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
     public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
     public static final String NEWLINE_DELIMITER = "\n";

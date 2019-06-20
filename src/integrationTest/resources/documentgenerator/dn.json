@@ -1,5 +1,5 @@
 {
-    "template":"FL-DIV-GNO-ENG-00020.docx",
+    "template":"FL-DIV-GNO-ENG-00021.docx",
     "values":{
         "caseDetails":{
             "id":"1517833758870511",
@@ -161,7 +161,9 @@
                             "TimeOfHearing":"15:30"
                         }
                     }
-                ]
+                ],
+                "DecreeNisiGrantedDate":"2019-10-10",
+                "DAEligibleFromDate":"2019-11-22"
             },
             "data_classification":{
                 "D8DerivedRespondentHomeAddress":"PUBLIC",

@@ -53,8 +53,10 @@ public class DocumentManagementServiceImplUTest {
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
+    private static final String DECREE_NISI_NAME_FOR_PDF_FILE = "DecreeNisiPronouncement.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
-    private static final String COE_TEMPALTE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
 
     @Rule
@@ -261,7 +263,7 @@ public class DocumentManagementServiceImplUTest {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = COE_TEMPALTE;
+        final String templateName = COE_TEMPLATE;
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
@@ -323,6 +325,39 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsDecreeNisi_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DECREE_NISI_TEMPLATE;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DECREE_NISI_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, DECREE_NISI_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenStoreDocument_thenProceedAsExpected() {
         final byte[] data = {1};
         final String filename = "someFileName";
@@ -372,17 +407,36 @@ public class DocumentManagementServiceImplUTest {
         final byte[] expected = {1};
         final Map<String, Object> placeholderMap = emptyMap();
 
-        when(pdfGenerationFactory.getGeneratorService(COE_TEMPALTE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(COE_TEMPALTE, placeholderMap)).thenReturn(expected);
+        when(pdfGenerationFactory.getGeneratorService(COE_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(COE_TEMPLATE, placeholderMap)).thenReturn(expected);
 
-        byte[] actual = classUnderTest.generateDocument(COE_TEMPALTE, placeholderMap);
+        byte[] actual = classUnderTest.generateDocument(COE_TEMPLATE, placeholderMap);
 
         assertEquals(expected, actual);
 
         Mockito.verify(pdfGenerationFactory, Mockito.times(1))
-            .getGeneratorService(COE_TEMPALTE);
+            .getGeneratorService(COE_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-            .generate(COE_TEMPALTE, placeholderMap);
+            .generate(COE_TEMPLATE, placeholderMap);
+    }
+
+
+    @Test
+    public void whenGenerateDecreeNisiDocumentWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+
+        when(pdfGenerationFactory.getGeneratorService(DECREE_NISI_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(DECREE_NISI_TEMPLATE, placeholderMap)).thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(DECREE_NISI_TEMPLATE, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(DECREE_NISI_TEMPLATE);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(DECREE_NISI_TEMPLATE, placeholderMap);
     }
 
     @Test
