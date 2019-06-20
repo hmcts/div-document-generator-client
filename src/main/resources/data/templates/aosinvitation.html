@@ -184,10 +184,10 @@
             {% endif %}
         {% else %}
             {% set journeyType = "paper" %}
-            {% if divorceUnit == "serviceCentre" or divorceUnit == "eastMidlands" %}
-                {% set journeyType = "online" %}
-            {% elseif caseDetails.case_data.D8RespondentSolicitorName is not empty %}
+            {% if caseDetails.case_data.D8RespondentSolicitorName is not empty %}
                 {% set journeyType = "solicitor" %}
+            {% elseif divorceUnit == "serviceCentre" or divorceUnit == "eastMidlands" %}
+                {% set journeyType = "online" %}
             {% endif %} 
         {% endif %}
 
