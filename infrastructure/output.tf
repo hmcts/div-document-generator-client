@@ -13,3 +13,7 @@ output "test_environment" {
 output "idam_s2s_url" {
     value = "${local.idam_s2s_url}"
 }
+
+output "feature_resp_solicitor_details" {
+  value = "${var.feature_resp_solicitor_details}"
+}

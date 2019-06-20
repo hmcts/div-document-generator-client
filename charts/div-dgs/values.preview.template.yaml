@@ -9,6 +9,7 @@ java:
         REFORM_ENVIRONMENT : "aat"
         DOCMOSIS_SERVICE_RENDER_URL: "https://docmosis-development.platform.hmcts.net/rs/render"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        FEATURE_RESP_SOLICITOR_DETAILS: "true"
 
     # Don't modify below here
     image: ${IMAGE_NAME}

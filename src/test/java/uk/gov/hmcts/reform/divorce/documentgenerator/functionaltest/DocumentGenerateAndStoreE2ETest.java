@@ -80,6 +80,9 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
 
+
+    private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
+
     @Autowired
     private MockMvc webClient;
 
@@ -193,6 +196,8 @@ public class DocumentGenerateAndStoreE2ETest {
 
         ReflectionTestUtils.setField(pdfGenerationService, "objectMapper", objectMapper);
 
+        ReflectionTestUtils.setField(documentManagementService, "featureToggleRespSolicitor", true);
+
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
         final String securityToken = "securityToken";
@@ -202,6 +207,8 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> valuesWithDate = new HashMap<>(values);
         valuesWithDate.put(CURRENT_DATE_KEY, new SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
                 .format(Date.from(instant)));
+
+        valuesWithDate.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
