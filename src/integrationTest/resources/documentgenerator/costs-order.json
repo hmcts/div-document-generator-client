@@ -166,7 +166,8 @@
                             "TimeOfHearing":"15:30"
                         }
                     }
-                ]
+                ],
+                "DecreeNisiGrantedDate": "2019-10-11"
             },
             "data_classification":{
                 "D8DerivedRespondentHomeAddress":"PUBLIC",
