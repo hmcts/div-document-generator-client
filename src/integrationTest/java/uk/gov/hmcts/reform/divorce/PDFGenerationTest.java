@@ -81,24 +81,29 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"Resp_Desertion_Undefend_noAdmit_Response"},
                 {"Resp_Desertion_Undefend_Response"},
                 {"co-respondent-answers-defended-admit-costs"},
-                {"co-respondent-answers-undefended-no-admit-no-costs"},
-                {"AOS_Hus_Res-Addr_DivUnit-SC"},
-                {"AOS_Same-Sex-Female"},
-                {"AOS_Same-Sex-Male"},
-                {"AOS_Amend_Petition"},
-                {"AOS_Hus_Res-Addr_DivUnit-EM"}
+                {"co-respondent-answers-undefended-no-admit-no-costs"}
         });
 
         List testData = new ArrayList(basicTestData);
 
         if (featureToggleRespSolicitor) {
             testData.addAll(Arrays.asList(new Object[][] {
-                {"AOS_Solicitor"}
+                {"AOS_Solicitor"},
+                {"AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl"},
+                {"AOS_Same-Sex-Female-Sol-Online-Avl"},
+                {"AOS_Same-Sex-Male-Sol-Online-Avl"},
+                {"AOS_Amend_Petition-Sol-Online-Avl"},
+                {"AOS_Hus_Res-Addr_DivUnit-EM-Sol-Online-Avl"}
             }));
         } else {
             testData.addAll(Arrays.asList(new Object[][] {
                 {"AOS_Wife_Sol-Addr_DivUnit-WM"},
-                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"}
+                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
+                {"AOS_Hus_Res-Addr_DivUnit-SC"},
+                {"AOS_Same-Sex-Female"},
+                {"AOS_Same-Sex-Male"},
+                {"AOS_Amend_Petition"},
+                {"AOS_Hus_Res-Addr_DivUnit-EM"}
             }));
         }
         return testData;
