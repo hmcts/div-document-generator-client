@@ -8,7 +8,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactor
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +20,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_DOCUMENT_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
@@ -42,9 +43,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 
     private final Clock clock = Clock.systemDefaultZone();
-
-    @Autowired
-    private TemplateManagementService templateManagementService;
 
     @Autowired
     private PDFGenerationFactory pdfGenerationFactory;
@@ -111,6 +109,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID:
                 return CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
+            case COSTS_ORDER_DOCUMENT_ID:
+                return COSTS_ORDER_NAME_FOR_PDF_FILE;
             case DECREE_NISI_TEMPLATE_ID:
                 return DECREE_NISI_TEMPLATE_NAME;
             default:
