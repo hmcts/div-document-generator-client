@@ -229,12 +229,14 @@
     {% endautoescape %}
 </p>
 
+{% if placeOfMarriage is not empty %}
 <p class="heading-small">Where the marriage took place</p>
 <p class="response-text">
     {% autoescape false %}
     {{ placeOfMarriage }}
     {% endautoescape %}
 </p>
+{% endif %}
 
 <p class="heading-small">Date of marriage</p>
 <p class="response-text">
