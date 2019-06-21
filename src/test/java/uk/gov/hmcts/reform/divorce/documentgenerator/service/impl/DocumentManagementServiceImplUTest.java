@@ -327,7 +327,8 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected() throws Exception {
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
+        throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
@@ -498,8 +499,10 @@ public class DocumentManagementServiceImplUTest {
         final byte[] expected = {1};
         final Map<String, Object> placeholderMap = emptyMap();
 
-        when(pdfGenerationFactory.getGeneratorService(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap)).thenReturn(expected);
+        when(pdfGenerationFactory.getGeneratorService(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID))
+            .thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap))
+            .thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap);
 
