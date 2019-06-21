@@ -11,7 +11,14 @@
 
             @page {
                 size: 8.5in 11in;
-                margin: 2% 10% 1% 10%;
+                margin: 10%;
+                @bottom-left {
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-family: "Open Sans";
+                    font-size: 10pt;
+                    padding-left: 8px;
+                    padding-bottom: 20px;
+                }
             }
 
             html {
@@ -134,19 +141,19 @@
             }
 
             .section-header {
-                position: absolute;
+                position: relative;
                 width: 100%;
             }
 
             .section-address {
-                position: absolute;
+                position: relative;
                 margin-top: 182px;
                 margin-left: 12px;
                 margin-right: 12px;
             }
 
             .section-content {
-                position: absolute;
+                position: relative;
                 margin-top: 260px;
                 margin-left: 12px;
                 margin-right: 12px;
@@ -569,6 +576,8 @@
 
                 <p class="response-text">
                     If you want to use a solicitor, you must give them this letter as soon as possible.
+                </p>
+                <p class="response-text">
                     If you're a solicitor, we're still working on the solicitor's online service. For now, you'll need to respond using the paper forms. Please contact us to have these sent to you.
                 </p>
                 {% endif %}
