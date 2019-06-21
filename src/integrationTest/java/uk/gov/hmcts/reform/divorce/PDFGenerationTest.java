@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -41,7 +42,7 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        List<Object[]> testData = Arrays.asList(new Object[][]{
+        List<Object[]> basicTestData = Arrays.asList(new Object[][]{
                 {"mini-petition-draft"},
                 {"CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO"},
                 {"CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
@@ -87,6 +88,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Amend_Petition"},
                 {"AOS_Hus_Res-Addr_DivUnit-EM"}
         });
+
+        List testData = new ArrayList(basicTestData);
 
         if (featureToggleRespSolicitor) {
             testData.addAll(Arrays.asList(new Object[][] {
