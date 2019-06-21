@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @RunWith(SerenityParameterizedRunner.class)
 public class PDFGenerationTest extends IntegrationTest {
@@ -29,6 +31,9 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String inputJson;
     private final String expectedOutput;
 
+    @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
+    private static boolean featureToggleRespSolicitor;
+
     public PDFGenerationTest(String fileName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, fileName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, fileName);
@@ -36,7 +41,7 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        return Arrays.asList(new Object[][]{
+        List<Object[]> testData = Arrays.asList(new Object[][]{
                 {"mini-petition-draft"},
                 {"CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO"},
                 {"CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
@@ -75,16 +80,25 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"Resp_Desertion_Undefend_noAdmit_Response"},
                 {"Resp_Desertion_Undefend_Response"},
                 {"co-respondent-answers-defended-admit-costs"},
-                {"co-respondent-answers-undefended-no-admit-no-costs"}
-        });
-
-        /* Add these to above list when featureToggleRespSolicitor is enabled. All the pdfs are in place
+                {"co-respondent-answers-undefended-no-admit-no-costs"},
                 {"AOS_Hus_Res-Addr_DivUnit-SC"},
                 {"AOS_Same-Sex-Female"},
                 {"AOS_Same-Sex-Male"},
                 {"AOS_Amend_Petition"},
-                {"AOS_Solicitor"},
-        */
+                {"AOS_Hus_Res-Addr_DivUnit-EM"}
+        });
+
+        if (featureToggleRespSolicitor) {
+            testData.addAll(Arrays.asList(new Object[][] {
+                {"AOS_Solicitor"}
+            }));
+        } else {
+            testData.addAll(Arrays.asList(new Object[][] {
+                {"AOS_Wife_Sol-Addr_DivUnit-WM"},
+                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"}
+            }));
+        }
+        return testData;
     }
 
     @Test
