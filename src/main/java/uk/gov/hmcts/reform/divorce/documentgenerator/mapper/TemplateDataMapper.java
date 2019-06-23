@@ -34,6 +34,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 
@@ -99,8 +100,7 @@ public class TemplateDataMapper {
             }
         }
 
-        // We are told to hardcode the Court Name on the templates for now
-        data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        data.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
 
         // Get page assets
         data.putAll(getPageAssets());
