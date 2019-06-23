@@ -35,6 +35,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 
@@ -71,7 +72,7 @@ public class TemplateDataMapperTest {
 
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
-        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -258,7 +259,6 @@ public class TemplateDataMapperTest {
         );
 
         expectedData.putAll(caseData);
-        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
@@ -277,7 +277,6 @@ public class TemplateDataMapperTest {
         );
 
         expectedData.putAll(caseData);
-        expectedData.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
 
         String expectedContactAddress = StringUtils.join(
             CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
@@ -287,8 +286,6 @@ public class TemplateDataMapperTest {
 
         assertEquals(expectedData, actual);
     }
-
-
 
     private void mockDocmosisPdfBaseConfig() {
         when(docmosisBasePdfConfig.getDisplayTemplateKey()).thenReturn(TEMPLATE_KEY);
