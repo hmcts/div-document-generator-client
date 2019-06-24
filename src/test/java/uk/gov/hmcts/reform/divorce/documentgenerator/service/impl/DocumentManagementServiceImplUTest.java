@@ -43,7 +43,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
+@PrepareForTest( {GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
 public class DocumentManagementServiceImplUTest {
 
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
@@ -54,10 +54,14 @@ public class DocumentManagementServiceImplUTest {
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
     private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
     private static final String DECREE_NISI_NAME_FOR_PDF_FILE = "DecreeNisiPronouncement.pdf";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE = "CaseListForPronouncement.pdf";
+    private static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
     private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
+    private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
 
     @Rule
     public ExpectedException expectedException = none();
@@ -107,19 +111,19 @@ public class DocumentManagementServiceImplUTest {
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class))
-                        .withArguments(data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
 
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("generateDocument", templateName, placeholderMap);
+            .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
+            .invoke("storeDocument", data, authToken, AOS_INVITATION_NAME_FOR_PDF_FILE);
     }
 
     @Test
@@ -243,19 +247,19 @@ public class DocumentManagementServiceImplUTest {
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class))
-                        .withArguments(data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
 
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
 
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("generateDocument", templateName, placeholderMap);
+            .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
+            .invoke("storeDocument", data, authToken, MINI_PETITION_NAME_FOR_PDF_FILE);
     }
 
     @Test
@@ -325,6 +329,74 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
+        throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsDraftMiniPetition_thenProceedAsExpected()
+        throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DRAFT_MINI_PETITION_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsDecreeNisi_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
@@ -366,7 +438,7 @@ public class DocumentManagementServiceImplUTest {
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
         when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", filename))
-                .thenReturn(fileUploadResponse);
+            .thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test", filename);
@@ -374,7 +446,7 @@ public class DocumentManagementServiceImplUTest {
         assertEquals(expected, actual);
 
         Mockito.verify(evidenceManagementService, Mockito.times(1))
-                .storeDocumentAndGetInfo(data, "test", filename);
+            .storeDocumentAndGetInfo(data, "test", filename);
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
@@ -399,7 +471,7 @@ public class DocumentManagementServiceImplUTest {
         Mockito.verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(A_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
-                .generate(A_TEMPLATE, formattedPlaceholderMap);
+            .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
     @Test
@@ -456,6 +528,26 @@ public class DocumentManagementServiceImplUTest {
             .getGeneratorService(COSTS_ORDER_TEMPLATE);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
             .generate(COSTS_ORDER_TEMPLATE, placeholderMap);
+    }
+
+    @Test
+    public void whenGenerateCaseListForPronouncementWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+
+        when(pdfGenerationFactory.getGeneratorService(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID))
+            .thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap))
+            .thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
