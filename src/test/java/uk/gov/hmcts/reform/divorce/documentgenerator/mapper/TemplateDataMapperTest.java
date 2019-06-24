@@ -61,7 +61,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 public class TemplateDataMapperTest {
 
     // Test Values
-    private static final String TEST_COURT_NAME = "Court Name";
     private static final String TEST_COURT_ADDRESS = "Placeholder Court";
 
     // Docmosis Base Config Constants
@@ -91,6 +90,7 @@ public class TemplateDataMapperTest {
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -355,26 +355,8 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenExistingCourtName_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
     public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
         caseData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> requestData = Collections.singletonMap(
@@ -382,10 +364,7 @@ public class TemplateDataMapperTest {
         );
 
         expectedData.putAll(caseData);
-
-        String expectedContactAddress = StringUtils.join(
-            CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
-        expectedData.put(COURT_CONTACT_KEY, expectedContactAddress);
+        expectedData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

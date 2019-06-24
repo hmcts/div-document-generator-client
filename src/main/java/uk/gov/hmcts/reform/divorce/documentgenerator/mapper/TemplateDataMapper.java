@@ -139,15 +139,8 @@ public class TemplateDataMapper {
             data.put(COURT_HEARING_TIME_KEY, latestCourtHearing.getValue().get(COURT_HEARING_TIME_KEY));
         }
 
-        if (Objects.nonNull(data.get(COURT_NAME_KEY))) {
-            if (Objects.nonNull(data.get(COURT_CONTACT_KEY))) {
-                String careOfCourt = String.join(SPACE_DELIMITER, CARE_OF_PREFIX,
-                    String.valueOf(data.get(COURT_NAME_KEY)));
-                data.put(COURT_CONTACT_KEY, String.join(NEWLINE_DELIMITER, careOfCourt,
-                    String.valueOf(data.get(COURT_CONTACT_KEY))));
-            } else {
-                data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-            }
+        if (Objects.isNull(data.get(COURT_CONTACT_KEY))) {
+            data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         }
 
         if (Objects.nonNull(data.get(CLIAM_COSTS_FROM))) {
