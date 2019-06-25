@@ -63,6 +63,7 @@ document:
             FL-DIV-GNO-ENG-00021.docx: "docmosis"
             FL-DIV-DEC-ENG-00060.docx: "docmosis"
             respondentAnswers: "pdfgenerator"
+            FL-DIV-GNO-ENG-00059.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"

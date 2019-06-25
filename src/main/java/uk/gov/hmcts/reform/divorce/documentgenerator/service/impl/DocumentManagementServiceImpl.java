@@ -19,6 +19,8 @@ import java.util.Map;
 
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_DOCUMENT_ID;
@@ -60,13 +62,13 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
                                                           String authorizationToken) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
-                templateName, placeholders.size());
+            templateName, placeholders.size());
 
         placeholders.put(
             CURRENT_DATE_KEY,
             new SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
                 .format(Date.from(clock.instant())
-            )
+                )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, featureToggleRespSolicitor);
 
@@ -81,14 +83,14 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken, String fileName) {
         log.debug("Store document requested with document of size [{}]", document.length);
         return GeneratedDocumentInfoMapper
-                .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document,
-                    authorizationToken, fileName));
+            .mapToGeneratedDocumentInfo(evidenceManagementService.storeDocumentAndGetInfo(document,
+                authorizationToken, fileName));
     }
 
     @Override
     public byte[] generateDocument(String templateName, Map<String, Object> placeholders) {
         log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
-                templateName, placeholders.size());
+            templateName, placeholders.size());
 
         Map<String, Object> formattedPlaceholders = placeholders;
 
@@ -120,8 +122,11 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return COSTS_ORDER_NAME_FOR_PDF_FILE;
             case DECREE_NISI_TEMPLATE_ID:
                 return DECREE_NISI_TEMPLATE_NAME;
+            case CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID:
+                return CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
             default:
                 throw new IllegalArgumentException("Unknown template: " + templateName);
         }
     }
+
 }

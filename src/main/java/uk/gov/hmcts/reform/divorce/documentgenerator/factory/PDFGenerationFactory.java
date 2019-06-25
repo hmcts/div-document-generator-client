@@ -17,8 +17,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @Component
 public class PDFGenerationFactory {
 
-
-
     private TemplateConfiguration templateConfiguration;
     private Map<String, PDFGenerationService> generatorMap;
 
