@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -44,6 +45,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 
+    private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
+
     private final Clock clock = Clock.systemDefaultZone();
 
     @Autowired
@@ -51,6 +54,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Autowired
     private EvidenceManagementService evidenceManagementService;
+
+    @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
+    private boolean featureToggleRespSolicitor;
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
@@ -64,6 +70,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 .format(Date.from(clock.instant())
                 )
         );
+        placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, featureToggleRespSolicitor);
 
         String fileName = getFileNameFromTemplateName(templateName);
 
