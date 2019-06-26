@@ -31,7 +31,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_DECISION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
@@ -92,16 +92,16 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenValidDnApprovalDate_whenTemplateDataMapperIsCalled_returnFormattedDnApprovalDate() {
+    public void givenValidDNDecisionDate_whenTemplateDataMapperIsCalled_returnFormattedDNDecisionDate() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DN_APPROVAL_DATE_KEY, "2019-05-30");
+        caseData.put(DN_DECISION_DATE_KEY, "2019-05-30");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
-        String expectedFormattedDNApprovalDate = "30 May 2019";
-        expectedData.put(DN_APPROVAL_DATE_KEY, expectedFormattedDNApprovalDate);
+        String expectedFormattedDNDecisionDate = "30 May 2019";
+        expectedData.put(DN_DECISION_DATE_KEY, expectedFormattedDNDecisionDate);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
@@ -109,9 +109,9 @@ public class TemplateDataMapperTest {
     }
 
     @Test(expected = PDFGenerationException.class)
-    public void givenInvalidDnApprovalDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+    public void givenInvalidDNDecisionDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DN_APPROVAL_DATE_KEY, "invalidDate");
+        caseData.put(DN_DECISION_DATE_KEY, "invalidDate");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)

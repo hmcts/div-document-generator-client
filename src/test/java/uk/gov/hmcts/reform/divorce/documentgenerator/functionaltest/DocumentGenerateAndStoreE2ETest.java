@@ -55,6 +55,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_DECISION_DATE_KEY;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
@@ -79,7 +80,6 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CLAIM_COSTS_JSON_KEY = "D8DivorceCostsClaim";
     private static final String CLAIM_COSTS_FROM_JSON_KEY = "D8DivorceClaimFrom";
     private static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
-    private static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
 
     private static final String FILE_URL = "fileURL";
     private static final String MIME_TYPE = "mimeType";
@@ -575,12 +575,12 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithDnApprovalDate_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithDNDecisionDate_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
         final Map<String, Object> caseData = Collections.singletonMap(
-            DN_APPROVAL_DATE_KEY, "2019-10-10");
+            DN_DECISION_DATE_KEY, "2019-10-10");
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
@@ -866,11 +866,11 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenInvalidDnApprovalDateForGenerateCoE_whenGenerateAndStoreDocument_thenThrowException() throws Exception {
+    public void givenInvalidDNDecisionDateForGenerateCoE_whenGenerateAndStoreDocument_thenThrowException() throws Exception {
         final Map<String, Object> values = new HashMap<>();
 
         final Map<String, Object> caseData = Collections.singletonMap(
-            DN_APPROVAL_DATE_KEY, "invalidDateFormat");
+            DN_DECISION_DATE_KEY, "invalidDateFormat");
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 

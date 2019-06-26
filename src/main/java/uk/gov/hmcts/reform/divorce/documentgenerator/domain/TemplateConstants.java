@@ -47,7 +47,7 @@ public class TemplateConstants {
     public static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
     public static final String DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY = "DAEligibleFromDate";
     public static final String DECREE_NISI_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
-    public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
+    public static final String DN_DECISION_DATE_KEY = "DNDecisionDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
     public static final String NEWLINE_DELIMITER = "\n";
     public static final String SERVICE_COURT_NAME_KEY = "ServiceCourtName";
