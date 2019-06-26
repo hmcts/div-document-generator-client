@@ -16,6 +16,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String VALID_INPUT_JSON = "valid-input.json";
     private static final String COE_INPUT_JSON = "coe.json";
     private static final String DECREE_NISI_INPUT_JSON = "dn.json";
+    private static final String DECREE_ABSOLUTE_INPUT_JSON = "da.json";
     private static final String DOCUMENT_URL_KEY = "url";
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
@@ -25,67 +26,50 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
 
-    @Test
-    public void givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore() throws Exception {
-        String requestBody = loadJson(VALID_INPUT_JSON);
-        //check PDF is generated
+    public void checkPDFGenerated(String filename) throws Exception {
+        String requestBody = loadJson(filename);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
         String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
+
+        checkDataPresentInEvidenceManagement(documentUri);
+    }
+
+    public void checkDataPresentInEvidenceManagement(String documentUri) {
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
         Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
+    }
+
+    @Test
+    public void givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore() throws Exception {
+        checkPDFGenerated(VALID_INPUT_JSON);
     }
 
     @Test
     public void givenAllTheRightParameters_whenGenerateCoEWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
-        String requestBody = loadJson(COE_INPUT_JSON);
-        //check PDF is generated
-        Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
-        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
+        checkPDFGenerated(COE_INPUT_JSON);
     }
 
     @Test
     public void givenAllTheRightParameters_whenGenerateCostsOrderWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
-        String requestBody = loadJson(COSTS_ORDER_INPUT_JSON);
-        //check PDF is generated
-        Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
-        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
+        checkPDFGenerated(COSTS_ORDER_INPUT_JSON);
     }
 
     @Test
     public void givenAllTheRightParameters_whenGenerateDecreeNisiWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
-        String requestBody = loadJson(DECREE_NISI_INPUT_JSON);
-        //check PDF is generated
-        Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
-        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
+        checkPDFGenerated(DECREE_NISI_INPUT_JSON);
+    }
+
+    @Test
+    public void givenAllTheRightParameters_whenGenerateDecreeAbosluteWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
+        throws Exception {
+        checkPDFGenerated(DECREE_ABSOLUTE_INPUT_JSON);
     }
 
     @Test
