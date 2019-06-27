@@ -22,9 +22,6 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String X_PATH_TO_URL = "_links.self.href";
     private static final String COSTS_ORDER_INPUT_JSON = "costs-order.json";
 
-    @Value("${divorce.document.generator.uri}")
-    private String divDocumentGeneratorURI;
-
     @Test
     public void givenAllTheRightParameters_whenGeneratePDF_thenGeneratedPDFShouldBeStoredInEMStore() throws Exception {
         String requestBody = loadJson(VALID_INPUT_JSON);

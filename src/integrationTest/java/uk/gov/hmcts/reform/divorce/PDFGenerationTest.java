@@ -32,7 +32,7 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String inputJson;
     private final String expectedOutput;
 
-    @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
+    @Value("${feature-toggle.resp-solicitor-details}")
     private static boolean featureToggleRespSolicitor;
 
     public PDFGenerationTest(String fileName) {
