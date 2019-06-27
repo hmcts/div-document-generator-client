@@ -35,8 +35,8 @@ public class PDFGenerationTest extends IntegrationTest {
     private static boolean featureToggleRespSolicitor;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    public void setFeatureToggleRespSolicitor(boolean toggle) {
-        featureToggleRespSolicitor = toggle;
+    public void setFeatureToggleRespSolicitor(String toggle) {
+        featureToggleRespSolicitor = Boolean.valueOf(toggle);
     }
 
     public PDFGenerationTest(String fileName) {
