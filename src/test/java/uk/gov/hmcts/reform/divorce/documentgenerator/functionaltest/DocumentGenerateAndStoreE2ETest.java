@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.functionaltest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,14 +53,16 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @PropertySource(value = "classpath:application.yml")
 @TestPropertySource(properties = {"endpoints.health.time-to-live=0",
-        "service-auth-provider.service.stub.enabled=false",
-        "evidence-management-api.service.stub.enabled=false"})
+    "service-auth-provider.service.stub.enabled=false",
+    "evidence-management-api.service.stub.enabled=false"})
 @AutoConfigureMockMvc
 public class DocumentGenerateAndStoreE2ETest {
     private static final String API_URL = "/version/1/generatePDF";
@@ -67,6 +70,9 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
+    private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -79,6 +85,9 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String MIME_TYPE = "mimeType";
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
+
+
+    private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
 
     @Autowired
     private MockMvc webClient;
@@ -109,7 +118,6 @@ public class DocumentGenerateAndStoreE2ETest {
 
     private MockRestServiceServer mockRestServiceServer;
 
-
     @Before
     public void before() {
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
@@ -123,10 +131,10 @@ public class DocumentGenerateAndStoreE2ETest {
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -137,10 +145,10 @@ public class DocumentGenerateAndStoreE2ETest {
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -151,10 +159,10 @@ public class DocumentGenerateAndStoreE2ETest {
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -166,10 +174,10 @@ public class DocumentGenerateAndStoreE2ETest {
         when(serviceTokenGenerator.generate()).thenThrow(new HttpClientErrorException(HttpStatus.SERVICE_UNAVAILABLE));
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isServiceUnavailable());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isServiceUnavailable());
     }
 
     @Test
@@ -181,10 +189,10 @@ public class DocumentGenerateAndStoreE2ETest {
         when(serviceTokenGenerator.generate()).thenThrow(new HttpClientErrorException(HttpStatus.UNAUTHORIZED));
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -192,6 +200,8 @@ public class DocumentGenerateAndStoreE2ETest {
         final ObjectMapper objectMapper = mock(ObjectMapper.class);
 
         ReflectionTestUtils.setField(pdfGenerationService, "objectMapper", objectMapper);
+
+        ReflectionTestUtils.setField(documentManagementService, "featureToggleRespSolicitor", true);
 
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
@@ -201,22 +211,24 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final Map<String, Object> valuesWithDate = new HashMap<>(values);
         valuesWithDate.put(CURRENT_DATE_KEY, new SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-                .format(Date.from(instant)));
+            .format(Date.from(instant)));
+
+        valuesWithDate.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
         final GenerateDocumentRequest requestToPDFService =
-                new GenerateDocumentRequest(new String(templateManagementService.getTemplateByName(A_TEMPLATE)),
-                        valuesWithDate);
+            new GenerateDocumentRequest(new String(templateManagementService.getTemplateByName(A_TEMPLATE)),
+                valuesWithDate);
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
         when(objectMapper.writeValueAsString(requestToPDFService)).thenThrow(mock(JsonProcessingException.class));
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isInternalServerError());
 
         mockRestServiceServer.verify();
     }
@@ -228,15 +240,15 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        mockPDFService(HttpStatus.BAD_REQUEST, new byte[]{1});
+        mockPDFService(HttpStatus.BAD_REQUEST, new byte[] {1});
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isServiceUnavailable());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isServiceUnavailable());
 
         mockRestServiceServer.verify();
     }
@@ -248,15 +260,15 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        mockPDFService(HttpStatus.INTERNAL_SERVER_ERROR, new byte[]{1});
+        mockPDFService(HttpStatus.INTERNAL_SERVER_ERROR, new byte[] {1});
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isInternalServerError());
 
         mockRestServiceServer.verify();
     }
@@ -273,10 +285,10 @@ public class DocumentGenerateAndStoreE2ETest {
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
 
         mockRestServiceServer.verify();
     }
@@ -288,16 +300,16 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.BAD_REQUEST, null);
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isServiceUnavailable());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isServiceUnavailable());
 
         mockRestServiceServer.verify();
     }
@@ -309,16 +321,16 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.UNAUTHORIZED, null);
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnauthorized());
 
         mockRestServiceServer.verify();
     }
@@ -332,16 +344,16 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isInternalServerError());
 
         mockRestServiceServer.verify();
     }
@@ -354,25 +366,24 @@ public class DocumentGenerateAndStoreE2ETest {
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
 
-
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         MvcResult result = webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
 
         assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-                result.getResponse().getContentAsString());
+            result.getResponse().getContentAsString());
 
         mockRestServiceServer.verify();
     }
@@ -390,20 +401,20 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         MvcResult result = webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
 
         assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-                result.getResponse().getContentAsString());
+            result.getResponse().getContentAsString());
 
         mockRestServiceServer.verify();
     }
@@ -420,20 +431,20 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
         MvcResult result = webClient.perform(post(API_URL)
-                .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
 
         assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-                result.getResponse().getContentAsString());
+            result.getResponse().getContentAsString());
 
         mockRestServiceServer.verify();
     }
@@ -451,7 +462,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -482,7 +493,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -513,7 +524,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockPDFService(HttpStatus.OK, new byte[]{1});
+        mockPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -545,7 +556,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -580,7 +591,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -617,7 +628,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -640,7 +651,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final String[] claimFrom = new String[] { "respondent", "correspondent" };
+        final String[] claimFrom = new String[] {"respondent", "correspondent"};
         final Map<String, Object> caseData = new HashMap<>();
         caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
         caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
@@ -654,7 +665,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -677,7 +688,44 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final String[] claimFrom = new String[] { "respondent" };
+        final String[] claimFrom = new String[] {"respondent"};
+        final Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
+        caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(COE_TEMPLATE, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final String[] claimFrom = new String[] {"correspondent"};
         final Map<String, Object> caseData = new HashMap<>();
         caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
         caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
@@ -710,7 +758,7 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForDivorceCertificateOfEntitlementWithClaimFromCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+    public void givenAllGoesWellForDivorceCostsOrder_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -722,13 +770,84 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(COE_TEMPLATE, values);
+            new GenerateDocumentRequest(COSTS_ORDER_TEMPLATE, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForDecreeNisiPronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = ImmutableMap.of(
+            DECREE_NISI_GRANTED_DATE_KEY, "2019-10-10",
+            DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, "2019-11-23"
+        );
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(DECREE_NISI_TEMPLATE, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
+    public void givenAllGoesWellForPrintForPronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = Collections.emptyMap();
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -792,9 +911,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     private void mockPDFService(HttpStatus expectedResponse, byte[] body) {
         mockRestServiceServer.expect(once(), requestTo(pdfServiceUri)).andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(expectedResponse)
-                        .body(ObjectMapperTestUtil.convertObjectToJsonBytes(body))
-                        .contentType(MediaType.APPLICATION_JSON));
+            .andRespond(withStatus(expectedResponse)
+                .body(ObjectMapperTestUtil.convertObjectToJsonBytes(body))
+                .contentType(MediaType.APPLICATION_JSON));
     }
 
     private void mockDocmosisPDFService(HttpStatus expectedResponse, byte[] body) {
@@ -806,8 +925,8 @@ public class DocumentGenerateAndStoreE2ETest {
 
     private void mockEMClientAPI(HttpStatus expectedResponse, List<FileUploadResponse> fileUploadResponse) {
         mockRestServiceServer.expect(once(), requestTo(emClientAPIUri)).andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(expectedResponse)
-                        .body(ObjectMapperTestUtil.convertObjectToJsonString(fileUploadResponse))
-                        .contentType(MediaType.APPLICATION_JSON));
+            .andRespond(withStatus(expectedResponse)
+                .body(ObjectMapperTestUtil.convertObjectToJsonString(fileUploadResponse))
+                .contentType(MediaType.APPLICATION_JSON));
     }
 }

@@ -10,6 +10,10 @@ variable "capacity" {
     default = "1"
 }
 
+variable "instance_size" {
+    default = "I2"
+}
+
 variable "component" {
   type = "string"
 }
@@ -93,3 +97,6 @@ variable "health_check_ttl" {
     type = "string"
     default = "5000"
 }
+variable "feature_resp_solicitor_details" {
+  default = false
+} 

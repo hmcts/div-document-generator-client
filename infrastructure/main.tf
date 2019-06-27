@@ -29,6 +29,7 @@ module "div-dgs" {
   common_tags                     = "${var.common_tags}"
   asp_name                        = "${local.asp_name}"
   asp_rg                          = "${local.asp_rg}"
+  instance_size                   = "${var.instance_size}"
 
   app_settings = {
     REFORM_SERVICE_NAME                                   = "${var.reform_service_name}"
@@ -45,6 +46,7 @@ module "div-dgs" {
     DOCMOSIS_SERVICE_RENDER_URL                           = "${var.docmosis_service_url}${var.docmosis_render_endpoint}"
     DOCMOSIS_SERVICE_ACCESS_KEY                           = "${data.azurerm_key_vault_secret.docmosis-api-key.value}"
     MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE           = "${var.health_check_ttl}"
+    FEATURE_RESP_SOLICITOR_DETAILS                        = "${var.feature_resp_solicitor_details}"
   }
 }
 

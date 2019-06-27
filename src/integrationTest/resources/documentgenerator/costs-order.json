@@ -1,15 +1,20 @@
 {
-    "template":"FL-DIV-GNO-ENG-00020.docx",
+    "template":"FL-DIV-DEC-ENG-00060.docx",
     "values":{
         "caseDetails":{
             "id":"1517833758870511",
             "jurisdiction":"DIVORCE",
-            "state":"Issued",
+            "state":"AwaitingDecreeAbsolute",
             "case_type_id":"DIVORCE",
             "created_date":"2018-02-05T12:29:17.81",
             "last_modified":"2018-02-05T14:57:11.346",
             "security_classification":"PUBLIC",
             "case_data":{
+                "CourtName": "East Midlands Regional Divorce Centre",
+                "PronouncementJudge": "Judge Homer Simpson",
+                "CostsClaimGranted": "Yes",
+                "WhoPaysCosts": "respondent",
+                "TypeCostsDecision": "half",
                 "D8DerivedRespondentHomeAddress":"82 Landor Road\nLondon\nSW9 9PE",
                 "D8PetitionerNameChangedHow":[
                     "marriageCertificate"
@@ -161,7 +166,8 @@
                             "TimeOfHearing":"15:30"
                         }
                     }
-                ]
+                ],
+                "DecreeNisiGrantedDate": "2019-10-11"
             },
             "data_classification":{
                 "D8DerivedRespondentHomeAddress":"PUBLIC",
@@ -251,7 +257,7 @@
                 "D8MarriageIsSameSexCouple":"PUBLIC",
                 "D8FinancialOrder":"PUBLIC",
                 "D8ReasonForDivorceShowFiveYearsSeparatio":"PUBLIC",
-                "D8MarriageDate":"PUBLIC",
+                "D8MarriageDate":"2000-01-01",
                 "D8caseReference":"PUBLIC",
                 "D8HelpWithFeesNeedHelp":"PUBLIC",
                 "D8JurisdictionRespondentResidence":"PUBLIC",

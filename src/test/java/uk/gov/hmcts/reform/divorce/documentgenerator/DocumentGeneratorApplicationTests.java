@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator;
 
-
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
