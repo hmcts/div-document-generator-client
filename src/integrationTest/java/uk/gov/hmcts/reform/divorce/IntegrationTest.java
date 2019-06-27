@@ -35,6 +35,9 @@ public abstract class IntegrationTest {
     @Value("${http.proxy:#{null}}")
     protected String httpProxy;
 
+    @Value("${feature-toggle.resp-solicitor-details}")
+    private static boolean featureToggleRespSolicitor;
+
     @Autowired
     private AuthTokenGenerator authTokenGenerator;
 
@@ -106,5 +109,9 @@ public abstract class IntegrationTest {
         }
 
         return userToken;
+    }
+
+    protected static boolean getFeatureToggleRespSolicitor() {
+        return featureToggleRespSolicitor;
     }
 }
