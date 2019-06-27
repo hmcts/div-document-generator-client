@@ -33,7 +33,7 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String expectedOutput;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    private static boolean featureToggleRespSolicitor;
+    private static String featureToggleRespSolicitor;
 
     public PDFGenerationTest(String fileName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, fileName);
@@ -87,7 +87,7 @@ public class PDFGenerationTest extends IntegrationTest {
 
         List testData = new ArrayList(basicTestData);
 
-        if (featureToggleRespSolicitor) {
+        if (Boolean.valueOf(featureToggleRespSolicitor)) {
             testData.addAll(Arrays.asList(new Object[][] {
                 {"AOS_Solicitor"},
                 {"AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl"},
