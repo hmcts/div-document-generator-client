@@ -47,6 +47,13 @@ public abstract class IntegrationTest {
     private static String userToken = null;
     private String username;
 
+    protected static boolean featureToggleRespSolicitor;
+
+    @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
+    public void setFeatureToggleRespSolicitor(String toggle) {
+        IntegrationTest.featureToggleRespSolicitor = Boolean.valueOf(toggle);
+    }
+
     IntegrationTest() {
         this.springMethodIntegration = new SpringIntegrationMethodRule();
     }

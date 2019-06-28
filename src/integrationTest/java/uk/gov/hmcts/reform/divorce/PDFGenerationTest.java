@@ -32,9 +32,6 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String inputJson;
     private final String expectedOutput;
 
-    @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    private static boolean featureToggleRespSolicitor;
-
     public PDFGenerationTest(String fileName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, fileName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, fileName);
