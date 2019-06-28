@@ -98,5 +98,6 @@ variable "health_check_ttl" {
     default = "5000"
 }
 variable "feature_resp_solicitor_details" {
-  default = false
+  type    = "string"
+  default = "false"
 } 
