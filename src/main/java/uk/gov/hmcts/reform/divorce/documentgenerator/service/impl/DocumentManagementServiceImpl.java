@@ -56,7 +56,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    private boolean featureToggleRespSolicitor;
+    private String featureToggleRespSolicitor;
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
@@ -70,7 +70,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 .format(Date.from(clock.instant())
                 )
         );
-        placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, featureToggleRespSolicitor);
+        placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
 
         String fileName = getFileNameFromTemplateName(templateName);
 

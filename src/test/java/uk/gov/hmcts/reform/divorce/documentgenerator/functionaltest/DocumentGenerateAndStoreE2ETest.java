@@ -201,7 +201,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         ReflectionTestUtils.setField(pdfGenerationService, "objectMapper", objectMapper);
 
-        ReflectionTestUtils.setField(documentManagementService, "featureToggleRespSolicitor", true);
+        ReflectionTestUtils.setField(documentManagementService, "featureToggleRespSolicitor", "true");
 
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
