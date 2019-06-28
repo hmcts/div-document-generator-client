@@ -138,14 +138,22 @@
                 "D8PetitionerContactDetailsConfidential":"share",
                 "D8LegalProceedings":"YES",
                 "createdDate":"2018-02-05",
-                "D8MarriagePlaceOfMarriage":"In a church",
+                "D8MarriagePlaceOfMarriage":"The regist Office in the District of Louth in the County of Lincolnshire",
                 "D8RespondentCorrespondenceAddress":{
                     "PostCode":"SW9 9PE"
                 },
                 "D8ReasonForDivorce":"unreasonable-behaviour",
                 "D8InferredPetitionerGender":"female",
                 "D8JurisdictionHabituallyResLast6Months":"NO",
-                "DNApprovalDate":"2019-05-30",
+                "DNApprovalDate":"2019-01-24",
+                "ServiceCourtName": "East Midlands Regional Divorce Centre",
+                "DecreeNisiGrantedDate":"2019-10-10",
+                "DecreeAbsoluteGrantedDate": "2020-01-13",
+                "CourtContactDetails": "60 Canal Street \nNottingham \nNottinghamshire \nNG1 7EJ \nEmail: divorce@justice.gov.uk \nPhone: 0300 303 0642",
+                "PronouncementJudge": "District Judge Homer Simpson",
+                "CostsClaimGranted": "Yes",
+                "WhoPaysCosts": "respondent",
+                "TypeCostsDecision": "half",
                 "DateAndTimeOfHearing": [
                     {
                         "id":"null",
@@ -162,7 +170,7 @@
                         }
                     }
                 ],
-                "DecreeNisiGrantedDate":"2019-10-10",
+
                 "DAEligibleFromDate":"2019-11-22"
             },
             "data_classification":{
