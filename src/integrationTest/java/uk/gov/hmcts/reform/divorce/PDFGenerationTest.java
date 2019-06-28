@@ -83,6 +83,10 @@ public class PDFGenerationTest extends IntegrationTest {
 
         List testData = new ArrayList(basicTestData);
 
+        System.out.println("Feature toggle value is");
+        System.out.println(getFeatureToggleRespSolicitor());
+        System.out.println(System.getenv("FEATURE_RESP_SOLICITOR_DETAILS"));
+
         if (getFeatureToggleRespSolicitor()) {
             testData.addAll(Arrays.asList(new Object[][] {
                 {"AOS_Solicitor"},
