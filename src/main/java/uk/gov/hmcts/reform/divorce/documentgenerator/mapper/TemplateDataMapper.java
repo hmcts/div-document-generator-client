@@ -26,11 +26,15 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 
@@ -48,9 +52,21 @@ public class TemplateDataMapper {
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
 
-        // Setup Formatted DN Approval Date if exists
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(D8_MARRIAGE_DATE_KEY))) {
+            data.put(D8_MARRIAGE_DATE_KEY, formatDateFromCCD((String) data.get(D8_MARRIAGE_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(DECREE_NISI_GRANTED_DATE_KEY))) {
+            data.put(DECREE_NISI_GRANTED_DATE_KEY, formatDateFromCCD((String) data.get(DECREE_NISI_GRANTED_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY))) {
+            data.put(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY,
+                formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
@@ -84,8 +100,7 @@ public class TemplateDataMapper {
             }
         }
 
-        // We are told to hardcode the Court Name on the templates for now
-        data.put(COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        data.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
 
         // Get page assets
         data.putAll(getPageAssets());

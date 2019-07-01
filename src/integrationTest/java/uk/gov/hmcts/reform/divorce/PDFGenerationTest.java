@@ -9,13 +9,16 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @RunWith(SerenityParameterizedRunner.class)
 public class PDFGenerationTest extends IntegrationTest {
@@ -36,7 +39,9 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        return Arrays.asList(new Object[][]{
+        List<Object[]> basicTestData = Arrays.asList(new Object[][]{
+                {"mini-petition-draft"},
+                {"mini-petition-draft-no-place-of-marriage"},
                 {"CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO"},
                 {"CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
                 {"CC--Corres_FO--No_CN--C_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes"},
@@ -56,13 +61,6 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"CC--No_FO--ChildApp_CN--ABCDEFG_DR-DES-CRK-No-PL-No-DT-No_LP--No"},
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-UB-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Long-SoC-Solicitors"},
                 {"CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Petitioner-Solicitor"},
-                {"AOS_Hus_Res-Addr_DivUnit-EM"},
-                {"AOS_Hus_Res-Addr_DivUnit-SC"},
-                {"AOS_Wife_Sol-Addr_DivUnit-WM"},
-                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
-                {"AOS_Same-Sex-Female"},
-                {"AOS_Same-Sex-Male"},
-                {"AOS_Amend_Petition"},
                 {"5YearSeparationWithMentalSeparationDate"},
                 {"AOS_Co-respondent_Online"},
                 {"AOS_Co-respondent_Paper"},
@@ -83,30 +81,54 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"co-respondent-answers-defended-admit-costs"},
                 {"co-respondent-answers-undefended-no-admit-no-costs"}
         });
+
+        List testData = new ArrayList(basicTestData);
+
+        if (featureToggleRespSolicitor) {
+            testData.addAll(Arrays.asList(new Object[][] {
+                {"AOS_Solicitor"},
+                {"AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl"},
+                {"AOS_Same-Sex-Female-Sol-Online-Avl"},
+                {"AOS_Same-Sex-Male-Sol-Online-Avl"},
+                {"AOS_Amend_Petition-Sol-Online-Avl"},
+                {"AOS_Hus_Res-Addr_DivUnit-EM-Sol-Online-Avl"}
+            }));
+        } else {
+            testData.addAll(Arrays.asList(new Object[][] {
+                {"AOS_Wife_Sol-Addr_DivUnit-WM"},
+                {"AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company"},
+                {"AOS_Hus_Res-Addr_DivUnit-SC"},
+                {"AOS_Same-Sex-Female"},
+                {"AOS_Same-Sex-Male"},
+                {"AOS_Amend_Petition"},
+                {"AOS_Hus_Res-Addr_DivUnit-EM"}
+            }));
+        }
+        return testData;
     }
 
     @Test
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
+        Response actual = generatePdfSuccessfully(inputJson);
+        byte[] expected = ResourceLoader.loadResource(expectedOutput);
 
-        String requestBody = ResourceLoader.loadJson(inputJson);
-        //check PDF is generated
-        Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-        documentUri = getDocumentStoreURI(documentUri);
-        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
-        //check the data present in the evidence management
-        Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        Assert.assertEquals(readPdf(ResourceLoader.loadResource(expectedOutput)),
-            readPdf(responseFromEvidenceManagement.asByteArray()));
+        Assert.assertEquals(readPdf(expected), readPdf(actual.asByteArray()));
     }
 
+    /**
+     * This is not really a test, just a utility to re-generate the PDFs after changing a template.
+     *
+     * <p>Should be @ignored in master branch.
+     * */
     @Test
     @Ignore
     public void ignoreMe_updateGeneratedPdfs() throws Exception  {
-        //this is not really a test, just a utility to re-generate the PDFs after changing a template
+        Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
+
+        savePdf(responseFromEvidenceManagement.asByteArray());
+    }
+
+    private Response generatePdfSuccessfully(String inputJson) throws Exception {
         String requestBody = ResourceLoader.loadJson(inputJson);
         Response response = callDivDocumentGenerator(requestBody);
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
@@ -116,7 +138,8 @@ public class PDFGenerationTest extends IntegrationTest {
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
         Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
-        savePdf(responseFromEvidenceManagement.asByteArray());
+
+        return responseFromEvidenceManagement;
     }
 
     private String readPdf(byte[] pdf) throws Exception {

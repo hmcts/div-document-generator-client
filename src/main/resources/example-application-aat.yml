@@ -24,3 +24,9 @@ idam:
     microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:divorce_document_generator}
     totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:replace_me}
     url: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://rpe-service-auth-provider-aat.service.core-compute-aat.internal}
+
+docmosis:
+  service:
+    pdf-service:
+      uri: ${DOCMOSIS_SERVICE_RENDER_URL:https://docmosis-development.platform.hmcts.net/rs/render}
+      accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:replace_me}
