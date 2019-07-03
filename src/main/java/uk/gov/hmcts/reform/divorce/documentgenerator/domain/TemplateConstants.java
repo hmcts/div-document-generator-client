@@ -52,8 +52,8 @@ public class TemplateConstants {
     public static final String NEWLINE_DELIMITER = "\n";
     public static final String SERVICE_COURT_NAME_KEY = "ServiceCourtName";
     public static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
-    public static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c\\o East Midlands Regional Divorce"
-        + " Centre\nPO Box 10447\nNottingham\nNG2 9QN\nEmail: contactdivorce@justice.gov.uk\nPhone: 0300 303"
+    public static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c/o HMCTS Digital Divorce"
+        + "\nPO Box 12706\nHarlow\nCM20 9QT\n\nEmail: divorcecase@justice.gov.uk\nPhone: 0300 303"
         + " 0642 (from 8.30am to 5pm)";
     public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
     public static final String SPACE_DELIMITER = " ";
