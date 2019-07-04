@@ -28,6 +28,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
@@ -62,6 +63,11 @@ public class TemplateDataMapper {
 
         if (Objects.nonNull(data.get(DECREE_NISI_GRANTED_DATE_KEY))) {
             data.put(DECREE_NISI_GRANTED_DATE_KEY, formatDateFromCCD((String) data.get(DECREE_NISI_GRANTED_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY))) {
+            data.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY,
+                formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
         }
 
         if (Objects.nonNull(data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY))) {

@@ -833,7 +833,7 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForDecreeAbosolutePronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+    public void givenAllGoesWellForDecreeAbsolutePronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
