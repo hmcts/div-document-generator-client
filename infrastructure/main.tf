@@ -23,6 +23,7 @@ module "div-dgs" {
   location                        = "${var.location}"
   env                             = "${var.env}"
   ilbIp                           = "${var.ilbIp}"
+  resource_group_name             = "${azurerm_resource_group.rg.name}"
   subscription                    = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity                        = "${var.capacity}"
