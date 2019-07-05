@@ -20,6 +20,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_TIME_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
@@ -67,7 +68,7 @@ public class TemplateDataMapper {
 
         if (Objects.nonNull(data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY))) {
             data.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY,
-                formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
+                formatDateTimeFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
         }
 
         if (Objects.nonNull(data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY))) {
@@ -124,16 +125,30 @@ public class TemplateDataMapper {
     }
 
     private String formatDateFromCCD(String ccdDateString) {
-        if (Objects.nonNull(ccdDateString)) {
-            try {
-                DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(CCD_DATE_FORMAT);
-                LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
+        try {
+            ccdDateString = formatDateFromPattern(ccdDateString, CCD_DATE_FORMAT);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to format CCD Date Type field", e);
+        }
+        return ccdDateString;
+    }
 
-                DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
-                ccdDateString = ccdDate.format(letterFormatter);
-            } catch (Exception e) {
-                throw new PDFGenerationException("Unable to format CCD Date Type field", e);
-            }
+    private String formatDateTimeFromCCD(String ccdDateString) {
+        try {
+            ccdDateString = formatDateFromPattern(ccdDateString, CCD_DATE_TIME_FORMAT);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to format CCD DateTime Type field", e);
+        }
+        return ccdDateString;
+    }
+
+    private String formatDateFromPattern(String ccdDateString, String fromPattern) throws Exception {
+        if (Objects.nonNull(ccdDateString)) {
+            DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(fromPattern);
+            LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
+
+            DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
+            ccdDateString = ccdDate.format(letterFormatter);
         }
         return ccdDateString;
     }
