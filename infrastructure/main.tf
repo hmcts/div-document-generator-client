@@ -11,10 +11,7 @@ locals {
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
   vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 
-  docmosis_prod_key_vault_name = "docmosisiaasprodkv"
-  docmosis_dev_key_vault_name  = "docmosisiaasdevkv"
-  docmosis_key_vault_name      = "${var.env == "prod" ? local.docmosis_prod_key_vault_name : local.docmosis_dev_key_vault_name}"
-  docmosis_key_vault_uri = "https://${local.docmosis_key_vault_name}.vault.azure.net/"
+  docmosis_key_vault_uri = "https://${var.docmosis_key_vault_name}.vault.azure.net/"
 
   asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
   asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
