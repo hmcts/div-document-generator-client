@@ -1,3 +1,7 @@
+provider "azurerm" {
+  version = "1.21.0"
+}
+
 locals {
   aseName = "core-compute-${var.env}"
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
@@ -11,13 +15,15 @@ locals {
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
   vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 
-  docmosis_prod_key_vault_name = "docmosisiaasprodkv"
-  docmosis_dev_key_vault_name  = "docmosisiaasdevkv"
-  docmosis_key_vault_name      = "${var.env == "prod" ? local.docmosis_prod_key_vault_name : local.docmosis_dev_key_vault_name}"
-  docmosis_key_vault_uri = "https://${local.docmosis_key_vault_name}.vault.azure.net/"
+  docmosis_key_vault_uri = "https://${var.docmosis_key_vault_name}.vault.azure.net/"
 
   asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
   asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.product}-${var.component}-${var.env}"
+  location = "${var.location}"
 }
 
 module "div-dgs" {
@@ -26,6 +32,7 @@ module "div-dgs" {
   location                        = "${var.location}"
   env                             = "${var.env}"
   ilbIp                           = "${var.ilbIp}"
+  resource_group_name             = "${azurerm_resource_group.rg.name}"
   subscription                    = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity                        = "${var.capacity}"
