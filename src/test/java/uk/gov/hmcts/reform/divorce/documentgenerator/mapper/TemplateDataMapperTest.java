@@ -30,6 +30,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
@@ -112,6 +113,35 @@ public class TemplateDataMapperTest {
     public void givenInvalidDnApprovalDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(DN_APPROVAL_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidDaGrantedDate_whenTemplateDataMapperIsCalled_returnFormattedDnApprovalDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDaGrantedDate = "30 May 2019";
+        expectedData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, expectedFormattedDaGrantedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidDaGrantedDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "invalidDate");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)

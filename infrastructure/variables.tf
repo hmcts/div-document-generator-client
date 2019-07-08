@@ -85,18 +85,17 @@ variable "common_tags" {
     type = "map"
 }
 
-variable "docmosis_service_url" {
-    type = "string"
-}
-
-variable "docmosis_render_endpoint" {
-    default = "/rs/render"
-}
-
 variable "health_check_ttl" {
     type = "string"
     default = "5000"
 }
+
 variable "feature_resp_solicitor_details" {
-  default = false
-} 
+  type    = "string"
+  default = "false"
+}
+
+variable "docmosis_key_vault_name" {
+  type    = "string"
+  default = "docmosisiaasdevkv"
+}

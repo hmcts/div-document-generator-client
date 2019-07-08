@@ -29,6 +29,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
@@ -56,7 +58,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
-    private boolean featureToggleRespSolicitor;
+    private String featureToggleRespSolicitor;
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
@@ -70,7 +72,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 .format(Date.from(clock.instant())
                 )
         );
-        placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, featureToggleRespSolicitor);
+        placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
 
         String fileName = getFileNameFromTemplateName(templateName);
 
@@ -124,6 +126,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return DECREE_NISI_TEMPLATE_NAME;
             case CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID:
                 return CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
+            case DECREE_ABSOLUTE_TEMPLATE_ID:
+                return DECREE_ABSOLUTE_NAME_FOR_PDF_FILE;
             default:
                 throw new IllegalArgumentException("Unknown template: " + templateName);
         }
