@@ -13,7 +13,7 @@ public class PdfDocumentRequest {
 
     private String accessKey;
 
-    private String templateName;
+private String templateName;
 
     private String outputName;
 
