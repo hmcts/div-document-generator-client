@@ -37,7 +37,10 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     private String pdfServiceEndpoint;
 
     @Value("${docmosis.service.pdf-service.accessKey}")
-        private String pdfServiceAccessKey;
+    private String pdfServiceAccessKey;
+
+    @Value("${docmosis.service.pdf-service.devMode}")
+    private String docmosisDevMode;
 
     @Override
     public byte[] generate(String templateName, Map<String, Object> placeholders) {
@@ -69,6 +72,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             .accessKey(pdfServiceAccessKey)
             .templateName(templateName)
             .outputName("result.pdf")
+            .devMode(docmosisDevMode)
             .data(templateDataMapper.map(placeholders)).build();
     }
 }
