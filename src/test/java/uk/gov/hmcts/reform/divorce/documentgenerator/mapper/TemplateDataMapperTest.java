@@ -124,7 +124,7 @@ public class TemplateDataMapperTest {
     @Test
     public void givenValidDaGrantedDate_whenTemplateDataMapperIsCalled_returnFormattedDnApprovalDate() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2019-05-30");
+        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2019-05-30T10:30:30.125");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)

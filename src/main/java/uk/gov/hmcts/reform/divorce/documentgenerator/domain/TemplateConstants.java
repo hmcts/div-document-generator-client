@@ -40,6 +40,7 @@ public class TemplateConstants {
     public static final String CASE_DATA = "case_data";
     public static final String CASE_DETAILS = "caseDetails";
     public static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String CCD_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     public static final String CO_RESPONDENT_WISH_TO_NAME = "D8ReasonForDivorceAdulteryWishToName";
     public static final String COURT_CONTACT_KEY = "CourtContactDetails";
     public static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
