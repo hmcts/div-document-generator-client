@@ -83,8 +83,7 @@ public class TemplateDataMapper {
         }
 
         if (Objects.nonNull(data.get(DECREE_NISI_SUBMITTED_DATE))) {
-            data.put(DECREE_NISI_SUBMITTED_DATE,
-                formatDateTimeFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
+            data.put(DECREE_NISI_SUBMITTED_DATE, formatDateFromCCD((String) data.get(DECREE_NISI_SUBMITTED_DATE)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
