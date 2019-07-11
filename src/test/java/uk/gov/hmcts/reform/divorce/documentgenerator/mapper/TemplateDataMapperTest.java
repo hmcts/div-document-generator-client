@@ -36,8 +36,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
@@ -326,7 +327,7 @@ public class TemplateDataMapperTest {
     @Test(expected = PDFGenerationException.class)
     public void givenInvalidDNSubmittedDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DECREE_NISI_SUBMITTED_DATE, "invalidDate");
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "invalidDate");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
@@ -338,14 +339,43 @@ public class TemplateDataMapperTest {
     @Test
     public void givenValidDNSubmittedDate_whenTemplateDataMapperIsCalled_returnFormattedDNSubmittedDate() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DECREE_NISI_SUBMITTED_DATE, "2019-05-30");
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "2019-05-30");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
         String expectedFormattedDNSubmittedDate = "30 May 2019";
-        expectedData.put(DECREE_NISI_SUBMITTED_DATE, expectedFormattedDNSubmittedDate);
+        expectedData.put(DECREE_NISI_SUBMITTED_DATE_KEY, expectedFormattedDNSubmittedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidIssueDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ISSUE_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidIssueDate_whenTemplateDataMapperIsCalled_returnFormattedDNSubmittedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ISSUE_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDNSubmittedDate = "30 May 2019";
+        expectedData.put(ISSUE_DATE_KEY, expectedFormattedDNSubmittedDate);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

@@ -35,8 +35,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
@@ -82,8 +83,13 @@ public class TemplateDataMapper {
                 formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY)));
         }
 
-        if (Objects.nonNull(data.get(DECREE_NISI_SUBMITTED_DATE))) {
-            data.put(DECREE_NISI_SUBMITTED_DATE, formatDateFromCCD((String) data.get(DECREE_NISI_SUBMITTED_DATE)));
+        if (Objects.nonNull(data.get(DECREE_NISI_SUBMITTED_DATE_KEY))) {
+            data.put(DECREE_NISI_SUBMITTED_DATE_KEY,
+                formatDateFromCCD((String) data.get(DECREE_NISI_SUBMITTED_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(ISSUE_DATE_KEY))) {
+            data.put(ISSUE_DATE_KEY, formatDateFromCCD((String) data.get(ISSUE_DATE_KEY)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
