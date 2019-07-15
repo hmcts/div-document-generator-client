@@ -18,6 +18,7 @@ public class TemplateConstants {
     public static final String MINI_PETITION_TEMPLATE_ID = "divorceminipetition";
     public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
+    public static final String DN_ANSWERS_TEMPLATE_ID = "FL-DIV-GNO-ENG-00022.docx";
     public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00060.docx";
     public static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
     public static final String DECREE_ABSOLUTE_TEMPLATE_ID = "FL-DIV-GOR-ENG-00062.docx";
@@ -28,6 +29,7 @@ public class TemplateConstants {
     public static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     public static final String DECREE_NISI_TEMPLATE_NAME = "DecreeNisiPronouncement.pdf";
+    public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
@@ -50,8 +52,10 @@ public class TemplateConstants {
     public static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
     public static final String DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY = "DAEligibleFromDate";
     public static final String DECREE_NISI_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
+    public static final String DECREE_NISI_SUBMITTED_DATE_KEY = "DNApplicationSubmittedDate";
     public static final String DECREE_ABSOLUTE_GRANTED_DATE_KEY = "DecreeAbsoluteGrantedDate";
     public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
+    public static final String ISSUE_DATE_KEY = "IssueDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
     public static final String NEWLINE_DELIMITER = "\n";
     public static final String SERVICE_COURT_NAME_KEY = "ServiceCourtName";
@@ -61,4 +65,9 @@ public class TemplateConstants {
         + " 0642 (from 8.30am to 5pm)";
     public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
     public static final String SPACE_DELIMITER = " ";
+    public static final String CLIAM_COSTS_FROM = "D8DivorceClaimFrom";
+    public static final String CLIAM_COSTS_FROM_RESP_CORESP = "ClaimFromRespCoResp";
+    public static final String CLIAM_COSTS_FROM_RESP = "ClaimFromResp";
+    public static final String CLIAM_COSTS_FROM_CORESP = "ClaimFromCoResp";
+    public static final String YES_VALUE = "yes";
 }

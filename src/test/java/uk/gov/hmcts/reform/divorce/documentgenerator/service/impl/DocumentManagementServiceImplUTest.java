@@ -39,6 +39,8 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_ANSWERS_TEMPLATE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
@@ -329,6 +331,39 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsDNAnswers_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DN_ANSWERS_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DECREE_NISI_ANSWERS_TEMPLATE_NAME);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, DECREE_NISI_ANSWERS_TEMPLATE_NAME);
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
@@ -530,6 +565,25 @@ public class DocumentManagementServiceImplUTest {
             .generate(COSTS_ORDER_TEMPLATE, placeholderMap);
     }
 
+    @Test
+    public void whenGenerateDNAnswersDocumentWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+
+        when(pdfGenerationFactory.getGeneratorService(DN_ANSWERS_TEMPLATE_ID)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(DN_ANSWERS_TEMPLATE_ID, placeholderMap)).thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(DN_ANSWERS_TEMPLATE_ID, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        HtmlFieldFormatter.format(placeholderMap);
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(DN_ANSWERS_TEMPLATE_ID);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(DN_ANSWERS_TEMPLATE_ID, placeholderMap);
+    }
+    
     @Test
     public void whenGenerateCaseListForPronouncementWithDocmosis_thenProceedAsExpected() {
         final byte[] expected = {1};

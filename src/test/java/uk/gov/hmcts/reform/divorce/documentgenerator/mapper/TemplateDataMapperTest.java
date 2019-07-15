@@ -22,6 +22,10 @@ import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_CORESP;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP_CORESP;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
@@ -32,13 +36,16 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
@@ -311,6 +318,117 @@ public class TemplateDataMapperTest {
         String expectedContactAddress = StringUtils.join(
             CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
         expectedData.put(COURT_CONTACT_KEY, expectedContactAddress);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidDNSubmittedDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidDNSubmittedDate_whenTemplateDataMapperIsCalled_returnFormattedDNSubmittedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDNSubmittedDate = "30 May 2019";
+        expectedData.put(DECREE_NISI_SUBMITTED_DATE_KEY, expectedFormattedDNSubmittedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidIssueDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ISSUE_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidIssueDate_whenTemplateDataMapperIsCalled_returnFormattedDNSubmittedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ISSUE_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDNSubmittedDate = "30 May 2019";
+        expectedData.put(ISSUE_DATE_KEY, expectedFormattedDNSubmittedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenExistingClaimCostsFromRespCoresp_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLIAM_COSTS_FROM, new String[] {"respondent", "correspondent"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(CLIAM_COSTS_FROM_RESP_CORESP, YES_VALUE);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+
+    @Test
+    public void givenExistingClaimCostsFromResp_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLIAM_COSTS_FROM, new String[] {"respondent"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(CLIAM_COSTS_FROM_RESP, YES_VALUE);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+
+    @Test
+    public void givenExistingClaimCostsFromCoResp_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CLIAM_COSTS_FROM, new String[] {"correspondent"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(CLIAM_COSTS_FROM_CORESP, YES_VALUE);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
