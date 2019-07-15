@@ -205,7 +205,7 @@ public class TemplateDataMapper {
         return ccdDateString;
     }
 
-    private String formatDateFromPattern(String ccdDateString, String fromPattern) throws Exception {
+    private String formatDateFromPattern(String ccdDateString, String fromPattern) {
         if (Objects.nonNull(ccdDateString)) {
             DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(fromPattern);
             LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
