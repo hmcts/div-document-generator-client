@@ -17,5 +17,7 @@ public class PdfDocumentRequest {
 
     private String outputName;
 
+    private String devMode;
+
     private Map<String,Object> data;
 }

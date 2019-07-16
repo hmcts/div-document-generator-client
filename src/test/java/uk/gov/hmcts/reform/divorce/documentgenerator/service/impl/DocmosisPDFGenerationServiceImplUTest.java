@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import feign.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +76,7 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)
             .templateName(template)
+            .devMode("false")
             .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -113,6 +113,7 @@ public class DocmosisPDFGenerationServiceImplUTest {
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)
             .templateName(template)
+            .devMode("false")
             .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

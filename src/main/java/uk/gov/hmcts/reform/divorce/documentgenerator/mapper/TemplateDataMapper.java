@@ -20,6 +20,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_TIME_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_CORESP;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP_CORESP;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
@@ -30,7 +35,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
@@ -38,6 +45,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @Component
 public class TemplateDataMapper {
@@ -67,12 +75,21 @@ public class TemplateDataMapper {
 
         if (Objects.nonNull(data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY))) {
             data.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY,
-                formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
+                formatDateTimeFromCCD((String) data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)));
         }
 
         if (Objects.nonNull(data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY))) {
             data.put(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY,
                 formatDateFromCCD((String) data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(DECREE_NISI_SUBMITTED_DATE_KEY))) {
+            data.put(DECREE_NISI_SUBMITTED_DATE_KEY,
+                formatDateFromCCD((String) data.get(DECREE_NISI_SUBMITTED_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(ISSUE_DATE_KEY))) {
+            data.put(ISSUE_DATE_KEY, formatDateFromCCD((String) data.get(ISSUE_DATE_KEY)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
@@ -106,6 +123,20 @@ public class TemplateDataMapper {
             }
         }
 
+        if (Objects.nonNull(data.get(CLIAM_COSTS_FROM))) {
+            List<String> listOfClaimCostsFrom =
+                mapper.convertValue(data.get(CLIAM_COSTS_FROM), ArrayList.class);
+            if (listOfClaimCostsFrom.contains("respondent")) {
+                if (listOfClaimCostsFrom.contains("correspondent")) {
+                    data.put(CLIAM_COSTS_FROM_RESP_CORESP, YES_VALUE);
+                } else {
+                    data.put(CLIAM_COSTS_FROM_RESP, YES_VALUE);
+                }
+            } else if (listOfClaimCostsFrom.contains("correspondent")) {
+                data.put(CLIAM_COSTS_FROM_CORESP, YES_VALUE);
+            }
+        }
+
         data.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
 
         // Get page assets
@@ -124,16 +155,30 @@ public class TemplateDataMapper {
     }
 
     private String formatDateFromCCD(String ccdDateString) {
-        if (Objects.nonNull(ccdDateString)) {
-            try {
-                DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(CCD_DATE_FORMAT);
-                LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
+        try {
+            ccdDateString = formatDateFromPattern(ccdDateString, CCD_DATE_FORMAT);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to format CCD Date Type field", e);
+        }
+        return ccdDateString;
+    }
 
-                DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
-                ccdDateString = ccdDate.format(letterFormatter);
-            } catch (Exception e) {
-                throw new PDFGenerationException("Unable to format CCD Date Type field", e);
-            }
+    private String formatDateTimeFromCCD(String ccdDateString) {
+        try {
+            ccdDateString = formatDateFromPattern(ccdDateString, CCD_DATE_TIME_FORMAT);
+        } catch (Exception e) {
+            throw new PDFGenerationException("Unable to format CCD DateTime Type field", e);
+        }
+        return ccdDateString;
+    }
+
+    private String formatDateFromPattern(String ccdDateString, String fromPattern) throws Exception {
+        if (Objects.nonNull(ccdDateString)) {
+            DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(fromPattern);
+            LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
+
+            DateTimeFormatter letterFormatter = DateTimeFormatter.ofPattern(LETTER_DATE_FORMAT);
+            ccdDateString = ccdDate.format(letterFormatter);
         }
         return ccdDateString;
     }

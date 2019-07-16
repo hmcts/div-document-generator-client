@@ -22,6 +22,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
     private static final String X_PATH_TO_URL = "_links.self.href";
     private static final String COSTS_ORDER_INPUT_JSON = "costs-order.json";
+    private static final String DN_SUBMISSION_INPUT_JSON = "dn-submission.json";
 
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
@@ -70,6 +71,12 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     public void givenAllTheRightParameters_whenGenerateDecreeAbosluteWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
         checkPDFGenerated(DECREE_ABSOLUTE_INPUT_JSON);
+    }
+
+    @Test
+    public void givenAllTheRightParameters_whenGenerateDNAnswersWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
+        throws Exception {
+        checkPDFGenerated(DN_SUBMISSION_INPUT_JSON);
     }
 
     @Test
