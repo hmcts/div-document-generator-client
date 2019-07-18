@@ -54,6 +54,8 @@ public class TemplateConstants {
     public static final String DECREE_NISI_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
     public static final String DECREE_NISI_SUBMITTED_DATE_KEY = "DNApplicationSubmittedDate";
     public static final String DECREE_ABSOLUTE_GRANTED_DATE_KEY = "DecreeAbsoluteGrantedDate";
+    public static final String BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "BehaviourMostRecentIncidentDateDN";
+    public static final String ADULTERY_FOUND_OUT_DATE_KEY = "AdulteryDateFoundOut";
     public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     public static final String ISSUE_DATE_KEY = "IssueDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
