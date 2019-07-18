@@ -162,7 +162,7 @@ public class TemplateDataMapperTest {
     @Test
     public void givenValidAdulteryFoundDate_whenTemplateDataMapperIsCalled_returnFormattedAdulteryFoundDate() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2019-05-30T10:30:30.125");
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2019-05-30");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
@@ -191,7 +191,7 @@ public class TemplateDataMapperTest {
     @Test
     public void givenValidBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_returnFormattedDate() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2019-05-30T10:30:30.125");
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2019-05-30");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)

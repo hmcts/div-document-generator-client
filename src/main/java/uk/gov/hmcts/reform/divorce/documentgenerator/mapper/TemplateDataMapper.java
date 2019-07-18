@@ -96,12 +96,12 @@ public class TemplateDataMapper {
 
         if (Objects.nonNull(data.get(ADULTERY_FOUND_OUT_DATE_KEY))) {
             data.put(ADULTERY_FOUND_OUT_DATE_KEY,
-                formatDateTimeFromCCD((String) data.get(ADULTERY_FOUND_OUT_DATE_KEY)));
+                formatDateFromCCD((String) data.get(ADULTERY_FOUND_OUT_DATE_KEY)));
         }
 
         if (Objects.nonNull(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY))) {
             data.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY,
-                formatDateTimeFromCCD((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)));
+                formatDateFromCCD((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
