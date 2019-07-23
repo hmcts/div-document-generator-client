@@ -19,6 +19,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
@@ -149,6 +151,64 @@ public class TemplateDataMapperTest {
     public void givenInvalidDaGrantedDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidAdulteryFoundDate_whenTemplateDataMapperIsCalled_returnFormattedAdulteryFoundDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDaGrantedDate = "30 May 2019";
+        expectedData.put(ADULTERY_FOUND_OUT_DATE_KEY, expectedFormattedDaGrantedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidAdulteryFoundDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_returnFormattedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDaGrantedDate = "30 May 2019";
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, expectedFormattedDaGrantedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "invalidDate");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)

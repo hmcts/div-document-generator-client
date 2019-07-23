@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
@@ -90,6 +92,16 @@ public class TemplateDataMapper {
 
         if (Objects.nonNull(data.get(ISSUE_DATE_KEY))) {
             data.put(ISSUE_DATE_KEY, formatDateFromCCD((String) data.get(ISSUE_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(ADULTERY_FOUND_OUT_DATE_KEY))) {
+            data.put(ADULTERY_FOUND_OUT_DATE_KEY,
+                formatDateFromCCD((String) data.get(ADULTERY_FOUND_OUT_DATE_KEY)));
+        }
+
+        if (Objects.nonNull(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY))) {
+            data.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY,
+                formatDateFromCCD((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)));
         }
 
         // If Solicitor WishToNameCoRespondent is set, also set the default wishToName field
