@@ -55,9 +55,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
@@ -77,6 +74,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
     private static final String DECREE_ABSOLUTE_TEMPLATE = "FL-DIV-GOR-ENG-00062.docx";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
+    private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00070.doc";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -921,6 +919,40 @@ public class DocumentGenerateAndStoreE2ETest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().is5xxServerError())
             .andReturn();
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOfflineInvitationLetterRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = Collections.emptyMap();
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
     }
 
     private FileUploadResponse getFileUploadResponse(HttpStatus httpStatus) {
