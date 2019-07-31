@@ -4,13 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import uk.gov.hmcts.reform.divorce.documentgenerator.client.DocmosisClient;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.TemplateDataMapper;
@@ -28,7 +23,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private DocmosisClient docmosisClient;
 
     @Autowired
     private TemplateDataMapper templateDataMapper;
@@ -51,17 +46,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             + " and placeholders of size [{}]", templateName, placeholders.size());
 
         try {
-            // Remove this log when tested
-            log.info("Making Docmosis Request From {}", pdfServiceEndpoint);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-            HttpEntity<PdfDocumentRequest> httpEntity = new HttpEntity<>(request(templateName, placeholders), headers);
-
-            ResponseEntity<byte[]> response =
-                restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
-            return response.getBody();
+            return docmosisClient.render(request(templateName, placeholders));
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }

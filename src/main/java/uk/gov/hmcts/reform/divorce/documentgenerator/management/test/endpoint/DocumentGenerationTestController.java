@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 
-import java.util.Map;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/test")
@@ -35,13 +36,12 @@ public class DocumentGenerationTestController {
                     response = byte[].class),
         })
     @RequestMapping(value = "/generateDocument", produces = "application/pdf", method = RequestMethod.POST)
-    public ResponseEntity generateDocument(@RequestParam
-                                               @ApiParam(value = "Form data containing the template name and key value "
-                                                       + "pair of placeholder texts", required = true)
-                                                       Map<String, Object> allRequestParams) {
-        String templateName = (String) allRequestParams.remove(TEMPLATE_NAME);
-
-        byte[] generatedPDF = documentManagementService.generateDocument(templateName, allRequestParams);
+    public ResponseEntity generateDocument(
+                        @ApiParam(value = "JSON object containing the templateName and the placeholder text map", required = true)
+                        @RequestBody
+                        @Valid
+                        GenerateDocumentRequest templateData) {
+        byte[] generatedPDF = documentManagementService.generateDocument(templateData.getTemplate(), templateData.getValues());
 
         return ResponseEntity
                 .ok()
