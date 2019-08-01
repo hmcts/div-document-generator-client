@@ -34,16 +34,16 @@ public class DocumentGenerationTestController {
         })
     @RequestMapping(value = "/generateDocument", produces = "application/pdf", method = RequestMethod.POST)
     public ResponseEntity generateDocument(
-                        @ApiParam(value = "JSON object containing the templateName and the placeholder text map", required = true)
+                        @ApiParam(value = "JSON object containing the templateName and case details", required = true)
                         @RequestBody
                         @Valid
                         GenerateDocumentRequest templateData) {
-        byte[] generatedPDF = documentManagementService.generateDocument(templateData.getTemplate(), templateData.getValues());
+        byte[] pdf = documentManagementService.generateDocument(templateData.getTemplate(), templateData.getValues());
 
         return ResponseEntity
                 .ok()
-                .contentLength(generatedPDF.length)
+                .contentLength(pdf.length)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(generatedPDF);
+                .body(pdf);
     }
 }
