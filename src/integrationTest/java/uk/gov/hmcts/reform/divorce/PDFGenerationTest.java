@@ -79,6 +79,7 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"Resp_Desertion_Undefend_Response"},
                 {"co-respondent-answers-defended-admit-costs"},
                 {"co-respondent-answers-undefended-no-admit-no-costs"},
+                {"AOS_Offline-Invitation-Letter-Respondent"},
                 {"solicitor-personal-service"}
         });
 
