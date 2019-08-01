@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.io.File;
@@ -79,7 +78,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"Resp_Desertion_Undefend_noAdmit_Response"},
                 {"Resp_Desertion_Undefend_Response"},
                 {"co-respondent-answers-defended-admit-costs"},
-                {"co-respondent-answers-undefended-no-admit-no-costs"}
+                {"co-respondent-answers-undefended-no-admit-no-costs"},
+                {"AOS_Offline-Invitation-Letter-Respondent"}
         });
 
         List testData = new ArrayList(basicTestData);

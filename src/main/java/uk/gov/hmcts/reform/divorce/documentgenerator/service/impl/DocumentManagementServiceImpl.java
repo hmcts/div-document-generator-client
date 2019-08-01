@@ -19,6 +19,8 @@ import java.util.Map;
 
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
@@ -132,6 +134,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return DECREE_ABSOLUTE_NAME_FOR_PDF_FILE;
             case DN_ANSWERS_TEMPLATE_ID:
                 return DECREE_NISI_ANSWERS_TEMPLATE_NAME;
+            case AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID:
+                return AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE;
             default:
                 throw new IllegalArgumentException("Unknown template: " + templateName);
         }

@@ -64,6 +64,9 @@ public class DocumentManagementServiceImplUTest {
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
+    private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00070.doc";
+    private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterRespondent.pdf";
 
     @Rule
     public ExpectedException expectedException = none();
@@ -465,6 +468,40 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetter_thenProceedAsExpected()
+        throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE);
+
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenStoreDocument_thenProceedAsExpected() {
         final byte[] data = {1};
         final String filename = "someFileName";
@@ -602,6 +639,27 @@ public class DocumentManagementServiceImplUTest {
             .getGeneratorService(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID);
         Mockito.verify(pdfGenerationService, Mockito.times(1))
             .generate(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, placeholderMap);
+    }
+
+    @Test
+    public void whenGenerateNameIsAOSOfflineInvitationLetterWithDocmosis_thenProceedAsExpected() {
+        final byte[] expected = {1};
+        final Map<String, Object> placeholderMap = emptyMap();
+
+        when(pdfGenerationFactory.getGeneratorService(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID))
+            .thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID, placeholderMap))
+            .thenReturn(expected);
+
+        byte[] actual = classUnderTest.generateDocument(
+            AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID, placeholderMap);
+
+        assertEquals(expected, actual);
+
+        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+            .getGeneratorService(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID);
+        Mockito.verify(pdfGenerationService, Mockito.times(1))
+            .generate(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID, placeholderMap);
     }
 
     private void mockAndSetClock(Instant instant) {
