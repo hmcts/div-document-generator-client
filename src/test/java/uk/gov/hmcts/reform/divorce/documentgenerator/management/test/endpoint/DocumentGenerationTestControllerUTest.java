@@ -8,10 +8,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
+import uk.gov.hmcts.reform.divorce.documentgenerator.functionaltest.ObjectMapperTestUtil;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.Mockito.when;
@@ -22,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(DocumentGenerationTestController.class)
 public class DocumentGenerationTestControllerUTest {
-    private static final String TEMPLATE_NAME = "templateName";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,17 +40,19 @@ public class DocumentGenerationTestControllerUTest {
         final Map<String, Object> placeHolders = Collections.singletonMap(someOtherKeyName, someOtherKeyValue);
         final String templateName = "templateName";
 
-        final Map<String, Object> allRequestParams = new HashMap<>(placeHolders);
-        allRequestParams.put(TEMPLATE_NAME, templateName);
+        GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(
+            templateName,
+            Collections.singletonMap(someOtherKeyName, someOtherKeyValue)
+        );
 
         when(documentManagementService.generateDocument(templateName, placeHolders)).thenReturn(data);
 
         mockMvc.perform(
                 post(contextPath)
-                        .param(someOtherKeyName, someOtherKeyValue)
-                        .param(TEMPLATE_NAME, templateName))
+                    .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+                    .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(data))
-                .andExpect(content().contentType(MediaType.APPLICATION_PDF));
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM));
     }
 }
