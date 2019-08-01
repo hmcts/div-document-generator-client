@@ -1,0 +1,18 @@
+{
+    "template": "FL-DIV-GNO-ENG-00073.docx",
+    "values": {
+        "caseDetails": {
+            "case_data": {
+                "D8RespondentFirstName": "John",
+                "D8RespondentLastName": "Smith",
+                "D8PetitionerFirstName": "Maria",
+                "D8PetitionerLastName": "Smith",
+                "D8DerivedRespondentHomeAddress": "82 Landor's Road\nLondon\nSW9 9PE",
+                "D8DivorceWho": "wife",
+                "CourtContactDetails": "60 Canal Street \nNottingham \nNottinghamshire \nNG1 7EJ \nEmail: divorce@justice.gov.uk \nPhone: 0300 303 0642",
+                "ServiceCourtName": "East Midlands Regional Divorce Centre",
+                "D8caseReference": "LV17D80100"
+            }
+        }
+    }
+}

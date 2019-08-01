@@ -24,8 +24,6 @@ import javax.validation.Valid;
 @Api(value = "Document Generation Test", tags = {"Document Generation Test"})
 public class DocumentGenerationTestController {
 
-    private static final String TEMPLATE_NAME = "templateName";
-
     @Autowired
     private DocumentManagementService documentManagementService;
 
