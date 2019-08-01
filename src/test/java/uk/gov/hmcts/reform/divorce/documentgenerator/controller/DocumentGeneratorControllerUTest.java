@@ -37,11 +37,33 @@ public class DocumentGeneratorControllerUTest {
             .thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest
-                .generatePDF("testToken", new GenerateDocumentRequest(templateName, placeholder));
+                .generateAndUploadPdf("testToken", new GenerateDocumentRequest(templateName, placeholder));
 
         assertEquals(expected, actual);
 
         verify(documentManagementService, times(1))
                 .generateAndStoreDocument(templateName, placeholder, "testToken");
+    }
+
+    @Test
+    public void whenGenerateDocument_thenReturnProperResponse() throws Exception {
+        final byte[] data = {1};
+        final String someOtherKeyName = "someOtherKeyName";
+        final String someOtherKeyValue = "someOtherKeyValue";
+
+        final Map<String, Object> placeHolders = Collections.singletonMap(someOtherKeyName, someOtherKeyValue);
+        final String templateName = "templateName";
+
+        GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(
+            templateName,
+            placeHolders
+        );
+
+        when(documentManagementService.generateDocument(templateName, placeHolders)).thenReturn(data);
+
+        classUnderTest.generatePdfBinary(generateDocumentRequest);
+
+        verify(documentManagementService, times(1))
+            .generateDocument(templateName, placeHolders);
     }
 }
