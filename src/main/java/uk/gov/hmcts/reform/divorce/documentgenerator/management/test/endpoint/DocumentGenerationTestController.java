@@ -32,8 +32,7 @@ public class DocumentGenerationTestController {
     @ApiOperation(value = "Generate PDF document based on the supplied template name and placeholder texts and returns "
             + "the PDF.", tags = {"Document Generation Test"})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "PDF was generated successfully. Returns the PDF document.",
-                    response = byte[].class),
+            @ApiResponse(code = 200, message = "PDF was generated successfully. Returns the PDF document."),
         })
     @RequestMapping(value = "/generateDocument", produces = "application/pdf", method = RequestMethod.POST)
     public ResponseEntity generateDocument(
@@ -46,7 +45,7 @@ public class DocumentGenerationTestController {
         return ResponseEntity
                 .ok()
                 .contentLength(generatedPDF.length)
-                .contentType(MediaType.APPLICATION_PDF)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(generatedPDF);
     }
 }
