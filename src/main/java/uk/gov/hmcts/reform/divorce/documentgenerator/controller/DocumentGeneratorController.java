@@ -61,7 +61,7 @@ public class DocumentGeneratorController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "PDF was generated successfully. Returns the PDF document."),
     })
-    @RequestMapping(value = "/generate-pdf-binary", produces = "application/octet-stream", method = RequestMethod.POST)
+    @RequestMapping(value = "/version/1/generate-pdf-binary", produces = "application/octet-stream", method = RequestMethod.POST)
     public ResponseEntity generatePdfBinary(
         @ApiParam(value = "JSON object containing the templateName and case details", required = true)
         @RequestBody
