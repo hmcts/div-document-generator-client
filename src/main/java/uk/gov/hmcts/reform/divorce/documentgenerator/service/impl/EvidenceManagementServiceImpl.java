@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.DocumentStorageException;
@@ -51,8 +50,6 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
             } else {
                 throw new DocumentStorageException("Failed to store document");
             }
-        } catch (HttpServerErrorException e) {
-            throw new DocumentStorageException("Error storing document " + e.getResponseBodyAsString(), e);
         } catch (Exception e) {
             throw new DocumentStorageException("Error storing document " + e.getMessage(), e);
         }
