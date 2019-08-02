@@ -471,7 +471,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetterRespondent_thenProceedAsExpected()
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetterResp_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
@@ -505,7 +505,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetterCoRespondent_thenProceedAsExpected()
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetterCoResp_thenProceedAsExpected()
         throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
