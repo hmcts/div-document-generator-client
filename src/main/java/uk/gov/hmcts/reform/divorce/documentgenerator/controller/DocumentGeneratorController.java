@@ -22,6 +22,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementS
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping(path = "/version/1")
 @Api(value = "Document Generation", tags = {"Document Generation"})
 @Slf4j
 public class DocumentGeneratorController {
@@ -41,7 +42,7 @@ public class DocumentGeneratorController {
             @ApiResponse(code = 500, message = "Returned when there is an unknown server error",
                     response = String.class)
         })
-    @PostMapping("/version/1/generatePDF")
+    @PostMapping("/generatePDF")
     public GeneratedDocumentInfo generateAndUploadPdf(
         @RequestHeader(value = "Authorization", required = false)
             String authorizationToken,
@@ -61,7 +62,7 @@ public class DocumentGeneratorController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "PDF was generated successfully. Returns the PDF document."),
     })
-    @RequestMapping(value = "/version/1/generate-pdf-binary", produces = "application/octet-stream", method = RequestMethod.POST)
+    @RequestMapping(value = "/generate-pdf-binary", produces = "application/octet-stream", method = RequestMethod.POST)
     public ResponseEntity generatePdfBinary(
         @ApiParam(value = "JSON object containing the templateName and case details", required = true)
         @RequestBody
