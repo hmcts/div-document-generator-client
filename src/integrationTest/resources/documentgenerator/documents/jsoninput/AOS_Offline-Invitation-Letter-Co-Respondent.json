@@ -1,5 +1,5 @@
 {
-    "template":"FL-DIV-LET-ENG-00070.doc",
+    "template":"FL-DIV-LET-ENG-00076.doc",
     "values":{
         "caseDetails":{
             "id":"1517833758870511",
@@ -10,7 +10,7 @@
             "last_modified":"2018-02-05T14:57:11.346",
             "security_classification":"PUBLIC",
             "case_data":{
-                "D8DerivedRespondentHomeAddress":"Flat 12\nIvy Tower\n34 Grange Road\nBirmingham\nB71 9PW",
+                "D8DerivedRespondentHomeAddress":"82 Landor Road\nLondon\nSW9 9PE",
                 "D8DerivedPetitionerHomeAddress":"82 Landor Road\nLondon\nSW9 9PE",
                 "D8DivorceClaimFrom": [
                     "respondent"
@@ -18,13 +18,11 @@
                 "D8ScreenHasMarriageBroken": "YES",
                 "D8InferredRespondentGender": "female",
                 "D8RespondentCorrespondenceUseHomeAddress": "No",
-                "D8RespondentLastName": "Jamed",
+                "D8RespondentLastName": "Harrington",
                 "D8PetitionerLastName": "Smith",
                 "D8PetitionerPhoneNumber": "01234567890",
-                "D8ResidualJurisdictionEligible": "YES",
-                "D8ReasonForDivorceLimitReasons": "NO",
                 "D8PetitionerEmail": "email@email.com",
-                "D8DerivedRespondentCorrespondenceAddr": "Flat 12\nIvy Tower\n34 Grange Road\nBirmingham\nB71 9PW",
+                "D8DerivedRespondentCorrespondenceAddr": "32 Long Bridge Street\nLlanidloes\nSY18 6AR\nWales",
                 "D8MarriagePetitionerName": "John Doe",
                 "D8MarriageDate": "2001-02-02",
                 "D8caseReference": "LV17D80100",
@@ -35,7 +33,14 @@
                 "D8MarriageRespondentName": "Jenny Benny",
                 "D8InferredPetitionerGender": "male",
                 "D8JurisdictionHabituallyResLast6Months": "NO",
-                "dateOfDocumentProduction": "2019-07-29"
+                "D8ReasonForDivorce": "adultery",
+                "D8ReasonForDivorceBehaviourDetails": "My wife is having an affair this week.",
+                "D8ReasonForDivorceAdulteryDetails" : "Adultery Details",
+                "D8ReasonForDivorceAdulteryWishToName" : "YES",
+                "D8ReasonForDivorceAdultery3rdPartyFName": "Benjamin",
+                "D8ReasonForDivorceAdultery3rdPartyLName" : "Stark",
+                "D8DerivedReasonForDivorceAdultery3rdAddr" : "Flat 12\nIvy Tower\n34 Grange Road\nBirmingham\nB71 9PW",
+                "dateOfDocumentProduction": "2019-08-02"
             }
         }
     }

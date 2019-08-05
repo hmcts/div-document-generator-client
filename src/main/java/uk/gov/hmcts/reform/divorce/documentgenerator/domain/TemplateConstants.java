@@ -23,6 +23,7 @@ public class TemplateConstants {
     public static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
     public static final String DECREE_ABSOLUTE_TEMPLATE_ID = "FL-DIV-GOR-ENG-00062.docx";
     public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00070.doc";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -39,6 +40,8 @@ public class TemplateConstants {
     public static final String DECREE_ABSOLUTE_NAME_FOR_PDF_FILE = "DecreeAbsolute.pdf";
     public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterRespondent.pdf";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterCoRespondent.pdf";
 
     // Template Data Mapper Constants
     public static final String CARE_OF_PREFIX = "c\\o";
