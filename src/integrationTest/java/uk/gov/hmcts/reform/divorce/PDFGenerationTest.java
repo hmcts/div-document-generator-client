@@ -80,7 +80,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"co-respondent-answers-defended-admit-costs"},
                 {"co-respondent-answers-undefended-no-admit-no-costs"},
                 {"AOS_Offline-Invitation-Letter-Respondent"},
-                {"AOS_Offline-Invitation-Letter-Co-Respondent"}
+                {"AOS_Offline-Invitation-Letter-Co-Respondent"},
+                {"solicitor-personal-service"}
         });
 
         List testData = new ArrayList(basicTestData);

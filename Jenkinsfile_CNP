@@ -40,7 +40,7 @@ withPipeline(type , product, component) {
         enableDockerBuild()
         installCharts()
     }
-    
+
     loadVaultSecrets(secrets)
     setVaultName('div')
 
@@ -50,7 +50,7 @@ withPipeline(type , product, component) {
 
     // Kubernetes does not retrieve variables from the output terraform
     before('functionalTest:preview') {
-        env.FEATURE_RESP_SOLICITOR_DETAILS = 'true'
+        env.FEATURE_RESP_SOLICITOR_DETAILS = 'false'
         env.test_environment = 'aat'
     }
 
@@ -62,7 +62,5 @@ withPipeline(type , product, component) {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
 
-    onMaster {
-        enableSlackNotifications(channel)
-    }
+    enableSlackNotifications(channel)
 }
