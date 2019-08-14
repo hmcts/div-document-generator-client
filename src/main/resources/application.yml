@@ -50,7 +50,7 @@ info:
 
 pdf:
   test:
-    enabled: true
+    enabled: false
 
 document:
     templates:
