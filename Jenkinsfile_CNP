@@ -19,11 +19,13 @@ def component = "dgs"
 
 def channel = '#div-dev'
 
-List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
-    secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
-    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
-    secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+def secrets = [
+    'div-${env}': [
+        secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
+        secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
+        secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
+        secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+    ]
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -39,10 +41,10 @@ withPipeline(type , product, component) {
     if (env.CHANGE_TITLE && !env.CHANGE_TITLE.startsWith('[PREVIEW]')) {
         enableDockerBuild()
         installCharts()
+        enableSecurityScan()
     }
 
     loadVaultSecrets(secrets)
-    setVaultName('div')
 
     after('checkout') {
         echo '${product}-${component} checked out'

@@ -7,13 +7,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -55,25 +52,5 @@ public class DocumentGeneratorController {
                 templateData.getTemplate(), templateData.getValues().size());
         return documentManagementService.generateAndStoreDocument(templateData.getTemplate(), templateData.getValues(),
             authorizationToken);
-    }
-
-    @ApiOperation(value = "Generate PDF document based on the supplied template name and placeholder texts and returns "
-        + "the PDF.", tags = {"Document Generation"})
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "PDF was generated successfully. Returns the PDF document."),
-    })
-    @RequestMapping(value = "/generate-pdf-binary", produces = "application/octet-stream", method = RequestMethod.POST)
-    public ResponseEntity generatePdfBinary(
-        @ApiParam(value = "JSON object containing the templateName and case details", required = true)
-        @RequestBody
-        @Valid
-            GenerateDocumentRequest templateData) {
-        byte[] pdf = documentManagementService.generateDocument(templateData.getTemplate(), templateData.getValues());
-
-        return ResponseEntity
-            .ok()
-            .contentLength(pdf.length)
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-            .body(pdf);
     }
 }
