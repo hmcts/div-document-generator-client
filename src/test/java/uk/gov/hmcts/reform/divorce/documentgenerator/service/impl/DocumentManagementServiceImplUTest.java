@@ -255,7 +255,7 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsDnRefusalOrder_thenProceedAsExpected() throws Exception {
+    public void whenGenerateAndStoreDocument_givenTemplateIsDnRefusalOrder_thenProceedAsExpected() throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
