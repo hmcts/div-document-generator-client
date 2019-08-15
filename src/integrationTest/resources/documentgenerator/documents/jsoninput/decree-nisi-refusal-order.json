@@ -1,0 +1,16 @@
+{
+    "template": "FL-DIV-DEC-ENG-00088.docx",
+    "values": {
+        "caseDetails": {
+            "case_data": {
+                "DNApprovalDate": "2019-01-15",
+                "D8caseReference": "LV89D85000",
+                "D8PetitionerFirstName": "John",
+                "D8PetitionerLastName": "Smith",
+                "D8RespondentFirstName": "Jane",
+                "D8RespondentLastName": "Doe",
+                "RefusalRejectionReason": ["noCriteria","other"]
+            }
+        }
+    }
+}

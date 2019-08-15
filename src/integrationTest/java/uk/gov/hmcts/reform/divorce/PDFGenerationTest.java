@@ -88,7 +88,8 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Offline-Behaviour-Desertion-Form"},
                 {"AOS_Offline-Adultery-Form-Respondent"},
                 {"AOS_Offline-Adultery-Form-Co-Respondent"},
-                {"solicitor-personal-service"}
+                {"solicitor-personal-service"},
+                {"decree-nisi-refusal-order"}
         });
 
         List testData = new ArrayList(basicTestData);

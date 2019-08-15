@@ -30,6 +30,7 @@ public class TemplateConstants {
     public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
     public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     public static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
+    public static final String DN_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -60,6 +61,7 @@ public class TemplateConstants {
         "AOSOfflineInvitationLetterCoRespondent.pdf";
 
     public static final String SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE = "SolicitorPersonalService.pdf";
+    public static final String DN_REFUSAL_ORDER_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
 
     // Template Data Mapper Constants
     public static final String CARE_OF_PREFIX = "c\\o";
@@ -95,5 +97,9 @@ public class TemplateConstants {
     public static final String CLIAM_COSTS_FROM_RESP_CORESP = "ClaimFromRespCoResp";
     public static final String CLIAM_COSTS_FROM_RESP = "ClaimFromResp";
     public static final String CLIAM_COSTS_FROM_CORESP = "ClaimFromCoResp";
+    public static final String REFUSAL_REJECTION_REASONS = "RefusalRejectionReason";
+    public static final String FREE_TEXT_ORDER_VALUE = "other";
+    public static final String HAS_FREE_TEXT_ORDER_KEY = "HasFreeTextOrder";
+    public static final String HAS_ONLY_FREE_TEXT_ORDER_KEY = "HasOnlyFreeTextOrder";
     public static final String YES_VALUE = "yes";
 }

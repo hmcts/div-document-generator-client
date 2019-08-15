@@ -40,8 +40,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -489,6 +492,60 @@ public class TemplateDataMapperTest {
 
         expectedData.putAll(caseData);
         expectedData.put(CLIAM_COSTS_FROM_CORESP, YES_VALUE);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenNoFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {"noFreeTextOrder"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, false);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenOnlyFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {"other"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, true);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenIncludesFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {"other", "yetAnother"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 

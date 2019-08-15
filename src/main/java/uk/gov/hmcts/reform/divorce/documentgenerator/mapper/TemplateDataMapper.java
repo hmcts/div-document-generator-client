@@ -11,6 +11,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationExce
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,13 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FREE_TEXT_ORDER_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -150,6 +155,12 @@ public class TemplateDataMapper {
         }
 
         data.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+
+        if (Objects.nonNull(data.get(REFUSAL_REJECTION_REASONS))) {
+            List<String> rejectionReasons = mapper.convertValue(data.get(REFUSAL_REJECTION_REASONS), ArrayList.class);
+            data.put(HAS_FREE_TEXT_ORDER_KEY, rejectionReasons.contains(FREE_TEXT_ORDER_VALUE));
+            data.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, rejectionReasons.equals(Arrays.asList(FREE_TEXT_ORDER_VALUE)));
+        }
 
         // Get page assets
         data.putAll(getPageAssets());
