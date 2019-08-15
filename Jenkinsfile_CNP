@@ -17,8 +17,6 @@ def type = "java"
 def product = "div"
 def component = "dgs"
 
-def channel = '#div-dev'
-
 def secrets = [
     'div-${env}': [
         secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
@@ -62,6 +60,4 @@ withPipeline(type , product, component) {
     after('functionalTest:aat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
-
-    enableSlackNotifications(channel)
 }
