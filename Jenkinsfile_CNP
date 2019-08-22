@@ -17,8 +17,6 @@ def type = "java"
 def product = "div"
 def component = "dgs"
 
-def channel = '#div-dev'
-
 def secrets = [
     'div-${env}': [
         secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
@@ -38,10 +36,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withPipeline(type , product, component) {
-    if (env.CHANGE_TITLE && !env.CHANGE_TITLE.startsWith('[PREVIEW]')) {
-        enableDockerBuild()
-        installCharts()
-    }
+    enableDockerBuild()
+    installCharts()
 
     loadVaultSecrets(secrets)
 
@@ -62,6 +58,4 @@ withPipeline(type , product, component) {
     after('functionalTest:aat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
-
-    enableSlackNotifications(channel)
 }
