@@ -76,6 +76,11 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
+    private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
+    private static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00081.docx";
+    private static final String AOS_OFFLINE_BEVAHIOUR_DESERTION_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -835,71 +840,14 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForDecreeAbsolutePronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final Map<String, Object> values = new HashMap<>();
-        final String securityToken = "securityToken";
-
-        final Map<String, Object> caseData = Collections.emptyMap();
-
-        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
-
-        final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(DECREE_ABSOLUTE_TEMPLATE, values);
-
-        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
-
-        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
-        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
-
-        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
-
-        MvcResult result = webClient.perform(post(API_URL)
-            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
-
-        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-            result.getResponse().getContentAsString());
-
-        mockRestServiceServer.verify();
+    public void givenAllGoesWellForDecreeAbsolutePronouncement_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(DECREE_ABSOLUTE_TEMPLATE);
     }
 
     @Test
     public void givenAllGoesWellForPrintForPronouncement_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final Map<String, Object> values = new HashMap<>();
-        final String securityToken = "securityToken";
-
-        final Map<String, Object> caseData = Collections.emptyMap();
-
-        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
-
-        final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, values);
-
-        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
-
-        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
-        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
-
-        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
-
-        MvcResult result = webClient.perform(post(API_URL)
-            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
-
-        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-            result.getResponse().getContentAsString());
-
-        mockRestServiceServer.verify();
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID);
     }
 
     @Test
@@ -923,41 +871,53 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForAosOfflineInvitationLetterRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final Map<String, Object> values = new HashMap<>();
-        final String securityToken = "securityToken";
-
-        final Map<String, Object> caseData = Collections.emptyMap();
-
-        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
-
-        final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID, values);
-
-        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
-
-        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
-        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
-
-        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
-
-        MvcResult result = webClient.perform(post(API_URL)
-            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
-
-        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-            result.getResponse().getContentAsString());
-
-        mockRestServiceServer.verify();
+    public void givenAllGoesWellForAosOfflineInvitationLetterRespondent_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(
+            AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID
+        );
     }
 
     @Test
-    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(
+            AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID
+        );
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOffline2YearSeparationForm_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID);
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOffline5YearSeparationForm_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID);
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOfflineBehaviourDesertionForm_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_BEVAHIOUR_DESERTION_TEMPLATE_ID);
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOfflineAdulteryFormRespondent_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID);
+    }
+
+    @Test
+    public void givenAllGoesWellForAosOfflineAdulteryFormCoRespondent_whenGenerateAndStoreDocument_thenReturn()
+        throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(
+            AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
+    }
+
+    private void assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(String templateId) throws Exception {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
@@ -966,7 +926,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID, values);
+            new GenerateDocumentRequest(templateId, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 
