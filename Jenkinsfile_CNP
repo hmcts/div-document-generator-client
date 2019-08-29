@@ -38,8 +38,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withPipeline(type , product, component) {
     enableDockerBuild()
     installCharts()
-
     loadVaultSecrets(secrets)
+    enableAksStagingDeployment()
 
     after('checkout') {
         echo '${product}-${component} checked out'
