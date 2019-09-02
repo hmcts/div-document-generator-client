@@ -89,7 +89,7 @@ public class PDFGenerationTest extends IntegrationTest {
                 {"AOS_Offline-Adultery-Form-Respondent"},
                 {"AOS_Offline-Adultery-Form-Co-Respondent"},
                 {"solicitor-personal-service"},
-                {"decree-nisi-refusal-order"}
+                {"decree-nisi-refusal-order-clarification"}
         });
 
         List testData = new ArrayList(basicTestData);
