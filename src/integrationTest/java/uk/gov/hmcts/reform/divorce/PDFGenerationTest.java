@@ -39,6 +39,8 @@ public class PDFGenerationTest extends IntegrationTest {
     @TestData
     public static Collection<Object[]> testData() {
         List<Object[]> basicTestData = Arrays.asList(new Object[][]{
+                {"mini-petition-resp-confidential-addr"},
+                {"mini-petition-draft-resp-confidential-addr"},
                 {"mini-petition-draft"},
                 {"mini-petition-draft-no-place-of-marriage"},
                 {"CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO"},
