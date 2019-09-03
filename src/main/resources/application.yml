@@ -69,6 +69,11 @@ document:
             FL-DIV-LET-ENG-00075.doc: "docmosis"
             FL-DIV-LET-ENG-00076.doc: "docmosis"
             FL-DIV-GNO-ENG-00073.docx: "docmosis"
+            FL-DIV-APP-ENG-00080.docx: "docmosis"
+            FL-DIV-APP-ENG-00081.docx: "docmosis"
+            FL-DIV-APP-ENG-00082.docx: "docmosis"
+            FL-DIV-APP-ENG-00083.docx: "docmosis"
+            FL-DIV-APP-ENG-00084.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
