@@ -11,6 +11,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationExce
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS_STATEMENT_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CCD_DATE_TIME_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
@@ -39,9 +41,22 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FREE_TEXT_ORDER_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_JURISDICTION_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.JURISDICTION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_CLARIFICATION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -150,6 +165,23 @@ public class TemplateDataMapper {
         }
 
         data.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+
+        if (Objects.nonNull(data.get(REFUSAL_CLARIFICATION_REASONS))) {
+            List<String> clarificationReasons =
+                mapper.convertValue(data.get(REFUSAL_CLARIFICATION_REASONS), ArrayList.class);
+            data.put(HAS_JURISDICTION_CLARIFICATION_KEY,
+                clarificationReasons.contains(JURISDICTION_CLARIFICATION_VALUE));
+            data.put(HAS_MARRIAGE_CERT_CLARIFICATION_KEY,
+                clarificationReasons.contains(MARRIAGE_CERT_CLARIFICATION_VALUE));
+            data.put(HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY,
+                clarificationReasons.contains(MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE));
+            data.put(HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY,
+                clarificationReasons.contains(PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE));
+            data.put(HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY,
+                clarificationReasons.contains(CASE_DETAILS_STATEMENT_CLARIFICATION_VALUE));
+            data.put(HAS_FREE_TEXT_ORDER_KEY, clarificationReasons.contains(FREE_TEXT_ORDER_VALUE));
+            data.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, clarificationReasons.equals(Arrays.asList(FREE_TEXT_ORDER_VALUE)));
+        }
 
         // Get page assets
         data.putAll(getPageAssets());
