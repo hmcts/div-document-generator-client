@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
@@ -32,7 +30,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
@@ -48,20 +45,17 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
 
     // Test Values
-    private static final String TEST_COURT_NAME = "Court Name";
     private static final String TEST_COURT_ADDRESS = "Placeholder Court";
 
     // Docmosis Base Config Constants
@@ -91,6 +85,7 @@ public class TemplateDataMapperTest {
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -355,26 +350,8 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenExistingCourtName_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
     public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
         caseData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> requestData = Collections.singletonMap(
@@ -382,10 +359,7 @@ public class TemplateDataMapperTest {
         );
 
         expectedData.putAll(caseData);
-
-        String expectedContactAddress = StringUtils.join(
-            CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
-        expectedData.put(COURT_CONTACT_KEY, expectedContactAddress);
+        expectedData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
