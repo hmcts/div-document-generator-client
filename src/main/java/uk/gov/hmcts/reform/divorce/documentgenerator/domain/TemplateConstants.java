@@ -64,7 +64,6 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
 
     // Template Data Mapper Constants
-    public static final String CARE_OF_PREFIX = "c\\o";
     public static final String CASE_DATA = "case_data";
     public static final String CASE_DETAILS = "caseDetails";
     public static final String CCD_DATE_FORMAT = "yyyy-MM-dd";
@@ -74,7 +73,6 @@ public class TemplateConstants {
     public static final String COURT_HEARING_DATE_KEY = "DateOfHearing";
     public static final String COURT_HEARING_JSON_KEY = "DateAndTimeOfHearing";
     public static final String COURT_HEARING_TIME_KEY = "TimeOfHearing";
-    public static final String COURT_NAME_KEY = "CourtName";
     public static final String D8_MARRIAGE_DATE_KEY = "D8MarriageDate";
     public static final String DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY = "DAEligibleFromDate";
     public static final String DECREE_NISI_GRANTED_DATE_KEY = "DecreeNisiGrantedDate";
@@ -85,7 +83,6 @@ public class TemplateConstants {
     public static final String DN_APPROVAL_DATE_KEY = "DNApprovalDate";
     public static final String ISSUE_DATE_KEY = "IssueDate";
     public static final String LETTER_DATE_FORMAT = "dd MMMM yyyy";
-    public static final String NEWLINE_DELIMITER = "\n";
     public static final String SERVICE_COURT_NAME_KEY = "ServiceCourtName";
     public static final String SERVICE_CENTRE_COURT_NAME = "Courts and Tribunals Service Centre";
     public static final String SERVICE_CENTRE_COURT_CONTACT_DETAILS = "c/o HMCTS Digital Divorce"
