@@ -68,4 +68,12 @@
         <cve>CVE-2019-14540</cve>
         <cve>CVE-2019-16335</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+            To address gradle-pitest-plugin, suppressing until a suitable solution is found.
+            Suppressed on 20/09/2019 ]]>
+        </notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2019-16370</cve>
+    </suppress>
 </suppressions>
