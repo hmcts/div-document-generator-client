@@ -257,7 +257,9 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateIsDnClarificationOrder_thenProceedAsExpected() throws Exception {
+    public void whenGenerateAndStoreDocument_givenTemplateIsDnClarificationOrder_thenProceedAsExpected()
+        throws Exception {
+
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
