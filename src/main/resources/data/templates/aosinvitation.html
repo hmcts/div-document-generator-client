@@ -195,7 +195,7 @@
                 {% set journeyType = "solicitor" %}
             {% elseif divorceUnit == "serviceCentre" or divorceUnit == "eastMidlands" %}
                 {% set journeyType = "online" %}
-            {% endif %} 
+            {% endif %}
         {% endif %}
 
         {% set accessCode = access_code %}
@@ -359,9 +359,9 @@
                         <li class="list-bullet-counter">
                             Select 'Create case' on your dashboard.
                             <ol class="list-bullet-alpha">
-                                <li class="list-bullet-counter">Select 'Family divorce' under 'Jurisdiction'</li>
-                                <li class="list-bullet-counter">Select 'Notice of acting' under 'Case type'</li>
-                                <li class="list-bullet-counter">Select 'Link to an existing case' under 'Event'</li>
+                                <li class="list-bullet-counter">Select 'Family Divorce' under 'Jurisdiction'</li>
+                                <li class="list-bullet-counter">Select 'Notice Of Acting' under 'Case type'</li>
+                                <li class="list-bullet-counter">Select 'Notice Of Acting' under 'Event'</li>
                                 <li class="list-bullet-counter">Press 'Start'</li>
                             </ol>
                         </li>
@@ -436,7 +436,7 @@
                     </p>
                 {% endif %}
 
-            {% else %}    
+            {% else %}
                 <div class="response-text">
                     {% if journeyType == "solicitor" %}
                     Dear {% autoescape false %}{{ respondentsSolicitorName }}{% endautoescape %},
