@@ -15,8 +15,6 @@ locals {
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
   vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
 
-  docmosis_key_vault_uri = "https://${var.docmosis_key_vault_name}.vault.azure.net/"
-
   asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
   asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
 }
@@ -39,14 +37,4 @@ data "azurerm_key_vault_secret" "div-doc-s2s-auth-secret" {
 data "azurerm_key_vault_secret" "idam-secret" {
     name      = "idam-secret"
     vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "docmosis_api_key" {
-  name      = "docmosis-api-key"
-  vault_uri = "${local.docmosis_key_vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "docmosis_endpoint" {
-  name      = "docmosis-endpoint"
-  vault_uri = "${local.docmosis_key_vault_uri}"
 }
