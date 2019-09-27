@@ -79,7 +79,9 @@ variable "location" {
 
 variable "ilbIp" {}
 
-variable "vault_env" {}
+variable "vault_env" {
+    default = "preprod"
+}
 
 variable "common_tags" {
     type = "map"
