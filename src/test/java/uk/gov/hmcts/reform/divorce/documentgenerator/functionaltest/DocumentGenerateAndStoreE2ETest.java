@@ -55,7 +55,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
@@ -79,7 +80,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
     private static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00081.docx";
-    private static final String AOS_OFFLINE_BEVAHIOUR_DESERTION_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
+    private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
 
@@ -902,7 +903,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForAosOfflineBehaviourDesertionForm_whenGenerateAndStoreDocument_thenReturn()
         throws Exception {
-        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_BEVAHIOUR_DESERTION_TEMPLATE_ID);
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_BEHAVIOUR_DESERTION_TEMPLATE_ID);
     }
 
     @Test
@@ -952,6 +953,40 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
+    public void givenAllGoesWellForDecreeNisiClarificationOrder_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final Map<String, Object> values = new HashMap<>();
+        final String securityToken = "securityToken";
+
+        final Map<String, Object> caseData = Collections.emptyMap();
+
+        values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
+
+        final GenerateDocumentRequest generateDocumentRequest =
+            new GenerateDocumentRequest(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
     public void givenAllGoesWellForDecreeNisiRefusalOrder_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
@@ -961,7 +996,7 @@ public class DocumentGenerateAndStoreE2ETest {
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
         final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(DN_REFUSAL_ORDER_TEMPLATE_ID, values);
+            new GenerateDocumentRequest(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID, values);
 
         final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
 

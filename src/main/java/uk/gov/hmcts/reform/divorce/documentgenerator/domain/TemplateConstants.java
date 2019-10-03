@@ -30,7 +30,8 @@ public class TemplateConstants {
     public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
     public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     public static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
-    public static final String DN_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
+    public static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
+    public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -61,7 +62,8 @@ public class TemplateConstants {
         "AOSOfflineInvitationLetterCoRespondent.pdf";
 
     public static final String SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE = "SolicitorPersonalService.pdf";
-    public static final String DN_REFUSAL_ORDER_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
+    public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
+    public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
@@ -95,11 +97,15 @@ public class TemplateConstants {
     public static final String CLIAM_COSTS_FROM_RESP = "ClaimFromResp";
     public static final String CLIAM_COSTS_FROM_CORESP = "ClaimFromCoResp";
     public static final String REFUSAL_CLARIFICATION_REASONS = "RefusalClarificationReason";
+    public static final String REFUSAL_REJECTION_REASONS = "RefusalRejectionReason";
     public static final String JURISDICTION_CLARIFICATION_VALUE = "jurisdictionDetails";
     public static final String MARRIAGE_CERT_CLARIFICATION_VALUE = "marriageCertificate";
     public static final String MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE = "marriageCertTranslation";
     public static final String PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE = "previousProceedingDetails";
     public static final String CASE_DETAILS_STATEMENT_CLARIFICATION_VALUE = "caseDetailsStatement";
+    public static final String NO_JURISDICTION_REJECTION_VALUE = "noJurisdiction";
+    public static final String NO_CRITERIA_REJECTION_VALUE = "noCriteria";
+    public static final String INSUFFICIENT_DETAILS_REJECTION_VALUE = "insufficentDetails";
     public static final String FREE_TEXT_ORDER_VALUE = "other";
     public static final String HAS_JURISDICTION_CLARIFICATION_KEY = "HasJurisdictionClarificationReason";
     public static final String HAS_MARRIAGE_CERT_CLARIFICATION_KEY = "HasMarriageCertClarificationReason";
@@ -108,6 +114,9 @@ public class TemplateConstants {
     public static final String HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY = "HasPreviousProceedingsClarificationReason";
     public static final String HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY
         = "HasCaseDetailsStatementClarificationReason";
+    public static final String HAS_NO_JURISDICTION_REJECTION_KEY = "HasNoJurisdiction";
+    public static final String HAS_NO_CRITERIA_REJECTION_KEY = "HasApplicationDoesNotFitCriteria";
+    public static final String HAS_INSUFFICIENT_DETAILS_REJECTION_KEY = "HasInsufficientDetails";
     public static final String HAS_FREE_TEXT_ORDER_KEY = "HasFreeTextOrder";
     public static final String HAS_ONLY_FREE_TEXT_ORDER_KEY = "HasOnlyFreeTextOrder";
     public static final String YES_VALUE = "yes";
