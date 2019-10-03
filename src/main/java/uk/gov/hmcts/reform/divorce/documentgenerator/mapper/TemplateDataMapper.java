@@ -42,18 +42,25 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FREE_TEXT_ORDER_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_JURISDICTION_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_NO_CRITERIA_REJECTION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_NO_JURISDICTION_REJECTION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.INSUFFICIENT_DETAILS_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.JURISDICTION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_CRITERIA_REJECTION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_JURISDICTION_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -170,6 +177,16 @@ public class TemplateDataMapper {
                 clarificationReasons.contains(CASE_DETAILS_STATEMENT_CLARIFICATION_VALUE));
             data.put(HAS_FREE_TEXT_ORDER_KEY, clarificationReasons.contains(FREE_TEXT_ORDER_VALUE));
             data.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, clarificationReasons.equals(Arrays.asList(FREE_TEXT_ORDER_VALUE)));
+        }
+
+        if (Objects.nonNull(data.get(REFUSAL_REJECTION_REASONS))) {
+            List<String> rejectionReasons =
+                mapper.convertValue(data.get(REFUSAL_REJECTION_REASONS), ArrayList.class);
+            data.put(HAS_NO_JURISDICTION_REJECTION_KEY, rejectionReasons.contains(NO_JURISDICTION_REJECTION_VALUE));
+            data.put(HAS_NO_CRITERIA_REJECTION_KEY, rejectionReasons.contains(NO_CRITERIA_REJECTION_VALUE));
+            data.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY,
+                rejectionReasons.contains(INSUFFICIENT_DETAILS_REJECTION_VALUE));
+            data.put(HAS_FREE_TEXT_ORDER_KEY, rejectionReasons.contains(FREE_TEXT_ORDER_VALUE));
         }
 
         // Get page assets

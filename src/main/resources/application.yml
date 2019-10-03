@@ -75,6 +75,7 @@ document:
             FL-DIV-APP-ENG-00083.docx: "docmosis"
             FL-DIV-APP-ENG-00084.docx: "docmosis"
             FL-DIV-DEC-ENG-00088.docx: "docmosis"
+            FL-DIV-DEC-ENG-00098.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
