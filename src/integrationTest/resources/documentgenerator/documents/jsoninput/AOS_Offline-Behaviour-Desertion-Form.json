@@ -14,7 +14,8 @@
                 "D8PetitionerLastName": "Doe",
                 "D8RespondentFirstName": "Jane",
                 "D8RespondentLastName": "Doe",
-                "D8caseReference": "LV17D80100"
+                "D8caseReference": "LV17D80100",
+                "D8ReasonForDivorce": "unreasonable-behaviour"
             }
         }
     }
