@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PDFGenerationSupport {
-     static List<Object[]> getFormNames(final boolean respSolicitorEnabled){
+    static List<Object[]> getFormNames(final boolean respSolicitorEnabled) {
         List<Object[]> basicTestData = Arrays.asList(new Object[][]{
             {"mini-petition-resp-confidential-addr"},
             {"mini-petition-draft-resp-confidential-addr"},

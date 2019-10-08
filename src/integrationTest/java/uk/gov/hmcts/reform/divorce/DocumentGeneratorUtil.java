@@ -5,13 +5,13 @@ import io.restassured.response.Response;
 import static net.serenitybdd.rest.SerenityRest.given;
 
 public class DocumentGeneratorUtil {
-    static Response generatePDF (final String requestBody, final String generatePDFURI, final String userToken) {
+    static Response generatePDF(final String requestBody, final String generateDocURI, final String userToken) {
         return given()
             .contentType("application/json")
             .header("Authorization", userToken)
             .body(requestBody)
             .when()
-            .post(generatePDFURI)
+            .post(generateDocURI)
             .andReturn();
     }
 }

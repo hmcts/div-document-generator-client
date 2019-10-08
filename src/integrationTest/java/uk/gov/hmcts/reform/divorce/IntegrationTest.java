@@ -88,7 +88,7 @@ public abstract class IntegrationTest {
         return userToken;
     }
 
-    private void configProxyHost(){
+    private void configProxyHost() {
         try {
             URL proxy = new URL(httpProxy);
             if (InetAddress.getByName(proxy.getHost()).isReachable(2000)) {
