@@ -187,6 +187,7 @@ public class TemplateDataMapper {
             data.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY,
                 rejectionReasons.contains(INSUFFICIENT_DETAILS_REJECTION_VALUE));
             data.put(HAS_FREE_TEXT_ORDER_KEY, rejectionReasons.contains(FREE_TEXT_ORDER_VALUE));
+            data.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, rejectionReasons.equals(Arrays.asList(FREE_TEXT_ORDER_VALUE)));
         }
 
         // Get page assets
