@@ -571,6 +571,8 @@ public class TemplateDataMapperTest {
         expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, false);
         expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, false);
         expectedData.put(HAS_FREE_TEXT_ORDER_KEY, false);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
         assertEquals(expectedData, actual);
@@ -595,6 +597,30 @@ public class TemplateDataMapperTest {
         expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, true);
         expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, true);
         expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenHasOnlyOther_thenReturnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {
+            "other"
+        });
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_NO_JURISDICTION_REJECTION_KEY, false);
+        expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, false);
+        expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, false);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, true);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
