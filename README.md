@@ -85,7 +85,8 @@ To run all integration tests locally:
     * Start the app with AAT config using `./gradlew clean bootRunAat`
     * Start the test with AAT config using `./gradlew clean functional`
     
-If you update content in PDFs, you can regenerate the existing PDFs by running the ignored test in PDFGeneratorTest.java   
+If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates), you can re-generate the PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`. The test
+will output generated PDFs to the folder `src/integrationTest/resources/documentgenerator/documents/regenerated`  
 
 **Unit tests**
 

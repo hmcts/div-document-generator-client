@@ -18,8 +18,6 @@ import java.net.URL;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 
-import static net.serenitybdd.rest.SerenityRest.given;
-
 @Slf4j
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
@@ -27,10 +25,10 @@ public abstract class IntegrationTest {
     private static final String GENERIC_PASSWORD = "genericPassword123";
 
     @Value("${divorce.document.generator.uri}")
-    private String divDocumentGeneratorURI;
+    protected String divDocumentGeneratorURI;
 
     @Value("${document.management.store.baseUrl}")
-    private String documentManagementURL;
+    protected String documentManagementURL;
 
     @Value("${http.proxy:#{null}}")
     protected String httpProxy;
@@ -61,20 +59,7 @@ public abstract class IntegrationTest {
     @PostConstruct
     public void init() {
         if (!Strings.isNullOrEmpty(httpProxy)) {
-            try {
-                URL proxy = new URL(httpProxy);
-                if (InetAddress.getByName(proxy.getHost()).isReachable(2000)) {
-                    System.setProperty("http.proxyHost", proxy.getHost());
-                    System.setProperty("http.proxyPort", Integer.toString(proxy.getPort()));
-                    System.setProperty("https.proxyHost", proxy.getHost());
-                    System.setProperty("https.proxyPort", Integer.toString(proxy.getPort()));
-                } else {
-                    throw new IOException();
-                }
-            } catch (IOException e) {
-                log.error("Error setting up proxy - are you connected to the VPN?", e);
-                throw new RuntimeException(e);
-            }
+            configProxyHost();
         }
     }
 
@@ -85,23 +70,11 @@ public abstract class IntegrationTest {
     }
 
     Response callDivDocumentGenerator(String requestBody) {
-        return given()
-            .contentType("application/json")
-            .header("Authorization", getUserToken())
-            .body(requestBody)
-            .when()
-            .post(divDocumentGeneratorURI)
-            .andReturn();
+        return DocumentGeneratorUtil.generatePDF(requestBody,
+                                                divDocumentGeneratorURI,
+                                                getUserToken());
     }
 
-    //this is a hack to make this work with the docker container
-    String getDocumentStoreURI(String uri) {
-        if (uri.contains("document-management-store:8080")) {
-            return uri.replace("http://document-management-store:8080", documentManagementURL);
-        }
-
-        return uri;
-    }
 
     private synchronized String getUserToken() {
         username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
@@ -113,5 +86,22 @@ public abstract class IntegrationTest {
         }
 
         return userToken;
+    }
+
+    private void configProxyHost() {
+        try {
+            URL proxy = new URL(httpProxy);
+            if (InetAddress.getByName(proxy.getHost()).isReachable(2000)) {
+                System.setProperty("http.proxyHost", proxy.getHost());
+                System.setProperty("http.proxyPort", Integer.toString(proxy.getPort()));
+                System.setProperty("https.proxyHost", proxy.getHost());
+                System.setProperty("https.proxyPort", Integer.toString(proxy.getPort()));
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+            log.error("Error setting up proxy - are you connected to the VPN?", e);
+            throw new RuntimeException(e);
+        }
     }
 }
