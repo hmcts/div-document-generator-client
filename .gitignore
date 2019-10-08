@@ -17,7 +17,6 @@ out
 
 bin/
 target/
-**/temp/
 
 src/main/resources/version
 java-rpm-packaging/
