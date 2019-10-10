@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -18,13 +19,14 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementS
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping(path = "/version/1")
 @Api(value = "Document Generation", tags = {"Document Generation"})
 @Slf4j
 public class DocumentGeneratorController {
 
     @Autowired
     private DocumentManagementService documentManagementService;
-    
+
     @ApiOperation(value = "Generate PDF document based on the supplied template name and placeholder texts and saves "
             + "it in the evidence management.", tags = {"Document Generation"})
     @ApiResponses({
@@ -37,8 +39,8 @@ public class DocumentGeneratorController {
             @ApiResponse(code = 500, message = "Returned when there is an unknown server error",
                     response = String.class)
         })
-    @PostMapping("/version/1/generatePDF")
-    public GeneratedDocumentInfo generatePDF(
+    @PostMapping("/generatePDF")
+    public GeneratedDocumentInfo generateAndUploadPdf(
         @RequestHeader(value = "Authorization", required = false)
             String authorizationToken,
         @ApiParam(value = "JSON object containing the templateName and the placeholder text map", required = true)

@@ -79,7 +79,9 @@ variable "location" {
 
 variable "ilbIp" {}
 
-variable "vault_env" {}
+variable "vault_env" {
+    default = "preprod"
+}
 
 variable "common_tags" {
     type = "map"
@@ -95,12 +97,3 @@ variable "feature_resp_solicitor_details" {
   default = "false"
 }
 
-variable "docmosis_key_vault_name" {
-  type    = "string"
-  default = "docmosisiaasdevkv"
-}
-
-variable "docmosis_dev_mode_flag" {
-  type    = "string"
-  default = "false"
-}

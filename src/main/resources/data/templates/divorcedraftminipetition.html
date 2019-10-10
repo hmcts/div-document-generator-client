@@ -126,6 +126,8 @@
 {% set respondentFirstName = caseDetails.case_data.D8RespondentFirstName | default("") %}
 {% set respondentLastName = caseDetails.case_data.D8RespondentLastName | default("") %}
 {% set respondentsName = respondentFirstName + " " + respondentLastName %}
+{% set respConfidentialAddr = caseDetails.case_data.RespondentContactDetailsConfidential | default("share") %}
+{% set coRespConfidentialAddr = caseDetails.case_data.coRespondentContactDetailsConfidential | default("NO") %}
 {% set petitionerConfidential = caseDetails.case_data.D8PetitionerContactDetailsConfidential | default("") %}
 {% set husbandOrWife = caseDetails.case_data.D8DivorceWho %}
 {% set petitionerName = caseDetails.case_data.D8MarriagePetitionerName %}
@@ -594,6 +596,7 @@
 </p>
 {% endif %}
 
+{% if (respConfidentialAddr == "share") %}
 <p class="single-block">
 <h2 class="heading-medium">Respondent's correspondence address</h2>
 <p class="response-text">
@@ -620,8 +623,9 @@
     {% endif %}
 </p>
 </p>
+{% endif %}
 
-{% if (isCorrespondentNamed == "YES" or isCorrespondentNamedBySolicitor == "YES") and correspondentsAddress is not empty %}
+{% if (isCorrespondentNamed == "YES" or isCorrespondentNamedBySolicitor == "YES") and correspondentsAddress is not empty and coRespConfidentialAddr == "NO" %}
 <p class="single-block">
 <h2 class="heading-medium">Co-respondent's correspondence address</h2>
 <p class="response-text">

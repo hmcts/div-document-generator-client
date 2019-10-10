@@ -1,0 +1,19 @@
+{
+    "template": "FL-DIV-DEC-ENG-00098.docx",
+    "values": {
+        "caseDetails": {
+            "case_data": {
+                "D8DivorceWho": "wife",
+                "DNApprovalDate": "2019-07-10",
+                "D8caseReference": "LV88D85000",
+                "D8PetitionerFirstName": "John",
+                "D8PetitionerLastName": "Smith",
+                "D8RespondentFirstName": "Jane",
+                "D8RespondentLastName": "Doe",
+                "RefusalRejectionReason": ["noJurisdiction","noCriteria","insufficentDetails","other"],
+                "RefusalRejectionAdditionalInfo": "The court has decided to make this free text order where you must give more information to us",
+                "FeeToPay": "95"
+            }
+        }
+    }
+}

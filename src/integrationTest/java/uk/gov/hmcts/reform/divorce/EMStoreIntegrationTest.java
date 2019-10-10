@@ -23,6 +23,8 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String X_PATH_TO_URL = "_links.self.href";
     private static final String COSTS_ORDER_INPUT_JSON = "costs-order.json";
     private static final String DN_SUBMISSION_INPUT_JSON = "dn-submission.json";
+    private static final String DN_REFUSAL_ORDER_INPUT_JSON
+        = "documents/jsoninput/decree-nisi-refusal-order-clarification.json";
 
     @Value("${divorce.document.generator.uri}")
     private String divDocumentGeneratorURI;
@@ -77,6 +79,12 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     public void givenAllTheRightParameters_whenGenerateDNAnswersWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
         throws Exception {
         checkPDFGenerated(DN_SUBMISSION_INPUT_JSON);
+    }
+
+    @Test
+    public void givenAllTheRightParameters_whenGenerateDnRefusalOrderWithDocmosis_thenGeneratedPDFShouldBeStoredInEMStore()
+        throws Exception {
+        checkPDFGenerated(DN_REFUSAL_ORDER_INPUT_JSON);
     }
 
     @Test

@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CARE_OF_PREFIX;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
@@ -30,7 +30,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
@@ -38,20 +37,29 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_JURISDICTION_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_NO_CRITERIA_REJECTION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_NO_JURISDICTION_REJECTION_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NEWLINE_DELIMITER;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SPACE_DELIMITER;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
 
     // Test Values
-    private static final String TEST_COURT_NAME = "Court Name";
     private static final String TEST_COURT_ADDRESS = "Placeholder Court";
 
     // Docmosis Base Config Constants
@@ -81,6 +89,7 @@ public class TemplateDataMapperTest {
         // Setup base data that will always be added to the payload
         expectedData = new HashMap<>();
         expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
+        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -149,6 +158,64 @@ public class TemplateDataMapperTest {
     public void givenInvalidDaGrantedDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidAdulteryFoundDate_whenTemplateDataMapperIsCalled_returnFormattedAdulteryFoundDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDaGrantedDate = "30 May 2019";
+        expectedData.put(ADULTERY_FOUND_OUT_DATE_KEY, expectedFormattedDaGrantedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidAdulteryFoundDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "invalidDate");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenValidBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_returnFormattedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2019-05-30");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedDaGrantedDate = "30 May 2019";
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, expectedFormattedDaGrantedDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test(expected = PDFGenerationException.class)
+    public void givenInvalidBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_throwPdfGenerationException() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "invalidDate");
 
         Map<String, Object> requestData = Collections.singletonMap(
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
@@ -287,26 +354,8 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void givenExistingCourtName_whenTemplateDataMapperIsCalled_returnFormattedData() {
-        Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
-
-        Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
-        );
-
-        expectedData.putAll(caseData);
-        expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-
-        assertEquals(expectedData, actual);
-    }
-
-    @Test
     public void givenExistingCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(COURT_NAME_KEY, TEST_COURT_NAME);
         caseData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> requestData = Collections.singletonMap(
@@ -314,10 +363,7 @@ public class TemplateDataMapperTest {
         );
 
         expectedData.putAll(caseData);
-
-        String expectedContactAddress = StringUtils.join(
-            CARE_OF_PREFIX, SPACE_DELIMITER, TEST_COURT_NAME, NEWLINE_DELIMITER, TEST_COURT_ADDRESS);
-        expectedData.put(COURT_CONTACT_KEY, expectedContactAddress);
+        expectedData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
@@ -434,6 +480,153 @@ public class TemplateDataMapperTest {
 
         assertEquals(expectedData, actual);
     }
+
+    @Test
+    public void givenDnRefusalClarificationReasons_whenNoFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_CLARIFICATION_REASONS, new String[] {"noKnownElements"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_JURISDICTION_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_MARRIAGE_CERT_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, false);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalClarificationReasons_whenOnlyFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_CLARIFICATION_REASONS, new String[] {"other"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_JURISDICTION_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_MARRIAGE_CERT_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY, false);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, true);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalClarificationReasons_whenIncludesFreeTextOrder_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_CLARIFICATION_REASONS, new String[] {
+            "jurisdictionDetails",
+            "marriageCertTranslation",
+            "marriageCertificate",
+            "previousProceedingDetails",
+            "caseDetailsStatement",
+            "other"
+        });
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_JURISDICTION_CLARIFICATION_KEY, true);
+        expectedData.put(HAS_MARRIAGE_CERT_CLARIFICATION_KEY, true);
+        expectedData.put(HAS_MARRIAGE_CERT_TRANSLATION_CLARIFICATION_KEY, true);
+        expectedData.put(HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY, true);
+        expectedData.put(HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY, true);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenNoKnownElements_thenReturnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {"noKnownElements"});
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_NO_JURISDICTION_REJECTION_KEY, false);
+        expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, false);
+        expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, false);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, false);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenHasAllKnownElements_thenReturnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {
+            "noJurisdiction",
+            "noCriteria",
+            "insufficentDetails",
+            "other"
+        });
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_NO_JURISDICTION_REJECTION_KEY, true);
+        expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, true);
+        expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, true);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, false);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenDnRefusalRejectionReasons_whenHasOnlyOther_thenReturnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(REFUSAL_REJECTION_REASONS, new String[] {
+            "other"
+        });
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(HAS_NO_JURISDICTION_REJECTION_KEY, false);
+        expectedData.put(HAS_NO_CRITERIA_REJECTION_KEY, false);
+        expectedData.put(HAS_INSUFFICIENT_DETAILS_REJECTION_KEY, false);
+        expectedData.put(HAS_FREE_TEXT_ORDER_KEY, true);
+        expectedData.put(HAS_ONLY_FREE_TEXT_ORDER_KEY, true);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
 
     private void mockDocmosisPdfBaseConfig() {
         when(docmosisBasePdfConfig.getDisplayTemplateKey()).thenReturn(TEMPLATE_KEY);

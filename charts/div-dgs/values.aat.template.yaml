@@ -1,17 +1,11 @@
 java:
     environment:
-        APPINSIGHTS_INSTRUMENTATIONKEY : "dummykey"
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL : "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-        ENVIRONMENT_NAME : "aat"
-        EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL : "http://div-emca-aat.service.core-compute-aat.internal"
-        IDAM_S2S_URL : "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-        PDF_SERVICE_BASEURL : "http://cmc-pdf-service-aat.service.core-compute-aat.internal"
-        REFORM_ENVIRONMENT : "aat"
-        DOCMOSIS_SERVICE_BASE_URL: "https://docmosis-development.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"
         DOCMOSIS_SERVICE_DEV_MODE_FLAG: "true"
+        PDF_TEST_ENABLED: "true"
 
     # Don't modify below here
     image: ${IMAGE_NAME}
     ingressHost: ${SERVICE_FQDN}
+    aadIdentityName: divorce

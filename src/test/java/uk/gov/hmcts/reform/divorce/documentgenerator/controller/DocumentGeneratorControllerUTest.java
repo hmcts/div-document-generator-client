@@ -37,11 +37,12 @@ public class DocumentGeneratorControllerUTest {
             .thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest
-                .generatePDF("testToken", new GenerateDocumentRequest(templateName, placeholder));
+                .generateAndUploadPdf("testToken", new GenerateDocumentRequest(templateName, placeholder));
 
         assertEquals(expected, actual);
 
         verify(documentManagementService, times(1))
                 .generateAndStoreDocument(templateName, placeholder, "testToken");
     }
+
 }

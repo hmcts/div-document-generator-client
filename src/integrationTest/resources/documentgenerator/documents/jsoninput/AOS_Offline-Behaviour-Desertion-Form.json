@@ -1,0 +1,22 @@
+{
+    "template":"FL-DIV-APP-ENG-00082.docx",
+    "values":{
+        "caseDetails":{
+            "id":"1517833758870511",
+            "jurisdiction":"DIVORCE",
+            "state":"Issued",
+            "case_type_id":"DIVORCE",
+            "created_date":"2018-02-05T12:29:17.81",
+            "last_modified":"2018-02-05T14:57:11.346",
+            "security_classification":"PUBLIC",
+            "case_data":{
+                "D8PetitionerFirstName": "John",
+                "D8PetitionerLastName": "Doe",
+                "D8RespondentFirstName": "Jane",
+                "D8RespondentLastName": "Doe",
+                "D8caseReference": "LV17D80100",
+                "D8ReasonForDivorce": "unreasonable-behaviour"
+            }
+        }
+    }
+}

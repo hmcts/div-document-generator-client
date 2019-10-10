@@ -50,7 +50,7 @@ info:
 
 pdf:
   test:
-    enabled: true
+    enabled: false
 
 document:
     templates:
@@ -66,6 +66,16 @@ document:
             FL-DIV-GNO-ENG-00059.docx: "docmosis"
             FL-DIV-GOR-ENG-00062.docx: "docmosis"
             FL-DIV-GNO-ENG-00022.docx: "docmosis"
+            FL-DIV-LET-ENG-00075.doc: "docmosis"
+            FL-DIV-LET-ENG-00076.doc: "docmosis"
+            FL-DIV-GNO-ENG-00073.docx: "docmosis"
+            FL-DIV-APP-ENG-00080.docx: "docmosis"
+            FL-DIV-APP-ENG-00081.docx: "docmosis"
+            FL-DIV-APP-ENG-00082.docx: "docmosis"
+            FL-DIV-APP-ENG-00083.docx: "docmosis"
+            FL-DIV-APP-ENG-00084.docx: "docmosis"
+            FL-DIV-DEC-ENG-00088.docx: "docmosis"
+            FL-DIV-DEC-ENG-00098.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -141,4 +151,4 @@ docmosis:
 
 feature-toggle:
   toggle:
-    feature_resp_solicitor_details: ${FEATURE_RESP_SOLICITOR_DETAILS:false}
+    feature_resp_solicitor_details: ${FEATURE_RESP_SOLICITOR_DETAILS:true}

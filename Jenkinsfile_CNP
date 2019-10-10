@@ -17,13 +17,13 @@ def type = "java"
 def product = "div"
 def component = "dgs"
 
-def channel = '#div-dev'
-
-List<LinkedHashMap<String, Object>> secrets = [
-    secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
-    secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
-    secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
-    secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+def secrets = [
+    'div-${env}': [
+        secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
+        secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
+        secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
+        secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+    ]
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -36,16 +36,18 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withPipeline(type , product, component) {
-    if (env.CHANGE_TITLE && !env.CHANGE_TITLE.startsWith('[PREVIEW]')) {
-        enableDockerBuild()
-        installCharts()
-    }
-    
+    enableDockerBuild()
+    installCharts()
     loadVaultSecrets(secrets)
-    setVaultName('div')
+    enableAksStagingDeployment()
+    disableLegacyDeployment()
 
     after('checkout') {
         echo '${product}-${component} checked out'
+    }
+
+    before('functionalTest:aat') {
+        env.test_environment = 'aat'
     }
 
     // Kubernetes does not retrieve variables from the output terraform
@@ -60,9 +62,5 @@ withPipeline(type , product, component) {
 
     after('functionalTest:aat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
-    }
-
-    onMaster {
-        enableSlackNotifications(channel)
     }
 }

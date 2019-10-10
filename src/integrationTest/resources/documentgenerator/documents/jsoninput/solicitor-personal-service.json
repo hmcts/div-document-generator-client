@@ -1,0 +1,17 @@
+{
+    "template": "FL-DIV-GNO-ENG-00073.docx",
+    "values": {
+        "caseDetails": {
+            "case_data": {
+                "D8RespondentFirstName": "John",
+                "D8RespondentLastName": "Smith",
+                "D8PetitionerFirstName": "Maria",
+                "D8PetitionerLastName": "Smith",
+                "D8DerivedRespondentHomeAddress": "82 Landor's Road\nLondon\nSW9 9PE",
+                "D8DivorceWho": "wife",
+                "D8caseReference": "LV17D80100",
+                "CurrentDate": "31 July 2019"
+            }
+        }
+    }
+}
