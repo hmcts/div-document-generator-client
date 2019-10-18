@@ -64,6 +64,7 @@ you can run the application by executing following command:
 
 ```bash
     docker-compose up
+    
 ```
 
 As a result the following container(s) will get created and started:
