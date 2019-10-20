@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.text.SimpleDateFormat;
 import java.time.Clock;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -87,6 +88,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                                                           String authorizationToken) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
             templateName, placeholders.size());
+        String caseId = getCaseId(placeholders);
+
+        log.info("Generating document for case Id {}", caseId);
 
         placeholders.put(
             CURRENT_DATE_KEY,
@@ -99,6 +103,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         String fileName = getFileNameFromTemplateName(templateName);
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
+
+        log.info("Document generated for case Id {}", caseId);
 
         return storeDocument(generatedDocument, authorizationToken, fileName);
     }
@@ -124,6 +130,11 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         }
 
         return pdfGenerationFactory.getGeneratorService(templateName).generate(templateName, formattedPlaceholders);
+    }
+
+    private String getCaseId(Map<String, Object> placeholders) {
+        Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails", Collections.emptyMap());
+        return (String) caseDetails.get("id");
     }
 
     private String getFileNameFromTemplateName(String templateName) {
