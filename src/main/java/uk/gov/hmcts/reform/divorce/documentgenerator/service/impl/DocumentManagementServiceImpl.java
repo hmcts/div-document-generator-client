@@ -133,7 +133,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     }
 
     private String getCaseId(Map<String, Object> placeholders) {
-        Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails", Collections.emptyMap());
+        Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails",
+            Collections.emptyMap());
         return (String) caseDetails.get("id");
     }
 
