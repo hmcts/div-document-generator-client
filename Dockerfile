@@ -1,5 +1,5 @@
 ARG APP_INSIGHTS_AGENT_VERSION=2.3.1
-FROM hmctspublic.azurecr.io/base/java:openjdk-8-distroless-1.2
+FROM hmctspublic.azurecr.io/base/java:openjdk-8-distroless-debug-1.3
 
 ENV APP div-document-generator.jar
 
