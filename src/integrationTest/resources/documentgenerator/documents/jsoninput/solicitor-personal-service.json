@@ -10,7 +10,8 @@
                 "D8DerivedRespondentHomeAddress": "82 Landor's Road\nLondon\nSW9 9PE",
                 "D8DivorceWho": "wife",
                 "D8caseReference": "LV17D80100",
-                "CurrentDate": "31 July 2019"
+                "CurrentDate": "31 July 2019",
+                "D8InferredPetitionerGender": "female"
             }
         }
     }
