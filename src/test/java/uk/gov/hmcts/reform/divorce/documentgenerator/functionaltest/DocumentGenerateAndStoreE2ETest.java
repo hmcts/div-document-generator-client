@@ -62,7 +62,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @PropertySource(value = "classpath:application.yml")
-@TestPropertySource(properties = {"endpoints.health.time-to-live=0",
+@TestPropertySource(properties = {"management.endpoint.health.cache.time-to-live=0",
     "service-auth-provider.service.stub.enabled=false",
     "evidence-management-api.service.stub.enabled=false"})
 @AutoConfigureMockMvc

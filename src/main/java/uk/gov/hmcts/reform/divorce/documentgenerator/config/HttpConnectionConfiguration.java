@@ -23,6 +23,8 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.logging.httpcomponents.OutboundRequestIdSettingInterceptor;
 
+import java.nio.charset.Charset;
+
 import static java.util.Arrays.asList;
 
 @Configuration
@@ -31,7 +33,7 @@ public class HttpConnectionConfiguration {
     private static final MediaType MEDIA_TYPE_HAL_JSON =
             new MediaType("application",
                     "vnd.uk.gov.hmcts.dm.document-collection.v1+hal+json",
-                    MappingJackson2HttpMessageConverter.DEFAULT_CHARSET);
+                    Charset.forName("UTF-8"));
 
     @Value("${http.connect.timeout}")
     private int httpConnectTimeout;

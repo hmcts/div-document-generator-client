@@ -52,7 +52,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
         classes = {DocumentGeneratorApplication.class, HealthCheckITest.LocalRibbonClientConfiguration.class})
 @PropertySource(value = "classpath:application.properties")
 @TestPropertySource(properties = {
-        "endpoints.health.time-to-live=0",
+        "management.endpoint.health.cache.time-to-live=0",
         "feign.hystrix.enabled=true",
         "eureka.client.enabled=false"
     })
@@ -121,13 +121,13 @@ public class HealthCheckITest {
         assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
         assertThat(JsonPath.read(body, "$.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.evidenceManagementClientHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.serviceAuthProviderHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.diskSpace.status").toString(),
             equalTo("UP"));
     }
 
@@ -143,13 +143,13 @@ public class HealthCheckITest {
         assertThat(response.getStatusLine().getStatusCode(),
             equalTo(503));
         assertThat(JsonPath.read(body, "$.status").toString(), equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.evidenceManagementClientHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.PDFServiceHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.serviceAuthProviderHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.diskSpace.status").toString(),
             equalTo("UP"));
     }
 
@@ -166,13 +166,13 @@ public class HealthCheckITest {
             equalTo(503));
         assertThat(JsonPath.read(body, "$.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.evidenceManagementClientHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.PDFServiceHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.serviceAuthProviderHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.diskSpace.status").toString(),
             equalTo("UP"));
     }
 
@@ -188,13 +188,13 @@ public class HealthCheckITest {
         assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
         assertThat(JsonPath.read(body, "$.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.evidenceManagementClientHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.serviceAuthProviderHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.diskSpace.status").toString(),
             equalTo("UP"));
     }
 
@@ -210,13 +210,13 @@ public class HealthCheckITest {
         assertThat(response.getStatusLine().getStatusCode(), equalTo(503));
         assertThat(JsonPath.read(body, "$.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.evidenceManagementClientHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.evidenceManagementClientHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.PDFServiceHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.PDFServiceHealthCheck.status").toString(),
             equalTo("UP"));
-        assertThat(JsonPath.read(body, "$.details.serviceAuthProviderHealthCheck.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.serviceAuthProviderHealthCheck.status").toString(),
             equalTo("DOWN"));
-        assertThat(JsonPath.read(body, "$.details.diskSpace.status").toString(),
+        assertThat(JsonPath.read(body, "$.components.diskSpace.status").toString(),
             equalTo("UP"));
     }
 
