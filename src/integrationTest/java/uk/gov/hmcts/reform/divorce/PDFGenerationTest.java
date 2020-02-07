@@ -47,6 +47,8 @@ public class PDFGenerationTest extends IntegrationTest {
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
         Response actual = generatePdfSuccessfully(inputJson);
         byte[] expected = ResourceLoader.loadResource(expectedOutput);
+        log.info(inputJson);
+        log.info(expectedOutput);
 
         Assert.assertEquals(readPdf(expected), readPdf(actual.asByteArray()));
     }
