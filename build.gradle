@@ -135,7 +135,7 @@ def versions = [
     pdfbox: '2.0.8',
     pitest: '1.4.10',
     powerMock: '1.7.3',
-    puppyCrawl: '8.25',
+    puppyCrawl: '8.29',
     reformHealth: '0.0.5',
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
