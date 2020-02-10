@@ -426,16 +426,6 @@
                     {% endif %}
                 </p>
 
-                {% if journeyType != "solicitor" %}
-                    <h2 class="heading-small">
-                        Solicitors
-                    </h2>
-
-                    <p class="response-text">
-                        If you are represented by a solicitor, please follow the 'How to respond' instructions above and answer 'Yes' when asked if you are represented by a solicitor. Will will send your solicitor instructions on how to respond on your behalf."
-                    </p>
-                {% endif %}
-
             {% else %}
                 <div class="response-text">
                     {% if journeyType == "solicitor" %}
@@ -568,6 +558,19 @@
                     <span class="bold-small">You must only respond if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you respond falsely.</span>
                     {% endif %}
                 </p>
+
+                {% if journeyType != "solicitor" %}
+                <h2 class="heading-small">
+                    Solicitors
+                </h2>
+
+                <p class="response-text">
+                    If you want to use a solicitor, you must give them this letter as soon as possible.
+                </p>
+                <p class="response-text">
+                    If you're a solicitor, we're still working on the solicitor's online service. For now, you'll need to respond using the paper forms. Please contact us to have these sent to you.
+                </p>
+                {% endif %}
             {% endif %}
             <h2 class="heading-small">
                 HM Courts {{ "&" | escape }} Tribunals Service
