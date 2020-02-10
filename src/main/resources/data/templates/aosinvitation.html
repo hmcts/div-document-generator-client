@@ -419,11 +419,7 @@
 
 
                 <p class="response-text next-paragraph">
-                    {% if journeyType == "online" %}
                         <span class="bold-small">You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
-                    {% elseif journeyType == "solicitor" %}
-                        <span class="bold-small">You must only sign in to this service if you are the legal representative of {% autoescape false %}{{ respondentsName }}{% endautoescape %}. You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
-                    {% endif %}
                 </p>
 
             {% else %}
@@ -552,8 +548,6 @@
                 <p class="response-text next-paragraph">
                     {% if journeyType == "online" %}
                     <span class="bold-small">You must only sign in to this service if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you access this service illegally.</span>
-                    {% elseif journeyType == "solicitor" %}
-                    <span class="bold-small">You must only respond if you are {% autoescape false %}{{ respondentsSolicitorName }}{% endautoescape %} or someone they have appointed to respond for them. You could be fined or imprisoned for contempt of court if you respond falsely.</span>
                     {% else %}
                     <span class="bold-small">You must only respond if you are {% autoescape false %}{{ respondentsName }}{% endautoescape %} or someone they have asked to represent them. You could be fined or imprisoned for contempt of court if you respond falsely.</span>
                     {% endif %}
