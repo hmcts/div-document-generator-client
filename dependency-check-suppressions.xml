@@ -85,10 +85,4 @@
         <cve>CVE-2015-2156</cve>
         <cve>CVE-2019-16869</cve>
     </suppress>
-    <suppress>
-        <notes>
-            Ignoring puppycrawl.tools:checkstyle XXE Injection until solution is found, 10/2/2020
-        </notes>
-        <cve>CVE-2019-10782</cve>
-    </suppress>
 </suppressions>
