@@ -114,7 +114,4 @@ public class TemplateConstants {
     public static final String HAS_FREE_TEXT_ORDER_KEY = "HasFreeTextOrder";
     public static final String HAS_ONLY_FREE_TEXT_ORDER_KEY = "HasOnlyFreeTextOrder";
     public static final String YES_VALUE = "yes";
-
-    // Language preference
-    public static final String LANGUAGE_PREFERENCE_WELSH = "LanguagePreferenceWelsh";
 }
