@@ -39,6 +39,8 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_ANSWERS_TEMPLATE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE;
@@ -72,6 +74,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
         "AOSOffline2YearSeparationForm.pdf";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
+    private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00246.docx";
     private static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
         "AOSOffline5YearSeparationForm.pdf";
     private static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00081.docx";
@@ -202,6 +205,15 @@ public class DocumentManagementServiceImplUTest {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID,
             AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
@@ -433,7 +445,6 @@ public class DocumentManagementServiceImplUTest {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = templateId;
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
@@ -446,17 +457,17 @@ public class DocumentManagementServiceImplUTest {
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+            "generateDocument", String.class, Map.class)).withArguments(templateId, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, fileName);
 
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateId, placeholderMap, authToken);
 
         assertEquals(expected, actual);
 
         verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("generateDocument", templateName, placeholderMap);
+            .invoke("generateDocument", templateId, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
             .invoke("storeDocument", data, authToken, fileName);
     }
