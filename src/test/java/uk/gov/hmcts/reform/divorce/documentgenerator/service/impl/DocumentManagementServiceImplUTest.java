@@ -14,6 +14,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -220,6 +221,15 @@ public class DocumentManagementServiceImplUTest {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID,
             AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            TemplateConstants.AOS_OFFLINE_5_YEAR_SEP_FORM_WELSH_TEMPLATE_ID,
+            TemplateConstants.AOS_OFFLINE_5_YEAR_SEP_FORM_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
