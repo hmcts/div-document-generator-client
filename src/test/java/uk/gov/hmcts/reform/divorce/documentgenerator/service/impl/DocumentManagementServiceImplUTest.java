@@ -224,7 +224,14 @@ public class DocumentManagementServiceImplUTest {
         );
     }
 
-
+    @Test
+    public void givenTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID,
+            TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
 
     @Test
     public void givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpectedWelsh()

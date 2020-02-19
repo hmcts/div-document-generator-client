@@ -52,6 +52,7 @@ public class PDFGenerationSupport {
             {"AOS_Offline-Invitation-Letter-Respondent"},
             {"AOS_Offline-Invitation-Letter-Co-Respondent"},
             {"AOS_Offline-2-Year-Separation-Form"},
+            {"AOS_Offline-2-Year-Separation-Form-Welsh"},
             {"AOS_Offline-5-Year-Separation-Form"},
             {"AOS_Offline-5-Year-Separation-Form-Welsh"},
             {"AOS_Offline-Behaviour-Desertion-Form"},

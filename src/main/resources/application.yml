@@ -109,6 +109,7 @@ document-template:
         FL-DIV-DEC-ENG-00088.docx: "DecreeNisiClarificationOrder.pdf"
         FL-DIV-DEC-ENG-00098.docx: "DecreeNisiRefusalOrder.pdf"
         FL-DIV-APP-WEL-00247.docx: "AOSOffline5YearSeparationFormWelsh.pdf"
+        FL-DIV-APP-WEL-00246.docx: "AOSOffline2YearSeparationFormWelsh.pdf"
 
 service-auth-provider:
   service:
