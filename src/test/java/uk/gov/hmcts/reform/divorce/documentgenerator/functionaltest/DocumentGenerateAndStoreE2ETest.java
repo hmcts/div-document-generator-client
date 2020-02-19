@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +27,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
@@ -45,6 +47,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.ExpectedCount.once;
@@ -95,7 +99,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String MIME_TYPE = "mimeType";
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
-
+    private Map<String, String> templateMap;
 
     private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
 
@@ -114,6 +118,9 @@ public class DocumentGenerateAndStoreE2ETest {
     @MockBean
     private AuthTokenGenerator serviceTokenGenerator;
 
+    @Mock
+    private TemplateNameConfiguration templateNameConfiguration;
+
     @Autowired
     private PDFGenerationServiceImpl pdfGenerationService;
 
@@ -131,6 +138,8 @@ public class DocumentGenerateAndStoreE2ETest {
     @Before
     public void before() {
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
+        templateMap = ImmutableMap.of(A_TEMPLATE,"divorceminipetition");
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
     }
 
     @Test

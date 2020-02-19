@@ -84,6 +84,32 @@ document:
         displayTemplateKey: "displayTemplateOnly"
         displayTemplateVal: "1"
 
+document-template:
+    templatesName:
+        aosinvitation: "AOSInvitation.pdf"
+        divorceminipetition: "DivorcePetition.pdf"
+        divorcedraftminipetition: "DraftDivorcePetition.pdf"
+        co-respondentinvitation: "CoRespondentInvitation.pdf"
+        respondentAnswers: "RespondentAnswers.pdf"
+        co-respondent-answers: "CoRespondentAnswers.pdf"
+        FL-DIV-GNO-ENG-00020.docx: "CertificateOfEntitlement.pdf"
+        FL-DIV-DEC-ENG-00060.docx: "CostsOrder.pdf"
+        FL-DIV-GNO-ENG-00021.docx: "DecreeNisiPronouncement.pdf"
+        FL-DIV-GNO-ENG-00059.docx: "CaseListForPronouncement.pdf"
+        FL-DIV-GOR-ENG-00062.docx: "DecreeAbsolute.pdf"
+        FL-DIV-GNO-ENG-00022.docx: "DecreeNisiAnswers.pdf"
+        FL-DIV-LET-ENG-00075.doc: "AOSOfflineInvitationLetterRespondent.pdf"
+        FL-DIV-LET-ENG-00076.doc: "AOSOfflineInvitationLetterCoRespondent.pdf"
+        FL-DIV-APP-ENG-00080.docx: "AOSOffline2YearSeparationForm.pdf"
+        FL-DIV-APP-ENG-00081.docx: "AOSOffline5YearSeparationForm.pdf"
+        FL-DIV-APP-ENG-00082.docx: "AOSOfflineBehaviourDesertionForm.pdf"
+        FL-DIV-APP-ENG-00083.docx: "AOSOfflineAdulteryFormRespondent.pdf"
+        FL-DIV-APP-ENG-00084.docx: "AOSOfflineAdulteryFormCoRespondent.pdf"
+        FL-DIV-GNO-ENG-00073.docx: "SolicitorPersonalService.pdf"
+        FL-DIV-DEC-ENG-00088.docx: "DecreeNisiClarificationOrder.pdf"
+        FL-DIV-DEC-ENG-00098.docx: "DecreeNisiRefusalOrder.pdf"
+        FL-DIV-APP-WEL-00247.docx: "AOSOffline5YearSeparationFormWelsh.pdf"
+
 service-auth-provider:
   service:
     stub:

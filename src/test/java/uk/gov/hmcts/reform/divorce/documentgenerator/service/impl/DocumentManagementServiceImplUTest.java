@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
@@ -30,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.rules.ExpectedException.none;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
@@ -93,6 +94,8 @@ public class DocumentManagementServiceImplUTest {
     private static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
 
+    private Map<String, String> templateMap;
+
     @Rule
     public ExpectedException expectedException = none();
 
@@ -105,6 +108,9 @@ public class DocumentManagementServiceImplUTest {
     @Mock
     private EvidenceManagementService evidenceManagementService;
 
+    @Mock
+    private TemplateNameConfiguration templateNameConfiguration;
+
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
@@ -116,9 +122,12 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         mockAndSetClock(Instant.now());
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
+        expectedException.expect(NullPointerException.class);
 
+        templateMap = ImmutableMap.of("unknown-template-id","unknown-template");
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
 
     }
@@ -215,14 +224,7 @@ public class DocumentManagementServiceImplUTest {
         );
     }
 
-    @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpected()
-        throws Exception {
-        assertGenerateAndStoreDocument(
-            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID,
-            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE
-        );
-    }
+
 
     @Test
     public void givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpectedWelsh()
@@ -284,6 +286,8 @@ public class DocumentManagementServiceImplUTest {
         expected.setUrl("someUrl");
 
         mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
@@ -291,6 +295,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
@@ -317,6 +322,8 @@ public class DocumentManagementServiceImplUTest {
         expected.setUrl("someUrl");
 
         mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
@@ -324,6 +331,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
@@ -439,11 +447,19 @@ public class DocumentManagementServiceImplUTest {
         assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
     }
 
-    private void assertGenerateAndStoreDocument(String templateId, String fileName) throws Exception {
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID,
+            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE
+        );
+    }
+
+    private void assertGenerateAndStoreDocument(String templateName, String fileName) throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = templateId;
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
@@ -453,6 +469,9 @@ public class DocumentManagementServiceImplUTest {
         expected.setMimeType("someMimeType");
         expected.setUrl("someUrl");
 
+        templateMap = ImmutableMap.of(templateName,fileName);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
@@ -461,6 +480,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, fileName);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
