@@ -243,6 +243,15 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsAOSOfflineBehaviourDesertionForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            TemplateConstants.AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_WELSH_TEMPLATE_ID,
+            TemplateConstants.AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineBehaviourDesertionForm_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(

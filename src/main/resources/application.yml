@@ -110,6 +110,7 @@ document-template:
         FL-DIV-DEC-ENG-00098.docx: "DecreeNisiRefusalOrder.pdf"
         FL-DIV-APP-WEL-00247.docx: "AOSOffline5YearSeparationFormWelsh.pdf"
         FL-DIV-APP-WEL-00246.docx: "AOSOffline2YearSeparationFormWelsh.pdf"
+        FL-DIV-APP-WEL-00248.docx: "AOSOfflineBehaviourDesertionFormWelsh.pdf"
 
 service-auth-provider:
   service:
