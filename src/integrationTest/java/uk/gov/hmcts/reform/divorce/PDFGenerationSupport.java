@@ -59,12 +59,13 @@ public class PDFGenerationSupport {
             {"AOS_Offline-Adultery-Form-Respondent-Welsh"},
             {"AOS_Offline-Adultery-Form-Respondent"},
             {"AOS_Offline-Adultery-Form-Co-Respondent"},
+            {"AOS_Offline-Adultery-Form-Co-Respondent-Welsh"},
             {"solicitor-personal-service"},
             {"decree-nisi-refusal-order-clarification"},
             {"decree-nisi-refusal-order-rejection"}
         });
 
-        List testData = new ArrayList(basicTestData);
+        List<Object[]> testData = new ArrayList<>(basicTestData);
 
         if (respSolicitorEnabled) {
             testData.addAll(Arrays.asList(new Object[][] {

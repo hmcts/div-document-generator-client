@@ -17,6 +17,7 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
     public static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00248.docx";
     public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00249.docx";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00250.docx";
 
     // Template Names
     public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
@@ -30,6 +31,8 @@ public class TemplateConstants {
         "AOSOfflineBehaviourDesertionFormWelsh.pdf";
     public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
         "AOSOfflineAdulteryFormRespondentWelsh.pdf";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineAdulteryFormCoRespondentWelsh.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
