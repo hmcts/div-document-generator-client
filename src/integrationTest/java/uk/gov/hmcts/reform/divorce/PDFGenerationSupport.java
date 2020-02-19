@@ -56,6 +56,7 @@ public class PDFGenerationSupport {
             {"AOS_Offline-5-Year-Separation-Form"},
             {"AOS_Offline-5-Year-Separation-Form-Welsh"},
             {"AOS_Offline-Behaviour-Desertion-Form-Welsh"},
+            {"AOS_Offline-Adultery-Form-Respondent-Welsh"},
             {"AOS_Offline-Adultery-Form-Respondent"},
             {"AOS_Offline-Adultery-Form-Co-Respondent"},
             {"solicitor-personal-service"},

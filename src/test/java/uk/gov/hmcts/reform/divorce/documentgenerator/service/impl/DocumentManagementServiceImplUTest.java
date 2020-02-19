@@ -261,6 +261,15 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsAOSOfflineAdulteryRespondent_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            TemplateConstants.AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_WELSH_TEMPLATE_ID,
+            TemplateConstants.AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineAdulteryRespondent_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(

@@ -111,6 +111,7 @@ document-template:
         FL-DIV-APP-WEL-00247.docx: "AOSOffline5YearSeparationFormWelsh.pdf"
         FL-DIV-APP-WEL-00246.docx: "AOSOffline2YearSeparationFormWelsh.pdf"
         FL-DIV-APP-WEL-00248.docx: "AOSOfflineBehaviourDesertionFormWelsh.pdf"
+        FL-DIV-APP-WEL-00249.docx: "AOSOfflineAdulteryFormRespondentWelsh.pdf"
 
 service-auth-provider:
   service:
