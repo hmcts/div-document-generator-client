@@ -124,6 +124,8 @@ public class DocumentManagementServiceImplUTest {
         "AOSOfflineInvitationLetterCoRespondent.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
+    private static final String SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00245.docx";
+    private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
 
     private Map<String, String> templateMap;
 
@@ -359,6 +361,13 @@ public class DocumentManagementServiceImplUTest {
     public void whenGenerateAndStoreDocument_givenTemplateNameIsSolicitorPersonalService_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID, SOLICITOR_PERSONAL_SERVICE_FILE_NAME);
+    }
+
+    @Test
+    public void givenTemplateNameIsSolicitorPersonalService_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID,
+            SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME);
     }
 
     @Test
