@@ -115,6 +115,7 @@ document-template:
         FL-DIV-APP-WEL-00250.docx: "AOSOfflineAdulteryFormCoRespondentWelsh.pdf"
         FL-DIV-DEC-WEL-00240.docx: "CostsOrderWelsh.pdf"
         FL-DIV-DEC-WEL-00251.docx: "DecreeNisiClarificationOrderWelsh.pdf"
+        FL-DIV-DEC-WEL-00252.docx: "DecreeNisiRefusalOrderWelsh.pdf"
 
 service-auth-provider:
   service:

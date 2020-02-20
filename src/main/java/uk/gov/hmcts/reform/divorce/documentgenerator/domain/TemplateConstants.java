@@ -9,36 +9,6 @@ public class TemplateConstants {
     public static final String DOCMOSIS_TYPE = "docmosis";
     public static final String PDF_GENERATOR_TYPE = "pdfgenerator";
 
-    // Template Ids
-    public static final String DN_ANSWERS_TEMPLATE_ID = "FL-DIV-GNO-ENG-00022.docx";
-    public static final String AOS_OFFLINE_5_YEAR_SEP_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00247.docx";
-    public static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00246.docx";
-    public static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
-    public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
-    public static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00248.docx";
-    public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00249.docx";
-    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00250.docx";
-    public static final String COSTS_ORDER_WELSH_DOCUMENT_ID = "FL-DIV-DEC-WEL-00240.docx";
-    public static final String DN_REFUSAL_ORDER_CLARIFICATION_WELSH_TEMPLATE_ID = "FL-DIV-DEC-WEL-00251.docx";
-
-    // Template Names
-    public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
-    public static final String AOS_OFFLINE_5_YEAR_SEP_FORM_NAME_FOR_PDF_WELSH_FILE =
-        "AOSOffline5YearSeparationFormWelsh.pdf";
-    public static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE =
-        "AOSOffline2YearSeparationFormWelsh.pdf";
-    public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
-    public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE =
-        "DecreeNisiClarificationOrderWelsh.pdf";
-    public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
-    public static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_WELSH_FILE =
-        "AOSOfflineBehaviourDesertionFormWelsh.pdf";
-    public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
-        "AOSOfflineAdulteryFormRespondentWelsh.pdf";
-    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
-        "AOSOfflineAdulteryFormCoRespondentWelsh.pdf";
-    public static final String COSTS_ORDER_NAME_FOR_PDF_WELSH_FILE = "CostsOrderWelsh.pdf";
-
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
     public static final String CASE_DETAILS = "caseDetails";
