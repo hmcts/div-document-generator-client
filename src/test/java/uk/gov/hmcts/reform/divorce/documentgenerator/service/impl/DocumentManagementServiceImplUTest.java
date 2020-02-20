@@ -171,6 +171,12 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsCostsOrder_gands_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(TemplateConstants.COSTS_ORDER_WELSH_DOCUMENT_ID,
+            TemplateConstants.COSTS_ORDER_NAME_FOR_PDF_WELSH_FILE);
+    }
+
+    @Test
     public void givenTemplateNameIsCostsOrder_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         assertGenerateAndStoreDocument(COSTS_ORDER_TEMPLATE, COSTS_ORDER_NAME_FOR_PDF_FILE);
     }
