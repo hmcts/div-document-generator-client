@@ -76,6 +76,22 @@ document:
             FL-DIV-APP-ENG-00084.docx: "docmosis"
             FL-DIV-DEC-ENG-00088.docx: "docmosis"
             FL-DIV-DEC-ENG-00098.docx: "docmosis"
+            FL-DIV-APP-WEL-00247.docx: "docmosis"
+            FL-DIV-APP-WEL-00246.docx: "docmosis"
+            FL-DIV-APP-WEL-00248.docx: "docmosis"
+            FL-DIV-APP-WEL-00249.docx: "docmosis"
+            FL-DIV-APP-WEL-00250.docx: "docmosis"
+            FL-DIV-DEC-WEL-00240.docx: "docmosis"
+            FL-DIV-DEC-WEL-00251.docx: "docmosis"
+            FL-DIV-DEC-WEL-00252.docx: "docmosis"
+            FL-DIV-GNO-WEL-00238.docx: "docmosis"
+            FL-DIV-GNO-WEL-00239.docx: "docmosis"
+            FL-DIV-APP-WEL-00253.docx: "docmosis"
+            FL-DIV-GNO-WEL-00241.docx: "docmosis"
+            FL-DIV-GNO-WEL-00245.docx: "docmosis"
+            FL-DIV-GOR-WEL-00242.docx: "docmosis"
+            FL-DIV-LET-WEL-00243.docx: "docmosis"
+            FL-DIV-LET-WEL-00244.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -123,6 +139,8 @@ document-template:
         FL-DIV-GNO-WEL-00245.docx: "SolicitorPersonalServiceWelsh.pdf"
         FL-DIV-GOR-WEL-00242.docx: "DecreeAbsoluteWelsh.pdf"
         FL-DIV-LET-WEL-00243.docx: "AOSOfflineInvitationLetterRespondentWelsh.pdf"
+        FL-DIV-LET-WEL-00244.docx: "AOSOfflineInvitationLetterCoRespondentWelsh.pdf"
+
 service-auth-provider:
   service:
     stub:

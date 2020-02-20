@@ -125,6 +125,9 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterCoRespondent.pdf";
+    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-LET-WEL-00244.docx";
+    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterCoRespondentWelsh.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00245.docx";
@@ -293,6 +296,15 @@ public class DocumentManagementServiceImplUTest {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID,
             AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOfflineInvitationLetterCoResp_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
