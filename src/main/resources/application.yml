@@ -117,6 +117,7 @@ document-template:
         FL-DIV-DEC-WEL-00251.docx: "DecreeNisiClarificationOrderWelsh.pdf"
         FL-DIV-DEC-WEL-00252.docx: "DecreeNisiRefusalOrderWelsh.pdf"
         FL-DIV-GNO-WEL-00238.docx: "CertificateOfEntitlement.pdf"
+        FL-DIV-GNO-WEL-00239.docx: "DecreeNisiPronouncementWelsh.pdf"
 
 service-auth-provider:
   service:

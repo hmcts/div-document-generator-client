@@ -86,12 +86,14 @@ public class DocumentManagementServiceImplUTest {
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_WELSH_FILE = "CertificateOfEntitlement.pdf";
     private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
     private static final String DECREE_NISI_NAME_FOR_PDF_FILE = "DecreeNisiPronouncement.pdf";
+    private static final String DECREE_NISI_NAME_FOR_PDF_WELSH_FILE = "DecreeNisiPronouncementWelsh.pdf";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE = "CaseListForPronouncement.pdf";
     private static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
     private static final String COE_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00238.docx";
     private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
+    private static final String DECREE_NISI_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00239.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
@@ -231,6 +233,11 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsDecreeNisi_thenProceedAsExpected() throws Exception {
         assertGenerateAndStoreDocument(DECREE_NISI_TEMPLATE, DECREE_NISI_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameIsDecreeNisi_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(DECREE_NISI_WELSH_TEMPLATE, DECREE_NISI_NAME_FOR_PDF_WELSH_FILE);
     }
 
     @Test
