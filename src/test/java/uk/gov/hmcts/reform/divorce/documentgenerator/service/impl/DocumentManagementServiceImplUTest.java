@@ -102,6 +102,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00241.docx";
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
+    private static final String AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-LET-WEL-00243.docx";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
         "AOSOffline2YearSeparationForm.pdf";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
@@ -119,6 +120,8 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterRespondent.pdf";
+    private static final String AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineInvitationLetterRespondentWelsh.pdf";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterCoRespondent.pdf";
@@ -272,6 +275,15 @@ public class DocumentManagementServiceImplUTest {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID,
             AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOfflineInvitationLetterResp_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
         );
     }
 

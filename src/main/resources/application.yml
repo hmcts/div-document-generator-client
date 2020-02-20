@@ -122,7 +122,7 @@ document-template:
         FL-DIV-GNO-WEL-00241.docx: "CaseListForPronouncementWelsh.pdf"
         FL-DIV-GNO-WEL-00245.docx: "SolicitorPersonalServiceWelsh.pdf"
         FL-DIV-GOR-WEL-00242.docx: "DecreeAbsoluteWelsh.pdf"
-
+        FL-DIV-LET-WEL-00243.docx: "AOSOfflineInvitationLetterRespondentWelsh.pdf"
 service-auth-provider:
   service:
     stub:
