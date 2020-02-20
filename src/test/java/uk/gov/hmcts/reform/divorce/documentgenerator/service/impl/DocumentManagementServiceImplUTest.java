@@ -126,6 +126,9 @@ public class DocumentManagementServiceImplUTest {
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00245.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
+    private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
+    private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
+
 
     private Map<String, String> templateMap;
 
@@ -222,6 +225,11 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsDNAnswers_thenProceedAsExpectedWelsh() throws Exception {
         assertGenerateAndStoreDocument(DN_ANSWERS_WELSH_TEMPLATE_ID, DECREE_NISI_ANSWERS_TEMPLATE_PDF_WELSH_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameDecreeAbsolute_thenProceedAsExpected() throws Exception {
+        assertGenerateAndStoreDocument(DECREE_ABSOLUTE_WELSH_TEMPLATE_ID, DECREE_ABSOLUTE_WELSH_PDF_FILE);
     }
 
     @Test

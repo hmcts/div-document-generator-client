@@ -121,6 +121,7 @@ document-template:
         FL-DIV-APP-WEL-00253.docx: "DecreeNisiAnswersWelsh.pdf"
         FL-DIV-GNO-WEL-00241.docx: "CaseListForPronouncementWelsh.pdf"
         FL-DIV-GNO-WEL-00245.docx: "SolicitorPersonalServiceWelsh.pdf"
+        FL-DIV-GOR-WEL-00242.docx: "DecreeAbsoluteWelsh.pdf"
 
 service-auth-provider:
   service:
