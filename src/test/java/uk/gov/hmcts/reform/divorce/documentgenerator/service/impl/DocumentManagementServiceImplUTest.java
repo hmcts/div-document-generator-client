@@ -48,6 +48,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 public class DocumentManagementServiceImplUTest {
 
     private static final String DN_ANSWERS_TEMPLATE_ID = "FL-DIV-GNO-ENG-00022.docx";
+    private static final String DN_ANSWERS_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00253.docx";
     private static final String AOS_OFFLINE_5_YEAR_SEP_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00247.docx";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00246.docx";
     private static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
@@ -60,6 +61,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String DN_REFUSAL_ORDER_REJECTION_WELSH_TEMPLATE_ID = "FL-DIV-DEC-WEL-00252.docx";
 
     private static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
+    private static final String DECREE_NISI_ANSWERS_TEMPLATE_PDF_WELSH_FILE = "DecreeNisiAnswersWelsh.pdf";
     private static final String AOS_OFFLINE_5_YEAR_SEP_FORM_NAME_FOR_PDF_WELSH_FILE =
         "AOSOffline5YearSeparationFormWelsh.pdf";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE =
@@ -211,6 +213,11 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsCostsOrder_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         assertGenerateAndStoreDocument(COSTS_ORDER_TEMPLATE, COSTS_ORDER_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameIsDNAnswers_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(DN_ANSWERS_WELSH_TEMPLATE_ID, DECREE_NISI_ANSWERS_TEMPLATE_PDF_WELSH_FILE);
     }
 
     @Test
