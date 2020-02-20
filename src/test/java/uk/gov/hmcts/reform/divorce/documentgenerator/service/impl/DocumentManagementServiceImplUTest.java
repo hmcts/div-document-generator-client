@@ -309,6 +309,46 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void whenGenerateAndStoreDocument_ClarificationOrder_thenProceedAsExpectedWelsh()
+        throws Exception {
+
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_WELSH_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,
+            TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
+
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken,
+                TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateIsDnClarificationOrder_thenProceedAsExpected()
         throws Exception {
 
