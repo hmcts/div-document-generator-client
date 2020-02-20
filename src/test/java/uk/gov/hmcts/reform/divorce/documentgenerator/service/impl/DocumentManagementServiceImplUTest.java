@@ -90,6 +90,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String DECREE_NISI_NAME_FOR_PDF_FILE = "DecreeNisiPronouncement.pdf";
     private static final String DECREE_NISI_NAME_FOR_PDF_WELSH_FILE = "DecreeNisiPronouncementWelsh.pdf";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE = "CaseListForPronouncement.pdf";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_WELSH_FILE = "CaseListForPronouncementWelsh.pdf";
     private static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
@@ -98,6 +99,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String DECREE_NISI_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00239.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00241.docx";
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
@@ -229,6 +231,13 @@ public class DocumentManagementServiceImplUTest {
     public void whenGenerateAndStoreDocument_givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID, CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(CASE_LIST_FOR_PRONOUNCEMENT_WELSH_TEMPLATE_ID,
+            CASE_LIST_FOR_PRONOUNCEMENT_PDF_WELSH_FILE);
     }
 
     @Test

@@ -119,6 +119,7 @@ document-template:
         FL-DIV-GNO-WEL-00238.docx: "CertificateOfEntitlement.pdf"
         FL-DIV-GNO-WEL-00239.docx: "DecreeNisiPronouncementWelsh.pdf"
         FL-DIV-APP-WEL-00253.docx: "DecreeNisiAnswersWelsh.pdf"
+        FL-DIV-GNO-WEL-00241.docx: "CaseListForPronouncementWelsh.pdf"
 
 service-auth-provider:
   service:
