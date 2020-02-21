@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -29,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.rules.ExpectedException.none;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
@@ -39,12 +40,6 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_ANSWERS_TEMPLATE_NAME;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
@@ -52,23 +47,62 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @PrepareForTest( {GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
 public class DocumentManagementServiceImplUTest {
 
+    private static final String DN_ANSWERS_TEMPLATE_ID = "FL-DIV-GNO-ENG-00022.docx";
+    private static final String DN_ANSWERS_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00253.docx";
+    private static final String AOS_OFFLINE_5_YEAR_SEP_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00247.docx";
+    private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00246.docx";
+    private static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
+    private static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
+    private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00248.docx";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00249.docx";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-APP-WEL-00250.docx";
+    private static final String COSTS_ORDER_WELSH_DOCUMENT_ID = "FL-DIV-DEC-WEL-00240.docx";
+    private static final String DN_REFUSAL_ORDER_CLARIFICATION_WELSH_TEMPLATE_ID = "FL-DIV-DEC-WEL-00251.docx";
+    private static final String DN_REFUSAL_ORDER_REJECTION_WELSH_TEMPLATE_ID = "FL-DIV-DEC-WEL-00252.docx";
+
+    private static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
+    private static final String DECREE_NISI_ANSWERS_TEMPLATE_PDF_WELSH_FILE = "DecreeNisiAnswersWelsh.pdf";
+    private static final String AOS_OFFLINE_5_YEAR_SEP_FORM_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOffline5YearSeparationFormWelsh.pdf";
+    private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOffline2YearSeparationFormWelsh.pdf";
+    private static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
+    private static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE =
+        "DecreeNisiClarificationOrderWelsh.pdf";
+    private static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
+    private static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE = "DecreeNisiRefusalOrderWelsh.pdf";
+    private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineBehaviourDesertionFormWelsh.pdf";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineAdulteryFormRespondentWelsh.pdf";
+    private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineAdulteryFormCoRespondentWelsh.pdf";
+    private static final String COSTS_ORDER_NAME_FOR_PDF_WELSH_FILE = "CostsOrderWelsh.pdf";
+
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
     private static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
     private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
+    private static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_WELSH_FILE = "CertificateOfEntitlement.pdf";
     private static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
     private static final String DECREE_NISI_NAME_FOR_PDF_FILE = "DecreeNisiPronouncement.pdf";
+    private static final String DECREE_NISI_NAME_FOR_PDF_WELSH_FILE = "DecreeNisiPronouncementWelsh.pdf";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_FILE = "CaseListForPronouncement.pdf";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_WELSH_FILE = "CaseListForPronouncementWelsh.pdf";
     private static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
+    private static final String COE_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00238.docx";
     private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
+    private static final String DECREE_NISI_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00239.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
+    private static final String CASE_LIST_FOR_PRONOUNCEMENT_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00241.docx";
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
+    private static final String AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-LET-WEL-00243.docx";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
         "AOSOffline2YearSeparationForm.pdf";
     private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
@@ -86,11 +120,23 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
     private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterRespondent.pdf";
+    private static final String AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE =
+        "AOSOfflineInvitationLetterRespondentWelsh.pdf";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterCoRespondent.pdf";
+    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-LET-WEL-00244.docx";
+    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterCoRespondentWelsh.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
+    private static final String SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00245.docx";
+    private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
+    private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
+    private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
+
+
+    private Map<String, String> templateMap;
 
     @Rule
     public ExpectedException expectedException = none();
@@ -104,6 +150,9 @@ public class DocumentManagementServiceImplUTest {
     @Mock
     private EvidenceManagementService evidenceManagementService;
 
+    @Mock
+    private TemplateNameConfiguration templateNameConfiguration;
+
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
@@ -115,9 +164,12 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         mockAndSetClock(Instant.now());
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
+        expectedException.expect(NullPointerException.class);
 
+        templateMap = ImmutableMap.of("unknown-template-id","unknown-template");
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
 
     }
@@ -161,8 +213,29 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void coeWelsh_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
+        assertGenerateAndStoreDocument(COE_WELSH_TEMPLATE, CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_WELSH_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameIsCostsOrder_gands_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(COSTS_ORDER_WELSH_DOCUMENT_ID,
+            COSTS_ORDER_NAME_FOR_PDF_WELSH_FILE);
+    }
+
+    @Test
     public void givenTemplateNameIsCostsOrder_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         assertGenerateAndStoreDocument(COSTS_ORDER_TEMPLATE, COSTS_ORDER_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameIsDNAnswers_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(DN_ANSWERS_WELSH_TEMPLATE_ID, DECREE_NISI_ANSWERS_TEMPLATE_PDF_WELSH_FILE);
+    }
+
+    @Test
+    public void givenTemplateNameDecreeAbsolute_thenProceedAsExpected() throws Exception {
+        assertGenerateAndStoreDocument(DECREE_ABSOLUTE_WELSH_TEMPLATE_ID, DECREE_ABSOLUTE_WELSH_PDF_FILE);
     }
 
     @Test
@@ -177,6 +250,13 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsCaseListForPronouncement_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(CASE_LIST_FOR_PRONOUNCEMENT_WELSH_TEMPLATE_ID,
+            CASE_LIST_FOR_PRONOUNCEMENT_PDF_WELSH_FILE);
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsDraftMiniPetition_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
@@ -188,11 +268,25 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsDecreeNisi_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument(DECREE_NISI_WELSH_TEMPLATE, DECREE_NISI_NAME_FOR_PDF_WELSH_FILE);
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineInvitationLetterResp_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID,
             AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOfflineInvitationLetterResp_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
@@ -206,6 +300,15 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsAOSOfflineInvitationLetterCoResp_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_INV_LET_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_INV_LET_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(
@@ -215,11 +318,29 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpected()
+    public void givenTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpectedWelsh()
         throws Exception {
         assertGenerateAndStoreDocument(
-            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID,
-            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE
+            AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_5_YEAR_SEP_FORM_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_5_YEAR_SEP_FORM_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOfflineBehaviourDesertionForm_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
@@ -233,11 +354,29 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateNameIsAOSOfflineAdulteryRespondent_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
+        );
+    }
+
+    @Test
     public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOfflineAdulteryRespondent_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(
             AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID,
             AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_FILE
+        );
+    }
+
+    @Test
+    public void givenTemplateNameIsAOSOfflineAdulteryCoRespondent_thenProceedAsExpectedWelsh()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_WELSH_TEMPLATE_ID,
+            AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_WELSH_FILE
         );
     }
 
@@ -254,6 +393,53 @@ public class DocumentManagementServiceImplUTest {
     public void whenGenerateAndStoreDocument_givenTemplateNameIsSolicitorPersonalService_thenProceedAsExpected()
         throws Exception {
         assertGenerateAndStoreDocument(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID, SOLICITOR_PERSONAL_SERVICE_FILE_NAME);
+    }
+
+    @Test
+    public void givenTemplateNameIsSolicitorPersonalService_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID,
+            SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME);
+    }
+
+    @Test
+    public void whenGenerateAndStoreDocument_ClarificationOrder_thenProceedAsExpectedWelsh()
+        throws Exception {
+
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DN_REFUSAL_ORDER_CLARIFICATION_WELSH_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,
+            DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
+
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken,
+                DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_WELSH_FILE);
     }
 
     @Test
@@ -274,6 +460,8 @@ public class DocumentManagementServiceImplUTest {
         expected.setUrl("someUrl");
 
         mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
@@ -281,6 +469,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
@@ -307,6 +496,8 @@ public class DocumentManagementServiceImplUTest {
         expected.setUrl("someUrl");
 
         mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
             "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
@@ -314,6 +505,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);
@@ -322,6 +514,42 @@ public class DocumentManagementServiceImplUTest {
             .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
             .invoke("storeDocument", data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
+    public void givenTemplateIsDnRefusalOrder_thenProceedAsExpectedWelsh() throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
+        final String templateName = DN_REFUSAL_ORDER_REJECTION_WELSH_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
+        final String authToken = "someToken";
+
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        mockAndSetClock(instant);
+        templateMap = ImmutableMap.of(templateName,DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+            "storeDocument", byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
+
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+            .invoke("storeDocument", data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
     }
 
     @Test
@@ -429,11 +657,19 @@ public class DocumentManagementServiceImplUTest {
         assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
     }
 
-    private void assertGenerateAndStoreDocument(String templateId, String fileName) throws Exception {
+    @Test
+    public void whenGenerateAndStoreDocument_givenTemplateNameIsAOSOffline5YearSeparationForm_thenProceedAsExpected()
+        throws Exception {
+        assertGenerateAndStoreDocument(
+            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID,
+            AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE
+        );
+    }
+
+    private void assertGenerateAndStoreDocument(String templateName, String fileName) throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = templateId;
         final Map<String, Object> placeholderMap = new HashMap<>();
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
@@ -443,6 +679,9 @@ public class DocumentManagementServiceImplUTest {
         expected.setMimeType("someMimeType");
         expected.setUrl("someUrl");
 
+        templateMap = ImmutableMap.of(templateName,fileName);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
         mockAndSetClock(instant);
 
         doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
@@ -451,6 +690,7 @@ public class DocumentManagementServiceImplUTest {
             "storeDocument", byte[].class, String.class, String.class))
             .withArguments(data, authToken, fileName);
 
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
 
         assertEquals(expected, actual);

@@ -52,16 +52,20 @@ public class PDFGenerationSupport {
             {"AOS_Offline-Invitation-Letter-Respondent"},
             {"AOS_Offline-Invitation-Letter-Co-Respondent"},
             {"AOS_Offline-2-Year-Separation-Form"},
+            {"AOS_Offline-2-Year-Separation-Form-Welsh"},
             {"AOS_Offline-5-Year-Separation-Form"},
-            {"AOS_Offline-Behaviour-Desertion-Form"},
+            {"AOS_Offline-5-Year-Separation-Form-Welsh"},
+            {"AOS_Offline-Behaviour-Desertion-Form-Welsh"},
+            {"AOS_Offline-Adultery-Form-Respondent-Welsh"},
             {"AOS_Offline-Adultery-Form-Respondent"},
             {"AOS_Offline-Adultery-Form-Co-Respondent"},
+            {"AOS_Offline-Adultery-Form-Co-Respondent-Welsh"},
             {"solicitor-personal-service"},
             {"decree-nisi-refusal-order-clarification"},
             {"decree-nisi-refusal-order-rejection"}
         });
 
-        List testData = new ArrayList(basicTestData);
+        List<Object[]> testData = new ArrayList<>(basicTestData);
 
         if (respSolicitorEnabled) {
             testData.addAll(Arrays.asList(new Object[][] {
