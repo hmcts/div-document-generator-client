@@ -129,7 +129,7 @@ def versions = [
     jacksonDatabind: '2.10.2',
     jsonAssert: '1.2.3',
     junit: '4.12',
-    lombok: '1.16.16',
+    lombok: '1.18.12',
     mockito: '2.8.9',
     nimbus: '5.1',
     pdfbox: '2.0.8',
