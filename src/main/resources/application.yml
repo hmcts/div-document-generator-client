@@ -92,6 +92,11 @@ document:
             FL-DIV-GOR-WEL-00242.docx: "docmosis"
             FL-DIV-LET-WEL-00243.docx: "docmosis"
             FL-DIV-LET-WEL-00244.docx: "docmosis"
+            FL-DIV-GNO-WEL-00256.docx: "docmosis"
+            FL-DIV-LET-WEL-00257.docx: "docmosis"
+            FL-DIV-LET-WEL-00258.docx: "docmosis"
+            FL-DIV-LET-WEL-00259.docx: "docmosis"
+            FL-DIV-LET-WEL-00260.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -140,6 +145,11 @@ document-template:
         FL-DIV-GOR-WEL-00242.docx: "DecreeAbsoluteWelsh.pdf"
         FL-DIV-LET-WEL-00243.docx: "AOSOfflineInvitationLetterRespondentWelsh.pdf"
         FL-DIV-LET-WEL-00244.docx: "AOSOfflineInvitationLetterCoRespondentWelsh.pdf"
+        FL-DIV-GNO-WEL-00256.docx: "DivorcePetitionWelsh.pdf"
+        FL-DIV-LET-WEL-00257.docx: "AOSInvitationWelsh.pdf"
+        FL-DIV-LET-WEL-00258.docx: "CoRespondentAnswersWelsh.pdf"
+        FL-DIV-LET-WEL-00259.docx: "CoRespondentInvitationWelsh.pdf"
+        FL-DIV-LET-WEL-00260.docx: "RespondentAnswersWelsh.pdf"
 
 service-auth-provider:
   service:

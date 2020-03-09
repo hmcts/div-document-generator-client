@@ -135,7 +135,6 @@ public class DocumentManagementServiceImplUTest {
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
 
-
     private Map<String, String> templateMap;
 
     @Rule
@@ -159,6 +158,31 @@ public class DocumentManagementServiceImplUTest {
     @Before
     public void before() {
         mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
+    }
+
+    @Test
+    public void divorceminiPetition_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument("FL-DIV-GNO-WEL-00256.docx", "DivorcePetitionWelsh.pdf");
+    }
+
+    @Test
+    public void aosInvition_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument("FL-DIV-LET-WEL-00257.docx", "AOSInvitationWelsh.pdf");
+    }
+
+    @Test
+    public void coRespondentAnswers_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument("FL-DIV-GNO-WEL-00258.docx", "CoRespondentAnswersWelsh.pdf");
+    }
+
+    @Test
+    public void coRespondentInvitation_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument("FL-DIV-GNO-WEL-00259.docx", "CoRespondentInvitationWelsh.pdf");
+    }
+
+    @Test
+    public void respondentAnswersWelsh_thenProceedAsExpectedWelsh() throws Exception {
+        assertGenerateAndStoreDocument("FL-DIV-GNO-WEL-00260.docx", "RespondentAnswersWelsh.pdf");
     }
 
     @Test
