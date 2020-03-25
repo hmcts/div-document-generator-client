@@ -48,7 +48,7 @@ public class PDFGenerationTest extends IntegrationTest {
         Response actual = generatePdfSuccessfully(inputJson);
         byte[] expected = ResourceLoader.loadResource(expectedOutput);
 
-        Assert.assertEquals(readPdf(expected), readPdf(actual.asByteArray()));
+        Assert.assertEquals(inputJson, readPdf(expected), readPdf(actual.asByteArray()));
     }
 
     /**

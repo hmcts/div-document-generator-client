@@ -28,6 +28,7 @@ plugins {
 }
 
 apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'org.springframework.boot'
 
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'

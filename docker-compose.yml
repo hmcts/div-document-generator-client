@@ -45,7 +45,7 @@ services:
      - SERVER_PORT=8080
      - IDAM_SUPERUSER_EMAIL
      - IDAM_SECRET_KEY=AAAAAAAAAAAAAAAA
-     - GOV_NOTIFY_API_KEY
+     - GOV_NOTIFY_API_KEY=divorce_preprod_live_key-b86e6469-4927-4f50-a029-6ddb523330cf-2409ba37-b5e6-4f03-b052-7d0f0986888d
      - SPRING_DATASOURCE_URL=jdbc:postgresql://document-management-store-database:5432/evidence
      - SPRING_DATASOURCE_USERNAME=evidence
      - SPRING_DATASOURCE_PASSWORD=evidence
