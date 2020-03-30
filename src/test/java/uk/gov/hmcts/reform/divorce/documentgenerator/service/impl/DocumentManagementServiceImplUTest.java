@@ -31,8 +31,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.rules.ExpectedException.none;
+import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -80,6 +82,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String COSTS_ORDER_NAME_FOR_PDF_WELSH_FILE = "CostsOrderWelsh.pdf";
 
     private static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
+    private static final String MINI_PETITION_NAME_FOR_WELSH_PDF_FILE = "DivorcePetitionWelsh.pdf";
     private static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
     private static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     private static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
@@ -93,6 +96,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String CASE_LIST_FOR_PRONOUNCEMENT_PDF_WELSH_FILE = "CaseListForPronouncementWelsh.pdf";
     private static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     private static final String A_TEMPLATE = "divorceminipetition";
+    private static final String D8_PETITION_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00256.docx";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
     private static final String COE_WELSH_TEMPLATE = "FL-DIV-GNO-WEL-00238.docx";
     private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
@@ -134,6 +138,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
+    private static final String DRAFT_PREFIX = "Draft";
 
     private Map<String, String> templateMap;
 
@@ -162,7 +167,7 @@ public class DocumentManagementServiceImplUTest {
 
     @Test
     public void divorceminiPetition_thenProceedAsExpectedWelsh() throws Exception {
-        assertGenerateAndStoreDocument("FL-DIV-GNO-WEL-00256.docx", "DivorcePetitionWelsh.pdf");
+        assertGenerateAndStoreDocument(D8_PETITION_WELSH_TEMPLATE, MINI_PETITION_NAME_FOR_WELSH_PDF_FILE);
     }
 
     @Test
@@ -577,6 +582,44 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void testGenerateAndStoreDraftDocument() {
+        final String fileName = "DraftDivorcePetitionWelsh.pdf";
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final String authToken = "someToken";
+        final byte[] data = {126};
+
+        final Map<String, String> templateMap = singletonMap(D8_PETITION_WELSH_TEMPLATE,
+                MINI_PETITION_NAME_FOR_WELSH_PDF_FILE);
+        when(pdfGenerationFactory.getGeneratorService(D8_PETITION_WELSH_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(D8_PETITION_WELSH_TEMPLATE, placeholderMap)).thenReturn(data);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        classUnderTest.generateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, placeholderMap, authToken);
+
+        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken, fileName);
+    }
+
+    @Test
+    public void testGenerateAndStoreDraftDocument_WithDraftPrefix() {
+
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final String authToken = "someToken";
+        final byte[] data = {126};
+
+        final Map<String, String> templateMap = singletonMap(DRAFT_MINI_PETITION_TEMPLATE_ID,
+                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+        when(pdfGenerationFactory.getGeneratorService(DRAFT_MINI_PETITION_TEMPLATE_ID))
+                .thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap)).thenReturn(data);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        classUnderTest.generateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap, authToken);
+
+        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken,
+                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+    }
+
+    @Test
     public void whenStoreDocument_thenProceedAsExpected() {
         final byte[] data = {1};
         final String filename = "someFileName";
@@ -592,7 +635,7 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1))
+        verify(evidenceManagementService, Mockito.times(1))
             .storeDocumentAndGetInfo(data, "test", filename);
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
@@ -615,9 +658,9 @@ public class DocumentManagementServiceImplUTest {
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(A_TEMPLATE);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
@@ -736,8 +779,8 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1)).getGeneratorService(templateId);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1)).getGeneratorService(templateId);
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(templateId, placeholderMap);
     }
 
@@ -755,9 +798,9 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID, placeholderMap);
     }
 
@@ -775,9 +818,9 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID, placeholderMap);
     }
 
