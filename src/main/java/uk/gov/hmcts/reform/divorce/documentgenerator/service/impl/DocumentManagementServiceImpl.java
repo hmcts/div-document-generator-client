@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,11 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
         String authorizationToken) {
-        FileDetails fileDetails = new FileDetails(templateNameConfiguration.getTemplatesName().get(templateName),
-                false);
+        FileDetails fileDetails = FileDetails.builder()
+                .fileName(templateNameConfiguration.getTemplatesName().get(templateName))
+                .isDraft(Boolean.FALSE)
+                .build();
+
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
 
@@ -65,7 +68,10 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         if (!fileName.startsWith(DRAFT_PREFIX)) {
             fileName = String.join("", DRAFT_PREFIX, fileName);
         }
-        FileDetails fileDetails = new FileDetails(fileName, true);
+        FileDetails fileDetails = FileDetails.builder()
+                .fileName(fileName)
+                .isDraft(Boolean.TRUE)
+                .build();
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
 
@@ -84,7 +90,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
-        placeholders.put(IS_DRAFT, fileDetails.isDraft);
+        placeholders.put(IS_DRAFT, fileDetails.isDraft());
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
 
@@ -122,10 +128,10 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         return (String) caseDetails.get("id");
     }
 
-    @AllArgsConstructor
+    @Builder
     @Getter
     private class FileDetails {
-        private String fileName;
-        private boolean isDraft;
+        private final String fileName;
+        private final boolean isDraft;
     }
 }
