@@ -144,6 +144,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
     private static final String DRAFT_DIVORCE_PETITION_WELSH_PDF = "DraftDivorcePetitionWelsh.pdf";
+    private static final String DIVORCE_PETITION_WELSH_PDF = "DivorcePetitionWelsh.pdf";
     private static final String IS_DRAFT = "isDraft";
 
     private Map<String, String> templateMap;
@@ -614,15 +615,18 @@ public class DocumentManagementServiceImplUTest {
 
     @Test
     public void testGenerateAndStoreDraftDocument() throws Exception {
-        assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DRAFT_DIVORCE_PETITION_WELSH_PDF);
+        assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DIVORCE_PETITION_WELSH_PDF,
+                DRAFT_DIVORCE_PETITION_WELSH_PDF);
     }
 
     @Test
     public void testGenerateAndStoreDraftDocument_WithDraftPrefix() throws Exception {
-        assertGenerateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+        assertGenerateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE,
+                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
     }
 
-    private void assertGenerateAndStoreDraftDocument(String templateName, String fileName) throws Exception {
+    private void assertGenerateAndStoreDraftDocument(String templateName, String fileName,
+                                                     String generatedFileName) throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
@@ -644,7 +648,7 @@ public class DocumentManagementServiceImplUTest {
                 "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
         doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
                 "storeDocument", byte[].class, String.class, String.class))
-                .withArguments(data, authToken, fileName);
+                .withArguments(data, authToken, generatedFileName);
 
         classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
         GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDraftDocument(templateName, placeholderMap,
@@ -655,7 +659,7 @@ public class DocumentManagementServiceImplUTest {
         verifyPrivate(classUnderTest, Mockito.times(1))
                 .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", data, authToken, fileName);
+                .invoke("storeDocument", data, authToken, generatedFileName);
     }
 
     @Test
