@@ -143,6 +143,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
+    private static final String DRAFT_DIVORCE_PETITION_WELSH_PDF = "DraftDivorcePetitionWelsh.pdf";
     private static final String IS_DRAFT = "isDraft";
 
     private Map<String, String> templateMap;
@@ -612,48 +613,50 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void testGenerateAndStoreDraftDocument() {
-        final String fileName = "DraftDivorcePetitionWelsh.pdf";
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final String authToken = "someToken";
-        final byte[] data = {126};
-
-        final Map<String, String> templateMap = singletonMap(D8_PETITION_WELSH_TEMPLATE,
-                MINI_PETITION_NAME_FOR_WELSH_PDF_FILE);
-        when(pdfGenerationFactory.getGeneratorService(D8_PETITION_WELSH_TEMPLATE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(D8_PETITION_WELSH_TEMPLATE, placeholderMap)).thenReturn(data);
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
-
-        classUnderTest.generateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, placeholderMap, authToken);
-
-        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken, fileName);
-        verify(pdfGenerationService).generate(same(D8_PETITION_WELSH_TEMPLATE), placeHolderCaptor.capture());
-        Map<String, Object> value = placeHolderCaptor.getValue();
-        assertThat("Draft value set ", value.get(IS_DRAFT), is(true));
+    public void testGenerateAndStoreDraftDocument() throws Exception {
+        assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DRAFT_DIVORCE_PETITION_WELSH_PDF);
     }
 
     @Test
-    public void testGenerateAndStoreDraftDocument_WithDraftPrefix() {
 
+    public void testGenerateAndStoreDraftDocument_WithDraftPrefix() throws Exception {
+        assertGenerateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+  }
+
+    private void assertGenerateAndStoreDraftDocument(String templateName, String fileName) throws Exception {
+        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
+
+        final byte[] data = {1};
         final Map<String, Object> placeholderMap = new HashMap<>();
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        final Instant instant = Instant.now();
         final String authToken = "someToken";
-        final byte[] data = {126};
 
-        final Map<String, String> templateMap = singletonMap(DRAFT_MINI_PETITION_TEMPLATE_ID,
-                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
-        when(pdfGenerationFactory.getGeneratorService(DRAFT_MINI_PETITION_TEMPLATE_ID))
-                .thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap)).thenReturn(data);
+        expected.setCreatedOn("someCreatedDate");
+        expected.setMimeType("someMimeType");
+        expected.setUrl("someUrl");
+
+        templateMap = ImmutableMap.of(templateName,fileName);
         when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
 
-        classUnderTest.generateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap, authToken);
+        mockAndSetClock(instant);
 
-        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken,
-                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
+        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
+                "storeDocument", byte[].class, String.class, String.class))
+                .withArguments(data, authToken, fileName);
 
-        verify(pdfGenerationService).generate(same(DRAFT_MINI_PETITION_TEMPLATE_ID), placeHolderCaptor.capture());
-        Map<String, Object> value = placeHolderCaptor.getValue();
-        assertThat("Draft value set ", value.get(IS_DRAFT), is(true));
+        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
+        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDraftDocument(templateName, placeholderMap,
+                authToken);
+
+        assertEquals(expected, actual);
+
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("generateDocument", templateName, placeholderMap);
+        verifyPrivate(classUnderTest, Mockito.times(1))
+                .invoke("storeDocument", data, authToken, fileName);
     }
 
     @Test
