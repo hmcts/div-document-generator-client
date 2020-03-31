@@ -6,6 +6,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,8 +34,11 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.rules.ExpectedException.none;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -138,7 +143,7 @@ public class DocumentManagementServiceImplUTest {
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
-    private static final String DRAFT_PREFIX = "Draft";
+    private static final String IS_DRAFT = "isDraft";
 
     private Map<String, String> templateMap;
 
@@ -159,6 +164,9 @@ public class DocumentManagementServiceImplUTest {
 
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
+
+    @Captor
+    ArgumentCaptor<Map<String, Object>> placeHolderCaptor;
 
     @Before
     public void before() {
@@ -582,6 +590,28 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void givenTemplateIsDnRefusalOrder_withDraftSetToFalse() {
+        final String templateName = DN_REFUSAL_ORDER_REJECTION_WELSH_TEMPLATE_ID;
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        final String fileName = "DecreeNisiRefusalOrderWelsh.pdf";
+        final String authToken = "someToken";
+        final byte[] data = {126};
+
+        final Map<String, String> templateMap = singletonMap(templateName,
+                DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
+        when(pdfGenerationFactory.getGeneratorService(templateName)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(templateName, placeholderMap)).thenReturn(data);
+        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+
+        classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
+
+        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken, fileName);
+        verify(pdfGenerationService).generate(same(templateName), placeHolderCaptor.capture());
+        Map<String, Object> value = placeHolderCaptor.getValue();
+        assertThat("Draft value set ", value.get(IS_DRAFT), is(false));
+    }
+
+    @Test
     public void testGenerateAndStoreDraftDocument() {
         final String fileName = "DraftDivorcePetitionWelsh.pdf";
         final Map<String, Object> placeholderMap = new HashMap<>();
@@ -597,6 +627,9 @@ public class DocumentManagementServiceImplUTest {
         classUnderTest.generateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, placeholderMap, authToken);
 
         verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken, fileName);
+        verify(pdfGenerationService).generate(same(D8_PETITION_WELSH_TEMPLATE), placeHolderCaptor.capture());
+        Map<String, Object> value = placeHolderCaptor.getValue();
+        assertThat("Draft value set ", value.get(IS_DRAFT), is(true));
     }
 
     @Test
@@ -617,6 +650,10 @@ public class DocumentManagementServiceImplUTest {
 
         verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken,
                 DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+
+        verify(pdfGenerationService).generate(same(DRAFT_MINI_PETITION_TEMPLATE_ID), placeHolderCaptor.capture());
+        Map<String, Object> value = placeHolderCaptor.getValue();
+        assertThat("Draft value set ", value.get(IS_DRAFT), is(true));
     }
 
     @Test
@@ -802,6 +839,8 @@ public class DocumentManagementServiceImplUTest {
             .getGeneratorService(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID);
         verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID, placeholderMap);
+
+
     }
 
     @Test

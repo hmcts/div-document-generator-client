@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +20,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
@@ -30,6 +31,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
     private static final String DRAFT_PREFIX = "Draft";
+    private static final String IS_DRAFT = "isDraft";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -51,26 +53,24 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
         String authorizationToken) {
-        Supplier<String> fileNameSupplier = () -> templateNameConfiguration.getTemplatesName().get(templateName);
-        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileNameSupplier);
+        FileDetails fileDetails = new FileDetails(templateNameConfiguration.getTemplatesName().get(templateName),
+                false);
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDraftDocument(String templateName,
                 Map<String, Object> placeholders, String authorizationToken) {
-        Supplier<String> fileNameSupplier = () -> {
-            String fileName = templateNameConfiguration.getTemplatesName().get(templateName);
-            if (!fileName.startsWith(DRAFT_PREFIX)) {
-                fileName = String.join("", DRAFT_PREFIX, fileName);
-            }
-            return fileName;
-        };
-
-        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileNameSupplier);
+        String fileName = templateNameConfiguration.getTemplatesName().get(templateName);
+        if (!fileName.startsWith(DRAFT_PREFIX)) {
+            fileName = String.join("", DRAFT_PREFIX, fileName);
+        }
+        FileDetails fileDetails = new FileDetails(fileName, true);
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
 
     private GeneratedDocumentInfo getGeneratedDocumentInfo(String templateName, Map<String, Object> placeholders,
-                                                           String authorizationToken, Supplier<String> fileName) {
+                                                           String authorizationToken, FileDetails fileDetails) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
             templateName, placeholders.size());
         String caseId = getCaseId(placeholders);
@@ -84,12 +84,13 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
+        placeholders.put(IS_DRAFT, fileDetails.isDraft);
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
 
         log.info("Document generated for case Id {}", caseId);
 
-        return storeDocument(generatedDocument, authorizationToken, fileName.get());
+        return storeDocument(generatedDocument, authorizationToken, fileDetails.getFileName());
     }
 
     @Override
@@ -119,5 +120,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails",
             Collections.emptyMap());
         return (String) caseDetails.get("id");
+    }
+
+    @AllArgsConstructor
+    @Getter
+    private class FileDetails {
+        private String fileName;
+        private boolean isDraft;
     }
 }
