@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +53,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
         String authorizationToken) {
-        FileDetails fileDetails = FileDetails.builder()
-                .fileName(templateNameConfiguration.getTemplatesName().get(templateName))
-                .isDraft(Boolean.FALSE)
-                .build();
+        FileDetails fileDetails = new FileDetails(templateNameConfiguration.getTemplatesName().get(templateName),
+                Boolean.FALSE);
 
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
@@ -68,10 +66,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         if (!fileName.startsWith(DRAFT_PREFIX)) {
             fileName = String.join("", DRAFT_PREFIX, fileName);
         }
-        FileDetails fileDetails = FileDetails.builder()
-                .fileName(fileName)
-                .isDraft(Boolean.TRUE)
-                .build();
+        FileDetails fileDetails = new FileDetails(fileName, Boolean.TRUE);
+
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
     }
 
@@ -128,10 +124,13 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         return (String) caseDetails.get("id");
     }
 
-    @Builder
+    @AllArgsConstructor
     @Getter
-    private class FileDetails {
+    class FileDetails {
         private final String fileName;
         private final boolean isDraft;
     }
 }
+
+
+
