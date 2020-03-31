@@ -618,10 +618,9 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-
     public void testGenerateAndStoreDraftDocument_WithDraftPrefix() throws Exception {
         assertGenerateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
-  }
+    }
 
     private void assertGenerateAndStoreDraftDocument(String templateName, String fileName) throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
