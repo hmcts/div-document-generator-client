@@ -130,20 +130,12 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
         "AOSOfflineInvitationLetterCoRespondent.pdf";
-    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_WELSH_TEMPLATE_ID = "FL-DIV-LET-WEL-00244.docx";
-    private static final String AOS_OFFLINE_INV_LET_CO_RESPONDENT_NAME_FOR_PDF_FILE =
-        "AOSOfflineInvitationLetterCoRespondentWelsh.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_NAME = "SolicitorPersonalService.pdf";
     private static final String SOLICITOR_PERSONAL_SERVICE_WELSH_TEMPLATE_ID = "FL-DIV-GNO-WEL-00245.docx";
     private static final String SOLICITOR_PERSONAL_SERVICE_FILE_WELSH_NAME = "SolicitorPersonalServiceWelsh.pdf";
     private static final String DECREE_ABSOLUTE_WELSH_TEMPLATE_ID = "FL-DIV-GOR-WEL-00242.docx";
     private static final String DECREE_ABSOLUTE_WELSH_PDF_FILE = "DecreeAbsoluteWelsh.pdf";
-    private static final String DRAFT_DIVORCE_PETITION_WELSH_PDF = "DraftDivorcePetitionWelsh.pdf";
-    private static final String DIVORCE_PETITION_WELSH_PDF = "DivorcePetitionWelsh.pdf";
-    private static final String IS_DRAFT = "isDraft";
-    private static final String DRAFT_AOSOFFLINE_2_YEAR_SEPARATION_FORM_WELSH_PDF =
-            "DraftAOSOffline2YearSeparationFormWelsh.pdf";
 
     private Map<String, String> templateMap;
 
@@ -589,65 +581,6 @@ public class DocumentManagementServiceImplUTest {
             .invoke("storeDocument", data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
     }
 
-    @Test
-    public void testTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpectedWelsh()
-            throws Exception {
-        assertGenerateAndStoreDraftDocument(
-                AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID,
-                AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE,
-                DRAFT_AOSOFFLINE_2_YEAR_SEPARATION_FORM_WELSH_PDF
-        );
-    }
-
-    @Test
-    public void testGenerateAndStoreDraftDocument() throws Exception {
-        assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DIVORCE_PETITION_WELSH_PDF,
-                DRAFT_DIVORCE_PETITION_WELSH_PDF);
-    }
-
-    @Test
-    public void testGenerateAndStoreDraftDocument_WithDraftPrefix() throws Exception {
-        assertGenerateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE,
-                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
-    }
-
-    private void assertGenerateAndStoreDraftDocument(String templateName, String fileName,
-                                                     String generatedFileName) throws Exception {
-        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
-
-        final byte[] data = {1};
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
-        final Instant instant = Instant.now();
-        final String authToken = "someToken";
-
-        expected.setCreatedOn("someCreatedDate");
-        expected.setMimeType("someMimeType");
-        expected.setUrl("someUrl");
-
-        templateMap = ImmutableMap.of(templateName,fileName);
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
-
-        mockAndSetClock(instant);
-
-        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
-        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-                "storeDocument", byte[].class, String.class, String.class))
-                .withArguments(data, authToken, generatedFileName);
-
-        classUnderTest.setTemplateNameConfiguration(templateNameConfiguration);
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDraftDocument(templateName, placeholderMap,
-                authToken);
-
-        assertEquals(expected, actual);
-
-        verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("generateDocument", templateName, placeholderMap);
-        verifyPrivate(classUnderTest, Mockito.times(1))
-                .invoke("storeDocument", data, authToken, generatedFileName);
-
-    }
 
     @Test
     public void whenStoreDocument_thenProceedAsExpected() {
