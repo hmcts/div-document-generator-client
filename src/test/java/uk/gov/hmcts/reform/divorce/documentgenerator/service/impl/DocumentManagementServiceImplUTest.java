@@ -146,6 +146,8 @@ public class DocumentManagementServiceImplUTest {
     private static final String DRAFT_DIVORCE_PETITION_WELSH_PDF = "DraftDivorcePetitionWelsh.pdf";
     private static final String DIVORCE_PETITION_WELSH_PDF = "DivorcePetitionWelsh.pdf";
     private static final String IS_DRAFT = "isDraft";
+    private static final String DRAFT_AOSOFFLINE_2_YEAR_SEPARATION_FORM_WELSH_PDF =
+            "DraftAOSOffline2YearSeparationFormWelsh.pdf";
 
     private Map<String, String> templateMap;
 
@@ -592,6 +594,16 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
+    public void testTemplateNameIsAOSOffline2YearSeparationForm_thenProceedAsExpectedWelsh()
+            throws Exception {
+        assertGenerateAndStoreDraftDocument(
+                AOS_OFFLINE_2_YEAR_SEPARATION_FORM_WELSH_TEMPLATE_ID,
+                AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_WELSH_FILE,
+                DRAFT_AOSOFFLINE_2_YEAR_SEPARATION_FORM_WELSH_PDF
+        );
+    }
+
+    @Test
     public void testGenerateAndStoreDraftDocument() throws Exception {
         assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DIVORCE_PETITION_WELSH_PDF,
                 DRAFT_DIVORCE_PETITION_WELSH_PDF);
@@ -638,6 +650,7 @@ public class DocumentManagementServiceImplUTest {
                 .invoke("generateDocument", templateName, placeholderMap);
         verifyPrivate(classUnderTest, Mockito.times(1))
                 .invoke("storeDocument", data, authToken, generatedFileName);
+
     }
 
     @Test
