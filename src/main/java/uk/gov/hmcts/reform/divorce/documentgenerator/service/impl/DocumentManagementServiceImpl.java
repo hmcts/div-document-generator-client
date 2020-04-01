@@ -53,10 +53,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
         String authorizationToken) {
-        FileDetails fileDetails = new FileDetails(templateNameConfiguration.getTemplatesName().get(templateName),
-                Boolean.FALSE);
-
-        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
+        String fileName = templateNameConfiguration.getTemplatesName().get(templateName);
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
     }
 
     @Override
@@ -66,13 +64,13 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         if (!fileName.startsWith(DRAFT_PREFIX)) {
             fileName = String.join("", DRAFT_PREFIX, fileName);
         }
-        FileDetails fileDetails = new FileDetails(fileName, Boolean.TRUE);
+        placeholders.put(IS_DRAFT, true);
 
-        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileDetails);
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
     }
 
     private GeneratedDocumentInfo getGeneratedDocumentInfo(String templateName, Map<String, Object> placeholders,
-                                                           String authorizationToken, FileDetails fileDetails) {
+                                                           String authorizationToken, String fileName) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
             templateName, placeholders.size());
         String caseId = getCaseId(placeholders);
@@ -86,13 +84,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
-        placeholders.put(IS_DRAFT, fileDetails.isDraft());
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
 
         log.info("Document generated for case Id {}", caseId);
 
-        return storeDocument(generatedDocument, authorizationToken, fileDetails.getFileName());
+        return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
     @Override
@@ -122,13 +119,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails",
             Collections.emptyMap());
         return (String) caseDetails.get("id");
-    }
-
-    @AllArgsConstructor
-    @Getter
-    class FileDetails {
-        private final String fileName;
-        private final boolean isDraft;
     }
 }
 

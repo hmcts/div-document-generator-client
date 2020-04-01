@@ -592,28 +592,6 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void givenTemplateIsDnRefusalOrder_withDraftSetToFalse() {
-        final String templateName = DN_REFUSAL_ORDER_REJECTION_WELSH_TEMPLATE_ID;
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final String fileName = "DecreeNisiRefusalOrderWelsh.pdf";
-        final String authToken = "someToken";
-        final byte[] data = {126};
-
-        final Map<String, String> templateMap = singletonMap(templateName,
-                DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_WELSH_FILE);
-        when(pdfGenerationFactory.getGeneratorService(templateName)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(templateName, placeholderMap)).thenReturn(data);
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
-
-        classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
-
-        verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken, fileName);
-        verify(pdfGenerationService).generate(same(templateName), placeHolderCaptor.capture());
-        Map<String, Object> value = placeHolderCaptor.getValue();
-        assertThat("Draft value set ", value.get(IS_DRAFT), is(false));
-    }
-
-    @Test
     public void testGenerateAndStoreDraftDocument() throws Exception {
         assertGenerateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, DIVORCE_PETITION_WELSH_PDF,
                 DRAFT_DIVORCE_PETITION_WELSH_PDF);
