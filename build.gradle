@@ -266,7 +266,7 @@ dependencyManagement {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
         dependencySet(
             group: 'com.fasterxml.jackson.core',
-            version: '2.10.2'
+            version: '2.10.3'
         ) {
             entry 'jackson-core'
             entry 'jackson-databind'
