@@ -45,4 +45,23 @@ public class DocumentGeneratorControllerUTest {
                 .generateAndStoreDocument(templateName, placeholder, "testToken");
     }
 
+    @Test
+    public void whenGeneratePDF_thenReturnGeneratedDraftPDFDocumentInfo() {
+        final String templateName = "templateName";
+        final Map<String, Object> placeholder = Collections.emptyMap();
+
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+
+        when(documentManagementService.generateAndStoreDraftDocument(templateName, placeholder, "testToken"))
+            .thenReturn(expected);
+
+        GeneratedDocumentInfo actual = classUnderTest
+                .generateAndUploadDraftPdf("testToken", new GenerateDocumentRequest(templateName, placeholder));
+
+        assertEquals(expected, actual);
+
+        verify(documentManagementService)
+                .generateAndStoreDraftDocument(templateName, placeholder, "testToken");
+    }
+
 }

@@ -97,6 +97,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String MIME_TYPE = "mimeType";
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
+    private static final String IS_DRAFT = "isDraft";
     private Map<String, String> templateMap;
 
     private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
@@ -222,6 +223,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
+        values.put(IS_DRAFT, false);
         final String securityToken = "securityToken";
         final Instant instant = Instant.now();
         mockAndSetClock(instant);
