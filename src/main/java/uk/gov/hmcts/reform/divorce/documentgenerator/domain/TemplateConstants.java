@@ -63,4 +63,6 @@ public class TemplateConstants {
     public static final String HAS_FREE_TEXT_ORDER_KEY = "HasFreeTextOrder";
     public static final String HAS_ONLY_FREE_TEXT_ORDER_KEY = "HasOnlyFreeTextOrder";
     public static final String YES_VALUE = "yes";
+    public static final String ACCESS_CODE_KEY = "access_code";
+    public static final String CASE_ID_KEY = "id";
 }
