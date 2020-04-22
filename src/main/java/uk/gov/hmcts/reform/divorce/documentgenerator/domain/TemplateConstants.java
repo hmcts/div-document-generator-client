@@ -65,4 +65,14 @@ public class TemplateConstants {
     public static final String YES_VALUE = "yes";
     public static final String ACCESS_CODE_KEY = "access_code";
     public static final String CASE_ID_KEY = "id";
+    public static final String D8_DIVORCE_WHO_KEY = "D8DivorceWho";
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY = "D8ReasonForDivorceDesertionDate";
+    public static final String D8_MENTAL_SEPARATION_DATE_KEY = "D8MentalSeparationDate";
+    public static final String D8_PHYSICAL_SEPARATION_DATE_KEY = "D8PhysicalSeparationDate";
+    public static final String WELSH_D8_DIVORCE_WHO_KEY = "welshD8DivorceWho";
+    public static final String WELSH_D8_MARRIAGE_DATE_KEY = "welshD8MarriageDate";
+    public static final String WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY = "welshD8ReasonForDivorceDesertionDate";
+    public static final String WELSH_D8_MENTAL_SEPARATION_DATE_KEY = "welshD8MentalSeparationDate";
+    public static final String WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY = "welshD8PhysicalSeparationDate";
+    public static final String LANGUAGE_PREFERENCE_WELSH_KEY = "LanguagePreferenceWelsh";
 }
