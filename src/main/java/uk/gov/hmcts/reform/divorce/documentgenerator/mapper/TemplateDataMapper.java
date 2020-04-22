@@ -5,8 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshStringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ACCESS_CODE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
@@ -36,7 +41,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MENTAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PHYSICAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
@@ -56,6 +65,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.INSUFFICIENT_DETAILS_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.JURISDICTION_CLARIFICATION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE;
@@ -68,6 +78,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @Component
@@ -79,8 +94,16 @@ public class TemplateDataMapper {
     @Autowired
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
 
+    @Autowired
+    private TemplateConfig templateConfig;
+
+    @Autowired
+    private LocalDateToWelshStringConverter localDateToWelshStringConverter;
+
     @SuppressWarnings("unchecked")
     public Map<String, Object> map(Map<String, Object> placeholders) {
+
+
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
 
@@ -89,6 +112,7 @@ public class TemplateDataMapper {
         Optional.ofNullable(((Map) placeholders.get(CASE_DETAILS)).get(CASE_ID_KEY))
                 .ifPresent(value -> data.put(CASE_ID_KEY, value));
 
+        updateWithWelshTranslatedData(data);
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
         }
@@ -240,5 +264,43 @@ public class TemplateDataMapper {
             ccdDateString = ccdDate.format(letterFormatter);
         }
         return ccdDateString;
+    }
+
+    private void updateWithWelshTranslatedData(Map<String, Object> caseData) {
+
+        Consumer<Map<String, Object>> welshConsumer = (data) -> {
+            Map<String, String> relationship =
+                    templateConfig.getTemplate().get(RELATION).get(WELSH);
+
+            Optional.ofNullable(data.get(D8_DIVORCE_WHO_KEY)).ifPresent(
+                divorceWho ->
+                        data.put(WELSH_D8_DIVORCE_WHO_KEY, relationship.get(divorceWho)));
+
+            Optional.ofNullable(data.get(D8_MARRIAGE_DATE_KEY)).map(Object::toString).ifPresent(
+                date ->
+                    data.put(WELSH_D8_MARRIAGE_DATE_KEY,
+                                localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY)).map(Object::toString).ifPresent(
+                date ->
+                     data.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY,
+                                localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(D8_MENTAL_SEPARATION_DATE_KEY)).map(Object::toString).ifPresent(
+                date ->
+                     data.put(WELSH_D8_MENTAL_SEPARATION_DATE_KEY,
+                                localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(Object::toString).ifPresent(
+                date ->
+                     data.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY,
+                                localDateToWelshStringConverter.convert(date)));
+
+        };
+
+        Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))
+                .map(Object::toString)
+                .filter(YES_VALUE::equalsIgnoreCase)
+                .ifPresent(data -> welshConsumer.accept(caseData));
     }
 }

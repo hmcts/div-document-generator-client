@@ -105,6 +105,31 @@ document:
         displayTemplateKey: "displayTemplateOnly"
         displayTemplateVal: "1"
 
+template:
+  relation:
+    english:
+      "male": "husband"
+      "female": "wife"
+    welsh:
+      "male": "gŵr"
+      "female": "gwraig"
+      "husband": "gŵr"
+      "wife": "gwraig"
+  months:
+    welsh:
+      1: "Ionawr"
+      2: "Chwefror"
+      3: "Mawrth"
+      4: "Ebrill"
+      5: "Mai"
+      6: "Mehefin"
+      7: "Gorffennaf"
+      8: "Awst"
+      9: "Medi"
+      10: "Hydref"
+      11: "Tachwedd"
+      12: "Rhagfyr"
+
 document-template:
     templatesName:
         aosinvitation: "AOSInvitation.pdf"
