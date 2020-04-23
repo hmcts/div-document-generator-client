@@ -46,6 +46,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MENTAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PHYSICAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
@@ -64,6 +65,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.INSUFFICIENT_DETAILS_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.JURISDICTION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
@@ -83,6 +85,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @Component
@@ -103,7 +106,6 @@ public class TemplateDataMapper {
     @SuppressWarnings("unchecked")
     public Map<String, Object> map(Map<String, Object> placeholders) {
 
-
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
 
@@ -111,6 +113,8 @@ public class TemplateDataMapper {
                 .ifPresent(value -> data.put(ACCESS_CODE_KEY,value));
         Optional.ofNullable(((Map) placeholders.get(CASE_DETAILS)).get(CASE_ID_KEY))
                 .ifPresent(value -> data.put(CASE_ID_KEY, value));
+        Optional.ofNullable(placeholders.get(IS_DRAFT_KEY))
+                .ifPresent(value -> data.put(IS_DRAFT_KEY, value));
 
         updateWithWelshTranslatedData(data);
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
@@ -224,7 +228,6 @@ public class TemplateDataMapper {
 
         // Get page assets
         data.putAll(getPageAssets());
-
         return data;
     }
 
@@ -294,6 +297,11 @@ public class TemplateDataMapper {
             Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(Object::toString).ifPresent(
                 date ->
                      data.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY,
+                                localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY)).map(Object::toString).ifPresent(
+                date ->
+                     data.put(WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
         };
