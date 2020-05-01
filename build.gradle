@@ -188,7 +188,7 @@ dependencies {
     compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.31') {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.34') {
         force = true
     }
     compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: '9.0.33') {
