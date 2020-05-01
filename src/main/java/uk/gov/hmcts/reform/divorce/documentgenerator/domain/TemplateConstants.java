@@ -70,6 +70,10 @@ public class TemplateConstants {
     public static final String D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY = "D8ReasonForDivorceSeperationDate";
     public static final String D8_MENTAL_SEPARATION_DATE_KEY = "D8MentalSeparationDate";
     public static final String D8_PHYSICAL_SEPARATION_DATE_KEY = "D8PhysicalSeparationDate";
+    public static final String PREVIOUS_ISSUE_DATE_KEY = "PreviousIssueDate";
+    public static final String LAST_MODIFIED_KEY = "last_modified";
+    public static final String WELSH_LAST_MODIFIED_KEY = "welsh_last_modified";
+    public static final String WELSH_PREVIOUS_ISSUE_DATE_KEY = "welshPreviousIssueDate";
     public static final String WELSH_D8_DIVORCE_WHO_KEY = "welshD8DivorceWho";
     public static final String WELSH_D8_MARRIAGE_DATE_KEY = "welshD8MarriageDate";
     public static final String WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY = "welshD8ReasonForDivorceDesertionDate";

@@ -11,9 +11,11 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationExce
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshStringConverter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,11 +70,13 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.JURISDICTION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LETTER_DATE_FORMAT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_CRITERIA_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_JURISDICTION_REJECTION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
@@ -86,6 +90,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @Component
@@ -111,10 +117,15 @@ public class TemplateDataMapper {
 
         Optional.ofNullable(placeholders.get(ACCESS_CODE_KEY))
                 .ifPresent(value -> data.put(ACCESS_CODE_KEY,value));
-        Optional.ofNullable(((Map) placeholders.get(CASE_DETAILS)).get(CASE_ID_KEY))
-                .ifPresent(value -> data.put(CASE_ID_KEY, value));
         Optional.ofNullable(placeholders.get(IS_DRAFT_KEY))
                 .ifPresent(value -> data.put(IS_DRAFT_KEY, value));
+
+        Map caseDetailsMap =
+                Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.EMPTY_MAP);
+        Optional.ofNullable(caseDetailsMap.get(CASE_ID_KEY))
+                .ifPresent(value -> data.put(CASE_ID_KEY, value));
+        Optional.ofNullable(caseDetailsMap.get(LAST_MODIFIED_KEY))
+                .ifPresent(value -> data.put(LAST_MODIFIED_KEY, value));
 
         updateWithWelshTranslatedData(data);
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
@@ -279,35 +290,47 @@ public class TemplateDataMapper {
                 divorceWho ->
                         data.put(WELSH_D8_DIVORCE_WHO_KEY, relationship.get(divorceWho)));
 
-            Optional.ofNullable(data.get(D8_MARRIAGE_DATE_KEY)).map(Object::toString).ifPresent(
+            Optional.ofNullable(data.get(D8_MARRIAGE_DATE_KEY)).map(String.class::cast).ifPresent(
                 date ->
                     data.put(WELSH_D8_MARRIAGE_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY)).map(Object::toString).ifPresent(
+            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY)).map(String.class::cast).ifPresent(
                 date ->
                      data.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
-            Optional.ofNullable(data.get(D8_MENTAL_SEPARATION_DATE_KEY)).map(Object::toString).ifPresent(
+            Optional.ofNullable(data.get(D8_MENTAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
                 date ->
                      data.put(WELSH_D8_MENTAL_SEPARATION_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
-            Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(Object::toString).ifPresent(
+            Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
                 date ->
                      data.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY)).map(Object::toString).ifPresent(
+            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY)).map(String.class::cast).ifPresent(
                 date ->
                      data.put(WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY,
                                 localDateToWelshStringConverter.convert(date)));
 
+            if (data.get(IS_DRAFT_KEY) == null) {
+                Optional.ofNullable(data.get(PREVIOUS_ISSUE_DATE_KEY)).map(String.class::cast).ifPresent(
+                    date ->
+                                data.put(WELSH_PREVIOUS_ISSUE_DATE_KEY,
+                                        localDateToWelshStringConverter.convert(date)));
+
+                String lastModifiedTime = (String)data.computeIfAbsent(LAST_MODIFIED_KEY,
+                    k -> LocalDateTime.now().toString());
+
+                data.put(WELSH_LAST_MODIFIED_KEY,
+                    localDateToWelshStringConverter.convert((LocalDateTime.parse(lastModifiedTime).toLocalDate())));
+            }
         };
 
         Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))
-                .map(Object::toString)
+                .map(String.class::cast)
                 .filter(YES_VALUE::equalsIgnoreCase)
                 .ifPresent(data -> welshConsumer.accept(caseData));
     }
