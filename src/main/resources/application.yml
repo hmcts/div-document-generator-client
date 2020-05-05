@@ -52,6 +52,7 @@ pdf:
   test:
     enabled: false
 
+#TODO - here's the duplication - we probably don't need both of these
 document:
     templates:
         map:

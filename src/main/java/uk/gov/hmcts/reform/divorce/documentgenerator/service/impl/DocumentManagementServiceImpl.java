@@ -88,7 +88,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                                                           String authorizationToken) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
             templateName, placeholders.size());
-        String caseId = getCaseId(placeholders);
+        String caseId = getCaseId(placeholders);//TODO - we should probably enforce or at least log an error if the caseId is not passed.
 
         log.info("Generating document for case Id {}", caseId);
 
@@ -138,8 +138,11 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         return (String) caseDetails.get("id");
     }
 
-    private String getFileNameFromTemplateName(String templateName) {
-        switch (templateName) {
+    private String getFileNameFromTemplateName(String templateName) {//TODO - I remember this was one of the issues. This is duplicated somewhere else as well
+        switch (templateName) {//TODO - we could implement something better than a switch statement
+            //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
+            //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
+            //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
             case AOS_INVITATION_TEMPLATE_ID:
                 return AOS_INVITATION_NAME_FOR_PDF_FILE;
             case MINI_PETITION_TEMPLATE_ID:
@@ -186,6 +189,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 return DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
             default:
                 throw new IllegalArgumentException("Unknown template: " + templateName);
+            //TODO - make sure every AC is understood and catered for
         }
     }
 
