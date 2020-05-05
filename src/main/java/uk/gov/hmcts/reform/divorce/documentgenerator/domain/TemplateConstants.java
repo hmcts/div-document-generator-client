@@ -83,4 +83,5 @@ public class TemplateConstants {
             "welshD8ReasonForDivorceSeperationDate";
     public static final String LANGUAGE_PREFERENCE_WELSH_KEY = "LanguagePreferenceWelsh";
     public static final String IS_DRAFT_KEY = "isDraft";
+    public static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
 }

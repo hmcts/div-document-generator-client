@@ -1,7 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +19,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @Service
@@ -29,7 +28,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 
-    private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
     private static final String DRAFT_PREFIX = "Draft";
     private static final String IS_DRAFT = "isDraft";
 
