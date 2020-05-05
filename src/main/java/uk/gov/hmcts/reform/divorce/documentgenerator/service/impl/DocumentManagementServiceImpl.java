@@ -100,7 +100,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
 
-        String fileName = getFileNameFromTemplateName(templateName);
+        String fileName = getFileNameFromTemplateName(templateName);//TODO - first change
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
 
@@ -137,6 +137,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
             Collections.emptyMap());
         return (String) caseDetails.get("id");
     }
+
+    //TODO - phase 1 - add a default name for my new template
+    //TODO - last phase - after everything else is done, add an optional file name parameter
 
     private String getFileNameFromTemplateName(String templateName) {//TODO - I remember this was one of the issues. This is duplicated somewhere else as well
         switch (templateName) {//TODO - we could implement something better than a switch statement

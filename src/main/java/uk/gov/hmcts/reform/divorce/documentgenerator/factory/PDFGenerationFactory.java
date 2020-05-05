@@ -23,7 +23,8 @@ public class PDFGenerationFactory {
     @Autowired
     public PDFGenerationFactory(TemplateConfiguration templateConfiguration,
                                 @Qualifier("pdfGenerator") PDFGenerationService pdfGenerationService,
-                                @Qualifier("docmosisPdfGenerator") PDFGenerationService docmosisPdfGenerationService) {
+                                @Qualifier("docmosisPdfGenerator") PDFGenerationService docmosisPdfGenerationService) {//TODO - should these be in a constructor? - do it last, if at all
+        //TODO - second change
         this.templateConfiguration = templateConfiguration;
 
         // Setup generator type mapping against expected template map values
@@ -34,12 +35,14 @@ public class PDFGenerationFactory {
     }
 
     public PDFGenerationService getGeneratorService(String templateId) {
+        //TODO - we could even remove all of the docmosis template
         return generatorMap.get(
             getGeneratorType(templateId)
         );
     }
 
     public String getGeneratorType(String templateId) {
-        return templateConfiguration.getMap().getOrDefault(templateId, PDF_GENERATOR_TYPE);
-    }
+        return templateConfiguration.getMap().getOrDefault(templateId, PDF_GENERATOR_TYPE);//TODO - THIS SHOULD BE THE VERY FIRST THING - careful changing this. we might have templates that are not listed here but still being passed by clients
+    }//TODO - we probably got to a point where Docmosis is the default
+
 }

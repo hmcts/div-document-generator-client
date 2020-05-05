@@ -11,7 +11,10 @@ import org.powermock.reflect.Whitebox;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.ResourceLoader;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
@@ -26,10 +29,12 @@ public class TemplateManagementServiceImplUTest {
     @InjectMocks
     private TemplateManagementServiceImpl classUnderTest;
 
+    //TODO - this is my very first task: write good tests to test existing behaviour, then see what happens when an unexisting template name is passed as a parameter. The refactoring depends on this answer (at least)
+
     @Before
     public void before() {
         mockStatic(NullOrEmptyValidator.class, ResourceLoader.class);
-    }
+    }//TODO - ???
 
     @Test
     public void givenATemplateName_whenGetTemplateByName_thenReturnResource() {
@@ -52,11 +57,17 @@ public class TemplateManagementServiceImplUTest {
         NullOrEmptyValidator.requireNonBlank(TEMPLATE_NAME);
     }
 
-    private String getResourcePath() {
+    @Test
+    public void checkWhatHappensWhenTemplateNameDoesNotExist(){
+        byte[] template = classUnderTest.getTemplateByName("unexisting-template");
+        assertThat(template, is(nullValue()));
+    }
+
+    private String getResourcePath() {//TODO - ???
         try {
             return Whitebox.invokeMethod(classUnderTest,
                             "getResourcePath",
-                                            TemplateManagementServiceImplUTest.TEMPLATE_NAME);
+                                            TemplateManagementServiceImplUTest.TEMPLATE_NAME);//TODO - ?
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
