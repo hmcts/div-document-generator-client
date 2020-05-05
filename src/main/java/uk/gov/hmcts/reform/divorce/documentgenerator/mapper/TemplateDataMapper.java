@@ -123,7 +123,7 @@ public class TemplateDataMapper {
         Optional.ofNullable(placeholders.get(FEATURE_TOGGLE_RESP_SOLCIITOR))
                 .map(value -> data.put(FEATURE_TOGGLE_RESP_SOLCIITOR, value));
 
-        Map caseDetailsMap =
+        Map<String, Object> caseDetailsMap =
                 Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.EMPTY_MAP);
         Optional.ofNullable(caseDetailsMap.get(CASE_ID_KEY))
                 .ifPresent(value -> data.put(CASE_ID_KEY, value));
