@@ -111,6 +111,9 @@ public class DocumentManagementServiceImplUTest {
         mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
     }
 
+    //TODO - what being tested here? can I move some of it to the factory test?
+    //TODO - this class urgently needs to be cleaned up
+
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         mockAndSetClock(Instant.now());
@@ -118,9 +121,9 @@ public class DocumentManagementServiceImplUTest {
         expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
 
         classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
-
     }
 
+    //TODO - all most of these tests are doing is to ensure the private methods are called with the right parameters
     @Test
     public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() throws Exception {
         final String templateId = "aosinvitation";
@@ -255,6 +258,7 @@ public class DocumentManagementServiceImplUTest {
         assertGenerateAndStoreDocument(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID, SOLICITOR_PERSONAL_SERVICE_FILE_NAME);
     }
 
+    //TODO - these ones seem to be much the same, but with no code being reused
     @Test
     public void whenGenerateAndStoreDocument_givenTemplateIsDnClarificationOrder_thenProceedAsExpected()
         throws Exception {
@@ -264,10 +268,10 @@ public class DocumentManagementServiceImplUTest {
         final byte[] data = {1};
         final String templateName = DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
         final Map<String, Object> placeholderMap = new HashMap<>();
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
         final String authToken = "someToken";
 
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         expected.setCreatedOn("someCreatedDate");
         expected.setMimeType("someMimeType");
         expected.setUrl("someUrl");
@@ -345,6 +349,7 @@ public class DocumentManagementServiceImplUTest {
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
 
+    //TODO - this seems to be a bit different - I think it also checks that the HtmlFieldFormatter was called
     @Test
     public void whenGenerateDocument_thenProceedAsExpected() {
         final byte[] expected = {1};
@@ -367,6 +372,7 @@ public class DocumentManagementServiceImplUTest {
             .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
+    //TODO - these seem to do a more sensible job and actually just use proper mocks to assert the same thing the ones above do
     @Test
     public void whenGenerateCoEDocumentWithDocmosis_thenProceedAsExpected() {
         assertDocumentGenerated(COE_TEMPLATE);
@@ -427,16 +433,16 @@ public class DocumentManagementServiceImplUTest {
         assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
     }
 
-    private void assertGenerateAndStoreDocument(String templateId, String fileName) throws Exception {
+    //TODO - all this is really doing is to test the method "getFileNameFromTemplateName". all this method does is test that the template returns the right filename. - therefore, with the new format, these tests will probably belong somewhere else
+    private void assertGenerateAndStoreDocument(String templateName, String fileName) throws Exception {
         final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
 
         final byte[] data = {1};
-        final String templateName = templateId;
         final Map<String, Object> placeholderMap = new HashMap<>();
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         final Instant instant = Instant.now();
         final String authToken = "someToken";
 
+        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
         expected.setCreatedOn("someCreatedDate");
         expected.setMimeType("someMimeType");
         expected.setUrl("someUrl");
@@ -475,6 +481,7 @@ public class DocumentManagementServiceImplUTest {
             .generate(templateId, placeholderMap);
     }
 
+    //TODO - these seem to repeat the tests above - with the proper mocking
     @Test
     public void whenGenerateDnClarificationOrderWithDocmosis_thenProceedAsExpected() {
         final byte[] expected = {1};
