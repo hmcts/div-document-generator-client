@@ -54,6 +54,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FREE_TEXT_ORDER_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
@@ -119,8 +120,10 @@ public class TemplateDataMapper {
                 .ifPresent(value -> data.put(ACCESS_CODE_KEY,value));
         Optional.ofNullable(placeholders.get(IS_DRAFT_KEY))
                 .ifPresent(value -> data.put(IS_DRAFT_KEY, value));
+        Optional.ofNullable(placeholders.get(FEATURE_TOGGLE_RESP_SOLCIITOR))
+                .ifPresent(value -> data.put(FEATURE_TOGGLE_RESP_SOLCIITOR, value));
 
-        Map caseDetailsMap =
+        Map<String, Object> caseDetailsMap =
                 Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.EMPTY_MAP);
         Optional.ofNullable(caseDetailsMap.get(CASE_ID_KEY))
                 .ifPresent(value -> data.put(CASE_ID_KEY, value));
@@ -282,7 +285,7 @@ public class TemplateDataMapper {
 
     private void updateWithWelshTranslatedData(Map<String, Object> caseData) {
 
-        Consumer<Map<String, Object>> welshConsumer = (data) -> {
+        Consumer<Map<String, Object>> welshConsumer = data -> {
             Map<String, String> relationship =
                     templateConfig.getTemplate().get(RELATION).get(WELSH);
 

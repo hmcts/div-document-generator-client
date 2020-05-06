@@ -52,6 +52,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
@@ -66,6 +67,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
@@ -79,6 +81,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -140,6 +143,27 @@ public class TemplateDataMapperTest {
     }
 
     @Test
+    public void testAOSInvitationParameters() {
+        Map<String, Object> caseData = new HashMap<>();
+        String accessCode = "3333";
+        String caseIdKey = "2222";
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+                CASE_DETAILS, caseDetails,
+                ACCESS_CODE_KEY, accessCode,
+                FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
     public void testDraftMiniPetitionParameters() {
         when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
         when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
@@ -193,6 +217,7 @@ public class TemplateDataMapperTest {
         caseData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
         caseData.put(D8_DIVORCE_WHO_KEY, "wife");
         caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "2015-11-01");
+        caseData.put(PREVIOUS_ISSUE_DATE_KEY, "2001-12-02");
         String lastModified = "2020-04-29T22:35:21.717";
         String accessCode = "3333";
         String caseIdKey = "2222";
@@ -206,12 +231,11 @@ public class TemplateDataMapperTest {
         expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
         expectedData.put(LAST_MODIFIED_KEY, lastModified);
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
-
+        expectedData.put(WELSH_PREVIOUS_ISSUE_DATE_KEY, "2 Rhagfyr 2012");
 
 
         ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey,
                 LAST_MODIFIED_KEY, lastModified);
-
         Map<String, Object> requestData = ImmutableMap.of(
                 CASE_DETAILS, caseDetails,
                 ACCESS_CODE_KEY, accessCode
