@@ -13,7 +13,7 @@ public class TemplateManagementServiceImpl implements TemplateManagementService 
     private static final String RESOURCE_PATH_TEMPLATE = "data/templates/%s.html";
 
     @Override
-    public byte[] getTemplateByName(String templateName) {//TODO - what happens if template doesn't exist? - THIS SHOULD BE FIRST
+    public byte[] getTemplateByName(String templateName) {
         log.info("Get template requested with templateName [{}]", templateName);
         return ResourceLoader.loadResource(getResourcePath(templateName));
     }
@@ -22,4 +22,5 @@ public class TemplateManagementServiceImpl implements TemplateManagementService 
         NullOrEmptyValidator.requireNonBlank(templateName);
         return String.format(RESOURCE_PATH_TEMPLATE, templateName);
     }
+
 }
