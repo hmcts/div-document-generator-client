@@ -45,7 +45,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @PowerMockIgnore("com.microsoft.applicationinsights.*")
 @RunWith(PowerMockRunner.class)
@@ -352,14 +351,13 @@ public class DocumentManagementServiceImplUTest {
         final Map<String, Object> placeholderMap = emptyMap();
         final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
 
-        when(pdfGenerationFactory.getGeneratorType(A_TEMPLATE)).thenReturn(PDF_GENERATOR_TYPE);
         when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
 
         byte[] actual = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual);//TODO - leave this for now until tests are refactored - I think this will fix this test
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);

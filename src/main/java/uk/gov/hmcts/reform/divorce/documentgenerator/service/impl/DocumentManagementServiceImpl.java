@@ -9,6 +9,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactor
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +59,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE;
@@ -125,11 +125,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         Map<String, Object> formattedPlaceholders = placeholders;
 
         // Reform PDF Generator requires formatting for certain characters
-        if (PDF_GENERATOR_TYPE.equals(pdfGenerationFactory.getGeneratorType(templateName))) {
+        PDFGenerationService generatorService = pdfGenerationFactory.getGeneratorService(templateName);
+        if (generatorService instanceof PDFGenerationServiceImpl) {
             formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
         }
 
-        return pdfGenerationFactory.getGeneratorService(templateName).generate(templateName, formattedPlaceholders);
+        return generatorService.generate(templateName, formattedPlaceholders);
     }
 
     private String getCaseId(Map<String, Object> placeholders) {

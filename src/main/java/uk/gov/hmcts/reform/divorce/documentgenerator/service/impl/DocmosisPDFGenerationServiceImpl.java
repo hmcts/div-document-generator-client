@@ -61,6 +61,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
             ResponseEntity<byte[]> response =
                 restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
+
             return response.getBody();
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
@@ -71,8 +72,9 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
         return PdfDocumentRequest.builder()
             .accessKey(pdfServiceAccessKey)
             .templateName(templateName)
-            .outputName("result.pdf")
+            .outputName("result.pdf")//TODO - how do we use the filename?
             .devMode(docmosisDevMode)
             .data(templateDataMapper.map(placeholders)).build();
     }
+
 }

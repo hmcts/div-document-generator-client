@@ -41,7 +41,8 @@ public class PDFGenerationFactory {
         );
     }
 
-    public String getGeneratorType(String templateId) {
+    private String getGeneratorType(String templateId) {
+        //TODO - preparation for refactoring - what happens if I pass an unexisting docmosis template as a parameter - do we want to protect against this?
         return templateConfiguration.getMap().getOrDefault(templateId, PDF_GENERATOR_TYPE);//TODO - THIS SHOULD BE THE VERY FIRST THING - careful changing this. we might have templates that are not listed here but still being passed by clients
     }//TODO - we probably got to a point where Docmosis is the default
 
