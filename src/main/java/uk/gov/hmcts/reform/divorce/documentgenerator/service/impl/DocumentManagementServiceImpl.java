@@ -147,38 +147,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
             //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
             //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
             //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
-            case DRAFT_MINI_PETITION_TEMPLATE_ID:
-                return DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
-            case CO_RESPONDENT_ANSWERS_TEMPLATE_ID:
-                return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
-            case DECREE_NISI_TEMPLATE_ID:
-                return DECREE_NISI_TEMPLATE_NAME;
-            case CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID:
-                return CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
-            case DECREE_ABSOLUTE_TEMPLATE_ID:
-                return DECREE_ABSOLUTE_NAME_FOR_PDF_FILE;
-            case DN_ANSWERS_TEMPLATE_ID:
-                return DECREE_NISI_ANSWERS_TEMPLATE_NAME;
-            case AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID:
-                return AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID:
-                return AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID:
-                return AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID:
-                return AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID:
-                return AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID:
-                return AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_FILE;
-            case AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID:
-                return AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_FILE;
-            case SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID:
-                return SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE;
-            case DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID:
-                return DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE;
-            case DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID:
-                return DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
             default:
                 throw new IllegalArgumentException("Unknown template: " + templateName);
             //TODO - make sure every AC is understood and catered for
