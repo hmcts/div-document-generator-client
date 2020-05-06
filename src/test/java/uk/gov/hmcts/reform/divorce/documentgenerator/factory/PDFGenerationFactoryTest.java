@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)//TODO - we might be able to move this to the TemplateConfigurationTest
 @SpringBootTest
 public class PDFGenerationFactoryTest {
 
@@ -23,9 +23,9 @@ public class PDFGenerationFactoryTest {
 
     @Test
     public void shouldReturnTheRightGeneratorServiceByTemplateName() {
+        //TODO - maybe add all cases in the other test? this will be a configuration test... - I think it can't hurt to over test. Let's do it
         assertThat(classUnderTest.getGeneratorService("aosinvitation"), is(instanceOf(PDFGenerationServiceImpl.class)));
         assertThat(classUnderTest.getGeneratorService("FL-DIV-GNO-ENG-00073.docx"), is(instanceOf(DocmosisPDFGenerationServiceImpl.class)));
-        //TODO - maybe add all cases in the other test? this will be a configuration test...
     }
 
     @Test

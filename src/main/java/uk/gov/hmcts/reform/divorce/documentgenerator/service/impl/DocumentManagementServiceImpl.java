@@ -147,16 +147,10 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
             //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
             //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
             //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
-            case AOS_INVITATION_TEMPLATE_ID:
-                return AOS_INVITATION_NAME_FOR_PDF_FILE;
             case MINI_PETITION_TEMPLATE_ID:
                 return MINI_PETITION_NAME_FOR_PDF_FILE;
             case DRAFT_MINI_PETITION_TEMPLATE_ID:
                 return DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
-            case CO_RESPONDENT_INVITATION_TEMPLATE_ID:
-                return CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
-            case RESPONDENT_ANSWERS_TEMPLATE_ID:
-                return RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case CO_RESPONDENT_ANSWERS_TEMPLATE_ID:
                 return CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
             case CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID:
