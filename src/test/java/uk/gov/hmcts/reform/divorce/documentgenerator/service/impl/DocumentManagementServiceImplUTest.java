@@ -30,31 +30,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentManagementServiceImplUTest {
 
-    private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
-    private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
-    private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
-    private static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
-    private static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
-    private static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
-    private static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00081.docx";
-    private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
-    private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
-    private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
-    private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
-
     private static final String A_TEMPLATE = "a-certain-template";
     private static final String A_TEMPLATE_FILE_NAME = "fileName.pdf";
     private static final String TEST_AUTH_TOKEN = "someToken";
     private static final byte[] TEST_GENERATED_DOCUMENT = new byte[] {1};
 
-    private static final FileUploadResponse EXPECTED_FILE_UPLOAD_RESPONSE = new FileUploadResponse(HttpStatus.OK);
+    private static final FileUploadResponse EXPECTED_FILE_UPLOAD_RESPONSE = new FileUploadResponse(HttpStatus.OK);//TODO - builder
 
     @Rule
     public ExpectedException expectedException = none();
@@ -70,6 +57,9 @@ public class DocumentManagementServiceImplUTest {
 
     @Mock
     private TemplateConfiguration templateConfiguration;
+
+    @Captor
+    private ArgumentCaptor<Map<String, Object>> payloadCaptor;
 
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
@@ -119,9 +109,6 @@ public class DocumentManagementServiceImplUTest {
         verify(evidenceManagementService).storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME);
     }
 
-    @Captor
-    private ArgumentCaptor<Map<String, Object>> payloadCaptor;
-
     @Test
     public void givenPdfGeneratorIsUsed_whenGenerateDocumentWithHtmlCharacters_thenEscapeHtmlCharacters() {
         final Map<String, Object> placeholderMap = new HashMap<>();
@@ -140,81 +127,6 @@ public class DocumentManagementServiceImplUTest {
     }
 
     //TODO - these seem to do a more sensible job and actually just use proper mocks to assert the same thing the ones above do
-    @Test
-    public void whenGenerateCoEDocumentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(COE_TEMPLATE);
-    }
-
-    @Test
-    public void whenGenerateDecreeNisiDocumentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(DECREE_NISI_TEMPLATE);
-    }
-
-    @Test
-    public void whenGenerateCostsOrderDocumentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(COSTS_ORDER_TEMPLATE);
-    }
-
-    @Test
-    public void whenGenerateDNAnswersDocumentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(DN_ANSWERS_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateCaseListForPronouncementWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOfflineInvitationLetterRespondentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOfflineInvitationLetterCoRespondentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOffline2YearSeparationFormWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOffline5YearSeparationFormWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOfflineBehaviourDesertionFormWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOfflineAdulteryFormRespondentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID);
-    }
-
-    @Test
-    public void whenGenerateNameIsAOSOfflineAdulteryFormCoRespondentWithDocmosis_thenProceedAsExpected() {
-        assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
-    }
-
-    private void assertDocumentGenerated(String templateId) {
-        final byte[] expected = {1};
-        final Map<String, Object> placeholderMap = emptyMap();
-
-        when(pdfGenerationFactory.getGeneratorService(templateId)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(templateId, placeholderMap)).thenReturn(expected);
-
-        byte[] actual = classUnderTest.generateDocument(templateId, placeholderMap);
-
-        assertEquals(expected, actual);
-
-        verify(pdfGenerationFactory).getGeneratorService(templateId);
-        verify(pdfGenerationService).generate(templateId, placeholderMap);
-    }
-
     //TODO - these seem to repeat the tests above - with the proper mocking
     @Test
     public void whenGenerateDnClarificationOrderWithDocmosis_thenProceedAsExpected() {
