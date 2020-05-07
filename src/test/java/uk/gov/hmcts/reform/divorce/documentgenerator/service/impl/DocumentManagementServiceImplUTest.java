@@ -8,12 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -30,23 +28,22 @@ import java.util.Map;
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.rules.ExpectedException.none;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 
-@PowerMockIgnore("com.microsoft.applicationinsights.*")
-@RunWith(PowerMockRunner.class)
-@PrepareForTest( {GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
+//@PowerMockIgnore("com.microsoft.applicationinsights.*")
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest( {GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
+@RunWith(MockitoJUnitRunner.class)
 public class DocumentManagementServiceImplUTest {
 
     private static final String A_TEMPLATE = "divorceminipetition";
@@ -74,12 +71,48 @@ public class DocumentManagementServiceImplUTest {
     @Mock
     private EvidenceManagementService evidenceManagementService;
 
+    @Mock
+    private TemplateConfiguration templateConfiguration;
+
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
     @Before
     public void before() {
-        mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
+//        mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
+    }
+
+    @Test
+    public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
+        mockAndSetClock(Instant.now());
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
+
+        classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
+        //TODO - adapt this to new way of testing
+    }
+
+    @Test
+    public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() {
+        final byte[] data = {1};//TODO - should these be constants?
+        final String authToken = "someToken";
+        FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
+        fileUploadResponse.setFileUrl("someUrl");
+        fileUploadResponse.setMimeType("someMimeType");
+        fileUploadResponse.setCreatedOn("someCreatedDate");
+        String templateFileName = "fileName.pdf";
+
+        when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(data);
+        when(templateConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(templateFileName);
+        when(evidenceManagementService.storeDocumentAndGetInfo(eq(data), eq(authToken), eq(templateFileName))).thenReturn(fileUploadResponse);
+
+        GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), authToken);
+
+        assertThat(generatedDocumentInfo.getUrl(), equalTo("someUrl"));
+        assertThat(generatedDocumentInfo.getMimeType(), equalTo("someMimeType"));
+        assertThat(generatedDocumentInfo.getCreatedOn(), equalTo("someCreatedDate"));
+        verify(evidenceManagementService).storeDocumentAndGetInfo(eq(data), eq(authToken), eq(templateFileName));
     }
 
     //TODO - these tests shouldn't really be passing - the fact they are mean they're probably overly mocked
@@ -96,16 +129,14 @@ public class DocumentManagementServiceImplUTest {
 
         final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", filename))
-            .thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", filename)).thenReturn(fileUploadResponse);
         when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
 
         GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test", filename);
 
         assertEquals(expected, actual);
 
-        Mockito.verify(evidenceManagementService, Mockito.times(1))
-            .storeDocumentAndGetInfo(data, "test", filename);
+        verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test", filename);
         verifyStatic(GeneratedDocumentInfoMapper.class);
         GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
     }
@@ -127,9 +158,9 @@ public class DocumentManagementServiceImplUTest {
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(A_TEMPLATE);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
@@ -194,39 +225,6 @@ public class DocumentManagementServiceImplUTest {
         assertDocumentGenerated(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID);
     }
 
-    //TODO - all this is really doing is to test the method "getFileNameFromTemplateName". all this method does is test that the template returns the right filename. - therefore, with the new format, these tests will probably belong somewhere else
-    //TODO - move all of these to the Template Configurator test
-    private void assertGenerateAndStoreDocument(String templateName, String fileName) throws Exception {
-        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
-
-        final byte[] data = {1};
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final Instant instant = Instant.now();
-        final String authToken = "someToken";
-
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
-        expected.setCreatedOn("someCreatedDate");
-        expected.setMimeType("someMimeType");
-        expected.setUrl("someUrl");
-
-        mockAndSetClock(instant);
-
-        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
-        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "storeDocument", byte[].class, String.class, String.class))
-            .withArguments(data, authToken, fileName);
-
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
-
-        assertEquals(expected, actual);
-
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("generateDocument", templateName, placeholderMap);
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("storeDocument", data, authToken, fileName);
-    }
-
     private void assertDocumentGenerated(String templateId) {
         final byte[] expected = {1};
         final Map<String, Object> placeholderMap = emptyMap();
@@ -238,8 +236,8 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1)).getGeneratorService(templateId);
-        Mockito.verify(pdfGenerationService, Mockito.times(1)).generate(templateId, placeholderMap);
+        verify(pdfGenerationFactory, Mockito.times(1)).getGeneratorService(templateId);
+        verify(pdfGenerationService, Mockito.times(1)).generate(templateId, placeholderMap);
     }
 
     //TODO - these seem to repeat the tests above - with the proper mocking
@@ -257,9 +255,9 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID, placeholderMap);
     }
 
@@ -277,9 +275,9 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        Mockito.verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory, Mockito.times(1))
             .getGeneratorService(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID);
-        Mockito.verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID, placeholderMap);
     }
 

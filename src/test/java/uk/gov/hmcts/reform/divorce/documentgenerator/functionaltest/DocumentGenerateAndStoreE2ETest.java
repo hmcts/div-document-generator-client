@@ -749,7 +749,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -772,7 +772,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final String[] claimFrom = new String[] { "correspondent" };
+        final String[] claimFrom = new String[] {"correspondent"};
         final Map<String, Object> caseData = new HashMap<>();
         caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
         caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
@@ -881,11 +881,8 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn()
-        throws Exception {
-        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(
-            AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID
-        );
+    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID);
     }
 
     @Test
@@ -920,25 +917,21 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     private void assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(String templateId) throws Exception {
-        final Map<String, Object> values = new HashMap<>();
-        final String securityToken = "securityToken";
-
+        //TODO - we might have quite a bit of duplication of this code
+        //Given
         final Map<String, Object> caseData = Collections.emptyMap();
-
+        final Map<String, Object> values = new HashMap<>();
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
-        final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(templateId, values);
-
-        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
-
         mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
+        final String securityToken = "securityToken";
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
+        //When
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(templateId, values);
         MvcResult result = webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
             .contentType(MediaType.APPLICATION_JSON)
@@ -946,9 +939,9 @@ public class DocumentGenerateAndStoreE2ETest {
             .andExpect(status().isOk())
             .andReturn();
 
-        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-            result.getResponse().getContentAsString());
-
+        //Then
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo), result.getResponse().getContentAsString());
         mockRestServiceServer.verify();
     }
 
@@ -1059,9 +1052,11 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     private void mockEMClientAPI(HttpStatus expectedResponse, List<FileUploadResponse> fileUploadResponse) {
-        mockRestServiceServer.expect(once(), requestTo(emClientAPIUri)).andExpect(method(HttpMethod.POST))
+        mockRestServiceServer.expect(once(), requestTo(emClientAPIUri))
+            .andExpect(method(HttpMethod.POST))
             .andRespond(withStatus(expectedResponse)
                 .body(ObjectMapperTestUtil.convertObjectToJsonString(fileUploadResponse))
                 .contentType(MediaType.APPLICATION_JSON));
     }
+
 }
