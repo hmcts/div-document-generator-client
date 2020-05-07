@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -14,29 +16,24 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadR
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 
-//@PowerMockIgnore("com.microsoft.applicationinsights.*")
-//@RunWith(PowerMockRunner.class)
-//@PrepareForTest( {GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class, DocumentManagementServiceImpl.class})
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentManagementServiceImplUTest {
 
@@ -87,7 +84,6 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         String unknownTemplateName = "unknown-template";
-        when(pdfGenerationFactory.getGeneratorService(unknownTemplateName)).thenReturn(pdfGenerationService);
         when(templateConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
         expectedException.expect(IllegalArgumentException.class);
@@ -109,8 +105,6 @@ public class DocumentManagementServiceImplUTest {
         verify(evidenceManagementService).storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME));
     }
 
-    //TODO - these tests shouldn't really be passing - the fact they are mean they're probably overly mocked
-
     //TODO - what being tested here? can I move some of it to the factory test?
     //TODO - this class urgently needs to be cleaned up
     //TODO - maybe I should start by writing more sensible tests instead of these
@@ -125,27 +119,24 @@ public class DocumentManagementServiceImplUTest {
         verify(evidenceManagementService).storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME);
     }
 
-    //TODO - this seems to be a bit different - I think it also checks that the HtmlFieldFormatter was called
+    @Captor
+    private ArgumentCaptor<Map<String, Object>> payloadCaptor;
+
     @Test
-    public void whenGenerateDocument_thenProceedAsExpected() {
-        final byte[] expected = {1};
-        final Map<String, Object> placeholderMap = emptyMap();
-        final Map<String, Object> formattedPlaceholderMap = Collections.singletonMap("SomeThing", new Object());
+    public void givenPdfGeneratorIsUsed_whenGenerateDocumentWithHtmlCharacters_thenEscapeHtmlCharacters() {
+        final Map<String, Object> placeholderMap = new HashMap<>();
+        placeholderMap.put("htmlValue", "<b>This should be escaped</b>");
 
-        when(HtmlFieldFormatter.format(placeholderMap)).thenReturn(formattedPlaceholderMap);
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(A_TEMPLATE, formattedPlaceholderMap)).thenReturn(expected);
+        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
+        //TODO - what tests that the formatter is not called? check coverage
 
-        byte[] actual = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
+        byte[] generatedDocument = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
 
-        assertEquals(expected, actual);//TODO - leave this for now until tests are refactored - I think this will fix this test
-
-        verifyStatic(HtmlFieldFormatter.class);
-        HtmlFieldFormatter.format(placeholderMap);
-        verify(pdfGenerationFactory)
-            .getGeneratorService(A_TEMPLATE);
-        verify(pdfGenerationService)
-            .generate(A_TEMPLATE, formattedPlaceholderMap);
+        assertThat(generatedDocument, equalTo(TEST_GENERATED_DOCUMENT));
+        verify(pdfGenerationFactory).getGeneratorService(A_TEMPLATE);
+        verify(pdfGenerationService).generate(eq(A_TEMPLATE), payloadCaptor.capture());
+        assertThat(payloadCaptor.getValue(), hasEntry("htmlValue", "&lt;b&gt;This should be escaped&lt;/b&gt;"));
     }
 
     //TODO - these seem to do a more sensible job and actually just use proper mocks to assert the same thing the ones above do
