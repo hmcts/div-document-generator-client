@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
@@ -38,7 +38,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private EvidenceManagementService evidenceManagementService;
 
     @Autowired
-    private TemplateConfiguration templateConfiguration;
+    private TemplatesConfiguration templatesConfiguration;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
     private String featureToggleRespSolicitor;
@@ -60,7 +60,7 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
 
-        String fileName = templateConfiguration.getFileNameByTemplateName(templateName);
+        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
 
         byte[] generatedDocument = generateDocument(templateName, placeholders);
 

@@ -55,7 +55,7 @@ pdf:
 #TODO - remove the templateConfigurationUnits level (or rename it) - do it last
 document:
     templates:
-        templateConfigurationUnits:
+        configurationList:
             -   templateName: "aosinvitation"
                 filename: "AOSInvitation.pdf"
                 document-generator: "pdfgenerator"

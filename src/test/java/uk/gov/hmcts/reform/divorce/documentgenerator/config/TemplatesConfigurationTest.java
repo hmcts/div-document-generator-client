@@ -59,13 +59,13 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TemplateConfigurationTest {
+public class TemplatesConfigurationTest {
 
     @Rule
     public ExpectedException expectedException = none();
 
     @Autowired
-    private TemplateConfiguration classUnderTest;
+    private TemplatesConfiguration classUnderTest;
 
     @Test
     public void shouldRetrieveFileNameByTemplateName() {

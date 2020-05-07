@@ -3,7 +3,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 
 import java.util.AbstractMap;
@@ -17,14 +17,14 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @Component
 public class PDFGenerationFactory {
 
-    private TemplateConfiguration templateConfiguration;
+    private TemplatesConfiguration templatesConfiguration;
     private Map<String, PDFGenerationService> generatorMap;
 
     @Autowired
-    public PDFGenerationFactory(TemplateConfiguration templateConfiguration,
+    public PDFGenerationFactory(TemplatesConfiguration templatesConfiguration,
                                 @Qualifier("pdfGenerator") PDFGenerationService pdfGenerationService,
                                 @Qualifier("docmosisPdfGenerator") PDFGenerationService docmosisPdfGenerationService) {//TODO - should these be in a constructor? - do it last, if at all
-        this.templateConfiguration = templateConfiguration;
+        this.templatesConfiguration = templatesConfiguration;
 
         // Setup generator type mapping against expected template map values
         this.generatorMap = Stream.of(
@@ -34,7 +34,7 @@ public class PDFGenerationFactory {
     }
 
     public PDFGenerationService getGeneratorService(String templateId) {
-        String generatorServiceName = templateConfiguration.getGeneratorServiceNameByTemplateName(templateId);
+        String generatorServiceName = templatesConfiguration.getGeneratorServiceNameByTemplateName(templateId);
         return generatorMap.get(generatorServiceName);
     }
 

@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
@@ -52,7 +52,7 @@ public class DocumentManagementServiceImplUTest {
     private EvidenceManagementService evidenceManagementService;
 
     @Mock
-    private TemplateConfiguration templateConfiguration;
+    private TemplatesConfiguration templatesConfiguration;
 
     @Captor
     private ArgumentCaptor<Map<String, Object>> payloadCaptor;
@@ -72,7 +72,7 @@ public class DocumentManagementServiceImplUTest {
     public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() {
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
-        when(templateConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(A_TEMPLATE_FILE_NAME);
+        when(templatesConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(A_TEMPLATE_FILE_NAME);
         when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME))).thenReturn(expectedFileUploadResponse);
 
         GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), TEST_AUTH_TOKEN);
@@ -84,7 +84,7 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         String unknownTemplateName = "unknown-template";
-        when(templateConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
+        when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));
