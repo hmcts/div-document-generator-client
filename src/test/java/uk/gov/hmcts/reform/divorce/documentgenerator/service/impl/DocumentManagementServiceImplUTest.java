@@ -1,19 +1,18 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
-import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
@@ -41,7 +40,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentManagementServiceImplUTest {
 
-    private static final String A_TEMPLATE = "divorceminipetition";
     private static final String COE_TEMPLATE = "FL-DIV-GNO-ENG-00020.docx";
     private static final String DECREE_NISI_TEMPLATE = "FL-DIV-GNO-ENG-00021.docx";
     private static final String COSTS_ORDER_TEMPLATE = "FL-DIV-DEC-ENG-00060.docx";
@@ -54,9 +52,12 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
 
-    private static final String TEST_AUTH_TOKEN = "someToken";
+    private static final String A_TEMPLATE = "a-certain-template";
     private static final String A_TEMPLATE_FILE_NAME = "fileName.pdf";
+    private static final String TEST_AUTH_TOKEN = "someToken";
     private static final byte[] TEST_GENERATED_DOCUMENT = new byte[] {1};
+
+    private static final FileUploadResponse EXPECTED_FILE_UPLOAD_RESPONSE = new FileUploadResponse(HttpStatus.OK);
 
     @Rule
     public ExpectedException expectedException = none();
@@ -76,6 +77,13 @@ public class DocumentManagementServiceImplUTest {
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
+    @Before
+    public void setUp() {
+        EXPECTED_FILE_UPLOAD_RESPONSE.setFileUrl("someUrl");
+        EXPECTED_FILE_UPLOAD_RESPONSE.setMimeType("someMimeType");
+        EXPECTED_FILE_UPLOAD_RESPONSE.setCreatedOn("someCreatedDate");//TODO - builder?
+    }
+
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         String unknownTemplateName = "unknown-template";
@@ -90,21 +98,14 @@ public class DocumentManagementServiceImplUTest {
 
     @Test
     public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() {
-        FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
-        fileUploadResponse.setFileUrl("someUrl");
-        fileUploadResponse.setMimeType("someMimeType");
-        fileUploadResponse.setCreatedOn("someCreatedDate");
-
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
         when(templateConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(A_TEMPLATE_FILE_NAME);
-        when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME))).thenReturn(fileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME))).thenReturn(EXPECTED_FILE_UPLOAD_RESPONSE);
 
         GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), TEST_AUTH_TOKEN);
 
-        assertThat(generatedDocumentInfo.getUrl(), equalTo("someUrl"));
-        assertThat(generatedDocumentInfo.getMimeType(), equalTo("someMimeType"));
-        assertThat(generatedDocumentInfo.getCreatedOn(), equalTo("someCreatedDate"));
+        assertGeneratedDocumentInfoIsAsExpected(generatedDocumentInfo);
         verify(evidenceManagementService).storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME));
     }
 
@@ -116,22 +117,12 @@ public class DocumentManagementServiceImplUTest {
 
     @Test
     public void whenStoreDocument_thenProceedAsExpected() {
-        final byte[] data = {1};
-        final String filename = "someFileName";
-        final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
+        when(evidenceManagementService.storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME)).thenReturn(EXPECTED_FILE_UPLOAD_RESPONSE);
 
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
+        GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.storeDocument(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME);
 
-        when(evidenceManagementService.storeDocumentAndGetInfo(data, "test", filename)).thenReturn(fileUploadResponse);
-        when(GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse)).thenReturn(expected);
-
-        GeneratedDocumentInfo actual = classUnderTest.storeDocument(data, "test", filename);
-
-        assertEquals(expected, actual);
-
-        verify(evidenceManagementService, Mockito.times(1)).storeDocumentAndGetInfo(data, "test", filename);
-        verifyStatic(GeneratedDocumentInfoMapper.class);
-        GeneratedDocumentInfoMapper.mapToGeneratedDocumentInfo(fileUploadResponse);
+        assertGeneratedDocumentInfoIsAsExpected(generatedDocumentInfo);
+        verify(evidenceManagementService).storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME);
     }
 
     //TODO - this seems to be a bit different - I think it also checks that the HtmlFieldFormatter was called
@@ -151,9 +142,9 @@ public class DocumentManagementServiceImplUTest {
 
         verifyStatic(HtmlFieldFormatter.class);
         HtmlFieldFormatter.format(placeholderMap);
-        verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory)
             .getGeneratorService(A_TEMPLATE);
-        verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService)
             .generate(A_TEMPLATE, formattedPlaceholderMap);
     }
 
@@ -229,8 +220,8 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        verify(pdfGenerationFactory, Mockito.times(1)).getGeneratorService(templateId);
-        verify(pdfGenerationService, Mockito.times(1)).generate(templateId, placeholderMap);
+        verify(pdfGenerationFactory).getGeneratorService(templateId);
+        verify(pdfGenerationService).generate(templateId, placeholderMap);
     }
 
     //TODO - these seem to repeat the tests above - with the proper mocking
@@ -248,9 +239,9 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory)
             .getGeneratorService(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID);
-        verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService)
             .generate(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID, placeholderMap);
     }
 
@@ -268,9 +259,16 @@ public class DocumentManagementServiceImplUTest {
 
         assertEquals(expected, actual);
 
-        verify(pdfGenerationFactory, Mockito.times(1))
+        verify(pdfGenerationFactory)
             .getGeneratorService(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID);
-        verify(pdfGenerationService, Mockito.times(1))
+        verify(pdfGenerationService)
             .generate(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID, placeholderMap);
     }
+
+    private void assertGeneratedDocumentInfoIsAsExpected(GeneratedDocumentInfo generatedDocumentInfo) {
+        assertThat(generatedDocumentInfo.getUrl(), equalTo("someUrl"));
+        assertThat(generatedDocumentInfo.getMimeType(), equalTo("someMimeType"));
+        assertThat(generatedDocumentInfo.getCreatedOn(), equalTo("someCreatedDate"));
+    }
+
 }
