@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -9,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.powermock.reflect.Whitebox;
 import org.springframework.http.HttpStatus;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
@@ -19,8 +17,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInf
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
-import java.time.Clock;
-import java.time.Instant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +29,6 @@ import static org.junit.rules.ExpectedException.none;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
@@ -59,6 +54,10 @@ public class DocumentManagementServiceImplUTest {
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
     private static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
 
+    private static final String TEST_AUTH_TOKEN = "someToken";
+    private static final String A_TEMPLATE_FILE_NAME = "fileName.pdf";
+    private static final byte[] TEST_GENERATED_DOCUMENT = new byte[] {1};
+
     @Rule
     public ExpectedException expectedException = none();
 
@@ -77,42 +76,36 @@ public class DocumentManagementServiceImplUTest {
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
-    @Before
-    public void before() {
-//        mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
-    }
-
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
-        mockAndSetClock(Instant.now());
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
+        String unknownTemplateName = "unknown-template";
+        when(pdfGenerationFactory.getGeneratorService(unknownTemplateName)).thenReturn(pdfGenerationService);
+        when(templateConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
-        classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
-        //TODO - adapt this to new way of testing
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));
+
+        classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
     }
 
     @Test
     public void givenTemplateNameIsAosInvitation_whenGenerateAndStoreDocument_thenProceedAsExpected() {
-        final byte[] data = {1};//TODO - should these be constants?
-        final String authToken = "someToken";
         FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
         fileUploadResponse.setFileUrl("someUrl");
         fileUploadResponse.setMimeType("someMimeType");
         fileUploadResponse.setCreatedOn("someCreatedDate");
-        String templateFileName = "fileName.pdf";
 
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(data);
-        when(templateConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(templateFileName);
-        when(evidenceManagementService.storeDocumentAndGetInfo(eq(data), eq(authToken), eq(templateFileName))).thenReturn(fileUploadResponse);
+        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
+        when(templateConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(A_TEMPLATE_FILE_NAME);
+        when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME))).thenReturn(fileUploadResponse);
 
-        GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), authToken);
+        GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), TEST_AUTH_TOKEN);
 
         assertThat(generatedDocumentInfo.getUrl(), equalTo("someUrl"));
         assertThat(generatedDocumentInfo.getMimeType(), equalTo("someMimeType"));
         assertThat(generatedDocumentInfo.getCreatedOn(), equalTo("someCreatedDate"));
-        verify(evidenceManagementService).storeDocumentAndGetInfo(eq(data), eq(authToken), eq(templateFileName));
+        verify(evidenceManagementService).storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME));
     }
 
     //TODO - these tests shouldn't really be passing - the fact they are mean they're probably overly mocked
@@ -279,12 +272,5 @@ public class DocumentManagementServiceImplUTest {
             .getGeneratorService(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID);
         verify(pdfGenerationService, Mockito.times(1))
             .generate(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID, placeholderMap);
-    }
-
-    private void mockAndSetClock(Instant instant) {
-        final Clock clock = mock(Clock.class);
-        when(clock.instant()).thenReturn(instant);
-
-        Whitebox.setInternalState(classUnderTest, "clock", clock);
     }
 }
