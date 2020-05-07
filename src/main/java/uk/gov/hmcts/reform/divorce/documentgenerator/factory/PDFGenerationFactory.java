@@ -36,6 +36,8 @@ public class PDFGenerationFactory {
 
     public PDFGenerationService getGeneratorService(String templateId) {
         //TODO - we could even remove all of the docmosis template
+
+        //TODO - when I comment this, I should see tests break - the DocumentManagementServiceImpl test - try this next
         return generatorMap.get(
             getGeneratorType(templateId)
         );
