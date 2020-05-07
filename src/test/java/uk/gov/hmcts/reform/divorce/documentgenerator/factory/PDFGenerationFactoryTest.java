@@ -38,8 +38,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @SpringBootTest
 public class PDFGenerationFactoryTest {
 
-    //TODO - possibly some of the logic that should be here will be in DocumentManagementServiceImplUTest :(
-
     @Autowired
     private PDFGenerationFactory classUnderTest;
 
@@ -75,5 +73,4 @@ public class PDFGenerationFactoryTest {
         assertThat(classUnderTest.getGeneratorService("non-existent-template"), is(instanceOf(PDFGenerationServiceImpl.class)));
     }
 
-    //TODO - look into unit test warnings - do it last
 }

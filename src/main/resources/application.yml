@@ -52,7 +52,7 @@ pdf:
     test:
         enabled: false
 
-#TODO - here's the duplication - we probably don't need both of these
+#TODO - remove the templateConfigurationUnits level (or rename it) - do it last
 document:
     templates:
         templateConfigurationUnits:
@@ -122,28 +122,6 @@ document:
             -   templateName: "FL-DIV-DEC-ENG-00098.docx"
                 filename: "DecreeNisiRefusalOrder.pdf"
                 document-generator: "docmosis"
-        map:
-            aosinvitation: "pdfgenerator"
-            co-respondentinvitation: "pdfgenerator"
-            co-respondent-answers: "pdfgenerator"
-            divorceminipetition: "pdfgenerator"
-            respondentAnswers: "pdfgenerator"
-            FL-DIV-GNO-ENG-00020.docx: "docmosis"
-            FL-DIV-GNO-ENG-00021.docx: "docmosis"
-            FL-DIV-DEC-ENG-00060.docx: "docmosis"
-            FL-DIV-GNO-ENG-00059.docx: "docmosis"
-            FL-DIV-GOR-ENG-00062.docx: "docmosis"
-            FL-DIV-GNO-ENG-00022.docx: "docmosis"
-            FL-DIV-LET-ENG-00075.doc: "docmosis"
-            FL-DIV-LET-ENG-00076.doc: "docmosis"
-            FL-DIV-GNO-ENG-00073.docx: "docmosis"
-            FL-DIV-APP-ENG-00080.docx: "docmosis"
-            FL-DIV-APP-ENG-00081.docx: "docmosis"
-            FL-DIV-APP-ENG-00082.docx: "docmosis"
-            FL-DIV-APP-ENG-00083.docx: "docmosis"
-            FL-DIV-APP-ENG-00084.docx: "docmosis"
-            FL-DIV-DEC-ENG-00088.docx: "docmosis"
-            FL-DIV-DEC-ENG-00098.docx: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"

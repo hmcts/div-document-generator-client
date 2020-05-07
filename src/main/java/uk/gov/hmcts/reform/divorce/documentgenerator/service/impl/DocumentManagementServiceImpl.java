@@ -23,6 +23,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class DocumentManagementServiceImpl implements DocumentManagementService {
+
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 
@@ -68,8 +69,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
         return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
-    //TODO - could I remove power mock from dependencies (very last thing)
-
     @Override
     public GeneratedDocumentInfo storeDocument(byte[] document, String authorizationToken, String fileName) {
         log.debug("Store document requested with document of size [{}]", document.length);
@@ -102,13 +101,11 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     //TODO - phase 1 - add a default name for my new template
     //TODO - last phase - after everything else is done, add an optional file name parameter
-    private String getFileNameFromTemplateName(String templateName) {//TODO - I remember this was one of the issues. This is duplicated somewhere else as well
-        //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
-        //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
-        //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
-        //TODO - make sure every AC is understood and catered for
-        //TODO - I probably need to call the new method from here - or instead of this
-        return null;
-    }
+    //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
+    //  a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
+    //  we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
+    //TODO - make sure every AC is understood and catered for
+
+    //TODO - could I remove power mock from dependencies (very last thing)
 
 }
