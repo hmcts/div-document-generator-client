@@ -143,14 +143,12 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     //TODO - last phase - after everything else is done, add an optional file name parameter
 
     private String getFileNameFromTemplateName(String templateName) {//TODO - I remember this was one of the issues. This is duplicated somewhere else as well
-        switch (templateName) {//TODO - we could implement something better than a switch statement
-            //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
-            //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
-            //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
-            default:
-                throw new IllegalArgumentException("Unknown template: " + templateName);
-            //TODO - make sure every AC is understood and catered for
-        }
+        //TODO - design decision - should COS know about the template name? or should it only know about a logical name? On the one hand, COS would know less about implementation details, on the other hand, we'd have to touch DGS for every new document
+        //TODO - a good gain would be if we could not touch DGS for new templates - every new story would be easier to implement
+        //TODO - we might want to take an optional parameter with the file name - what do we do if it's not passed? maybe we give the user the choice to put it the map. if it's not in the map and not in the parameter, then we fail the request
+        //TODO - make sure every AC is understood and catered for
+        //TODO - I probably need to call the new method from here - or instead of this
+        return null;
     }
 
 }

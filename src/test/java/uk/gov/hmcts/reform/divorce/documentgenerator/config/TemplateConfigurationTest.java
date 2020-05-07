@@ -1,6 +1,8 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.config;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
+import static org.junit.rules.ExpectedException.none;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
@@ -58,6 +61,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @SpringBootTest
 public class TemplateConfigurationTest {
 
+    @Rule
+    public ExpectedException expectedException = none();
+
     @Autowired
     private TemplateConfiguration templateConfiguration;
 
@@ -87,13 +93,13 @@ public class TemplateConfigurationTest {
         assertThat(templateConfiguration.getFileNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID), is(DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE));
     }
 
-    //TODO - what about non-existent ones? replicate the existing behaviour
     @Test
-    public void shouldThrowExceptionWhenUnknownTemplateIsRequested(){
-        fail("Implement this");
-        //TODO - is this really the behaviour I want. Check if this will replicate existing behaviour for the code as a whole
-        //default:
-        //  throw new IllegalArgumentException("Unknown template: " + templateName);
+    public void shouldThrowExceptionWhenUnknownTemplateIsRequested() {
+        String templateName = "unknown-template";
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Unknown template: " + templateName);
+
+        templateConfiguration.getFileNameByTemplateName(templateName);
     }
 
     @Test

@@ -2,17 +2,16 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data//TODO - reconsider these annotations
 @Component
 @ConfigurationProperties(prefix = "document.templates", ignoreUnknownFields = false)
-@EnableConfigurationProperties//TODO - probably don't need this
 public class TemplateConfiguration {
 
     private Map<String, String> map;
@@ -23,10 +22,11 @@ public class TemplateConfiguration {
     private Map<String, TemplateConfigurationUnit> templateConfig;//TODO - rename this
 
     public String getFileNameByTemplateName(String templateName) {
-//        return templateConfigurationUnits.get(templateName).getFileName();
         this.templateConfig = templateConfigurationUnits.stream().collect(Collectors.toMap(t -> t.getTemplateName(), t -> t));//TODO - load this only once
 
-        return templateConfig.get(templateName).getFileName();
+        return Optional.ofNullable(templateConfig.get(templateName))
+            .orElseThrow(() -> new IllegalArgumentException("Unknown template: " + templateName))
+            .getFileName();
         //TODO - write tests for when template name is duplicated
     }
 

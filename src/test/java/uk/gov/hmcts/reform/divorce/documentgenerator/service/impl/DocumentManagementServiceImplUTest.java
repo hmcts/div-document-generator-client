@@ -82,87 +82,11 @@ public class DocumentManagementServiceImplUTest {
         mockStatic(GeneratedDocumentInfoMapper.class, HtmlFieldFormatter.class);
     }
 
+    //TODO - these tests shouldn't really be passing - the fact they are mean they're probably overly mocked
+
     //TODO - what being tested here? can I move some of it to the factory test?
     //TODO - this class urgently needs to be cleaned up
     //TODO - maybe I should start by writing more sensible tests instead of these
-
-    @Test
-    public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
-        mockAndSetClock(Instant.now());
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: unknown-template"));
-
-        classUnderTest.generateAndStoreDocument("unknown-template", new HashMap<>(), "some-auth-token");
-    }
-
-    //TODO - these ones seem to be much the same, but with no code being reused
-    @Test
-    public void whenGenerateAndStoreDocument_givenTemplateIsDnClarificationOrder_thenProceedAsExpected()
-        throws Exception {
-
-        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
-
-        final byte[] data = {1};
-        final String templateName = DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final Instant instant = Instant.now();
-        final String authToken = "someToken";
-
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
-        expected.setCreatedOn("someCreatedDate");
-        expected.setMimeType("someMimeType");
-        expected.setUrl("someUrl");
-
-        mockAndSetClock(instant);
-
-        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
-        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "storeDocument", byte[].class, String.class, String.class))
-            .withArguments(data, authToken, DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
-
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
-
-        assertEquals(expected, actual);
-
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("generateDocument", templateName, placeholderMap);
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("storeDocument", data, authToken, DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE);
-    }
-
-    @Test
-    public void whenGenerateAndStoreDocument_givenTemplateIsDnRefusalOrder_thenProceedAsExpected() throws Exception {
-        final DocumentManagementServiceImpl classUnderTest = spy(new DocumentManagementServiceImpl());
-
-        final byte[] data = {1};
-        final String templateName = DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        final GeneratedDocumentInfo expected = new GeneratedDocumentInfo();
-        final Instant instant = Instant.now();
-        final String authToken = "someToken";
-
-        expected.setCreatedOn("someCreatedDate");
-        expected.setMimeType("someMimeType");
-        expected.setUrl("someUrl");
-
-        mockAndSetClock(instant);
-
-        doReturn(data).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "generateDocument", String.class, Map.class)).withArguments(templateName, placeholderMap);
-        doReturn(expected).when(classUnderTest, MemberMatcher.method(DocumentManagementServiceImpl.class,
-            "storeDocument", byte[].class, String.class, String.class))
-            .withArguments(data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
-
-        GeneratedDocumentInfo actual = classUnderTest.generateAndStoreDocument(templateName, placeholderMap, authToken);
-
-        assertEquals(expected, actual);
-
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("generateDocument", templateName, placeholderMap);
-        verifyPrivate(classUnderTest, Mockito.times(1))
-            .invoke("storeDocument", data, authToken, DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE);
-    }
 
     @Test
     public void whenStoreDocument_thenProceedAsExpected() {
