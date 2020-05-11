@@ -14,6 +14,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadR
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 
 import java.util.HashMap;
 
@@ -43,7 +44,7 @@ public class DocumentManagementServiceImplUTest {
     private PDFGenerationFactory pdfGenerationFactory;
 
     @Mock
-    private PDFGenerationServiceImpl pdfGenerationService;//TODO - this is wrong, but it passes the tests for now
+    private PDFGenerationService pdfGenerationService;
 
     @Mock
     private EvidenceManagementService evidenceManagementService;
