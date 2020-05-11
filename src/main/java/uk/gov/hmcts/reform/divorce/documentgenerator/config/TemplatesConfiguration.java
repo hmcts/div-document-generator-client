@@ -37,6 +37,8 @@ public class TemplatesConfiguration {
         return Optional.ofNullable(templateConfigurationMap.get(templateName))
             .map(TemplateConfiguration::getDocumentGenerator)
             .orElse(PDF_GENERATOR_TYPE);
+        //TODO - for next PR - make docmosis the default engine and take a file name as an optional parameter - the only downside is that the docmosis service would fail the request. this might be ok
+
     }
 
 }

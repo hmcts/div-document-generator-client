@@ -154,6 +154,7 @@ public class TemplatesConfigurationTest {
 
     @Test
     public void shouldReturnDefaultGeneratorForNonExistentTemplate() {
+        //TODO - think about consequences of making docmosis the default one - if we come to it - next PR
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName("non-existent-template"), is(PDF_GENERATOR_TYPE));
     }
 
