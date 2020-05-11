@@ -15,6 +15,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocu
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -72,7 +73,9 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
         headers.add(SERVICE_AUTHORIZATION_HEADER, serviceAuthToken);
 
-        GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), placeholders);
+        // Reform PDF Generator requires formatting for certain characters
+        Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
+        GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), formattedPlaceholders);
 
         try {
             return new HttpEntity<>(objectMapper.writeValueAsString(request), headers);
@@ -80,4 +83,5 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
             throw new PDFGenerationException("Failed to convert PDF request into JSON", e);
         }
     }
+
 }

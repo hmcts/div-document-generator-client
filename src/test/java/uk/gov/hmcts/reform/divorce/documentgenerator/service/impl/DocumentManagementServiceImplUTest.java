@@ -5,8 +5,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -18,10 +16,9 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactor
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 
 import java.util.HashMap;
-import java.util.Map;
 
+import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.ArgumentMatchers.any;
@@ -54,9 +51,6 @@ public class DocumentManagementServiceImplUTest {
     @Mock
     private TemplatesConfiguration templatesConfiguration;
 
-    @Captor
-    private ArgumentCaptor<Map<String, Object>> payloadCaptor;
-
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
 
@@ -82,14 +76,15 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
-        String unknownTemplateName = "unknown-template";
-        when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
+    public void givenPdfGeneratorIsUsed_whenGenerateDocumentWithHtmlCharacters_thenEscapeHtmlCharacters() {
+        when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
+        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
 
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));
+        byte[] generatedDocument = classUnderTest.generateDocument(A_TEMPLATE, new HashMap<>());
 
-        classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
+        assertThat(generatedDocument, equalTo(TEST_GENERATED_DOCUMENT));
+        verify(pdfGenerationFactory).getGeneratorService(A_TEMPLATE);
+        verify(pdfGenerationService).generate(eq(A_TEMPLATE), eq(emptyMap()));
     }
 
     @Test
@@ -103,21 +98,14 @@ public class DocumentManagementServiceImplUTest {
     }
 
     @Test
-    public void givenPdfGeneratorIsUsed_whenGenerateDocumentWithHtmlCharacters_thenEscapeHtmlCharacters() {
-        final Map<String, Object> placeholderMap = new HashMap<>();
-        placeholderMap.put("htmlValue", "<b>This should be escaped</b>");
+    public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
+        String unknownTemplateName = "unknown-template";
+        when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
-        when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
-        when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
-        //TODO - what tests that the formatter is not called? check coverage
-        //TODO - should this be done in the documentGeneratorService?
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));
 
-        byte[] generatedDocument = classUnderTest.generateDocument(A_TEMPLATE, placeholderMap);
-
-        assertThat(generatedDocument, equalTo(TEST_GENERATED_DOCUMENT));
-        verify(pdfGenerationFactory).getGeneratorService(A_TEMPLATE);
-        verify(pdfGenerationService).generate(eq(A_TEMPLATE), payloadCaptor.capture());
-        assertThat(payloadCaptor.getValue(), hasEntry("htmlValue", "&lt;b&gt;This should be escaped&lt;/b&gt;"));
+        classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
     }
 
     private void assertGeneratedDocumentInfoIsAsExpected(GeneratedDocumentInfo generatedDocumentInfo) {

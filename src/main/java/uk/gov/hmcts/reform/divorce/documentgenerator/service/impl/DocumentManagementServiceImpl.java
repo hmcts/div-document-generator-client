@@ -11,7 +11,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInf
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.DocumentManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 
 import java.text.SimpleDateFormat;
 import java.time.Clock;
@@ -82,18 +81,10 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Override
     public byte[] generateDocument(String templateName, Map<String, Object> placeholders) {
-        log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
-            templateName, placeholders.size());
+        log.debug("Generate document requested with templateName [{}], placeholders of size[{}]", templateName, placeholders.size());
 
-        Map<String, Object> formattedPlaceholders = placeholders;
-
-        // Reform PDF Generator requires formatting for certain characters
         PDFGenerationService generatorService = pdfGenerationFactory.getGeneratorService(templateName);
-        if (generatorService instanceof PDFGenerationServiceImpl) {
-            formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
-        }
-
-        return generatorService.generate(templateName, formattedPlaceholders);
+        return generatorService.generate(templateName, placeholders);
     }
 
     private String getCaseId(Map<String, Object> placeholders) {

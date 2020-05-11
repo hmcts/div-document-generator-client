@@ -20,11 +20,13 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocu
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyMap;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -44,7 +46,6 @@ public class PDFGenerationServiceImplUTest {
 
     private static final String TEST_SERVICE_TOKEN = "serviceToken";
     private static final String TEST_JSON_PAYLOAD = "{'transformedName':'transformedValue'}";
-    private static final Map<String, Object> TEST_PLACEHOLDERS = Collections.emptyMap();
     private static final String TEST_TEMPLATE_NAME = "testTemplateName";
     private static final byte[] TEST_TEMPLATE_CONTENT = {1, 2, 3};
     private static final byte[] TEST_PDF_FILE_CONTENT = {4, 5, 6};
@@ -64,6 +65,9 @@ public class PDFGenerationServiceImplUTest {
     @Captor
     private ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor;
 
+    @Captor
+    private ArgumentCaptor<GenerateDocumentRequest> generateDocumentRequestArgumentCaptor;
+
     @InjectMocks
     private PDFGenerationServiceImpl classUnderTest = new PDFGenerationServiceImpl(PDF_SERVICE_ENDPOINT);
 
@@ -72,19 +76,23 @@ public class PDFGenerationServiceImplUTest {
         when(serviceTokenGenerator.generate()).thenReturn(TEST_SERVICE_TOKEN);
         when(templateManagementService.getTemplateByName(TEST_TEMPLATE_NAME)).thenReturn(TEST_TEMPLATE_CONTENT);
         when(objectMapper.writeValueAsString(any())).thenReturn(TEST_JSON_PAYLOAD);
-        //TODO - get rid of all comments - last thing
     }
 
     @Test
-    public void givenHttpRequestGoesThrough_whenGenerateFromHtml_thenReturnProperResponse() {
+    public void givenHttpRequestGoesThrough_whenGenerateFromHtml_thenReturnProperResponse() throws JsonProcessingException {
         when(restTemplate.postForObject(eq(PDF_SERVICE_ENDPOINT), any(), eq(byte[].class))).thenReturn(TEST_PDF_FILE_CONTENT);
+        Map<String, Object> placeholders = new HashMap<>();
+        placeholders.put("htmlValue", "<b>This should be escaped</b>");
 
-        byte[] generatedDocument = classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
+        byte[] generatedDocument = classUnderTest.generate(TEST_TEMPLATE_NAME, placeholders);
 
         assertThat(generatedDocument, is(TEST_PDF_FILE_CONTENT));
         verify(serviceTokenGenerator).generate();
         verify(restTemplate).postForObject(eq(PDF_SERVICE_ENDPOINT), httpEntityArgumentCaptor.capture(), eq(byte[].class));
         assertCapturedHttpEntity(httpEntityArgumentCaptor.getValue());
+        verify(objectMapper).writeValueAsString(generateDocumentRequestArgumentCaptor.capture());
+        GenerateDocumentRequest generateDocumentRequest = generateDocumentRequestArgumentCaptor.getValue();
+        assertThat(generateDocumentRequest.getValues(), hasEntry("htmlValue", "&lt;b&gt;This should be escaped&lt;/b&gt;"));
     }
 
     @Test
@@ -92,7 +100,7 @@ public class PDFGenerationServiceImplUTest {
         when(restTemplate.postForObject(eq(PDF_SERVICE_ENDPOINT), any(), eq(byte[].class))).thenThrow(HttpClientErrorException.class);
 
         try {
-            classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
+            classUnderTest.generate(TEST_TEMPLATE_NAME, emptyMap());
             fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
             assertThat(exception.getCause(), is(instanceOf(HttpClientErrorException.class)));
@@ -106,14 +114,14 @@ public class PDFGenerationServiceImplUTest {
 
     @Test
     public void givenObjectMapperThrowsException_whenBuildRequest_thenThrowPDFGenerationException() throws Exception {
-        final GenerateDocumentRequest request = new GenerateDocumentRequest(new String(TEST_TEMPLATE_CONTENT), TEST_PLACEHOLDERS);
+        final GenerateDocumentRequest request = new GenerateDocumentRequest(new String(TEST_TEMPLATE_CONTENT), emptyMap());
         when(objectMapper.writeValueAsString(eq(request))).thenThrow(JsonProcessingException.class);
 
         try {
-            classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
+            classUnderTest.generate(TEST_TEMPLATE_NAME, emptyMap());
             fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
-            assertThat(exception.getCause(), is(instanceOf(JsonProcessingException.class)));//TODO - fix this mess once it's passing - doubly-chained cause
+            assertThat(exception.getCause(), is(instanceOf(JsonProcessingException.class)));
             assertThat(exception.getMessage(), is("Failed to convert PDF request into JSON"));
         }
 
