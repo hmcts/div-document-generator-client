@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.rules.ExpectedException.none;
@@ -132,6 +133,19 @@ public class TemplatesConfigurationTest {
     public void shouldReturnDefaultGeneratorForNonExistentTemplate() {
         //TODO - think about consequences of making docmosis the default one - if we come to it
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName("non-existent-template"), is(PDF_GENERATOR_TYPE));
+    }
+
+    @Test
+    public void shouldThrowAnExceptionWhenTemplateNameIsDuplicated() {
+        TemplatesConfiguration templatesConfiguration = new TemplatesConfiguration();
+        templatesConfiguration.setConfigurationList(asList(
+            new TemplateConfiguration("thisName", null, null),
+            new TemplateConfiguration("thisName", null, null)
+        ));
+
+        expectedException.expect(Exception.class);
+
+        templatesConfiguration.init();
     }
 
 }

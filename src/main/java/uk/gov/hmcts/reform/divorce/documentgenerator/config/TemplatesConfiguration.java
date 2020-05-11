@@ -30,16 +30,11 @@ public class TemplatesConfiguration {
         return Optional.ofNullable(templateConfigurationMap.get(templateName))
             .orElseThrow(() -> new IllegalArgumentException("Unknown template: " + templateName))
             .getFileName();
-        //TODO - write tests for when template name is duplicated
     }
 
     public String getGeneratorServiceNameByTemplateName(String templateName) {
-        //TODO - what happens if I don't find the template - keep behaviour on first PR
         return Optional.ofNullable(templateConfigurationMap.get(templateName)).map(TemplateConfiguration::getDocumentGenerator).orElse(PDF_GENERATOR_TYPE);
-
-        //TODO - preparation for refactoring - what happens if I pass an unexisting docmosis template as a parameter - do we want to protect against this?
-        //  careful changing this. we might have templates that are not listed here but still being passed by clients
-        //TODO - we probably got to a point where Docmosis is the default
+        //TODO - for next PR - make docmosis the default engine and take a file name as an optional parameter - the only downside is that the docmosis service would fail the request. this might be ok
     }
 
 }
