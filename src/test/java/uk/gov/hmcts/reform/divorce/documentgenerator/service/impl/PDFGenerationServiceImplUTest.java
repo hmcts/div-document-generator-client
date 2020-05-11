@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -95,6 +96,7 @@ public class PDFGenerationServiceImplUTest {
             fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
             assertThat(exception.getCause(), is(instanceOf(HttpClientErrorException.class)));
+            assertThat(exception.getMessage(), containsString("Failed to request PDF from REST endpoint"));
         }
 
         verify(serviceTokenGenerator).generate();
@@ -111,7 +113,8 @@ public class PDFGenerationServiceImplUTest {
             classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
             fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
-            assertThat(exception.getCause().getCause(), is(instanceOf(JsonProcessingException.class)));//TODO - fix this mess once it's passing - doubly-chained cause
+            assertThat(exception.getCause(), is(instanceOf(JsonProcessingException.class)));//TODO - fix this mess once it's passing - doubly-chained cause
+            assertThat(exception.getMessage(), is("Failed to convert PDF request into JSON"));
         }
 
         verify(objectMapper).writeValueAsString(eq(request));

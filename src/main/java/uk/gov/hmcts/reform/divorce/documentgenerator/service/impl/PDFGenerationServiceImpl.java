@@ -25,7 +25,7 @@ import java.util.Objects;
 @Slf4j
 public class PDFGenerationServiceImpl implements PDFGenerationService {
     private static final MediaType API_VERSION = MediaType
-            .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
+        .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
 
     private static final String SERVICE_AUTHORIZATION_HEADER = "ServiceAuthorization";
 
@@ -53,12 +53,14 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
         Objects.requireNonNull(placeholders);//TODO - next PR
         byte[] template = templateManagementService.getTemplateByName(templateName);
         log.info("Making request to pdf service to generate pdf document with template bytes of size [{}] "
-              + "and placeholders of size [{}]", template.length, placeholders.size());
+            + "and placeholders of size [{}]", template.length, placeholders.size());
 
         try {
             String authToken = serviceTokenGenerator.generate();
             HttpEntity<String> request = buildRequest(authToken, template, placeholders);
-            return restTemplate.postForObject(pdfServiceEndpoint, request, byte[].class);//restTemplate.postForObject("pdfServiceEndpoint","", byte[].class)
+            return restTemplate.postForObject(pdfServiceEndpoint, request, byte[].class);
+        } catch (PDFGenerationException e) {
+            throw e;
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }
