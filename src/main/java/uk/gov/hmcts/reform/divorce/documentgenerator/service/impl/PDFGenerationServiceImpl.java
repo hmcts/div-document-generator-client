@@ -50,8 +50,8 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
 
     @Override
     public byte[] generate(String templateName, Map<String, Object> placeholders) {
-        NullOrEmptyValidator.requireNonBlank(templateName);//TODO - next PR
-        Objects.requireNonNull(placeholders);//TODO - next PR
+        NullOrEmptyValidator.requireNonBlank(templateName);
+        Objects.requireNonNull(placeholders);
         byte[] template = templateManagementService.getTemplateByName(templateName);
         log.info("Making request to pdf service to generate pdf document with template bytes of size [{}] "
             + "and placeholders of size [{}]", template.length, placeholders.size());

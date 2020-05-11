@@ -22,7 +22,7 @@ public class PDFGenerationFactory {
     @Autowired
     public PDFGenerationFactory(TemplatesConfiguration templatesConfiguration,
                                 PDFGenerationServiceImpl pdfGenerationService,
-                                DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService) {//TODO - should these be in a constructor? - do it last, if at all - next PR
+                                DocmosisPDFGenerationServiceImpl docmosisPdfGenerationService) {
         this.templatesConfiguration = templatesConfiguration;
 
         // Setup generator type mapping against expected template map values

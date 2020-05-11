@@ -28,7 +28,7 @@ public class PDFGenerationFactoryTest {
     private DocmosisPDFGenerationServiceImpl docmosisPDFGenerationService;
 
     @InjectMocks
-    private PDFGenerationFactory classUnderTest;//TODO - run code analysis IntelliJ tool - next PR
+    private PDFGenerationFactory classUnderTest;
 
     @Test
     public void shouldReturnTheRightGeneratorServiceByTemplateName() {
