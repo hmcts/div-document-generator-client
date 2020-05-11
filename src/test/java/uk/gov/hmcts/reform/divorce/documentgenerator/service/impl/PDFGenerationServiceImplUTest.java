@@ -5,15 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,34 +19,34 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.powermock.api.mockito.PowerMockito.doNothing;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.doThrow;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_PDF;
 
-@PowerMockIgnore("com.microsoft.applicationinsights.*")
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({PDFGenerationServiceImpl.class, NullOrEmptyValidator.class, Objects.class})
+@RunWith(MockitoJUnitRunner.class)
 public class PDFGenerationServiceImplUTest {
 
-    private static final MediaType API_VERSION = MediaType
-            .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
-
+    private static final MediaType API_VERSION = MediaType.valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
     private static final String SERVICE_AUTHORIZATION_HEADER = "ServiceAuthorization";
-
     private static final String PDF_SERVICE_ENDPOINT = "pdf_service_endpoint";
+
+    private static final String TEST_SERVICE_TOKEN = "serviceToken";
+    private static final String TEST_JSON_PAYLOAD = "{'transformedName':'transformedValue'}";
+    private static final Map<String, Object> TEST_PLACEHOLDERS = Collections.emptyMap();
+    private static final String TEST_TEMPLATE_NAME = "testTemplateName";
+    private static final byte[] TEST_TEMPLATE_CONTENT = {1, 2, 3};
+    private static final byte[] TEST_PDF_FILE_CONTENT = {4, 5, 6};
 
     @Mock
     private RestTemplate restTemplate;
@@ -64,157 +60,69 @@ public class PDFGenerationServiceImplUTest {
     @Mock
     private AuthTokenGenerator serviceTokenGenerator;
 
+    @Captor
+    private ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor;
+
     @InjectMocks
-    @Spy
-    private final PDFGenerationServiceImpl classUnderTest = new PDFGenerationServiceImpl();
+    private PDFGenerationServiceImpl classUnderTest = new PDFGenerationServiceImpl(PDF_SERVICE_ENDPOINT);
 
     @Before
-    public void before() {
-        Whitebox.setInternalState(classUnderTest, "pdfServiceEndpoint", PDF_SERVICE_ENDPOINT);
-        mockStatic(NullOrEmptyValidator.class, Objects.class);
+    public void setUp() throws JsonProcessingException {
+        when(serviceTokenGenerator.generate()).thenReturn(TEST_SERVICE_TOKEN);
+        when(templateManagementService.getTemplateByName(TEST_TEMPLATE_NAME)).thenReturn(TEST_TEMPLATE_CONTENT);
+        when(objectMapper.writeValueAsString(any())).thenReturn(TEST_JSON_PAYLOAD);
+        //TODO - get rid of all comments - last thing
     }
 
     @Test
-    public void givenHttpClientErrorExceptionThrown_whenGenerateFromHtml_thenThrowPDFGenerationException() throws Exception {
-        final String template = "1";
-        final Map<String, Object> placeholders = Collections.emptyMap();
-        final String serviceToken = "serviceToken";
+    public void givenHttpRequestGoesThrough_whenGenerateFromHtml_thenReturnProperResponse() {
+        when(restTemplate.postForObject(eq(PDF_SERVICE_ENDPOINT), any(), eq(byte[].class))).thenReturn(TEST_PDF_FILE_CONTENT);
 
-        final HttpEntity<String> httpEntity = mock(HttpEntity.class);
+        byte[] generatedDocument = classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
 
-        final HttpClientErrorException httpClientErrorException = mock(HttpClientErrorException.class);
+        assertThat(generatedDocument, is(TEST_PDF_FILE_CONTENT));
+        verify(serviceTokenGenerator).generate();
+        verify(restTemplate).postForObject(eq(PDF_SERVICE_ENDPOINT), httpEntityArgumentCaptor.capture(), eq(byte[].class));
+        assertCapturedHttpEntity(httpEntityArgumentCaptor.getValue());
+    }
 
-        doNothing().when(NullOrEmptyValidator.class);
-        NullOrEmptyValidator.requireNonBlank(template);
-        doReturn(placeholders).when(Objects.class);
-        Objects.requireNonNull(placeholders);
-
-        doReturn(serviceToken).when(serviceTokenGenerator).generate();
-
-        doReturn(httpEntity).when(classUnderTest,
-                MemberMatcher.method(PDFGenerationServiceImpl.class, "buildRequest",
-                        String.class, byte[].class, Map.class))
-            .withArguments(serviceToken, template.getBytes(), placeholders);
-
-        when(templateManagementService.getTemplateByName(template)).thenReturn(template.getBytes());
-
-        doThrow(httpClientErrorException).when(restTemplate).postForObject(PDF_SERVICE_ENDPOINT, httpEntity,
-                byte[].class);
+    @Test
+    public void givenHttpClientErrorExceptionThrown_whenGenerateFromHtml_thenThrowPDFGenerationException() {
+        when(restTemplate.postForObject(eq(PDF_SERVICE_ENDPOINT), any(), eq(byte[].class))).thenThrow(HttpClientErrorException.class);
 
         try {
-            classUnderTest.generate(template, placeholders);
-            fail();
+            classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
+            fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
-            assertEquals(httpClientErrorException, exception.getCause());
+            assertThat(exception.getCause(), is(instanceOf(HttpClientErrorException.class)));
         }
 
-        verifyStatic(NullOrEmptyValidator.class);
-        NullOrEmptyValidator.requireNonBlank(template);
-        verifyStatic(Objects.class);
-        Objects.requireNonNull(placeholders);
-        Mockito.verify(serviceTokenGenerator, Mockito.times(1)).generate();
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("buildRequest", serviceToken,
-                template.getBytes(), placeholders);
-        Mockito.verify(restTemplate, Mockito.times(1)).postForObject(PDF_SERVICE_ENDPOINT,
-                httpEntity, byte[].class);
-    }
-
-    @Test
-    public void givenHttpRequestGoesThrough_whenGenerateFromHtml_thenReturnProperResponse() throws Exception {
-        final String template = "1";
-        final byte[] pdfFile = "2".getBytes();
-
-        final Map<String, Object> placeholders = Collections.emptyMap();
-        final String serviceToken = "serviceToken";
-
-        final HttpEntity<String> httpEntity = mock(HttpEntity.class);
-
-        doNothing().when(NullOrEmptyValidator.class);
-        NullOrEmptyValidator.requireNonBlank(template);
-        doReturn(placeholders).when(Objects.class);
-        Objects.requireNonNull(placeholders);
-
-        doReturn(serviceToken).when(serviceTokenGenerator).generate();
-
-        when(templateManagementService.getTemplateByName(template)).thenReturn(template.getBytes());
-
-        doReturn(httpEntity).when(classUnderTest,
-                MemberMatcher.method(PDFGenerationServiceImpl.class, "buildRequest",
-                        String.class, byte[].class, Map.class))
-            .withArguments(serviceToken, template.getBytes(), placeholders);
-
-        doReturn(pdfFile).when(restTemplate).postForObject(PDF_SERVICE_ENDPOINT, httpEntity, byte[].class);
-
-        byte[] actual = classUnderTest.generate(template, placeholders);
-
-        assertEquals(pdfFile, actual);
-
-        verifyStatic(NullOrEmptyValidator.class);
-        NullOrEmptyValidator.requireNonBlank(template);
-        verifyStatic(Objects.class);
-        Objects.requireNonNull(placeholders);
-        Mockito.verify(serviceTokenGenerator, Mockito.times(1)).generate();
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("buildRequest", serviceToken,
-                template.getBytes(), placeholders);
-        Mockito.verify(restTemplate, Mockito.times(1)).postForObject(PDF_SERVICE_ENDPOINT, httpEntity,
-                byte[].class);
+        verify(serviceTokenGenerator).generate();
+        verify(restTemplate).postForObject(eq(PDF_SERVICE_ENDPOINT), httpEntityArgumentCaptor.capture(), eq(byte[].class));
+        assertCapturedHttpEntity(httpEntityArgumentCaptor.getValue());
     }
 
     @Test
     public void givenObjectMapperThrowsException_whenBuildRequest_thenThrowPDFGenerationException() throws Exception {
-        final String serviceToken = "serviceToken";
-        final byte[] template = {1};
-        Map<String, Object> placeholders = Collections.emptyMap();
-
-        final JsonProcessingException jsonProcessingException = mock(JsonProcessingException.class);
-
-        final GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), placeholders);
-
-        when(objectMapper.writeValueAsString(request)).thenThrow(jsonProcessingException);
+        final GenerateDocumentRequest request = new GenerateDocumentRequest(new String(TEST_TEMPLATE_CONTENT), TEST_PLACEHOLDERS);
+        when(objectMapper.writeValueAsString(eq(request))).thenThrow(JsonProcessingException.class);
 
         try {
-            buildRequest(serviceToken, template, placeholders);
-            fail();
+            classUnderTest.generate(TEST_TEMPLATE_NAME, TEST_PLACEHOLDERS);
+            fail("Should have thrown exception");
         } catch (PDFGenerationException exception) {
-            assertEquals(jsonProcessingException, exception.getCause());
+            assertThat(exception.getCause().getCause(), is(instanceOf(JsonProcessingException.class)));//TODO - fix this mess once it's passing - doubly-chained cause
         }
 
-        Mockito.verify(objectMapper, Mockito.times(1)).writeValueAsString(request);
+        verify(objectMapper).writeValueAsString(eq(request));
     }
 
-    @Test
-    public void givenNoErrors_whenBuildRequest_thenReturnRequest() throws Exception {
-        final String serviceToken = "serviceToken";
-        final byte[] template = {1};
-        final Map<String, Object> placeholders = Collections.emptyMap();
-
-        final GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), placeholders);
-
-        final String requestString = "requestString";
-
-        when(objectMapper.writeValueAsString(request)).thenReturn(requestString);
-
-        HttpEntity<String> actual = buildRequest(serviceToken, template, placeholders);
-
-        HttpHeaders httpHeaders = actual.getHeaders();
-
-        assertEquals(requestString, actual.getBody());
-        assertEquals(API_VERSION, httpHeaders.getContentType());
-        assertEquals(MediaType.APPLICATION_PDF, httpHeaders.getAccept().get(0));
-        assertEquals(serviceToken, httpHeaders.get(SERVICE_AUTHORIZATION_HEADER).get(0));
-
-        Mockito.verify(objectMapper, Mockito.times(1)).writeValueAsString(request);
+    private void assertCapturedHttpEntity(HttpEntity capturedHttpEntity) {
+        HttpHeaders httpHeaders = capturedHttpEntity.getHeaders();
+        assertThat(httpHeaders.getContentType(), is(API_VERSION));
+        assertThat(httpHeaders.getAccept(), is(asList(APPLICATION_PDF)));
+        assertThat(httpHeaders.get(SERVICE_AUTHORIZATION_HEADER), is(asList(TEST_SERVICE_TOKEN)));
+        assertThat(capturedHttpEntity.getBody(), is(TEST_JSON_PAYLOAD));
     }
 
-    private HttpEntity<String> buildRequest(String serviceAuthToken, byte[] template,
-                                            Map<String, Object> placeholders) {
-        try {
-            return Whitebox.invokeMethod(classUnderTest, "buildRequest", serviceAuthToken, template,
-                    placeholders);
-        } catch (PDFGenerationException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

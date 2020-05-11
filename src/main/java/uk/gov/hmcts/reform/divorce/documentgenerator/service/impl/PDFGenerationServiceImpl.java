@@ -38,11 +38,14 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
     @Autowired
     private AuthTokenGenerator serviceTokenGenerator;
 
-    @Value("${service.pdf-service.uri}")
-    private String pdfServiceEndpoint;
-
     @Autowired
     private TemplateManagementService templateManagementService;
+
+    private String pdfServiceEndpoint;
+
+    public PDFGenerationServiceImpl(@Value("${service.pdf-service.uri}") String pdfServiceEndpoint) {
+        this.pdfServiceEndpoint = pdfServiceEndpoint;
+    }
 
     @Override
     public byte[] generate(String templateName, Map<String, Object> placeholders) {
@@ -53,17 +56,15 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
               + "and placeholders of size [{}]", template.length, placeholders.size());
 
         try {
-            return restTemplate.postForObject(
-                    pdfServiceEndpoint,
-                    buildRequest(serviceTokenGenerator.generate(), template, placeholders),
-                    byte[].class);
+            String authToken = serviceTokenGenerator.generate();
+            HttpEntity<String> request = buildRequest(authToken, template, placeholders);
+            return restTemplate.postForObject(pdfServiceEndpoint, request, byte[].class);//restTemplate.postForObject("pdfServiceEndpoint","", byte[].class)
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }
     }
 
-    private HttpEntity<String> buildRequest(String serviceAuthToken, byte[] template,
-                                            Map<String, Object> placeholders) {
+    private HttpEntity<String> buildRequest(String serviceAuthToken, byte[] template, Map<String, Object> placeholders) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(API_VERSION);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
