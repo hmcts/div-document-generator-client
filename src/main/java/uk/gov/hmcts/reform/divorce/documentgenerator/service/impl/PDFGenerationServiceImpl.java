@@ -67,7 +67,9 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
         }
     }
 
-    private HttpEntity<String> buildRequest(String serviceAuthToken, byte[] template, Map<String, Object> placeholders) {
+    private HttpEntity<String> buildRequest(String serviceAuthToken,
+                                            byte[] template,
+                                            Map<String, Object> placeholders) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(API_VERSION);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));

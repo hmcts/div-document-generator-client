@@ -68,7 +68,8 @@ public class DocumentManagementServiceImplUTest {
         when(pdfGenerationFactory.getGeneratorService(A_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(eq(A_TEMPLATE), any())).thenReturn(TEST_GENERATED_DOCUMENT);
         when(templatesConfiguration.getFileNameByTemplateName(A_TEMPLATE)).thenReturn(A_TEMPLATE_FILE_NAME);
-        when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME))).thenReturn(expectedFileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(eq(TEST_GENERATED_DOCUMENT), eq(TEST_AUTH_TOKEN), eq(A_TEMPLATE_FILE_NAME)))
+            .thenReturn(expectedFileUploadResponse);
 
         GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.generateAndStoreDocument(A_TEMPLATE, new HashMap<>(), TEST_AUTH_TOKEN);
 
@@ -90,7 +91,8 @@ public class DocumentManagementServiceImplUTest {
 
     @Test
     public void whenStoreDocument_thenProceedAsExpected() {
-        when(evidenceManagementService.storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME)).thenReturn(expectedFileUploadResponse);
+        when(evidenceManagementService.storeDocumentAndGetInfo(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME))
+            .thenReturn(expectedFileUploadResponse);
 
         GeneratedDocumentInfo generatedDocumentInfo = classUnderTest.storeDocument(TEST_GENERATED_DOCUMENT, TEST_AUTH_TOKEN, A_TEMPLATE_FILE_NAME);
 
@@ -101,7 +103,8 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         String unknownTemplateName = "unknown-template";
-        when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName)).thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
+        when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName))
+            .thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));

@@ -14,10 +14,11 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationServic
 
 import java.text.SimpleDateFormat;
 import java.time.Clock;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+
+import static java.util.Collections.emptyMap;
 
 @Service
 @Slf4j
@@ -81,14 +82,15 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Override
     public byte[] generateDocument(String templateName, Map<String, Object> placeholders) {
-        log.debug("Generate document requested with templateName [{}], placeholders of size[{}]", templateName, placeholders.size());
+        log.debug("Generate document requested with templateName [{}], placeholders of size[{}]",
+            templateName, placeholders.size());
 
         PDFGenerationService generatorService = pdfGenerationFactory.getGeneratorService(templateName);
         return generatorService.generate(templateName, placeholders);
     }
 
     private String getCaseId(Map<String, Object> placeholders) {
-        Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails", Collections.emptyMap());
+        Map<String, Object> caseDetails = (Map<String, Object>) placeholders.getOrDefault("caseDetails", emptyMap());
         return (String) caseDetails.get("id");
     }
 

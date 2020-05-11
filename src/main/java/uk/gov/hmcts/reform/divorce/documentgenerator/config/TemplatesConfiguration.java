@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
+import static java.util.stream.Collectors.toMap;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @Component
@@ -23,7 +23,8 @@ public class TemplatesConfiguration {
 
     @PostConstruct
     public void init() {
-        this.templateConfigurationMap = configurationList.stream().collect(Collectors.toMap(TemplateConfiguration::getTemplateName, t -> t));
+        this.templateConfigurationMap = configurationList.stream()
+            .collect(toMap(TemplateConfiguration::getTemplateName, t -> t));
     }
 
     public String getFileNameByTemplateName(String templateName) {
@@ -33,7 +34,9 @@ public class TemplatesConfiguration {
     }
 
     public String getGeneratorServiceNameByTemplateName(String templateName) {
-        return Optional.ofNullable(templateConfigurationMap.get(templateName)).map(TemplateConfiguration::getDocumentGenerator).orElse(PDF_GENERATOR_TYPE);
+        return Optional.ofNullable(templateConfigurationMap.get(templateName))
+            .map(TemplateConfiguration::getDocumentGenerator)
+            .orElse(PDF_GENERATOR_TYPE);
     }
 
 }

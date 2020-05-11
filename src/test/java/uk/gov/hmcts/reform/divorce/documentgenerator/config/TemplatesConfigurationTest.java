@@ -71,28 +71,50 @@ public class TemplatesConfigurationTest {
 
     @Test
     public void shouldRetrieveFileNameByTemplateName() {
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_INVITATION_TEMPLATE_ID), is(AOS_INVITATION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(CO_RESPONDENT_INVITATION_TEMPLATE_ID), is(CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(RESPONDENT_ANSWERS_TEMPLATE_ID), is(RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(CO_RESPONDENT_ANSWERS_TEMPLATE_ID), is(CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(MINI_PETITION_TEMPLATE_ID), is(MINI_PETITION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID), is(CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(COSTS_ORDER_DOCUMENT_ID), is(COSTS_ORDER_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DN_ANSWERS_TEMPLATE_ID), is(DECREE_NISI_ANSWERS_TEMPLATE_NAME));
-        assertThat(classUnderTest.getFileNameByTemplateName(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID), is(CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID), is(DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DECREE_NISI_TEMPLATE_ID), is(DECREE_NISI_TEMPLATE_NAME));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID), is(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID), is(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID), is(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID), is(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID), is(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID), is(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID), is(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID), is(SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DECREE_ABSOLUTE_TEMPLATE_ID), is(DECREE_ABSOLUTE_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID), is(DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID), is(DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_INVITATION_TEMPLATE_ID),
+            is(AOS_INVITATION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(CO_RESPONDENT_INVITATION_TEMPLATE_ID),
+            is(CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(RESPONDENT_ANSWERS_TEMPLATE_ID),
+            is(RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(CO_RESPONDENT_ANSWERS_TEMPLATE_ID),
+            is(CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(MINI_PETITION_TEMPLATE_ID),
+            is(MINI_PETITION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID),
+            is(CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(COSTS_ORDER_DOCUMENT_ID),
+            is(COSTS_ORDER_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DN_ANSWERS_TEMPLATE_ID),
+            is(DECREE_NISI_ANSWERS_TEMPLATE_NAME));
+        assertThat(classUnderTest.getFileNameByTemplateName(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID),
+            is(CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID),
+            is(DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DECREE_NISI_TEMPLATE_ID),
+            is(DECREE_NISI_TEMPLATE_NAME));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID),
+            is(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID),
+            is(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID),
+            is(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID),
+            is(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID),
+            is(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID),
+            is(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID),
+            is(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID),
+            is(SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DECREE_ABSOLUTE_TEMPLATE_ID),
+            is(DECREE_ABSOLUTE_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID),
+            is(DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE));
+        assertThat(classUnderTest.getFileNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID),
+            is(DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE));
     }
 
     @Test
