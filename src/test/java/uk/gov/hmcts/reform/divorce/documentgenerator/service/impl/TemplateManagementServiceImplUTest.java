@@ -1,65 +1,52 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
-import org.junit.Before;
+import org.apache.commons.io.IOUtils;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.ResourceLoader;
+import org.junit.rules.ExpectedException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.exception.ErrorLoadingTemplateException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 
-import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import java.io.IOException;
+import java.io.InputStream;
 
-@PowerMockIgnore("com.microsoft.applicationinsights.*")
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({NullOrEmptyValidator.class, ResourceLoader.class})
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.rules.ExpectedException.none;
+
 public class TemplateManagementServiceImplUTest {
-    private static final String TEMPLATE_NAME = "some_html";
-    private static final String RESOURCE_PATH = "data/templates/some_html.html";
 
-    @InjectMocks
-    private TemplateManagementServiceImpl classUnderTest;
+    @Rule
+    public ExpectedException expectedException = none();
 
-    @Before
-    public void before() {
-        mockStatic(NullOrEmptyValidator.class, ResourceLoader.class);
-    }
+    private static final String TEST_TEMPLATE_NAME = "testtemplate";
+    private static final String RESOURCE_PATH = "data/templates/testtemplate.html";
+
+    private TemplateManagementService classUnderTest = new TemplateManagementServiceImpl();
 
     @Test
-    public void givenATemplateName_whenGetTemplateByName_thenReturnResource() {
-        final byte[] data = {1};
+    public void shouldReturnExistingTemplateAsBytes() throws IOException {
+        try (InputStream resourceAsStream = TemplateManagementServiceImplUTest.class.getClassLoader().getResourceAsStream(RESOURCE_PATH)) {
+            byte[] testTemplateBytes = IOUtils.toByteArray(resourceAsStream);
 
-        when(ResourceLoader.loadResource(RESOURCE_PATH)).thenReturn(data);
+            byte[] actualTemplateBytes = classUnderTest.getTemplateByName(TEST_TEMPLATE_NAME);
 
-        assertEquals(data, classUnderTest.getTemplateByName(TEMPLATE_NAME));
-
-        verifyStatic(ResourceLoader.class);
-        ResourceLoader.loadResource(RESOURCE_PATH);
-    }
-
-    @Test
-    public void givenATemplateName_whenGetResourcePath_thenReturnResourcePath() {
-
-        assertEquals(RESOURCE_PATH, getResourcePath());
-
-        verifyStatic(NullOrEmptyValidator.class);
-        NullOrEmptyValidator.requireNonBlank(TEMPLATE_NAME);
-    }
-
-    private String getResourcePath() {
-        try {
-            return Whitebox.invokeMethod(classUnderTest,
-                            "getResourcePath",
-                                            TemplateManagementServiceImplUTest.TEMPLATE_NAME);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            assertThat(actualTemplateBytes, is(notNullValue()));
+            assertThat(actualTemplateBytes.length, is(greaterThan(0)));
+            assertThat(actualTemplateBytes, equalTo(testTemplateBytes));
         }
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenTemplateNameDoesNotExist() {
+        expectedException.expect(ErrorLoadingTemplateException.class);
+        expectedException.expectMessage(containsString("non-existent-template"));
+
+        classUnderTest.getTemplateByName("non-existent-template");
     }
 
 }
