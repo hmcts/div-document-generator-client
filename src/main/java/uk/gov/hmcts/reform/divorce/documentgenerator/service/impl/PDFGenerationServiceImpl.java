@@ -46,8 +46,8 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
 
     @Override
     public byte[] generate(String templateName, Map<String, Object> placeholders) {
-        NullOrEmptyValidator.requireNonBlank(templateName);//TODO - ?
-        Objects.requireNonNull(placeholders);//TODO - ?
+        NullOrEmptyValidator.requireNonBlank(templateName);//TODO - next PR
+        Objects.requireNonNull(placeholders);//TODO - next PR
         byte[] template = templateManagementService.getTemplateByName(templateName);
         log.info("Making request to pdf service to generate pdf document with template bytes of size [{}] "
               + "and placeholders of size [{}]", template.length, placeholders.size());
@@ -56,8 +56,7 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
             return restTemplate.postForObject(
                     pdfServiceEndpoint,
                     buildRequest(serviceTokenGenerator.generate(), template, placeholders),
-                    byte[].class);//TODO - at worse at fails and at best it generates a blank document - maybe I need to discuss with the team what we want to happen
-            //TODO - I think I can make a decision that I want this to throw an exception that gets translated to a proper error to the user - let's just see if it makes sense to implement it as part of this
+                    byte[].class);
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }

@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -71,7 +70,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
         return PdfDocumentRequest.builder()
             .accessKey(pdfServiceAccessKey)
             .templateName(templateName)
-            .outputName("result.pdf")//TODO - how do we use the filename?
+            .outputName("result.pdf")
             .devMode(docmosisDevMode)
             .data(templateDataMapper.map(placeholders)).build();
     }
