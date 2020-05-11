@@ -24,7 +24,6 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 @Service
 @Slf4j
-@Qualifier("docmosisPdfGenerator")
 public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
     @Autowired

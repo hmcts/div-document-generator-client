@@ -48,6 +48,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DOCMOSIS_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
@@ -105,33 +106,33 @@ public class TemplatesConfigurationTest {
 
     @Test
     public void shouldReturnTheRightPdfGeneratorNameByTemplateId() {
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_INVITATION_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CO_RESPONDENT_INVITATION_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(RESPONDENT_ANSWERS_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CO_RESPONDENT_ANSWERS_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(MINI_PETITION_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID), is("pdfgenerator"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(COSTS_ORDER_DOCUMENT_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_ANSWERS_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DECREE_NISI_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DECREE_ABSOLUTE_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID), is("docmosis"));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID), is("docmosis"));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_INVITATION_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CO_RESPONDENT_INVITATION_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(RESPONDENT_ANSWERS_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CO_RESPONDENT_ANSWERS_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(MINI_PETITION_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID), is(PDF_GENERATOR_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(COSTS_ORDER_DOCUMENT_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_ANSWERS_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DECREE_NISI_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DECREE_ABSOLUTE_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID), is(DOCMOSIS_TYPE));
     }
 
     @Test
     public void shouldReturnDefaultGeneratorForNonExistentTemplate() {
-        //TODO - think about consequences of making docmosis the default one - if we come to it
+        //TODO - think about consequences of making docmosis the default one - if we come to it - next PR
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName("non-existent-template"), is(PDF_GENERATOR_TYPE));
     }
 

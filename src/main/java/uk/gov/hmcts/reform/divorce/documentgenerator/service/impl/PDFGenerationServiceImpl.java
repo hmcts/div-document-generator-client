@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,6 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@Qualifier("pdfGenerator")
 public class PDFGenerationServiceImpl implements PDFGenerationService {
     private static final MediaType API_VERSION = MediaType
             .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
