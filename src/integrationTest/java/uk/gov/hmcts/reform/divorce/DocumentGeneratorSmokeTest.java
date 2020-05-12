@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.is;
 
 @Category(SmokeTest.class)
-public class DocumentGeneratorApplicationTests extends IntegrationTest {
+public class DocumentGeneratorSmokeTest extends IntegrationTest {
 
     @Test
     public void shouldHaveHealthyService() {
