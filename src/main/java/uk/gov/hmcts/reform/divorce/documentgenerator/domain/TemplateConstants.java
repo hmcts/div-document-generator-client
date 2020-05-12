@@ -81,7 +81,9 @@ public class TemplateConstants {
     public static final String WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY = "welshD8PhysicalSeparationDate";
     public static final String WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY =
             "welshD8ReasonForDivorceSeperationDate";
+    public static final String WELSH_COURT_HEARING_DATE_KEY = "welshDateOfHearing";
     public static final String LANGUAGE_PREFERENCE_WELSH_KEY = "LanguagePreferenceWelsh";
     public static final String IS_DRAFT_KEY = "isDraft";
     public static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
+    public static final String WELSH_CURRENT_DATE_KEY = "welshCurrentDate";
 }

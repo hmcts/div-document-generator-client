@@ -93,7 +93,9 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
 
 @Component
 public class TemplateDataMapper {
@@ -330,6 +332,20 @@ public class TemplateDataMapper {
                 data.put(WELSH_LAST_MODIFIED_KEY,
                     localDateToWelshStringConverter.convert((LocalDateTime.parse(lastModifiedTime).toLocalDate())));
             }
+
+            if (Objects.nonNull(data.get(COURT_HEARING_JSON_KEY))) {
+                List<Object> listOfCourtHearings =
+                    mapper.convertValue(data.get(COURT_HEARING_JSON_KEY), ArrayList.class);
+
+                // Last element of the list is the most recent court hearing
+                CcdCollectionMember<Map<String, Object>> latestCourtHearing =
+                    mapper.convertValue(listOfCourtHearings.get(listOfCourtHearings.size() - 1), CcdCollectionMember.class);
+                data.put(WELSH_COURT_HEARING_DATE_KEY,
+                    localDateToWelshStringConverter.convert((String) latestCourtHearing.getValue().get(COURT_HEARING_DATE_KEY)));
+            }
+            data.put(WELSH_CURRENT_DATE_KEY,
+                localDateToWelshStringConverter.convert((LocalDate.now())));
+
         };
 
         Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))

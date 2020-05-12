@@ -74,6 +74,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
@@ -203,6 +205,7 @@ public class TemplateDataMapperTest {
         );
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
         assertEquals(expectedData, actual);
     }
 
@@ -242,6 +245,7 @@ public class TemplateDataMapperTest {
         );
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
         assertEquals(expectedData, actual);
     }
 
@@ -279,6 +283,7 @@ public class TemplateDataMapperTest {
         );
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
         assertEquals("LAST_MODIFIED_KEY set to todays date " , LocalDate.now(),
                 LocalDateTime.parse((String)actual.get(LAST_MODIFIED_KEY)).toLocalDate());
     }
@@ -518,6 +523,9 @@ public class TemplateDataMapperTest {
 
     @Test
     public void givenCourtHearingDateTime_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        when(localDateToWelshStringConverter.convert("2019-10-10")).thenReturn("10 Hydref 2019");
+        when(localDateToWelshStringConverter.convert(LocalDate.parse("2020-04-29"))).thenReturn("29 Ebrill 2020");
+
         Map<String, Object> courtHearingDateTime = new HashMap<>();
         courtHearingDateTime.put(COURT_HEARING_DATE_KEY, "2019-10-10");
         courtHearingDateTime.put(COURT_HEARING_TIME_KEY, "10:30");
@@ -527,17 +535,21 @@ public class TemplateDataMapperTest {
 
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCcdCollectionMember));
-
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        String lastModified = "2020-04-29T22:35:21.717";
         Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+            CASE_DETAILS, ImmutableMap.of(CASE_DATA, caseData, LAST_MODIFIED_KEY, lastModified)
         );
 
         expectedData.putAll(caseData);
         expectedData.put(COURT_HEARING_DATE_KEY, "10 October 2019");
         expectedData.put(COURT_HEARING_TIME_KEY, "10:30");
+        expectedData.put(WELSH_COURT_HEARING_DATE_KEY, "10 Hydref 2019");
+        expectedData.put(LAST_MODIFIED_KEY, lastModified);
+        expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
-
+        actual.remove(WELSH_CURRENT_DATE_KEY);
         assertEquals(expectedData, actual);
     }
 
