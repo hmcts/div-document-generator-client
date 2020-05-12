@@ -1,5 +1,7 @@
 # Document Generator
 
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/hmcts/div-document-generator-client.svg?branch=master)](https://travis-ci.org/hmcts/div-document-generator-client)
 [![codecov](https://codecov.io/gh/hmcts/div-document-generator-client/branch/master/graph/badge.svg)](https://codecov.io/gh/hmcts/div-document-generator-client)
@@ -64,7 +66,7 @@ you can run the application by executing following command:
 
 ```bash
     docker-compose up
-    
+
 ```
 
 As a result the following container(s) will get created and started:
@@ -85,9 +87,9 @@ To run all integration tests locally:
 * Or if using command line:
     * Start the app with AAT config using `./gradlew clean bootRunAat`
     * Start the test with AAT config using `./gradlew clean functional`
-    
+
 If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates), you can re-generate the PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`. The test
-will output generated PDFs to the folder `src/integrationTest/resources/documentgenerator/documents/regenerated`  
+will output generated PDFs to the folder `src/integrationTest/resources/documentgenerator/documents/regenerated`
 
 **Unit tests**
 
