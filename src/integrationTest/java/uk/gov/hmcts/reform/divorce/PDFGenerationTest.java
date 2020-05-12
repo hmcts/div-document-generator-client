@@ -6,7 +6,6 @@ import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.junit.annotations.TestData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+
+import static org.junit.Assert.assertEquals;
 
 @Slf4j
 @RunWith(SerenityParameterizedRunner.class)
@@ -45,10 +46,13 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @Test
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
-        Response actual = generatePdfSuccessfully(inputJson);
         byte[] expected = ResourceLoader.loadResource(expectedOutput);
+        String expectedText = readPdf(expected);
 
-        Assert.assertEquals(readPdf(expected), readPdf(actual.asByteArray()));
+        Response actual = generatePdfSuccessfully(inputJson);
+        String actualText = readPdf(actual.asByteArray());
+
+        assertEquals("Comparison failed for " + inputJson, expectedText, actualText);
     }
 
     /**
@@ -56,34 +60,41 @@ public class PDFGenerationTest extends IntegrationTest {
      * The generated PDFs are stored at `integrationTest/resources/documentgenerator/documents/regenerated`
      *
      * <p>Should be @ignored in master branch.
-     * */
+     */
     @Test
     @Ignore
-    public void ignoreMe_updateGeneratedPdfs() throws Exception  {
+    public void ignoreMe_updateGeneratedPdfs() throws Exception {
         Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
-
         savePdf(responseFromEvidenceManagement.asByteArray());
+    }
+
+    private void savePdf(final byte[] pdf) throws IOException {
+        final File expectedPdfFile = new File("src/integrationTest/resources/" + tempOutput);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(expectedPdfFile)) {
+            fileOutputStream.write(pdf);
+            fileOutputStream.flush();
+        }
     }
 
     private Response generatePdfSuccessfully(String inputJson) throws Exception {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
         Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
         assertMimeType(response, APPLICATION_PDF_MIME_TYPE);
 
         String documentUri = getDocumentStoreURI(response.getBody().jsonPath().get(DOCUMENT_URL_KEY));
         log.info("Read data from Evidence Management service: {}", documentUri);
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-        Assert.assertEquals(String.format("Failed to generate PDF:  %s", documentUri),
-                HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
+        assertEquals(String.format("Failed to generate PDF:  %s", documentUri),
+            HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
 
         return responseFromEvidenceManagement;
     }
 
     private void assertMimeType(final Response response, final String expectedType) {
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
-        Assert.assertEquals(mimeType, expectedType);
+        assertEquals(mimeType, expectedType);
     }
 
     //this is a hack to make this work with the docker container
@@ -95,20 +106,9 @@ public class PDFGenerationTest extends IntegrationTest {
     }
 
     private String readPdf(final byte[] pdf) throws Exception {
-        PDDocument document = PDDocument.load(pdf);
-        PDFTextStripper stripper = new PDFTextStripper();
-        String text = stripper.getText(document);
-
-        document.close();
-
-        return text;
-    }
-
-    private void savePdf(final byte[] pdf) throws IOException {
-        final File expectedPdfFile = new File("src/integrationTest/resources/" + tempOutput);
-        try (FileOutputStream fileOutputStream = new FileOutputStream(expectedPdfFile)) {
-            fileOutputStream.write(pdf);
-            fileOutputStream.flush();
+        try (PDDocument document = PDDocument.load(pdf)) {
+            PDFTextStripper stripper = new PDFTextStripper();
+            return stripper.getText(document);
         }
     }
 }
