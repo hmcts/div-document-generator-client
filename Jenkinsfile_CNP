@@ -45,18 +45,14 @@ withPipeline(type, product, component) {
     }
 
     before('smoketest:aat') {
-        echo 'Setting environment up for smoke test'
         env.test_environment = 'aat'
-        echo "test_environment for smoke test is ${test_environment}"
-
-        environment {
-            test_environment = 'aat'
-        }
-        echo "now test_environment for smoke test is ${test_environment}"
-        //TODO - THIS IS A TEST AND SHOULD NOT BE MERGED TO MASTER
     }
 
     before('functionalTest:aat') {
+        env.test_environment = 'aat'
+    }
+
+    before('smoketest:preview') {
         env.test_environment = 'aat'
     }
 
