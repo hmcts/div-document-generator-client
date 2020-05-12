@@ -44,6 +44,10 @@ withPipeline(type , product, component) {
         echo '${product}-${component} checked out'
     }
 
+    before('smoketest:aat') {
+        env.test_environment = 'aat'
+    }
+
     before('functionalTest:aat') {
         env.test_environment = 'aat'
     }
