@@ -10,7 +10,7 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 
 import static java.util.stream.Collectors.toMap;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DOCMOSIS_TYPE;
 
 @Component
 @ConfigurationProperties(prefix = "document.templates", ignoreUnknownFields = false)
@@ -30,15 +30,14 @@ public class TemplatesConfiguration {
     public String getFileNameByTemplateName(String templateName) {
         return Optional.ofNullable(templateConfigurationMap.get(templateName))
             .orElseThrow(() -> new IllegalArgumentException("Unknown template: " + templateName))
-            .getFileName();
+            .getDefaultFileName();
     }
 
     public String getGeneratorServiceNameByTemplateName(String templateName) {
         return Optional.ofNullable(templateConfigurationMap.get(templateName))
             .map(TemplateConfiguration::getDocumentGenerator)
-            .orElse(PDF_GENERATOR_TYPE);
+            .orElse(DOCMOSIS_TYPE);
         //TODO - for next PR - make docmosis the default engine and take a file name as an optional parameter - the only downside is that the docmosis service would fail the request. this might be ok
-
     }
 
 }

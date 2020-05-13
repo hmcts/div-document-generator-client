@@ -32,8 +32,8 @@ public class PDFGenerationFactory {
         );
     }
 
-    public PDFGenerationService getGeneratorService(String templateId) {
-        String generatorServiceName = templatesConfiguration.getGeneratorServiceNameByTemplateName(templateId);
+    public PDFGenerationService getGeneratorService(String templateName) {
+        String generatorServiceName = templatesConfiguration.getGeneratorServiceNameByTemplateName(templateName);
         return generatorMap.get(generatorServiceName);
     }
 

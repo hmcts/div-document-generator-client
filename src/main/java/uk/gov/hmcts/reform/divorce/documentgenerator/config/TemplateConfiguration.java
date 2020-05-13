@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TemplateConfiguration {
 
     private String templateName;
-    private String fileName;
+    private String defaultFileName;
     private String documentGenerator;
 
 }

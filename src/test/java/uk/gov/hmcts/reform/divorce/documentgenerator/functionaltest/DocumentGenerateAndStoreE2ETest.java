@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static java.util.Collections.emptyMap;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -66,7 +67,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
     "service-auth-provider.service.stub.enabled=false",
     "evidence-management-api.service.stub.enabled=false"})
 @AutoConfigureMockMvc
-public class DocumentGenerateAndStoreE2ETest {
+public class DocumentGenerateAndStoreE2ETest {//TODO - this might be a good place to start as it will give me the clean slate I need to start implementing my new changes
+
     private static final String API_URL = "/version/1/generatePDF";
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
@@ -135,10 +137,9 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenTemplateNameIsNull_whenGenerateAndStoreDocument_thenReturnHttp400() throws Exception {
-        final String template = null;
-        final Map<String, Object> values = Collections.emptyMap();
+        final String templateName = null;
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(templateName, emptyMap());
 
         webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
@@ -149,10 +150,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenTemplateNameIsBlank_whenGenerateAndStoreDocument_thenReturnHttp400() throws Exception {
-        final String template = "  ";
-        final Map<String, Object> values = Collections.emptyMap();
+        final String templateName = "  ";
+        final Map<String, Object> values = emptyMap();
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(templateName, values);
 
         webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
@@ -163,10 +164,10 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenTemplateNotFound_whenGenerateAndStoreDocument_thenReturnHttp400() throws Exception {
-        final String template = "nonExistingTemplate";
-        final Map<String, Object> values = Collections.emptyMap();
+        final String templateName = "nonExistingTemplate";
+        final Map<String, Object> values = emptyMap();
 
-        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(templateName, values);
 
         webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
@@ -177,7 +178,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToAuthService_whenGenerateAndStoreDocument_thenReturnHttp503() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
@@ -192,7 +193,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAuthServiceReturnAuthenticationError_whenGenerateAndStoreDocument_thenReturnHttp401() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
 
@@ -245,7 +246,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToPDFService_whenGenerateAndStoreDocument_thenReturnHttp503() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -265,7 +266,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenPDFServiceReturnNon2xxStatus_whenGenerateAndStoreDocument_thenReturnSameStatus() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -285,7 +286,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenPDFServiceReturnNull_whenGenerateAndStoreDocument_thenReturn400() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -305,7 +306,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenCouldNotConnectToEMClientAPI_whenGenerateAndStoreDocument_thenReturn503() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -326,7 +327,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenEMClientAPIReturnNon2xxStatus_whenGenerateAndStoreDocument_thenReturnSameStatus() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -347,7 +348,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenEMClientAPIReturnDataContainsNon200Status_whenGenerateAndStoreDocument_thenReturn500() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -370,7 +371,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
     @Test
     public void givenAllGoesWell_whenGenerateAndStoreDocument_thenReturn() throws Exception {
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(A_TEMPLATE, values);
@@ -401,7 +402,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForAosInvitation_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String template = "aosinvitation";
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
@@ -432,7 +433,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForDivorceMiniPetition_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String template = "divorceminipetition";
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
@@ -462,7 +463,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForDivorceCoRespondentAos_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String coRespondentTemplate = "co-respondentinvitation";
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest =
@@ -493,7 +494,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForDivorceRespondentAnswers_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String respondentAnsTemplate = "respondentAnswers";
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest =
@@ -524,7 +525,7 @@ public class DocumentGenerateAndStoreE2ETest {
     @Test
     public void givenAllGoesWellForDivorceCoRespondentAnswers_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String coRespondentTemplate = "co-respondent-answers";
-        final Map<String, Object> values = Collections.emptyMap();
+        final Map<String, Object> values = emptyMap();
         final String securityToken = "securityToken";
 
         final GenerateDocumentRequest generateDocumentRequest =
@@ -625,7 +626,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final String securityToken = "securityToken";
 
         final CcdCollectionMember<Map<String, Object>> courtHearingDate = new CcdCollectionMember<>();
-        courtHearingDate.setValue(Collections.emptyMap());
+        courtHearingDate.setValue(emptyMap());
         final Map<String, Object> caseData = Collections.singletonMap(
             COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDate));
 
@@ -919,7 +920,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private void assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(String templateId) throws Exception {
         //TODO - we might have quite a bit of duplication of this code - next PR
         //Given
-        final Map<String, Object> caseData = Collections.emptyMap();
+        final Map<String, Object> caseData = emptyMap();
         final Map<String, Object> values = new HashMap<>();
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
@@ -950,7 +951,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final Map<String, Object> caseData = Collections.emptyMap();
+        final Map<String, Object> caseData = emptyMap();
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
@@ -984,7 +985,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final Map<String, Object> caseData = Collections.emptyMap();
+        final Map<String, Object> caseData = emptyMap();
 
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
