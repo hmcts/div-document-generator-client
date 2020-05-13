@@ -52,76 +52,78 @@ pdf:
     test:
         enabled: false
 
-#TODO - remove the templateConfigurationUnits level (or rename it) - do it last
 document:
     templates:
         configurationList:
-            -   templateName: "aosinvitation"
-                filename: "AOSInvitation.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "co-respondentinvitation"
-                filename: "CoRespondentInvitation.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "co-respondent-answers"
-                filename: "CoRespondentAnswers.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "divorceminipetition"
-                filename: "DivorcePetition.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "divorcedraftminipetition"
-                filename: "DraftDivorcePetition.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "FL-DIV-GNO-ENG-00020.docx"
-                filename: "CertificateOfEntitlement.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-GNO-ENG-00021.docx"
-                filename: "DecreeNisiPronouncement.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-DEC-ENG-00060.docx"
-                filename: "CostsOrder.pdf"
-                document-generator: "docmosis"
-            -   templateName: "respondentAnswers"
-                filename: "RespondentAnswers.pdf"
-                document-generator: "pdfgenerator"
-            -   templateName: "FL-DIV-GNO-ENG-00059.docx"
-                filename: "CaseListForPronouncement.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-GOR-ENG-00062.docx"
-                filename: "DecreeAbsolute.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-GNO-ENG-00022.docx"
-                filename: "DecreeNisiAnswers.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-LET-ENG-00075.doc"
-                filename: "AOSOfflineInvitationLetterRespondent.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-LET-ENG-00076.doc"
-                filename: "AOSOfflineInvitationLetterCoRespondent.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-GNO-ENG-00073.docx"
-                filename: "SolicitorPersonalService.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-APP-ENG-00080.docx"
-                filename: "AOSOffline2YearSeparationForm.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-APP-ENG-00081.docx"
-                filename: "AOSOffline5YearSeparationForm.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-APP-ENG-00082.docx"
-                filename: "AOSOfflineBehaviourDesertionForm.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-APP-ENG-00083.docx"
-                filename: "AOSOfflineAdulteryFormRespondent.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-APP-ENG-00084.docx"
-                filename: "AOSOfflineAdulteryFormCoRespondent.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-DEC-ENG-00088.docx"
-                filename: "DecreeNisiClarificationOrder.pdf"
-                document-generator: "docmosis"
-            -   templateName: "FL-DIV-DEC-ENG-00098.docx"
-                filename: "DecreeNisiRefusalOrder.pdf"
-                document-generator: "docmosis"
+            -   templateName: aosinvitation
+                filename: AOSInvitation.pdf
+                document-generator: pdfgenerator
+            -   templateName: co-respondentinvitation
+                filename: CoRespondentInvitation.pdf
+                document-generator: pdfgenerator
+            -   templateName: co-respondent-answers
+                filename: CoRespondentAnswers.pdf
+                document-generator: pdfgenerator
+            -   templateName: divorceminipetition
+                filename: DivorcePetition.pdf
+                document-generator: pdfgenerator
+            -   templateName: divorcedraftminipetition
+                filename: DraftDivorcePetition.pdf
+                document-generator: pdfgenerator
+            -   templateName: FL-DIV-GNO-ENG-00020.docx
+                filename: CertificateOfEntitlement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00021.docx
+                filename: DecreeNisiPronouncement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00060.docx
+                filename: CostsOrder.pdf
+                document-generator: docmosis
+            -   templateName: respondentAnswers
+                filename: RespondentAnswers.pdf
+                document-generator: pdfgenerator
+            -   templateName: FL-DIV-GNO-ENG-00059.docx
+                filename: CaseListForPronouncement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00062.docx
+                filename: DecreeAbsolute.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00022.docx
+                filename: DecreeNisiAnswers.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00075.doc
+                filename: AOSOfflineInvitationLetterRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00076.doc
+                filename: AOSOfflineInvitationLetterCoRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00073.docx
+                filename: SolicitorPersonalService.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00080.docx
+                filename: AOSOffline2YearSeparationForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00081.docx
+                filename: AOSOffline5YearSeparationForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00082.docx
+                filename: AOSOfflineBehaviourDesertionForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00083.docx
+                filename: AOSOfflineAdulteryFormRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00084.docx
+                filename: AOSOfflineAdulteryFormCoRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00088.docx
+                filename: DecreeNisiClarificationOrder.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00098.docx
+                filename: DecreeNisiRefusalOrder.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00357.docx
+                filename: DecreeNisiGrantedForRespondent.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
