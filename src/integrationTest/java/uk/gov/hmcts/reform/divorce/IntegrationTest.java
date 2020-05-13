@@ -22,7 +22,11 @@ import javax.annotation.PostConstruct;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
 public abstract class IntegrationTest {
+
     private static final String GENERIC_PASSWORD = "genericPassword123";
+
+    @Value("${document.generator.base.uri}")
+    protected String divDocumentGeneratorBaseURI;
 
     @Value("${divorce.document.generator.uri}")
     protected String divDocumentGeneratorURI;
