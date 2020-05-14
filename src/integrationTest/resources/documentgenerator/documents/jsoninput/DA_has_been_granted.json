@@ -7,7 +7,7 @@
             "caseReference": "LV17D80100",
             "addressee": {
                 "name": "John Doe",
-                "formattedAddress": "Respondent formattedAddress, SW9 9PE, value"
+                "formattedAddress": "Petitioner formattedAddress\nSW9 9PE\nLondon"
             },
             "decreeAbsoluteDate": "2020-01-13",
             "ctscContactDetails": {
