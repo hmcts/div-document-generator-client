@@ -124,6 +124,9 @@ document:
             -   templateName: FL-DIV-LET-ENG-00357.docx
                 filename: DecreeNisiGrantedForRespondent.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00355.docx
+                filename: DecreeAbsoluteGrantedLetter.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
