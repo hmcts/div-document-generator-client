@@ -72,6 +72,7 @@ public class TemplateConstants {
     public static final String D8_PHYSICAL_SEPARATION_DATE_KEY = "D8PhysicalSeparationDate";
     public static final String PREVIOUS_ISSUE_DATE_KEY = "PreviousIssueDate";
     public static final String LAST_MODIFIED_KEY = "last_modified";
+    public static final String DATE_OF_DOCUMENT_PRODUCTION = "dateOfDocumentProduction";
     public static final String WELSH_LAST_MODIFIED_KEY = "welsh_last_modified";
     public static final String WELSH_PREVIOUS_ISSUE_DATE_KEY = "welshPreviousIssueDate";
     public static final String WELSH_D8_DIVORCE_WHO_KEY = "welshD8DivorceWho";
@@ -86,4 +87,5 @@ public class TemplateConstants {
     public static final String IS_DRAFT_KEY = "isDraft";
     public static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
     public static final String WELSH_CURRENT_DATE_KEY = "welshCurrentDate";
+    public static final String WELSH_DATE_OF_DOCUMENT_PRODUCTION = "welshDateOfDocumentProduction";
 }
