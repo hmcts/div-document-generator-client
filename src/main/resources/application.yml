@@ -122,6 +122,9 @@ document:
             -   templateName: "FL-DIV-DEC-ENG-00098.docx"
                 filename: "DecreeNisiRefusalOrder.pdf"
                 document-generator: "docmosis"
+            -   templateName: "FL-DIV-GOR-ENG-00355.docx"
+                filename: "DecreeAbsoluteGrantedLetter.pdf"
+                document-generator: "docmosis"
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
