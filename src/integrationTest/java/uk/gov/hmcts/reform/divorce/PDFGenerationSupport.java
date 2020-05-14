@@ -59,7 +59,7 @@ public class PDFGenerationSupport {
             {"solicitor-personal-service"},
             {"decree-nisi-refusal-order-clarification"},
             {"decree-nisi-refusal-order-rejection"},
-            {"DA_has_been_granted"}
+            {"da-granted-letter"}
         });
 
         List testData = new ArrayList(basicTestData);

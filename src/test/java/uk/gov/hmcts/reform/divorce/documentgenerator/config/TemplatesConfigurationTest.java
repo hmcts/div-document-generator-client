@@ -70,8 +70,8 @@ public class TemplatesConfigurationTest {
             is(DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE));
         assertThat(classUnderTest.getFileNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID),
             is(DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE));
-        assertThat(classUnderTest.getFileNameByTemplateName(DA_HAS_BEEN_GRANTED_LETTER_TEMPLATE_ID),
-            is(DA_HAS_BEEN_GRANTED_LETTER_TEMPLATE_NAME));
+        assertThat(classUnderTest.getFileNameByTemplateName(DA_GRANTED_LETTER_TEMPLATE_ID),
+            is(DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class TemplatesConfigurationTest {
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DECREE_ABSOLUTE_TEMPLATE_ID), is(DOCMOSIS_TYPE));
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID), is(DOCMOSIS_TYPE));
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID), is(DOCMOSIS_TYPE));
-        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DA_HAS_BEEN_GRANTED_LETTER_TEMPLATE_ID), is(DOCMOSIS_TYPE));
+        assertThat(classUnderTest.getGeneratorServiceNameByTemplateName(DA_GRANTED_LETTER_TEMPLATE_ID), is(DOCMOSIS_TYPE));
     }
 
     @Test
