@@ -136,7 +136,7 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID,
                 DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DA_GRANTED_LETTER_TEMPLATE_ID,
-                DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
+                DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE)
         );
     }
 
