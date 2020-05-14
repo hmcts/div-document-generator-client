@@ -3,12 +3,6 @@
     "values":{
         "caseDetails":{
             "id":"1517833758870511",
-            "jurisdiction":"DIVORCE",
-            "state":"Issued",
-            "case_type_id":"DIVORCE",
-            "created_date":"2018-02-05T12:29:17.81",
-            "last_modified":"2018-02-05T14:57:11.346",
-            "security_classification":"PUBLIC",
             "case_data":{
                 "petitionerFullName": "John Doe",
                 "respondentFullName": "Jane Doe",

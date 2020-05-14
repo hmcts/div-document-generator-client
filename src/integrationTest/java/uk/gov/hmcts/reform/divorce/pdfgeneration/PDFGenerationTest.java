@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.divorce;
+package uk.gov.hmcts.reform.divorce.pdfgeneration;
 
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.HttpStatus;
+import uk.gov.hmcts.reform.divorce.IntegrationTest;
+import uk.gov.hmcts.reform.divorce.ResourceLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,9 +20,13 @@ import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * For more information on how to run these tests in a useful way, visit "How to: add a new template to DGS" in Confluence.
+ */
 @Slf4j
 @RunWith(SerenityParameterizedRunner.class)
 public class PDFGenerationTest extends IntegrationTest {
+
     private static final String DOCUMENT_URL_KEY = "url";
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
@@ -41,7 +47,7 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        return PDFGenerationSupport.getFormNames(featureToggleRespSolicitor);
+        return PDFGenerationSupport.getTestScenarios(featureToggleRespSolicitor);
     }
 
     @Test
@@ -80,7 +86,7 @@ public class PDFGenerationTest extends IntegrationTest {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
         Response response = callDivDocumentGenerator(requestBody);
-        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        assertEquals("Unexpected status code when generating PDF for " + inputJson, HttpStatus.OK.value(), response.getStatusCode());
         assertMimeType(response, APPLICATION_PDF_MIME_TYPE);
 
         String documentUri = getDocumentStoreURI(response.getBody().jsonPath().get(DOCUMENT_URL_KEY));

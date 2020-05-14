@@ -56,7 +56,7 @@ public abstract class IntegrationTest {
         IntegrationTest.featureToggleRespSolicitor = Boolean.valueOf(toggle);
     }
 
-    IntegrationTest() {
+    public IntegrationTest() {
         this.springMethodIntegration = new SpringIntegrationMethodRule();
     }
 
@@ -67,13 +67,13 @@ public abstract class IntegrationTest {
         }
     }
 
-    Response readDataFromEvidenceManagement(String uri) {
+    public Response readDataFromEvidenceManagement(String uri) {
         getUserToken();
         return EvidenceManagementUtil.readDataFromEvidenceManagement(
             uri, authTokenGenerator.generate(), username);
     }
 
-    Response callDivDocumentGenerator(String requestBody) {
+    public Response callDivDocumentGenerator(String requestBody) {
         return DocumentGeneratorUtil.generatePDF(requestBody,
                                                 divDocumentGeneratorURI,
                                                 getUserToken());
