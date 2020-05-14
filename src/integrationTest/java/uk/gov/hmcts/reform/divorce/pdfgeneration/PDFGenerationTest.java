@@ -20,11 +20,11 @@ import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * For more information on how to run these tests in a useful way, visit "How to: add a new template to DGS" in Confluence.
+ */
 @Slf4j
 @RunWith(SerenityParameterizedRunner.class)
-/**
- * For more information on how to run these tests in a useful way, visit [Confluence page]
- */
 public class PDFGenerationTest extends IntegrationTest {
 
     private static final String DOCUMENT_URL_KEY = "url";
