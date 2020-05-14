@@ -62,7 +62,7 @@ public class PDFGenerationSupport {
             "decree-nisi-refusal-order-clarification",
             "decree-nisi-refusal-order-rejection",
             "DN granted and cost order for respondent",
-            "DN granted for respondent"
+            "DN granted for respondent",
             "da-granted-letter"
         );
 

@@ -8,7 +8,7 @@
                 "caseReference": "LV17D80100",
                 "addressee": {
                     "name": "John Doe",
-                    "formattedAddress": "10 Baker Street\\nAnnex B1\\nBakersville\\nBakershire\\nBK13 B34"
+                    "formattedAddress": "10 Baker Street\nAnnex B1\nBakersville\nBakershire\nBK13 B34"
                 },
                 "letterDate": "2020-01-13",
                 "ctscContactDetails": {
