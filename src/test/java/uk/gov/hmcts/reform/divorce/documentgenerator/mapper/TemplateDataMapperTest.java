@@ -84,6 +84,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
@@ -267,6 +268,7 @@ public class TemplateDataMapperTest {
         caseData.put(D8_DIVORCE_WHO_KEY, "wife");
         caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "2015-11-01");
         caseData.put(DN_APPROVAL_DATE_KEY, "2015-11-01");
+        caseData.put(DECREE_NISI_GRANTED_DATE_KEY, "2015-11-01");
         String lastModified = "2020-04-29T22:35:21.717";
         String accessCode = "3333";
         String caseIdKey = "2222";
@@ -276,6 +278,7 @@ public class TemplateDataMapperTest {
         expectedData.put(WELSH_D8_MARRIAGE_DATE_KEY, "2 Rhagfyr 2012");
         expectedData.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "1 Tachwedd 2015");
         expectedData.put(WELSH_DN_APPROVAL_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, "1 Tachwedd 2015");
         expectedData.putAll(caseData);
         expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
         expectedData.put(LAST_MODIFIED_KEY, lastModified);

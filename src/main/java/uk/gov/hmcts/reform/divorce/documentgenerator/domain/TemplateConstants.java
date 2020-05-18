@@ -73,6 +73,7 @@ public class TemplateConstants {
     public static final String PREVIOUS_ISSUE_DATE_KEY = "PreviousIssueDate";
     public static final String LAST_MODIFIED_KEY = "last_modified";
     public static final String DATE_OF_DOCUMENT_PRODUCTION = "dateOfDocumentProduction";
+    public static final String WELSH_DECREE_NISI_GRANTED_DATE_KEY = "welshDecreeNisiGrantedDate";
     public static final String WELSH_DN_APPROVAL_DATE_KEY = "welshDNApprovalDate";
     public static final String WELSH_LAST_MODIFIED_KEY = "welsh_last_modified";
     public static final String WELSH_PREVIOUS_ISSUE_DATE_KEY = "welshPreviousIssueDate";

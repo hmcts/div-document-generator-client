@@ -95,6 +95,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
@@ -358,9 +359,10 @@ public class TemplateDataMapper {
                 localDateToWelshStringConverter.convert(dateOfDocumentProduction));
 
             Optional.ofNullable(data.get(DN_APPROVAL_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                    data.put(WELSH_DN_APPROVAL_DATE_KEY,
-                        localDateToWelshStringConverter.convert(date)));
+                date -> data.put(WELSH_DN_APPROVAL_DATE_KEY, localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(DECREE_NISI_GRANTED_DATE_KEY)).map(String.class::cast).ifPresent(
+                date -> data.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
 
         };
 
