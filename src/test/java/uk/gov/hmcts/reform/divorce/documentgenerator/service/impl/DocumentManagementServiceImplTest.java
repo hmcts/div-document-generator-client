@@ -9,7 +9,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.EvidenceManagementService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
@@ -17,7 +17,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationServic
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.Collections.singletonMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.rules.ExpectedException.none;
@@ -50,7 +49,7 @@ public class DocumentManagementServiceImplTest {
     private EvidenceManagementService evidenceManagementService;
 
     @Mock
-    private TemplateNameConfiguration templateNameConfiguration;
+    private TemplatesConfiguration templatesConfiguration;
 
     @InjectMocks
     private DocumentManagementServiceImpl classUnderTest;
@@ -64,11 +63,9 @@ public class DocumentManagementServiceImplTest {
         final String authToken = "someToken";
         final byte[] data = {126};
 
-        final Map<String, String> templateMap = singletonMap(D8_PETITION_WELSH_TEMPLATE,
-                MINI_PETITION_NAME_FOR_WELSH_PDF_FILE);
         when(pdfGenerationFactory.getGeneratorService(D8_PETITION_WELSH_TEMPLATE)).thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(D8_PETITION_WELSH_TEMPLATE, placeholderMap)).thenReturn(data);
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+        when(templatesConfiguration.getFileNameByTemplateName(D8_PETITION_WELSH_TEMPLATE)).thenReturn(MINI_PETITION_NAME_FOR_WELSH_PDF_FILE);
 
         classUnderTest.generateAndStoreDraftDocument(D8_PETITION_WELSH_TEMPLATE, placeholderMap, authToken);
 
@@ -85,12 +82,10 @@ public class DocumentManagementServiceImplTest {
         final String authToken = "someToken";
         final byte[] data = {126};
 
-        final Map<String, String> templateMap = singletonMap(DRAFT_MINI_PETITION_TEMPLATE_ID,
-                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
         when(pdfGenerationFactory.getGeneratorService(DRAFT_MINI_PETITION_TEMPLATE_ID))
                 .thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap)).thenReturn(data);
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
+        when(templatesConfiguration.getFileNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID)).thenReturn(DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
 
         classUnderTest.generateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap, authToken);
 

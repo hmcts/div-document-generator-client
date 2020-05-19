@@ -49,6 +49,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PHYSICAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DATE_OF_DOCUMENT_PRODUCTION;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
@@ -85,15 +86,21 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
+
 
 @Component
 public class TemplateDataMapper {
@@ -131,6 +138,7 @@ public class TemplateDataMapper {
                 .ifPresent(value -> data.put(LAST_MODIFIED_KEY, value));
 
         updateWithWelshTranslatedData(data);
+
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
         }
@@ -330,6 +338,33 @@ public class TemplateDataMapper {
                 data.put(WELSH_LAST_MODIFIED_KEY,
                     localDateToWelshStringConverter.convert((LocalDateTime.parse(lastModifiedTime).toLocalDate())));
             }
+
+            if (Objects.nonNull(data.get(COURT_HEARING_JSON_KEY))) {
+                List<Object> listOfCourtHearings =
+                    mapper.convertValue(data.get(COURT_HEARING_JSON_KEY), ArrayList.class);
+
+                // Last element of the list is the most recent court hearing
+                CcdCollectionMember<Map<String, Object>> latestCourtHearing =
+                    mapper.convertValue(listOfCourtHearings.get(listOfCourtHearings.size() - 1),
+                        CcdCollectionMember.class);
+                data.put(WELSH_COURT_HEARING_DATE_KEY, localDateToWelshStringConverter.convert(
+                    (String) latestCourtHearing.getValue().get(COURT_HEARING_DATE_KEY)));
+            }
+            data.put(WELSH_CURRENT_DATE_KEY,
+                localDateToWelshStringConverter.convert((LocalDate.now())));
+
+            String dateOfDocumentProduction = (String)data.computeIfAbsent(DATE_OF_DOCUMENT_PRODUCTION,
+                k -> LocalDate.now().toString());
+
+            data.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION,
+                localDateToWelshStringConverter.convert(dateOfDocumentProduction));
+
+            Optional.ofNullable(data.get(DN_APPROVAL_DATE_KEY)).map(String.class::cast).ifPresent(
+                date -> data.put(WELSH_DN_APPROVAL_DATE_KEY, localDateToWelshStringConverter.convert(date)));
+
+            Optional.ofNullable(data.get(DECREE_NISI_GRANTED_DATE_KEY)).map(String.class::cast).ifPresent(
+                date -> data.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
+
         };
 
         Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))

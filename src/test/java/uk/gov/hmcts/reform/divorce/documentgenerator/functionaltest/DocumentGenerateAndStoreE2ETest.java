@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,7 +26,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
@@ -55,6 +53,8 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfigurationTest.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfigurationTest.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 
@@ -83,8 +83,6 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
-    private static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
-    private static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -98,7 +96,6 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
     private static final String IS_DRAFT = "isDraft";
-    private Map<String, String> templateMap;
 
     private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
 
@@ -117,9 +114,6 @@ public class DocumentGenerateAndStoreE2ETest {
     @MockBean
     private AuthTokenGenerator serviceTokenGenerator;
 
-    @Mock
-    private TemplateNameConfiguration templateNameConfiguration;
-
     @Autowired
     private PDFGenerationServiceImpl pdfGenerationService;
 
@@ -137,8 +131,6 @@ public class DocumentGenerateAndStoreE2ETest {
     @Before
     public void before() {
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
-        templateMap = ImmutableMap.of(A_TEMPLATE,"divorceminipetition");
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
     }
 
     @Test

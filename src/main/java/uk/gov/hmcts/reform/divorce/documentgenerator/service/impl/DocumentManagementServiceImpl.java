@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.GeneratedDocumentInfo;
 import uk.gov.hmcts.reform.divorce.documentgenerator.factory.PDFGenerationFactory;
 import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.GeneratedDocumentInfoMapper;
@@ -21,7 +20,6 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 
 @Service
 @Slf4j
@@ -35,8 +33,6 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     private final Clock clock = Clock.systemDefaultZone();
 
-    private TemplateNameConfiguration templateNameConfiguration;
-
     @Autowired
     private PDFGenerationFactory pdfGenerationFactory;
 
@@ -49,22 +45,17 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
     private String featureToggleRespSolicitor;
 
-    @Autowired
-    public void setTemplateNameConfiguration(TemplateNameConfiguration templateNameConfiguration) {
-        this.templateNameConfiguration = templateNameConfiguration;
-    }
-
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
         String authorizationToken) {
-        String fileName = templateNameConfiguration.getTemplatesName().get(templateName);
+        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
     }
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDraftDocument(String templateName,
                 Map<String, Object> placeholders, String authorizationToken) {
-        String fileName = templateNameConfiguration.getTemplatesName().get(templateName);
+        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
         if (!fileName.startsWith(DRAFT_PREFIX)) {
             fileName = String.join("", DRAFT_PREFIX, fileName);
         }
@@ -91,13 +82,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
-
-        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
-
         byte[] generatedDocument = generateDocument(templateName, placeholders);
-
         log.info("Document generated for case Id {}", caseId);
-
         return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
