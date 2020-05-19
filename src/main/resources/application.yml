@@ -1,20 +1,20 @@
 server:
-  port: ${DIV_DOCUMENT_GENERATOR_PORT:4007}
+    port: ${DIV_DOCUMENT_GENERATOR_PORT:4007}
 
 service:
-  pdf-service:
-    uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/pdfs
-    health:
-      uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/health
-  evidence-management-client-api:
-    uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/upload
-    health:
-      context-path: ${EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT:/health}
-      uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}${service.evidence-management-client-api.health.context-path}
-  service-auth-provider:
-    health:
-      context-path: /health
-      uri: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}${service.service-auth-provider.health.context-path}
+    pdf-service:
+        uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/pdfs
+        health:
+            uri: ${PDF_SERVICE_BASEURL:http://localhost:5500}/health
+    evidence-management-client-api:
+        uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}/emclientapi/version/1/upload
+        health:
+            context-path: ${EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT:/health}
+            uri: ${EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL:http://localhost:4006}${service.evidence-management-client-api.health.context-path}
+    service-auth-provider:
+        health:
+            context-path: /health
+            uri: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}${service.service-auth-provider.health.context-path}
 
 auth:
   provider:
@@ -54,49 +54,76 @@ pdf:
 
 document:
     templates:
-        map:
-            aosinvitation: "pdfgenerator"
-            co-respondent-answers: "pdfgenerator"
-            co-respondentinvitation: "pdfgenerator"
-            divorceminipetition: "pdfgenerator"
-            FL-DIV-GNO-ENG-00020.docx: "docmosis"
-            FL-DIV-GNO-ENG-00021.docx: "docmosis"
-            FL-DIV-DEC-ENG-00060.docx: "docmosis"
-            respondentAnswers: "pdfgenerator"
-            FL-DIV-GNO-ENG-00059.docx: "docmosis"
-            FL-DIV-GOR-ENG-00062.docx: "docmosis"
-            FL-DIV-GNO-ENG-00022.docx: "docmosis"
-            FL-DIV-LET-ENG-00075.doc: "docmosis"
-            FL-DIV-LET-ENG-00076.doc: "docmosis"
-            FL-DIV-GNO-ENG-00073.docx: "docmosis"
-            FL-DIV-APP-ENG-00080.docx: "docmosis"
-            FL-DIV-APP-ENG-00081.docx: "docmosis"
-            FL-DIV-APP-ENG-00082.docx: "docmosis"
-            FL-DIV-APP-ENG-00083.docx: "docmosis"
-            FL-DIV-APP-ENG-00084.docx: "docmosis"
-            FL-DIV-DEC-ENG-00088.docx: "docmosis"
-            FL-DIV-DEC-ENG-00098.docx: "docmosis"
-            FL-DIV-APP-WEL-00247.docx: "docmosis"
-            FL-DIV-APP-WEL-00246.docx: "docmosis"
-            FL-DIV-APP-WEL-00248.docx: "docmosis"
-            FL-DIV-APP-WEL-00249.docx: "docmosis"
-            FL-DIV-APP-WEL-00250.docx: "docmosis"
-            FL-DIV-DEC-WEL-00240.docx: "docmosis"
-            FL-DIV-DEC-WEL-00251.docx: "docmosis"
-            FL-DIV-DEC-WEL-00252.docx: "docmosis"
-            FL-DIV-GNO-WEL-00238.docx: "docmosis"
-            FL-DIV-GNO-WEL-00239.docx: "docmosis"
-            FL-DIV-APP-WEL-00253.docx: "docmosis"
-            FL-DIV-GNO-WEL-00241.docx: "docmosis"
-            FL-DIV-GNO-WEL-00245.docx: "docmosis"
-            FL-DIV-GOR-WEL-00242.docx: "docmosis"
-            FL-DIV-LET-WEL-00243.docx: "docmosis"
-            FL-DIV-LET-WEL-00244.docx: "docmosis"
-            FL-DIV-GNO-WEL-00256.docx: "docmosis"
-            FL-DIV-LET-WEL-00257.docx: "docmosis"
-            FL-DIV-LET-WEL-00258.docx: "docmosis"
-            FL-DIV-LET-WEL-00259.docx: "docmosis"
-            FL-DIV-LET-WEL-00260.docx: "docmosis"
+        configurationList:
+            -   templateName: aosinvitation
+                filename: AOSInvitation.pdf
+                document-generator: pdfgenerator
+            -   templateName: co-respondentinvitation
+                filename: CoRespondentInvitation.pdf
+                document-generator: pdfgenerator
+            -   templateName: co-respondent-answers
+                filename: CoRespondentAnswers.pdf
+                document-generator: pdfgenerator
+            -   templateName: divorceminipetition
+                filename: DivorcePetition.pdf
+                document-generator: pdfgenerator
+            -   templateName: divorcedraftminipetition
+                filename: DraftDivorcePetition.pdf
+                document-generator: pdfgenerator
+            -   templateName: FL-DIV-GNO-ENG-00020.docx
+                filename: CertificateOfEntitlement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00021.docx
+                filename: DecreeNisiPronouncement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00060.docx
+                filename: CostsOrder.pdf
+                document-generator: docmosis
+            -   templateName: respondentAnswers
+                filename: RespondentAnswers.pdf
+                document-generator: pdfgenerator
+            -   templateName: FL-DIV-GNO-ENG-00059.docx
+                filename: CaseListForPronouncement.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00062.docx
+                filename: DecreeAbsolute.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00022.docx
+                filename: DecreeNisiAnswers.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00075.doc
+                filename: AOSOfflineInvitationLetterRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00076.doc
+                filename: AOSOfflineInvitationLetterCoRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00073.docx
+                filename: SolicitorPersonalService.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00080.docx
+                filename: AOSOffline2YearSeparationForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00081.docx
+                filename: AOSOffline5YearSeparationForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00082.docx
+                filename: AOSOfflineBehaviourDesertionForm.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00083.docx
+                filename: AOSOfflineAdulteryFormRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-ENG-00084.docx
+                filename: AOSOfflineAdulteryFormCoRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00088.docx
+                filename: DecreeNisiClarificationOrder.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00098.docx
+                filename: DecreeNisiRefusalOrder.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00357.docx
+                filename: DecreeNisiGrantedForRespondent.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
