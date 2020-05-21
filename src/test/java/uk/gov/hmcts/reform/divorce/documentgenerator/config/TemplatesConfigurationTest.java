@@ -46,6 +46,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DA_GRANTED_LETTER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_ANSWERS_TEMPLATE_NAME;
@@ -130,7 +132,9 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID,
                 DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID,
-                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME, DOCMOSIS_TYPE)
+                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(DA_GRANTED_LETTER_TEMPLATE_ID,
+                DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE)
         );
     }
 
