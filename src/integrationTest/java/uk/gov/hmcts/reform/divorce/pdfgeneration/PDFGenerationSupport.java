@@ -63,7 +63,9 @@ public class PDFGenerationSupport {
             "decree-nisi-refusal-order-rejection",
             "DN granted and cost order for respondent",
             "DN granted for respondent",
-            "da-granted-letter"
+            "da-granted-letter",
+            "CoE_Co-Respondent_Solicitor-cover-letter-cost-claim-granted",
+            "CoE_Co-Respondent_Solicitor-cover-letter-cost-claim-not-granted"
         );
 
         List<String> testData = new ArrayList(basicTestData);
