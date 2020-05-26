@@ -126,6 +126,8 @@ document:
                 document-generator: docmosis
             -   templateName: FL-DIV-GOR-ENG-00355.docx
                 filename: DecreeAbsoluteGrantedLetter.pdf
+            -   templateName: FL-DIV-GOR-ENG-00353.docx
+                filename: DecreeAbsoluteGrantedForRespondentSolicitor.pdf
                 document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"

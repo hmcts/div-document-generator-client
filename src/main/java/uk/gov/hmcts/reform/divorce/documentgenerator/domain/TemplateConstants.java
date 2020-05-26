@@ -34,6 +34,7 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
     public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00357.docx";
     public static final String DA_GRANTED_LETTER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00355.docx";
+    public static final String DA_GRANTED_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GOR-ENG-00353.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -68,6 +69,8 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
     public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
     public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME = "DecreeNisiGrantedForRespondent.pdf";
+    public static final String DA_GRANTED_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "DecreeAbsoluteGrantedForRespondentSolicitor.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
