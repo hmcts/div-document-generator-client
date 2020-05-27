@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 buildscript {
     ext {
-        springBootVersion = '2.2.6.RELEASE'
+        springBootVersion = '2.2.4.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -152,7 +152,9 @@ def versions = [
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
-    reformSpringBootAutoConfigure: '2.0.0'
+    reformSpringBootAutoConfigure: '2.0.0',
+    tomcatEmbed: '9.0.35',
+    springSecurityCrypto: '5.2.4.RELEASE'
 ]
 
 dependencies {
