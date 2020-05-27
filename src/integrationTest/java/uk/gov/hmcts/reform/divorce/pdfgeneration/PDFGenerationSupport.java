@@ -64,7 +64,10 @@ public class PDFGenerationSupport {
             "DN granted and cost order for respondent",
             "DN granted for respondent",
             "da-granted-letter",
-            "DA-granted-respondent-solicitor"
+            "DA-granted-cover-letter-respondent-solicitor",
+            "COE-cover-letter-respondent-costs-claim-granted",
+            "COE-cover-letter-respondent-costs-claim-not-granted",
+            "cost-order-cover-letter-co-respondent"
         );
 
         List<String> testData = new ArrayList(basicTestData);

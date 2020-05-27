@@ -126,8 +126,15 @@ document:
                 document-generator: docmosis
             -   templateName: FL-DIV-GOR-ENG-00355.docx
                 filename: DecreeAbsoluteGrantedLetter.pdf
+                document-generator: docmosis
             -   templateName: FL-DIV-GOR-ENG-00353.docx
-                filename: DecreeAbsoluteGrantedForRespondentSolicitor.pdf
+                filename: DecreeAbsoluteGrantedCoverLetterForRespondentSolicitor.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00360.docx
+                filename: CertificateOfEntitlementCoverLetterForRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00358.docx
+                filename: CostOrderCoverLetterForCoRespondent.pdf
                 document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
