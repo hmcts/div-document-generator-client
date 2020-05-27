@@ -154,7 +154,7 @@ def versions = [
     wiremockVersion: '2.19.0',
     reformSpringBootAutoConfigure: '2.0.0',
     springSecurityCrypto: '5.2.4.RELEASE',
-    tomcatEmbedCore: '9.0.34',
+    tomcatEmbedCore: '9.0.35',
     tomcatEmbedWebsocket: '9.0.35',
     tomcatEmbedEl: '9.0.33'
 ]
