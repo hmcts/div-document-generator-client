@@ -145,7 +145,7 @@ def versions = [
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
-    spring_security_rsa: '1.0.9.RELEASE',
+    spring_security_rsa: '1.0.8.RELEASE',
     springBoot: '2.2.4.RELEASE',
     springCloud: '2.2.1.RELEASE',
     springfoxSwagger: '2.9.2',
@@ -186,10 +186,10 @@ dependencies {
         force = true
     }
 
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.35') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.31') {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.35') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.31') {
         force = true
     }
     compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: '9.0.33') {
