@@ -17,24 +17,24 @@ service:
             uri: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}${service.service-auth-provider.health.context-path}
 
 auth:
-  provider:
-    service:
-      client:
-          port: 4502
-          baseUrl: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
-          tokenTimeToLiveInSeconds: 900
+    provider:
+        service:
+            client:
+                port: 4502
+                baseUrl: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
+                tokenTimeToLiveInSeconds: 900
 
 idam:
-  s2s-auth:
-    microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:sscs}
-    totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:AAAAAAAAAAAAAAAA}
-    url: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
+    s2s-auth:
+        microservice: ${AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE:sscs}
+        totp_secret: ${AUTH_PROVIDER_SERVICE_CLIENT_KEY:AAAAAAAAAAAAAAAA}
+        url: ${AUTH_PROVIDER_SERVICE_CLIENT_BASEURL:http://localhost:4502}
 
 http:
-  connect:
-    timeout: 60000
-    request:
-      timeout: 60000
+    connect:
+        timeout: 60000
+        request:
+            timeout: 60000
 
 health:
     check:
@@ -45,12 +45,12 @@ health:
                     timeout: 5000
 
 info:
-  app:
-    name: ${spring.application.name}
+    app:
+        name: ${spring.application.name}
 
 pdf:
-  test:
-    enabled: false
+    test:
+        enabled: false
 
 document:
     templates:
@@ -123,6 +123,9 @@ document:
                 document-generator: docmosis
             -   templateName: FL-DIV-LET-ENG-00357.docx
                 filename: DecreeNisiGrantedForRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00355.docx
+                filename: DecreeAbsoluteGrantedLetter.pdf
                 document-generator: docmosis
             -   templateName: FL-DIV-APP-WEL-00247.docx
                 filename: AOSOffline5YearSeparationFormWelsh.pdf
@@ -221,24 +224,24 @@ template:
       12: "Rhagfyr"
 
 service-auth-provider:
-  service:
-    stub:
-      enabled: false
+    service:
+        stub:
+            enabled: false
 
 evidence-management-api:
-  service:
-    stub:
-      enabled: false
+    service:
+        stub:
+            enabled: false
 
 documentation:
-  swagger:
-    enabled: true
+    swagger:
+        enabled: true
 
 spring:
-  application:
-    name: "div-dgs"
-  resources:
-    static-locations:
+    application:
+        name: "div-dgs"
+    resources:
+        static-locations:
 
 # GENERAL SPRING BOOT ACTUATOR CONFIG
 # Context path for Spring Boot Actuator endpoints
@@ -254,28 +257,28 @@ spring:
 # Enable the metrics endpoint
 # Enable sensitive metrics information
 management:
-  endpoint:
-    health:
-      show-details: "ALWAYS"
-      cache:
-        time-to-live: 5000
-  endpoints:
-    web:
-      base-path: /
-      path-mapping:
-        health: health
-      exposure:
-        include: info, health, metrics
+    endpoint:
+        health:
+            show-details: "ALWAYS"
+            cache:
+                time-to-live: 5000
+    endpoints:
+        web:
+            base-path: /
+            path-mapping:
+                health: health
+            exposure:
+                include: info, health, metrics
 
 logging:
-  level:
-    org.springframework.web: ERROR
-    uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
-  pattern:
-    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
+    level:
+        org.springframework.web: ERROR
+        uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
+    pattern:
+        console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
 
 azure:
-  app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
+    app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
 
 docmosis:
     service:
@@ -286,5 +289,5 @@ docmosis:
             devMode: ${DOCMOSIS_SERVICE_DEV_MODE_FLAG:false}
 
 feature-toggle:
-  toggle:
-    feature_resp_solicitor_details: ${FEATURE_RESP_SOLICITOR_DETAILS:true}
+    toggle:
+        feature_resp_solicitor_details: ${FEATURE_RESP_SOLICITOR_DETAILS:true}
