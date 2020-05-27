@@ -153,7 +153,6 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
     reformSpringBootAutoConfigure: '2.0.0',
-    tomcatEmbed: '9.0.35',
     springSecurityCrypto: '5.2.4.RELEASE'
 ]
 
@@ -188,10 +187,10 @@ dependencies {
         force = true
     }
 
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.33') {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.35') {
         force = true
     }
     compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: '9.0.33') {
@@ -200,7 +199,10 @@ dependencies {
 
     compile (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
         force = true
+        exclude group: 'org.springframework.security', module: 'spring-security-crypto'
     }
+
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
