@@ -145,7 +145,7 @@ def versions = [
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
-    spring_security_rsa: '1.0.8.RELEASE',
+    spring_security_rsa: '1.0.9.RELEASE',
     springBoot: '2.2.4.RELEASE',
     springCloud: '2.2.1.RELEASE',
     springfoxSwagger: '2.9.2',
@@ -198,7 +198,10 @@ dependencies {
 
     compile (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
         force = true
+        exclude group: 'org.springframework.security', module: 'spring-security-crypto'
     }
+
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.2.2.RELEASE'
 
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
