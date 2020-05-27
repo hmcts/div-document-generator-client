@@ -153,7 +153,10 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
     reformSpringBootAutoConfigure: '2.0.0',
-    springSecurityCrypto: '5.2.4.RELEASE'
+    springSecurityCrypto: '5.2.4.RELEASE',
+    tomcatEmbedCore: '9.0.34',
+    tomcatEmbedWebsocket: '9.0.35',
+    tomcatEmbedEl: '9.0.33'
 ]
 
 dependencies {
@@ -187,13 +190,13 @@ dependencies {
         force = true
     }
 
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.33') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcatEmbedCore) {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.35') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcatEmbedWebsocket) {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: '9.0.33') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcatEmbedEl) {
         force = true
     }
 
