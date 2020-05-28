@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,6 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 @Service
 @Slf4j
-@Qualifier("docmosisPdfGenerator")
 public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
     @Autowired
@@ -61,6 +59,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
             ResponseEntity<byte[]> response =
                 restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
+
             return response.getBody();
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
@@ -75,4 +74,5 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             .devMode(docmosisDevMode)
             .data(templateDataMapper.map(placeholders)).build();
     }
+
 }

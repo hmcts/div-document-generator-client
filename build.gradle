@@ -127,6 +127,7 @@ def versions = [
     gradlePitest: '1.4.5',
     guava: '28.1-jre',
     jacksonDatabind: '2.10.2',
+    apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
     junit: '4.12',
     lombok: '1.16.16',
@@ -151,7 +152,11 @@ def versions = [
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
-    reformSpringBootAutoConfigure: '2.0.0'
+    reformSpringBootAutoConfigure: '2.0.0',
+    springSecurityCrypto: '5.2.4.RELEASE',
+    tomcatEmbedCore: '9.0.35',
+    tomcatEmbedWebsocket: '9.0.35',
+    tomcatEmbedEl: '9.0.33'
 ]
 
 dependencies {
@@ -185,21 +190,26 @@ dependencies {
         force = true
     }
 
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcatEmbedCore) {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcatEmbedWebsocket) {
         force = true
     }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: '9.0.31') {
+    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcatEmbedEl) {
         force = true
     }
 
     compile (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
         force = true
+        exclude group: 'org.springframework.security', module: 'spring-security-crypto'
     }
 
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
+
     compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
+    compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
     compile (group: 'com.fasterxml.jackson.core', name:'jackson-databind', version: versions.jacksonDatabind) {
         force = true
     }
@@ -293,6 +303,9 @@ dependencies {
 }
 
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
+    setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
+    setClasspath(sourceSets.integrationTest.runtimeClasspath)
+
     useJUnit {
         includeCategories 'uk.gov.hmcts.reform.divorce.documentgenerator.category.SmokeTest'
     }
