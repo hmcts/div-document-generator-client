@@ -63,7 +63,7 @@ public class PDFGenerationSupport {
             "decree-nisi-refusal-order-rejection",
             "DN granted and cost order for respondent",
             "DN granted for respondent",
-            "da-granted-letter",
+            "DA-granted-letter",
             "CoE-co-respondent-solicitor-cover-letter-costClaimGranted",
             "CoE-co-respondent-solicitor-cover-letter-costClaimNotGranted",
             "Cost-Order-notification-letter-co-respondent-solicitor"
