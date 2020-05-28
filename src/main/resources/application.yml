@@ -127,6 +127,9 @@ document:
             -   templateName: FL-DIV-GOR-ENG-00355.docx
                 filename: DecreeAbsoluteGrantedLetter.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00447.docx
+                filename: CoECoRespondentSolicitorCoverLetter.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
