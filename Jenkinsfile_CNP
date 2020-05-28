@@ -2,8 +2,8 @@
 
 properties([
     [
-        $class: 'GithubProjectProperty',
-        displayName: 'Divorce Document Generator Client',
+        $class       : 'GithubProjectProperty',
+        displayName  : 'Divorce Document Generator Client',
         projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
     ],
     pipelineTriggers([
@@ -27,16 +27,15 @@ def secrets = [
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
-    [ $class: 'AzureKeyVaultSecret',
-      secretType: 'Secret',
-      name: secretName,
-      version: '',
-      envVariable: envVar
+    [$class     : 'AzureKeyVaultSecret',
+     secretType : 'Secret',
+     name       : secretName,
+     version    : '',
+     envVariable: envVar
     ]
 }
 
-withPipeline(type , product, component) {
-    installCharts()
+withPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableAksStagingDeployment()
     disableLegacyDeployment()
@@ -45,7 +44,15 @@ withPipeline(type , product, component) {
         echo '${product}-${component} checked out'
     }
 
+    before('smoketest:aat') {
+        env.test_environment = 'aat'
+    }
+
     before('functionalTest:aat') {
+        env.test_environment = 'aat'
+    }
+
+    before('smoketest:preview') {
         env.test_environment = 'aat'
     }
 
