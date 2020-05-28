@@ -51,6 +51,7 @@ public class PDFGenerationTest extends IntegrationTest {
     }
 
     @Test
+    @Ignore
     public void givenAJsonInput_whenGeneratePDF_thenShouldGenerateExpectedOutput() throws Exception {
         byte[] expected = ResourceLoader.loadResource(expectedOutput);
         String expectedText = readPdf(expected);
@@ -68,7 +69,6 @@ public class PDFGenerationTest extends IntegrationTest {
      * <p>Should be @ignored in master branch.
      */
     @Test
-    @Ignore
     public void ignoreMe_updateGeneratedPdfs() throws Exception {
         Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
         savePdf(responseFromEvidenceManagement.asByteArray());

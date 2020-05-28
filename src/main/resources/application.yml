@@ -136,8 +136,11 @@ document:
             -   templateName: FL-DIV-LET-ENG-00360.docx
                 filename: CertificateOfEntitlementCoverLetterForRespondent.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00423.docx
+                filename: CostOrderLetterForCoRespondentSolicitor.pdf
+                document-generator: docmosis
             -   templateName: FL-DIV-GNO-ENG-00447.docx
-                filename: CoECoRespondentSolicitorCoverLetter.pdf
+                filename: CertificateOfEntitlementCoverLetterForCoRespondentSolicitor.pdf
                 document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"

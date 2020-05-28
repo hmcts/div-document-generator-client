@@ -69,7 +69,8 @@ public class PDFGenerationSupport {
             "COE-cover-letter-respondent-costs-claim-not-granted",
             "CoE-co-respondent-solicitor-cover-letter-costClaimGranted",
             "CoE-co-respondent-solicitor-cover-letter-costClaimNotGranted",
-            "cost-order-cover-letter-co-respondent"
+            "cost-order-cover-letter-co-respondent",
+            "Cost-Order-notification-letter-co-respondent-solicitor"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
