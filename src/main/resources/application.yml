@@ -130,6 +130,9 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00447.docx
                 filename: CoECoRespondentSolicitorCoverLetter.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00423.docx
+                filename: CostOrderLetterCoRespondentSolicitor.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"

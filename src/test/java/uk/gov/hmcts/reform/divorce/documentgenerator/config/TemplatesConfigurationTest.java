@@ -43,6 +43,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_DOCUMENT_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_LETTER_CO_RESPONDENT_SOLICITOR;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_LETTER_CO_RESPONDENT_SOLICITOR_TEMPLATE_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE;
@@ -138,7 +140,9 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(DA_GRANTED_LETTER_TEMPLATE_ID,
                 DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
             new ImmutableTriple<>(CoE_CO_RESPONDENT_SOLICITOR_CL,
-                COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE)
+                COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(CO_LETTER_CO_RESPONDENT_SOLICITOR,
+                CO_LETTER_CO_RESPONDENT_SOLICITOR_TEMPLATE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE)
         );
     }
 
