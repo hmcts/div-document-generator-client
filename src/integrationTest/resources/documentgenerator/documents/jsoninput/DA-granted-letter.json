@@ -1,12 +1,17 @@
 {
-    "template":"FL-DIV-APP-ENG-00081.docx",
-    "values":{
-        "caseDetails":{
-            "id":"1517833758870511",
+    "template": "FL-DIV-GOR-ENG-00355.docx",
+    "values": {
+        "caseDetails" : {
+            "id": "2549365955851103",
             "case_data":{
                 "petitionerFullName": "John Doe",
                 "respondentFullName": "Jane Doe",
                 "caseReference": "LV17D80100",
+                "addressee": {
+                    "name": "John Doe",
+                    "formattedAddress": "10 Baker Street\nAnnex B1\nBakersville\nBakershire\nBK13 B34"
+                },
+                "letterDate": "29 May 2020",
                 "ctscContactDetails": {
                     "serviceCentre": "Courts and Tribunals Service Centre",
                     "careOf": "c/o HMCTS Digital Divorce",

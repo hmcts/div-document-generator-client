@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @RequiredArgsConstructor
 public class FileUploadResponse {
+
     private String fileUrl;
     private String fileName;
     private String mimeType;
@@ -15,6 +16,8 @@ public class FileUploadResponse {
     private String lastModifiedBy;
     private String createdOn;
     private String modifiedOn;
+
     @NonNull
     private HttpStatus status;
+
 }

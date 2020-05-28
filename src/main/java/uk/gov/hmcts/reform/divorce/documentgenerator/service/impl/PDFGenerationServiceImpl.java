@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +15,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocu
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
+import uk.gov.hmcts.reform.divorce.documentgenerator.util.HtmlFieldFormatter;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -24,10 +24,9 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@Qualifier("pdfGenerator")
 public class PDFGenerationServiceImpl implements PDFGenerationService {
     private static final MediaType API_VERSION = MediaType
-            .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
+        .valueOf("application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8");
 
     private static final String SERVICE_AUTHORIZATION_HEADER = "ServiceAuthorization";
 
@@ -40,11 +39,14 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
     @Autowired
     private AuthTokenGenerator serviceTokenGenerator;
 
-    @Value("${service.pdf-service.uri}")
-    private String pdfServiceEndpoint;
-
     @Autowired
     private TemplateManagementService templateManagementService;
+
+    private String pdfServiceEndpoint;
+
+    public PDFGenerationServiceImpl(@Value("${service.pdf-service.uri}") String pdfServiceEndpoint) {
+        this.pdfServiceEndpoint = pdfServiceEndpoint;
+    }
 
     @Override
     public byte[] generate(String templateName, Map<String, Object> placeholders) {
@@ -52,26 +54,30 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
         Objects.requireNonNull(placeholders);
         byte[] template = templateManagementService.getTemplateByName(templateName);
         log.info("Making request to pdf service to generate pdf document with template bytes of size [{}] "
-              + "and placeholders of size [{}]", template.length, placeholders.size());
+            + "and placeholders of size [{}]", template.length, placeholders.size());
 
         try {
-            return restTemplate.postForObject(
-                    pdfServiceEndpoint,
-                    buildRequest(serviceTokenGenerator.generate(), template, placeholders),
-                    byte[].class);
+            String authToken = serviceTokenGenerator.generate();
+            HttpEntity<String> request = buildRequest(authToken, template, placeholders);
+            return restTemplate.postForObject(pdfServiceEndpoint, request, byte[].class);
+        } catch (PDFGenerationException e) {
+            throw e;
         } catch (Exception e) {
             throw new PDFGenerationException("Failed to request PDF from REST endpoint " + e.getMessage(), e);
         }
     }
 
-    private HttpEntity<String> buildRequest(String serviceAuthToken, byte[] template,
+    private HttpEntity<String> buildRequest(String serviceAuthToken,
+                                            byte[] template,
                                             Map<String, Object> placeholders) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(API_VERSION);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
         headers.add(SERVICE_AUTHORIZATION_HEADER, serviceAuthToken);
 
-        GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), placeholders);
+        // Reform PDF Generator requires formatting for certain characters
+        Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
+        GenerateDocumentRequest request = new GenerateDocumentRequest(new String(template), formattedPlaceholders);
 
         try {
             return new HttpEntity<>(objectMapper.writeValueAsString(request), headers);
@@ -79,4 +85,5 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
             throw new PDFGenerationException("Failed to convert PDF request into JSON", e);
         }
     }
+
 }
