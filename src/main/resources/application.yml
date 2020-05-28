@@ -140,7 +140,7 @@ document:
                 filename: CostOrderLetterForCoRespondentSolicitor.pdf
                 document-generator: docmosis
             -   templateName: FL-DIV-GNO-ENG-00447.docx
-                filename: CertificateOfEntitlementCoverLetterForCoRespondentSolicitor.pdf
+                filename: CoECoRespondentSolicitorCoverLetter.pdf
                 document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"

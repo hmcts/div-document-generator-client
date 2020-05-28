@@ -50,7 +50,7 @@ public class TemplateConstants {
     public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
     public static final String DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE = "DecreeAbsoluteGrantedLetter.pdf";
     public static final String COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE = "CoECoRespondentSolicitorCoverLetter.pdf";
-    public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR_TEMPLATE_NAME_FOR_PDF_FILE = "CostOrderLetterCoRespondentSolicitor.pdf";
+    public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR_TEMPLATE_NAME_FOR_PDF_FILE = "CostOrderLetterForCoRespondentSolicitor.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
