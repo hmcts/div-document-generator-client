@@ -22,4 +22,5 @@ public class TemplateManagementServiceImpl implements TemplateManagementService 
         NullOrEmptyValidator.requireNonBlank(templateName);
         return String.format(RESOURCE_PATH_TEMPLATE, templateName);
     }
+
 }

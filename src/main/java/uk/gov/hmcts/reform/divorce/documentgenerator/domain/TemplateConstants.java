@@ -32,6 +32,9 @@ public class TemplateConstants {
     public static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
     public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00357.docx";
+    public static final String DA_GRANTED_LETTER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00355.docx";
+    public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -40,6 +43,8 @@ public class TemplateConstants {
     public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
     public static final String DECREE_NISI_TEMPLATE_NAME = "DecreeNisiPronouncement.pdf";
     public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
+    public static final String DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE = "DecreeAbsoluteGrantedLetter.pdf";
+    public static final String COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE = "CoECoRespondentSolicitorCoverLetter.pdf";
     public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
     public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
     public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
@@ -64,6 +69,7 @@ public class TemplateConstants {
     public static final String SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE = "SolicitorPersonalService.pdf";
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
     public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME = "DecreeNisiGrantedForRespondent.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
