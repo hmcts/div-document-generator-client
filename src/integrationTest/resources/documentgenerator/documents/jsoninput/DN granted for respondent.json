@@ -13,8 +13,6 @@
                 "respondentFullName": "Respondent Baker",
                 "letterDate": "05 May 2020",
                 "hearingDate": "15 Jun 2020",
-                "COMMENT-renamed-hasCourtOrderBeenGranted->courtOrderBeenGranted": "update FL-DIV-LET-ENG-00357.docx and remove",
-                "hasCourtOrderBeenGranted": false,
                 "courtOrderBeenGranted": false,
                 "ctscContactDetails": {
                     "serviceCentre": "Courts and Tribunals Service Centre",
