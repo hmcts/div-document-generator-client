@@ -86,14 +86,21 @@ public class PDFGenerationTest extends IntegrationTest {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
         Response response = callDivDocumentGenerator(requestBody);
-        assertEquals("Unexpected status code when generating PDF for " + inputJson, HttpStatus.OK.value(), response.getStatusCode());
+        assertEquals(
+            "Unexpected status code when generating PDF for " + inputJson,
+            HttpStatus.OK.value(),
+            response.getStatusCode()
+        );
         assertMimeType(response, APPLICATION_PDF_MIME_TYPE);
 
         String documentUri = getDocumentStoreURI(response.getBody().jsonPath().get(DOCUMENT_URL_KEY));
         log.info("Read data from Evidence Management service: {}", documentUri);
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
-        assertEquals(String.format("Failed to generate PDF:  %s", documentUri),
-            HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
+        assertEquals(
+            String.format("Failed to generate PDF:  %s", documentUri),
+            HttpStatus.OK.value(),
+            responseFromEvidenceManagement.getStatusCode()
+        );
 
         return responseFromEvidenceManagement;
     }
