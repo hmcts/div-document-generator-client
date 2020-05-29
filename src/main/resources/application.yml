@@ -127,6 +127,18 @@ document:
             -   templateName: FL-DIV-GOR-ENG-00355.docx
                 filename: DecreeAbsoluteGrantedLetter.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00353.docx
+                filename: DecreeAbsoluteGrantedCoverLetterForRespondentSolicitor.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00358.docx
+                filename: CostOrderCoverLetterForCoRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00360.docx
+                filename: CertificateOfEntitlementCoverLetterForRespondent.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00423.docx
+                filename: CostOrderLetterForCoRespondentSolicitor.pdf
+                document-generator: docmosis
             -   templateName: FL-DIV-GNO-ENG-00447.docx
                 filename: CoECoRespondentSolicitorCoverLetter.pdf
                 document-generator: docmosis
