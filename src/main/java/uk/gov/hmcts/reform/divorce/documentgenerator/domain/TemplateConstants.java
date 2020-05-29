@@ -32,11 +32,13 @@ public class TemplateConstants {
     public static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
     public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GNO-ENG-00356.docx";
     public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00357.docx";
     public static final String DA_GRANTED_LETTER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00355.docx";
     public static final String DA_GRANTED_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID =
         "FL-DIV-GOR-ENG-00353.docx";
     public static final String COE_COVER_LETTER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00360.docx";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GNO-ENG-00370.docx";
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358.docx";
     public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
     public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR = "FL-DIV-GNO-ENG-00423.docx";
@@ -76,10 +78,14 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
     public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
     public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME = "DecreeNisiGrantedForRespondent.pdf";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "DecreeNisiGrantedCoverLetterForRespondentSolicitor.pdf";
     public static final String DA_GRANTED_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
         "DecreeAbsoluteGrantedCoverLetterForRespondentSolicitor.pdf";
     public static final String COE_COVER_LETTER_FOR_RESPONDENT_FILE_NAME =
         "CertificateOfEntitlementCoverLetterForRespondent.pdf";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "CertificateOfEntitlementCoverLetterForRespondentSolicitor.pdf";
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME =
         "CostOrderCoverLetterForCoRespondent.pdf";
 
