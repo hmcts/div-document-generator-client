@@ -78,7 +78,8 @@ public class TemplateConstants {
     public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
     public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
     public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME = "DecreeNisiGrantedForRespondent.pdf";
-    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME = "DecreeNisiGrantedCoverLetterForRespondentSolicitor.pdf";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "DecreeNisiGrantedCoverLetterForRespondentSolicitor.pdf";
     public static final String DA_GRANTED_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
         "DecreeAbsoluteGrantedCoverLetterForRespondentSolicitor.pdf";
     public static final String COE_COVER_LETTER_FOR_RESPONDENT_FILE_NAME =
