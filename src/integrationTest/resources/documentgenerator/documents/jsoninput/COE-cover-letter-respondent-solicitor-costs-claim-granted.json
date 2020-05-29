@@ -23,8 +23,12 @@
                 "petitionerFullName": "Peter Griffen",
                 "respondentFullName": "Louis Griffen",
                 "solicitorReference": "SolRef1234",
+                "COMMENT-renamed-isCostsClaimGranted->costClaimGranted": "update FL-DIV-GNO-ENG-00370.docx and remove",
                 "isCostsClaimGranted": true,
-                "contactCourtByDeadline": "10 Nov 2020"
+                "costClaimGranted": true,
+                "COMMENT-renamed-contactCourtByDeadline->deadlineToContactCourtBy": "update FL-DIV-GNO-ENG-00370.docx and remove",
+                "contactCourtByDeadline": "10 Nov 2020",
+                "deadlineToContactCourtBy": "10 Nov 2020"
             }
         }
     }
