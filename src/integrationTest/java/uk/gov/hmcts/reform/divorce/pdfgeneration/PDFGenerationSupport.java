@@ -76,7 +76,9 @@ public class PDFGenerationSupport {
             "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-granted",
             "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-not-granted",
             "DN-granted-cover-letter-respondent-solicitor-claim-granted",
-            "DN-granted-cover-letter-respondent-solicitor-claim-not-granted"
+            "DN-granted-cover-letter-respondent-solicitor-claim-not-granted",
+            "COE-cover-letter-co-respondent-costs-claim-granted",
+            "COE-cover-letter-co-respondent-costs-claim-not-granted"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
