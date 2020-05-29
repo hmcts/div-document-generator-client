@@ -23,9 +23,9 @@
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
                 "husbandOrWife": "husband",
-                "hasCostsClaimBeenGranted": true,
                 "courtName": "The Family Court at Southampton",
-                "limitDateToContactCourt": "10 May 2020"
+                "costClaimGranted": true,
+                "deadlineToContactCourtBy": "10 May 2020"
             }
         }
     }

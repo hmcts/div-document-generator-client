@@ -23,8 +23,8 @@
                 "petitionerFullName": "Peter Griffen",
                 "respondentFullName": "Louis Griffen",
                 "solicitorReference": "SolRef1234",
-                "isCostsClaimGranted": false,
-                "contactCourtByDeadline": "10 November 2020"
+                "costClaimGranted": false,
+                "deadlineToContactCourtBy": "10 Nov 2020"
             }
         }
     }
