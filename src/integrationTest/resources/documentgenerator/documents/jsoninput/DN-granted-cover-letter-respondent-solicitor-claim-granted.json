@@ -1,0 +1,31 @@
+{
+    "template": "FL-DIV-GNO-ENG-00356.docx",
+    "values": {
+        "caseDetails": {
+            "id": "1517833758870511",
+            "case_data": {
+                "ctscContactDetails": {
+                    "serviceCentre": "Courts and Tribunals Service Centre",
+                    "careOf": "HMCTS Digital Divorce",
+                    "poBox": "PO Box 12706",
+                    "town": "Harlow",
+                    "postcode": "CM20 9QT",
+                    "emailAddress": "divorcecase@justice.gov.uk",
+                    "phoneNumber": "0300 303 0642",
+                    "openingHours": "Monday to Friday: 8am to 8pm,\nSaturday 8am to 2pm"
+                },
+                "addressee": {
+                    "name": "Respondent Baker",
+                    "formattedAddress": "10 Baker Street\nAnnex B1\nBakersville\nBakershire\nBK13 B34"
+                },
+                "caseReference": "1928-3092-4792-1082",
+                "petitionerFullName": "Applicant Baker",
+                "respondentFullName": "Respondent Baker",
+                "letterDate": "05 May 2020",
+                "hearingDate": "15 Jun 2020",
+                "costClaimGranted": true,
+                "costOrderAttached": false
+            }
+        }
+    }
+}
