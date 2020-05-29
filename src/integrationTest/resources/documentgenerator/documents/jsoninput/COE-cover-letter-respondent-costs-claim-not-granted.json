@@ -23,9 +23,13 @@
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
                 "husbandOrWife": "husband",
+                "COMMENT-renamed-hasCostsClaimBeenGranted->costClaimGranted": "update FL-DIV-LET-ENG-00360.docx and remove",
                 "hasCostsClaimBeenGranted": false,
+                "costClaimGranted": false,
                 "courtName": "The Family Court at Southampton",
-                "limitDateToContactCourt": "10 May 2020"
+                "COMMENT-renamed-limitDateToContactCourt->deadlineToContactCourtBy": "update FL-DIV-LET-ENG-00360.docx and remove",
+                "limitDateToContactCourt": "10 May 2020",
+                "deadlineToContactCourtBy": "10 May 2020"
             }
         }
     }
