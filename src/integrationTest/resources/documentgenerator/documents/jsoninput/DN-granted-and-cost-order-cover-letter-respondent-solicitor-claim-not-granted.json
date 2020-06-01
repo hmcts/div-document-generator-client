@@ -19,6 +19,7 @@
                     "formattedAddress": "10 Baker Street\nAnnex B1\nBakersville\nBakershire\nBK13 B34"
                 },
                 "caseReference": "1928-3092-4792-1082",
+                "solicitorReference": "SolRef1234",
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
                 "letterDate": "05 May 2020",
