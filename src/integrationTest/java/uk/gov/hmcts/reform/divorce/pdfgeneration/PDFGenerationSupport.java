@@ -63,10 +63,25 @@ public class PDFGenerationSupport {
             "decree-nisi-refusal-order-rejection",
             "DN granted and cost order for respondent",
             "DN granted for respondent",
-            "da-granted-letter"
+            "DA-granted-letter",
+            "DA-granted-cover-letter-respondent-solicitor",
+            "COE-cover-letter-respondent-costs-claim-granted",
+            "COE-cover-letter-respondent-costs-claim-not-granted",
+            "CoE-co-respondent-solicitor-cover-letter-costClaimGranted",
+            "CoE-co-respondent-solicitor-cover-letter-costClaimNotGranted",
+            "cost-order-cover-letter-co-respondent",
+            "Cost-Order-notification-letter-co-respondent-solicitor",
+            "COE-cover-letter-respondent-solicitor-costs-claim-granted",
+            "COE-cover-letter-respondent-solicitor-costs-claim-not-granted",
+            "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-granted",
+            "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-not-granted",
+            "DN-granted-cover-letter-respondent-solicitor-claim-granted",
+            "DN-granted-cover-letter-respondent-solicitor-claim-not-granted",
+            "COE-cover-letter-co-respondent-costs-claim-granted",
+            "COE-cover-letter-co-respondent-costs-claim-not-granted"
         );
 
-        List<String> testData = new ArrayList(basicTestData);
+        List<String> testData = new ArrayList<>(basicTestData);
 
         if (respSolicitorEnabled) {
             testData.addAll(Arrays.asList(
@@ -90,8 +105,7 @@ public class PDFGenerationSupport {
         }
 
         return testData.stream()
-            .map(s -> new Object[] {s})
+            .map(s -> new Object[]{s})
             .collect(Collectors.toList());
     }
-
 }

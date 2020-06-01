@@ -12,8 +12,8 @@
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
                 "letterDate": "05 May 2020",
-                "hearingDate": "15 June 2020",
-                "hasCourtOrderBeenGranted": false,
+                "hearingDate": "15 Jun 2020",
+                "courtOrderBeenGranted": false,
                 "ctscContactDetails": {
                     "serviceCentre": "Courts and Tribunals Service Centre",
                     "careOf": "HMCTS Digital Divorce",
