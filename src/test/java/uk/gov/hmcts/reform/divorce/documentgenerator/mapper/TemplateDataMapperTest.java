@@ -68,6 +68,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_ISSUE_FEE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
@@ -170,7 +171,7 @@ public class TemplateDataMapperTest {
     }
 
     @Test
-    public void testDraftMiniPetitionParameters() {
+    public void testWelshParameters() {
         when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
         when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
         when(localDateToWelshStringConverter.convert("2017-03-01")).thenReturn("1 Mawrth 2017");
@@ -283,12 +284,14 @@ public class TemplateDataMapperTest {
         expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
         expectedData.put(LAST_MODIFIED_KEY, lastModified);
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
+        expectedData.put(PETITION_ISSUE_FEE_KEY, "550");
 
         ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
 
         Map<String, Object> requestData = ImmutableMap.of(
                 CASE_DETAILS, caseDetails,
-                ACCESS_CODE_KEY, accessCode
+                ACCESS_CODE_KEY, accessCode,
+                PETITION_ISSUE_FEE_KEY, "550"
         );
 
         Map<String, Object> actual = templateDataMapper.map(requestData);

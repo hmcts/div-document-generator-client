@@ -173,4 +173,5 @@ public class TemplateConstants {
     public static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
     public static final String WELSH_CURRENT_DATE_KEY = "welshCurrentDate";
     public static final String WELSH_DATE_OF_DOCUMENT_PRODUCTION = "welshDateOfDocumentProduction";
+    public static final String PETITION_ISSUE_FEE_KEY = "petitionIssueFee";
 }

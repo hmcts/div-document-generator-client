@@ -78,6 +78,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MARRIAGE_CERT_TRANSLATION_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_CRITERIA_REJECTION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.NO_JURISDICTION_REJECTION_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_ISSUE_FEE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
@@ -129,9 +130,11 @@ public class TemplateDataMapper {
                 .ifPresent(value -> data.put(IS_DRAFT_KEY, value));
         Optional.ofNullable(placeholders.get(FEATURE_TOGGLE_RESP_SOLCIITOR))
                 .ifPresent(value -> data.put(FEATURE_TOGGLE_RESP_SOLCIITOR, value));
+        Optional.ofNullable(placeholders.get(PETITION_ISSUE_FEE_KEY))
+                .ifPresent(value -> data.put(PETITION_ISSUE_FEE_KEY, value));
 
         Map<String, Object> caseDetailsMap =
-                Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.EMPTY_MAP);
+                Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.emptyMap());
         Optional.ofNullable(caseDetailsMap.get(CASE_ID_KEY))
                 .ifPresent(value -> data.put(CASE_ID_KEY, value));
         Optional.ofNullable(caseDetailsMap.get(LAST_MODIFIED_KEY))
