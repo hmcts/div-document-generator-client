@@ -174,4 +174,7 @@ public class TemplateConstants {
     public static final String WELSH_CURRENT_DATE_KEY = "welshCurrentDate";
     public static final String WELSH_DATE_OF_DOCUMENT_PRODUCTION = "welshDateOfDocumentProduction";
     public static final String PETITION_ISSUE_FEE_KEY = "petitionIssueFee";
+    public static final String WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "welshBehaviourMostRecentIncidentDateDN";
+    public static final String WELSH_ADULTERY_FOUND_OUT_DATE_KEY = "welshAdulteryDateFoundOut";
+    public static final String WELSH_DECREE_NISI_SUBMITTED_DATE_KEY = "welshDNApplicationSubmittedDate";
 }
