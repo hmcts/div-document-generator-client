@@ -145,6 +145,4 @@ public class WelshTemplateDataMapper {
                 .filter(YES_VALUE::equalsIgnoreCase)
                 .ifPresent(data -> welshConsumer.accept(caseData));
     }
-
-
 }
