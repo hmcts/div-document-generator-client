@@ -115,6 +115,9 @@ public class TemplateDataMapper {
     private TemplateConfig templateConfig;
 
     @Autowired
+    private WelshTemplateDataMapper welshTemplateDataMapper;
+
+    @Autowired
     private LocalDateToWelshStringConverter localDateToWelshStringConverter;
 
     @SuppressWarnings("unchecked")
@@ -137,7 +140,7 @@ public class TemplateDataMapper {
         Optional.ofNullable(caseDetailsMap.get(LAST_MODIFIED_KEY))
                 .ifPresent(value -> data.put(LAST_MODIFIED_KEY, value));
 
-        updateWithWelshTranslatedData(data);
+        welshTemplateDataMapper.updateWithWelshTranslatedData(data);
 
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
@@ -289,87 +292,5 @@ public class TemplateDataMapper {
             ccdDateString = ccdDate.format(letterFormatter);
         }
         return ccdDateString;
-    }
-
-    private void updateWithWelshTranslatedData(Map<String, Object> caseData) {
-
-        Consumer<Map<String, Object>> welshConsumer = data -> {
-            Map<String, String> relationship =
-                    templateConfig.getTemplate().get(RELATION).get(WELSH);
-
-            Optional.ofNullable(data.get(D8_DIVORCE_WHO_KEY)).ifPresent(
-                divorceWho ->
-                        data.put(WELSH_D8_DIVORCE_WHO_KEY, relationship.get(divorceWho)));
-
-            Optional.ofNullable(data.get(D8_MARRIAGE_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                    data.put(WELSH_D8_MARRIAGE_DATE_KEY,
-                                localDateToWelshStringConverter.convert(date)));
-
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                     data.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY,
-                                localDateToWelshStringConverter.convert(date)));
-
-            Optional.ofNullable(data.get(D8_MENTAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                     data.put(WELSH_D8_MENTAL_SEPARATION_DATE_KEY,
-                                localDateToWelshStringConverter.convert(date)));
-
-            Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                     data.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY,
-                                localDateToWelshStringConverter.convert(date)));
-
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY)).map(String.class::cast).ifPresent(
-                date ->
-                     data.put(WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY,
-                                localDateToWelshStringConverter.convert(date)));
-
-            if (data.get(IS_DRAFT_KEY) == null) {
-                Optional.ofNullable(data.get(PREVIOUS_ISSUE_DATE_KEY)).map(String.class::cast).ifPresent(
-                    date ->
-                                data.put(WELSH_PREVIOUS_ISSUE_DATE_KEY,
-                                        localDateToWelshStringConverter.convert(date)));
-
-                String lastModifiedTime = (String)data.computeIfAbsent(LAST_MODIFIED_KEY,
-                    k -> LocalDateTime.now().toString());
-
-                data.put(WELSH_LAST_MODIFIED_KEY,
-                    localDateToWelshStringConverter.convert((LocalDateTime.parse(lastModifiedTime).toLocalDate())));
-            }
-
-            if (Objects.nonNull(data.get(COURT_HEARING_JSON_KEY))) {
-                List<Object> listOfCourtHearings =
-                    mapper.convertValue(data.get(COURT_HEARING_JSON_KEY), ArrayList.class);
-
-                // Last element of the list is the most recent court hearing
-                CcdCollectionMember<Map<String, Object>> latestCourtHearing =
-                    mapper.convertValue(listOfCourtHearings.get(listOfCourtHearings.size() - 1),
-                        CcdCollectionMember.class);
-                data.put(WELSH_COURT_HEARING_DATE_KEY, localDateToWelshStringConverter.convert(
-                    (String) latestCourtHearing.getValue().get(COURT_HEARING_DATE_KEY)));
-            }
-            data.put(WELSH_CURRENT_DATE_KEY,
-                localDateToWelshStringConverter.convert((LocalDate.now())));
-
-            String dateOfDocumentProduction = (String)data.computeIfAbsent(DATE_OF_DOCUMENT_PRODUCTION,
-                k -> LocalDate.now().toString());
-
-            data.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION,
-                localDateToWelshStringConverter.convert(dateOfDocumentProduction));
-
-            Optional.ofNullable(data.get(DN_APPROVAL_DATE_KEY)).map(String.class::cast).ifPresent(
-                date -> data.put(WELSH_DN_APPROVAL_DATE_KEY, localDateToWelshStringConverter.convert(date)));
-
-            Optional.ofNullable(data.get(DECREE_NISI_GRANTED_DATE_KEY)).map(String.class::cast).ifPresent(
-                date -> data.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
-
-        };
-
-        Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))
-                .map(String.class::cast)
-                .filter(YES_VALUE::equalsIgnoreCase)
-                .ifPresent(data -> welshConsumer.accept(caseData));
     }
 }
