@@ -313,4 +313,8 @@ public class TemplateConstants {
     public static final String COSTS_DIFFERENT_DETAILS_TRANS  = "CostsDifferentDetailsTrans";
     public static final String COSTS_DIFFERENT_DETAILS_TRANS_LANG  = "CostsDifferentDetailsTransLang";
 
+    public static final String PETITION_ISSUE_FEE_KEY = "petitionIssueFee";
+    public static final String WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "welshBehaviourMostRecentIncidentDateDN";
+    public static final String WELSH_ADULTERY_FOUND_OUT_DATE_KEY = "welshAdulteryDateFoundOut";
+    public static final String WELSH_DECREE_NISI_SUBMITTED_DATE_KEY = "welshDNApplicationSubmittedDate";
 }
