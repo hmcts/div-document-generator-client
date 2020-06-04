@@ -94,7 +94,7 @@ public class TemplateDataMapper {
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(data);
+        welshTemplateDataMapper.updateWithWelshTranslatedData(placeholders);
 
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));

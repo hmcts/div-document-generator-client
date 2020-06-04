@@ -533,7 +533,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1059,7 +1059,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1159,7 +1159,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1184,7 +1184,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1209,7 +1209,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1234,7 +1234,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_COSTS_REASON_EN, "test value");
         expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
@@ -1259,7 +1259,7 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_COSTS_REASON_EN, "test value");
         expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
 
-          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
             CASE_DETAILS, caseDetails,
             ACCESS_CODE_KEY, accessCode,
