@@ -22,7 +22,11 @@ import javax.annotation.PostConstruct;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {ServiceContextConfiguration.class})
 public abstract class IntegrationTest {
+
     private static final String GENERIC_PASSWORD = "genericPassword123";
+
+    @Value("${document.generator.base.uri}")
+    protected String divDocumentGeneratorBaseURI;
 
     @Value("${divorce.document.generator.uri}")
     protected String divDocumentGeneratorURI;
@@ -52,7 +56,7 @@ public abstract class IntegrationTest {
         IntegrationTest.featureToggleRespSolicitor = Boolean.valueOf(toggle);
     }
 
-    IntegrationTest() {
+    public IntegrationTest() {
         this.springMethodIntegration = new SpringIntegrationMethodRule();
     }
 
@@ -63,13 +67,13 @@ public abstract class IntegrationTest {
         }
     }
 
-    Response readDataFromEvidenceManagement(String uri) {
+    public Response readDataFromEvidenceManagement(String uri) {
         getUserToken();
         return EvidenceManagementUtil.readDataFromEvidenceManagement(
             uri, authTokenGenerator.generate(), username);
     }
 
-    Response callDivDocumentGenerator(String requestBody) {
+    public Response callDivDocumentGenerator(String requestBody) {
         return DocumentGeneratorUtil.generatePDF(requestBody,
                                                 divDocumentGeneratorURI,
                                                 getUserToken());

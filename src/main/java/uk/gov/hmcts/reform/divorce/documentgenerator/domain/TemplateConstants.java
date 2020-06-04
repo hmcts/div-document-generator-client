@@ -9,6 +9,88 @@ public class TemplateConstants {
     public static final String DOCMOSIS_TYPE = "docmosis";
     public static final String PDF_GENERATOR_TYPE = "pdfgenerator";
 
+    // Template Ids
+    public static final String AOS_INVITATION_TEMPLATE_ID = "aosinvitation";
+    public static final String CERTIFICATE_OF_ENTITLEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00020.docx";
+    public static final String CO_RESPONDENT_ANSWERS_TEMPLATE_ID = "co-respondent-answers";
+    public static final String CO_RESPONDENT_INVITATION_TEMPLATE_ID = "co-respondentinvitation";
+    public static final String DECREE_NISI_TEMPLATE_ID = "FL-DIV-GNO-ENG-00021.docx";
+    public static final String MINI_PETITION_TEMPLATE_ID = "divorceminipetition";
+    public static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
+    public static final String RESPONDENT_ANSWERS_TEMPLATE_ID = "respondentAnswers";
+    public static final String DN_ANSWERS_TEMPLATE_ID = "FL-DIV-GNO-ENG-00022.docx";
+    public static final String COSTS_ORDER_DOCUMENT_ID = "FL-DIV-DEC-ENG-00060.docx";
+    public static final String CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00059.docx";
+    public static final String DECREE_ABSOLUTE_TEMPLATE_ID = "FL-DIV-GOR-ENG-00062.docx";
+    public static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00080.docx";
+    public static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00081.docx";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
+    public static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00075.doc";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00076.doc";
+    public static final String SOLICITOR_PERSONAL_SERVICE_TEMPLATE_ID = "FL-DIV-GNO-ENG-00073.docx";
+    public static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
+    public static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GNO-ENG-00356.docx";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00357.docx";
+    public static final String DA_GRANTED_LETTER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00355.docx";
+    public static final String DA_GRANTED_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID =
+        "FL-DIV-GOR-ENG-00353.docx";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00360.docx";
+    public static final String COE_COVER_LETTER_FOR_CORESPONDENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00449.docx";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GNO-ENG-00370.docx";
+    public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358.docx";
+    public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
+    public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR = "FL-DIV-GNO-ENG-00423.docx";
+
+    // Template Names
+    public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
+    public static final String CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE = "CertificateOfEntitlement.pdf";
+    public static final String CO_RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "CoRespondentAnswers.pdf";
+    public static final String CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE = "CoRespondentInvitation.pdf";
+    public static final String DECREE_NISI_TEMPLATE_NAME = "DecreeNisiPronouncement.pdf";
+    public static final String DECREE_NISI_ANSWERS_TEMPLATE_NAME = "DecreeNisiAnswers.pdf";
+    public static final String DA_GRANTED_LETTER_TEMPLATE_NAME_FOR_PDF_FILE = "DecreeAbsoluteGrantedLetter.pdf";
+    public static final String COE_CORESPONDENT_SOLICITOR_CL_TEMPLATE_NAME_FOR_PDF_FILE = "CoECoRespondentSolicitorCoverLetter.pdf";
+    public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR_TEMPLATE_NAME_FOR_PDF_FILE = "CostOrderLetterForCoRespondentSolicitor.pdf";
+    public static final String MINI_PETITION_NAME_FOR_PDF_FILE = "DivorcePetition.pdf";
+    public static final String DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE = "DraftDivorcePetition.pdf";
+    public static final String RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE = "RespondentAnswers.pdf";
+    public static final String COSTS_ORDER_NAME_FOR_PDF_FILE = "CostsOrder.pdf";
+    public static final String CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE = "CaseListForPronouncement.pdf";
+    public static final String DECREE_ABSOLUTE_NAME_FOR_PDF_FILE = "DecreeAbsolute.pdf";
+    public static final String AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
+        "AOSOffline2YearSeparationForm.pdf";
+    public static final String AOS_OFFLINE_5_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE =
+        "AOSOffline5YearSeparationForm.pdf";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineAdulteryFormRespondent.pdf";
+    public static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineAdulteryFormCoRespondent.pdf";
+    public static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_FORM_NAME_FOR_PDF_FILE =
+        "AOSOfflineBehaviourDesertionForm.pdf";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterRespondent.pdf";
+    public static final String AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_NAME_FOR_PDF_FILE =
+        "AOSOfflineInvitationLetterCoRespondent.pdf";
+
+    public static final String SOLICITOR_PERSONAL_SERVICE_NAME_FOR_PDF_FILE = "SolicitorPersonalService.pdf";
+    public static final String DN_REFUSAL_ORDER_CLARIFICATION_NAME_FOR_PDF_FILE = "DecreeNisiClarificationOrder.pdf";
+    public static final String DN_REFUSAL_ORDER_REJECTION_NAME_FOR_PDF_FILE = "DecreeNisiRefusalOrder.pdf";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME = "DecreeNisiGrantedForRespondent.pdf";
+    public static final String DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "DecreeNisiGrantedCoverLetterForRespondentSolicitor.pdf";
+    public static final String DA_GRANTED_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "DecreeAbsoluteGrantedCoverLetterForRespondentSolicitor.pdf";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_FILE_NAME =
+        "CertificateOfEntitlementCoverLetterForRespondent.pdf";
+    public static final String COE_COVER_LETTER_FOR_CORESPONDENT_FILE_NAME = "CoECoverLetterForCoRespondent.pdf";
+    public static final String COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME =
+        "CertificateOfEntitlementCoverLetterForRespondentSolicitor.pdf";
+    public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME =
+        "CostOrderCoverLetterForCoRespondent.pdf";
+
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
     public static final String CASE_DETAILS = "caseDetails";
@@ -35,6 +117,7 @@ public class TemplateConstants {
         + "\nPO Box 12706\nHarlow\nCM20 9QT\n\nEmail: divorcecase@justice.gov.uk\n"
         + "Phone: 0300 303 0642 (Monday to Friday 8am to 8pm, Saturday 8am to 2pm)";
     public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
+    public static final String SPACE_DELIMITER = " ";
     public static final String CLIAM_COSTS_FROM = "D8DivorceClaimFrom";
     public static final String CLIAM_COSTS_FROM_RESP_CORESP = "ClaimFromRespCoResp";
     public static final String CLIAM_COSTS_FROM_RESP = "ClaimFromResp";
@@ -63,4 +146,35 @@ public class TemplateConstants {
     public static final String HAS_FREE_TEXT_ORDER_KEY = "HasFreeTextOrder";
     public static final String HAS_ONLY_FREE_TEXT_ORDER_KEY = "HasOnlyFreeTextOrder";
     public static final String YES_VALUE = "yes";
+    public static final String ACCESS_CODE_KEY = "access_code";
+    public static final String CASE_ID_KEY = "id";
+    public static final String D8_DIVORCE_WHO_KEY = "D8DivorceWho";
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY = "D8ReasonForDivorceDesertionDate";
+    public static final String D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY = "D8ReasonForDivorceSeperationDate";
+    public static final String D8_MENTAL_SEPARATION_DATE_KEY = "D8MentalSeparationDate";
+    public static final String D8_PHYSICAL_SEPARATION_DATE_KEY = "D8PhysicalSeparationDate";
+    public static final String PREVIOUS_ISSUE_DATE_KEY = "PreviousIssueDate";
+    public static final String LAST_MODIFIED_KEY = "last_modified";
+    public static final String DATE_OF_DOCUMENT_PRODUCTION = "dateOfDocumentProduction";
+    public static final String WELSH_DECREE_NISI_GRANTED_DATE_KEY = "welshDecreeNisiGrantedDate";
+    public static final String WELSH_DN_APPROVAL_DATE_KEY = "welshDNApprovalDate";
+    public static final String WELSH_LAST_MODIFIED_KEY = "welsh_last_modified";
+    public static final String WELSH_PREVIOUS_ISSUE_DATE_KEY = "welshPreviousIssueDate";
+    public static final String WELSH_D8_DIVORCE_WHO_KEY = "welshD8DivorceWho";
+    public static final String WELSH_D8_MARRIAGE_DATE_KEY = "welshD8MarriageDate";
+    public static final String WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY = "welshD8ReasonForDivorceDesertionDate";
+    public static final String WELSH_D8_MENTAL_SEPARATION_DATE_KEY = "welshD8MentalSeparationDate";
+    public static final String WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY = "welshD8PhysicalSeparationDate";
+    public static final String WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY =
+            "welshD8ReasonForDivorceSeperationDate";
+    public static final String WELSH_COURT_HEARING_DATE_KEY = "welshDateOfHearing";
+    public static final String LANGUAGE_PREFERENCE_WELSH_KEY = "LanguagePreferenceWelsh";
+    public static final String IS_DRAFT_KEY = "isDraft";
+    public static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
+    public static final String WELSH_CURRENT_DATE_KEY = "welshCurrentDate";
+    public static final String WELSH_DATE_OF_DOCUMENT_PRODUCTION = "welshDateOfDocumentProduction";
+    public static final String PETITION_ISSUE_FEE_KEY = "petitionIssueFee";
+    public static final String WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "welshBehaviourMostRecentIncidentDateDN";
+    public static final String WELSH_ADULTERY_FOUND_OUT_DATE_KEY = "welshAdulteryDateFoundOut";
+    public static final String WELSH_DECREE_NISI_SUBMITTED_DATE_KEY = "welshDNApplicationSubmittedDate";
 }

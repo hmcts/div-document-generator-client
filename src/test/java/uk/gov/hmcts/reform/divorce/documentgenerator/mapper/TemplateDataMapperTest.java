@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,19 +10,28 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshStringConverter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ACCESS_CODE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_ID_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_CORESP;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP;
@@ -31,12 +41,19 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MENTAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PHYSICAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DATE_OF_DOCUMENT_PRODUCTION;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
@@ -48,12 +65,33 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_ONLY_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_PREVIOUS_PROCEEDINGS_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_ISSUE_FEE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_SUBMITTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -74,12 +112,21 @@ public class TemplateDataMapperTest {
     private ObjectMapper mapper;
 
     @Mock
+    private TemplateConfig templateConfig;
+
+    @Mock
+    private LocalDateToWelshStringConverter localDateToWelshStringConverter;
+
+    @Mock
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
+
+
 
     @InjectMocks
     private TemplateDataMapper templateDataMapper;
 
     private Map<String, Object> expectedData;
+
 
     @Before
     public void setup() {
@@ -93,6 +140,176 @@ public class TemplateDataMapperTest {
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
+        Map<String, String> welshRelationship = ImmutableMap.of("male", "gŵr",
+                "female", "gwraig",
+                "husband", "gŵr", "wife", "gwraig");
+
+        Map<LanguagePreference, Map<String, String>> relation = ImmutableMap.of(WELSH, welshRelationship);
+
+        Map<String, Map<LanguagePreference, Map<String, String>>> template =
+                ImmutableMap.of(RELATION, relation);
+
+        when(templateConfig.getTemplate()).thenReturn(template);
+    }
+
+    @Test
+    public void testAOSInvitationParameters() {
+        Map<String, Object> caseData = new HashMap<>();
+        String accessCode = "3333";
+        String caseIdKey = "2222";
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+                CASE_DETAILS, caseDetails,
+                ACCESS_CODE_KEY, accessCode,
+                FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void testWelshParameters() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+        when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
+        when(localDateToWelshStringConverter.convert("2017-03-01")).thenReturn("1 Mawrth 2017");
+        when(localDateToWelshStringConverter.convert("2018-06-01")).thenReturn("1 Mehefin 2018");
+        when(localDateToWelshStringConverter.convert("2018-04-01")).thenReturn("1 Ebrill 2018");
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
+        caseData.put(D8_DIVORCE_WHO_KEY, "wife");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "2015-11-01");
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2015-11-01");
+        caseData.put(D8_MENTAL_SEPARATION_DATE_KEY, "2017-03-01");
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2017-03-01");
+        caseData.put(D8_PHYSICAL_SEPARATION_DATE_KEY, "2018-06-01");
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "2018-06-01");
+        caseData.put(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY, "2018-04-01");
+        caseData.put(DATE_OF_DOCUMENT_PRODUCTION, "2001-12-02");
+        String accessCode = "3333";
+        String caseIdKey = "2222";
+
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(WELSH_D8_DIVORCE_WHO_KEY, "gwraig");
+        expectedData.put(WELSH_D8_MARRIAGE_DATE_KEY, "2 Rhagfyr 2012");
+        expectedData.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_D8_MENTAL_SEPARATION_DATE_KEY, "1 Mawrth 2017");
+        expectedData.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY, "1 Mehefin 2018");
+        expectedData.put(WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY, "1 Ebrill 2018");
+        expectedData.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION, "2 Rhagfyr 2012");
+        expectedData.put(IS_DRAFT_KEY, true);
+        expectedData.put(WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_ADULTERY_FOUND_OUT_DATE_KEY, "1 Mawrth 2017");
+        expectedData.put(WELSH_DECREE_NISI_SUBMITTED_DATE_KEY, "1 Mehefin 2018");
+
+        expectedData.putAll(caseData);
+        expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "01 November 2015");
+        expectedData.put(ADULTERY_FOUND_OUT_DATE_KEY, "01 March 2017");
+        expectedData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "01 June 2018");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+                CASE_DETAILS, caseDetails,
+                ACCESS_CODE_KEY, accessCode,
+                IS_DRAFT_KEY, true
+        );
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void testMiniPetitionParameters() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+        when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
+        when(localDateToWelshStringConverter.convert(LocalDate.parse("2020-04-29"))).thenReturn("29 Ebrill 2020");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
+        caseData.put(D8_DIVORCE_WHO_KEY, "wife");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "2015-11-01");
+        caseData.put(PREVIOUS_ISSUE_DATE_KEY, "2001-12-02");
+        caseData.put(DATE_OF_DOCUMENT_PRODUCTION, "2001-12-02");
+        String lastModified = "2020-04-29T22:35:21.717";
+        String accessCode = "3333";
+        String caseIdKey = "2222";
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(WELSH_D8_DIVORCE_WHO_KEY, "gwraig");
+        expectedData.put(WELSH_D8_MARRIAGE_DATE_KEY, "2 Rhagfyr 2012");
+        expectedData.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION, "2 Rhagfyr 2012");
+
+        expectedData.putAll(caseData);
+        expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
+        expectedData.put(LAST_MODIFIED_KEY, lastModified);
+        expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
+        expectedData.put(WELSH_PREVIOUS_ISSUE_DATE_KEY, "2 Rhagfyr 2012");
+
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey,
+                LAST_MODIFIED_KEY, lastModified);
+        Map<String, Object> requestData = ImmutableMap.of(
+                CASE_DETAILS, caseDetails,
+                ACCESS_CODE_KEY, accessCode
+        );
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void testMiniPetitionParameters_LastModifiedTme_NotPresent() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+        when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
+        caseData.put(D8_DIVORCE_WHO_KEY, "wife");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "2015-11-01");
+        caseData.put(DN_APPROVAL_DATE_KEY, "2015-11-01");
+        caseData.put(DECREE_NISI_GRANTED_DATE_KEY, "2015-11-01");
+        String lastModified = "2020-04-29T22:35:21.717";
+        String accessCode = "3333";
+        String caseIdKey = "2222";
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(WELSH_D8_DIVORCE_WHO_KEY, "gwraig");
+        expectedData.put(WELSH_D8_MARRIAGE_DATE_KEY, "2 Rhagfyr 2012");
+        expectedData.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_DN_APPROVAL_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, "1 Tachwedd 2015");
+        expectedData.putAll(caseData);
+        expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
+        expectedData.put(LAST_MODIFIED_KEY, lastModified);
+        expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
+        expectedData.put(PETITION_ISSUE_FEE_KEY, "550");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+                CASE_DETAILS, caseDetails,
+                ACCESS_CODE_KEY, accessCode,
+                PETITION_ISSUE_FEE_KEY, "550"
+        );
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+        actual.remove(WELSH_CURRENT_DATE_KEY);
+        assertEquals("LAST_MODIFIED_KEY set to todays date " , LocalDate.now(),
+                LocalDateTime.parse((String)actual.get(LAST_MODIFIED_KEY)).toLocalDate());
     }
 
     @Test
@@ -330,6 +547,9 @@ public class TemplateDataMapperTest {
 
     @Test
     public void givenCourtHearingDateTime_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        when(localDateToWelshStringConverter.convert("2019-10-10")).thenReturn("10 Hydref 2019");
+        when(localDateToWelshStringConverter.convert(LocalDate.parse("2020-04-29"))).thenReturn("29 Ebrill 2020");
+
         Map<String, Object> courtHearingDateTime = new HashMap<>();
         courtHearingDateTime.put(COURT_HEARING_DATE_KEY, "2019-10-10");
         courtHearingDateTime.put(COURT_HEARING_TIME_KEY, "10:30");
@@ -339,17 +559,23 @@ public class TemplateDataMapperTest {
 
         Map<String, Object> caseData = new HashMap<>();
         caseData.put(COURT_HEARING_JSON_KEY, Collections.singletonList(courtHearingDateTimeCcdCollectionMember));
-
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(DATE_OF_DOCUMENT_PRODUCTION, "2019-10-10");
+        String lastModified = "2020-04-29T22:35:21.717";
         Map<String, Object> requestData = Collections.singletonMap(
-            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+            CASE_DETAILS, ImmutableMap.of(CASE_DATA, caseData, LAST_MODIFIED_KEY, lastModified)
         );
 
         expectedData.putAll(caseData);
         expectedData.put(COURT_HEARING_DATE_KEY, "10 October 2019");
         expectedData.put(COURT_HEARING_TIME_KEY, "10:30");
+        expectedData.put(WELSH_COURT_HEARING_DATE_KEY, "10 Hydref 2019");
+        expectedData.put(LAST_MODIFIED_KEY, lastModified);
+        expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
+        expectedData.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION, "10 Hydref 2019");
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
-
+        actual.remove(WELSH_CURRENT_DATE_KEY);
         assertEquals(expectedData, actual);
     }
 

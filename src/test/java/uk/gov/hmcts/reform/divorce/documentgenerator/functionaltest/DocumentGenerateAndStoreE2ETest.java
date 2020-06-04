@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,7 +26,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateNameConfiguration;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
@@ -57,6 +55,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DocumentGeneratorApplication.class)
@@ -83,8 +83,6 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String AOS_OFFLINE_BEHAVIOUR_DESERTION_TEMPLATE_ID = "FL-DIV-APP-ENG-00082.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00083.docx";
     private static final String AOS_OFFLINE_ADULTERY_FORM_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-APP-ENG-00084.docx";
-    private static final String DN_REFUSAL_ORDER_CLARIFICATION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00088.docx";
-    private static final String DN_REFUSAL_ORDER_REJECTION_TEMPLATE_ID = "FL-DIV-DEC-ENG-00098.docx";
 
     private static final String CASE_DETAILS = "caseDetails";
     private static final String CASE_DATA = "case_data";
@@ -97,7 +95,7 @@ public class DocumentGenerateAndStoreE2ETest {
     private static final String MIME_TYPE = "mimeType";
     private static final String CREATED_ON = "createdOn";
     private static final String CREATED_BY = "createdBy";
-    private Map<String, String> templateMap;
+    private static final String IS_DRAFT = "isDraft";
 
     private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
 
@@ -116,9 +114,6 @@ public class DocumentGenerateAndStoreE2ETest {
     @MockBean
     private AuthTokenGenerator serviceTokenGenerator;
 
-    @Mock
-    private TemplateNameConfiguration templateNameConfiguration;
-
     @Autowired
     private PDFGenerationServiceImpl pdfGenerationService;
 
@@ -136,8 +131,6 @@ public class DocumentGenerateAndStoreE2ETest {
     @Before
     public void before() {
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
-        templateMap = ImmutableMap.of(A_TEMPLATE,"divorceminipetition");
-        when(templateNameConfiguration.getTemplatesName()).thenReturn(templateMap);
     }
 
     @Test
@@ -222,6 +215,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final Map<String, Object> values = new HashMap<>();
         values.put("someKey", "someValue");
+        values.put(IS_DRAFT, false);
         final String securityToken = "securityToken";
         final Instant instant = Instant.now();
         mockAndSetClock(instant);
@@ -756,7 +750,7 @@ public class DocumentGenerateAndStoreE2ETest {
 
         final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
 
-        mockDocmosisPDFService(HttpStatus.OK, new byte[]{1});
+        mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
@@ -779,7 +773,7 @@ public class DocumentGenerateAndStoreE2ETest {
         final Map<String, Object> values = new HashMap<>();
         final String securityToken = "securityToken";
 
-        final String[] claimFrom = new String[] { "correspondent" };
+        final String[] claimFrom = new String[] {"correspondent"};
         final Map<String, Object> caseData = new HashMap<>();
         caseData.put(CLAIM_COSTS_JSON_KEY, "YES");
         caseData.put(CLAIM_COSTS_FROM_JSON_KEY, claimFrom);
@@ -888,11 +882,8 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
-    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn()
-        throws Exception {
-        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(
-            AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID
-        );
+    public void givenAllGoesWellForAosOfflineInvitationLetterCoRespondent_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID);
     }
 
     @Test
@@ -927,25 +918,20 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     private void assertReturnWhenAllGoesWellForGeneratingAndStoringDocuments(String templateId) throws Exception {
-        final Map<String, Object> values = new HashMap<>();
-        final String securityToken = "securityToken";
-
+        //Given
         final Map<String, Object> caseData = Collections.emptyMap();
-
+        final Map<String, Object> values = new HashMap<>();
         values.put(CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData));
 
-        final GenerateDocumentRequest generateDocumentRequest =
-            new GenerateDocumentRequest(templateId, values);
-
-        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
-
-        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
-
         mockDocmosisPDFService(HttpStatus.OK, new byte[] {1});
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
         mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
 
+        final String securityToken = "securityToken";
         when(serviceTokenGenerator.generate()).thenReturn(securityToken);
 
+        //When
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(templateId, values);
         MvcResult result = webClient.perform(post(API_URL)
             .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
             .contentType(MediaType.APPLICATION_JSON)
@@ -953,9 +939,9 @@ public class DocumentGenerateAndStoreE2ETest {
             .andExpect(status().isOk())
             .andReturn();
 
-        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
-            result.getResponse().getContentAsString());
-
+        //Then
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo), result.getResponse().getContentAsString());
         mockRestServiceServer.verify();
     }
 
@@ -1066,9 +1052,11 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     private void mockEMClientAPI(HttpStatus expectedResponse, List<FileUploadResponse> fileUploadResponse) {
-        mockRestServiceServer.expect(once(), requestTo(emClientAPIUri)).andExpect(method(HttpMethod.POST))
+        mockRestServiceServer.expect(once(), requestTo(emClientAPIUri))
+            .andExpect(method(HttpMethod.POST))
             .andRespond(withStatus(expectedResponse)
                 .body(ObjectMapperTestUtil.convertObjectToJsonString(fileUploadResponse))
                 .contentType(MediaType.APPLICATION_JSON));
     }
+
 }
