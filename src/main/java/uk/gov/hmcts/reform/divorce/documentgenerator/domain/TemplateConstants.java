@@ -117,7 +117,6 @@ public class TemplateConstants {
         + "\nPO Box 12706\nHarlow\nCM20 9QT\n\nEmail: divorcecase@justice.gov.uk\n"
         + "Phone: 0300 303 0642 (Monday to Friday 8am to 8pm, Saturday 8am to 2pm)";
     public static final String SOLICITOR_IS_NAMED_CO_RESPONDENT = "D8ReasonForDivorceAdulteryIsNamed";
-    public static final String SPACE_DELIMITER = " ";
     public static final String CLIAM_COSTS_FROM = "D8DivorceClaimFrom";
     public static final String CLIAM_COSTS_FROM_RESP_CORESP = "ClaimFromRespCoResp";
     public static final String CLIAM_COSTS_FROM_RESP = "ClaimFromResp";
