@@ -2,6 +2,8 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,24 +26,111 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESP_COSTS_REASON;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESP_COSTS_REASON_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESP_COSTS_REASON_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESP_COSTS_REASON_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESP_COSTS_REASON_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_DIVORCE_WHO_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_LEGAL_PROCEEDINGS_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_LEGAL_PROCEEDINGS_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_LEGAL_PROCEEDINGS_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_LEGAL_PROCEEDINGS_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MENTAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_PHYSICAL_SEPARATION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ENGLISH_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_JURISDICTION_DISAGREE_REASON;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_JURISDICTION_DISAGREE_REASON_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_JURISDICTION_DISAGREE_REASON_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_JURISDICTION_DISAGREE_REASON_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MENTAL_SEPARATION_DATE_KEY;
@@ -49,10 +138,13 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DATE_OF_DOCUMENT_PRODUCTION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -87,7 +179,6 @@ public class WelshTemplateDataMapperTest {
         when(templateConfig.getTemplate()).thenReturn(template);
     }
 
-
     @Test
     public void testDraftMiniPetitionParameters() {
         when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
@@ -120,7 +211,8 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
 
         welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
-        caseData.remove(WELSH_CURRENT_DATE_KEY);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
     }
 
@@ -150,7 +242,8 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(WELSH_PREVIOUS_ISSUE_DATE_KEY, "2 Rhagfyr 2012");
 
         welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
-        caseData.remove(WELSH_CURRENT_DATE_KEY);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
     }
 
@@ -178,7 +271,8 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
 
         welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
-        caseData.remove(WELSH_CURRENT_DATE_KEY);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals("LAST_MODIFIED_KEY set to todays date " , LocalDate.now(),
             LocalDateTime.parse((String) caseData.get(LAST_MODIFIED_KEY)).toLocalDate());
     }
@@ -212,7 +306,1017 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION, "10 Hydref 2019");
 
         welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
-        caseData.remove(WELSH_CURRENT_DATE_KEY);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void decreeAbsoluteGrantedDate() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2001-12-02");
+
+        expectedData.put(WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2 Rhagfyr 2012");
+
+        expectedData.putAll(caseData);
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void welshDAEligibleFromDate() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, "2001-12-02");
+
+        expectedData.put(WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, "2 Rhagfyr 2012");
+
+        expectedData.putAll(caseData);
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceBehaviourDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceBehaviourDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceBehaviourDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8PetitionerNameChangedHowOtherDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"gwerth prawf");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"test value");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"gwerth prawf");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8PetitionerNameChangedHowOtherDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"test value");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8PetitionerNameChangedHowOtherDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"test value");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,"test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
+        expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhenDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhenDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhenDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhereDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhereDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdulteryWhereDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    //
+    @Test
+    public void d8ReasonForDivorceAdultery2ndHandDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdultery2ndHandDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceAdultery2ndHandDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceDesertionDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceDesertionDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8ReasonForDivorceDesertionDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"test value");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,"test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
+        expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8LegalProceedingsDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"gwerth prawf");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"test value");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"gwerth prawf");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8LegalProceedingsDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"test value");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void d8LegalProceedingsDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"test value");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS,"test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
+        expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void despJurisdictionDisagreeReason_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON,"gwerth prawf");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"test value");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON,"gwerth prawf");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respJurisdictionDisagreeReason_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON,"test value");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"gwerth prawf");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON,"test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"gwerth prawf");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respJurisdictionDisagreeReason_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON,"test value");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"gwerth prawf");
+        caseData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON,"test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_TRANS,"gwerth prawf");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
+        expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respLegalProceedingsDescription_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"gwerth prawf");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"test value");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"gwerth prawf");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respLegalProceedingsDescription_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"test value");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"gwerth prawf");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"gwerth prawf");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respLegalProceedingsDescription_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"test value");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"gwerth prawf");
+        caseData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION,"test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,"gwerth prawf");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
+        expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respCostsReason_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_COSTS_REASON,"gwerth prawf");
+        caseData.put(RESP_COSTS_REASON_TRANS,"test value");
+        caseData.put(RESP_COSTS_REASON_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_COSTS_REASON,"gwerth prawf");
+        expectedData.put(RESP_COSTS_REASON_TRANS,"test value");
+        expectedData.put(RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respCostsReason_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_COSTS_REASON,"test value");
+        caseData.put(RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        caseData.put(RESP_COSTS_REASON_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_COSTS_REASON,"test value");
+        expectedData.put(RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        expectedData.put(RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void respCostsReason_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(RESP_COSTS_REASON,"test value");
+        caseData.put(RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        caseData.put(RESP_COSTS_REASON_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(RESP_COSTS_REASON,"test value");
+        expectedData.put(RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        expectedData.put(RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void coRespCostsReason_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CO_RESP_COSTS_REASON,"gwerth prawf");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS,"test value");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(CO_RESP_COSTS_REASON,"gwerth prawf");
+        expectedData.put(CO_RESP_COSTS_REASON_TRANS,"test value");
+        expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void coRespCostsReason_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CO_RESP_COSTS_REASON,"test value");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(CO_RESP_COSTS_REASON,"test value");
+        expectedData.put(CO_RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void coRespCostsReason_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(CO_RESP_COSTS_REASON,"test value");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        caseData.put(CO_RESP_COSTS_REASON_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(CO_RESP_COSTS_REASON,"test value");
+        expectedData.put(CO_RESP_COSTS_REASON_TRANS,"gwerth prawf");
+        expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
+        expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+
+    @Test
+    public void petitionChangedDetailsDN_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(PETITION_CHANGED_DETAILS_DN,"gwerth prawf");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"test value");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(PETITION_CHANGED_DETAILS_DN,"gwerth prawf");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void petitionChangedDetailsDN_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(PETITION_CHANGED_DETAILS_DN,"test value");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(PETITION_CHANGED_DETAILS_DN,"test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void petitionChangedDetailsDN_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(PETITION_CHANGED_DETAILS_DN,"test value");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(PETITION_CHANGED_DETAILS_DN_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(PETITION_CHANGED_DETAILS_DN,"test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
+        expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void adulteryTimeLivedTogetherDetailsDN_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void adulteryTimeLivedTogetherDetailsDN_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void adulteryTimeLivedTogetherDetailsDN_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+
+    @Test
+    public void behaviourTimeLivedTogetherDetailsDN_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void behaviourTimeLivedTogetherDetailsDN_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void behaviourTimeLivedTogetherDetailsDN_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionTimeLivedTogetherDetailsDN_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionTimeLivedTogetherDetailsDN_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionTimeLivedTogetherDetailsDN_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+
+    @Test
+    public void costsDifferentDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(COSTS_DIFFERENT_DETAILS,"gwerth prawf");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS,"test value");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(COSTS_DIFFERENT_DETAILS,"gwerth prawf");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_TRANS,"test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void costsDifferentDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(COSTS_DIFFERENT_DETAILS,"test value");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(COSTS_DIFFERENT_DETAILS,"test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void costsDifferentDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(COSTS_DIFFERENT_DETAILS,"test value");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(COSTS_DIFFERENT_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(COSTS_DIFFERENT_DETAILS,"test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
+        expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
     }
 }
