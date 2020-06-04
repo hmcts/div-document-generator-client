@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshString
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,16 +18,22 @@ import java.util.Optional;
 
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ACCESS_CODE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_ID_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_EN;
@@ -89,6 +96,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
@@ -96,6 +104,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ENGLISH_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
@@ -104,6 +113,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_ISSUE_FEE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_CY;
@@ -120,6 +130,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_CURRENT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
@@ -132,6 +144,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
@@ -150,11 +163,30 @@ public class WelshTemplateDataMapper {
     @Autowired
     private LocalDateToWelshStringConverter localDateToWelshStringConverter;
 
-    public void updateWithWelshTranslatedData(Map<String, Object> caseData) {
-        Optional.ofNullable(caseData.get(LANGUAGE_PREFERENCE_WELSH_KEY))
+    public void updateWithWelshTranslatedData(Map<String, Object> placeholders) {
+
+        Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
+
+        Optional.ofNullable(placeholders.get(ACCESS_CODE_KEY))
+            .ifPresent(value -> data.put(ACCESS_CODE_KEY,value));
+        Optional.ofNullable(placeholders.get(IS_DRAFT_KEY))
+            .ifPresent(value -> data.put(IS_DRAFT_KEY, value));
+        Optional.ofNullable(placeholders.get(FEATURE_TOGGLE_RESP_SOLCIITOR))
+            .ifPresent(value -> data.put(FEATURE_TOGGLE_RESP_SOLCIITOR, value));
+        Optional.ofNullable(placeholders.get(PETITION_ISSUE_FEE_KEY))
+            .ifPresent(value -> data.put(PETITION_ISSUE_FEE_KEY, value));
+
+        Map<String, Object> caseDetailsMap =
+            Optional.ofNullable(placeholders.get(CASE_DETAILS)).map(Map.class::cast).orElse(Collections.emptyMap());
+        Optional.ofNullable(caseDetailsMap.get(CASE_ID_KEY))
+            .ifPresent(value -> data.put(CASE_ID_KEY, value));
+        Optional.ofNullable(caseDetailsMap.get(LAST_MODIFIED_KEY))
+            .ifPresent(value -> data.put(LAST_MODIFIED_KEY, value));
+
+        Optional.ofNullable(data.get(LANGUAGE_PREFERENCE_WELSH_KEY))
             .map(String.class::cast)
             .filter(YES_VALUE::equalsIgnoreCase)
-            .ifPresent(data -> translatedWelshData(caseData));
+            .ifPresent(value -> translatedWelshData(data));
     }
 
     private void translatedWelshData(Map<String, Object> data) {
@@ -239,6 +271,15 @@ public class WelshTemplateDataMapper {
             date ->
                 data.put(WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY,
                     localDateToWelshStringConverter.convert(date)));
+
+        Optional.ofNullable(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)).map(String.class::cast).ifPresent(
+            date -> data.put(WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, localDateToWelshStringConverter.convert(date)));
+
+        Optional.ofNullable(data.get(ADULTERY_FOUND_OUT_DATE_KEY)).map(String.class::cast).ifPresent(
+            date -> data.put(WELSH_ADULTERY_FOUND_OUT_DATE_KEY, localDateToWelshStringConverter.convert(date)));
+
+        Optional.ofNullable(data.get(DECREE_NISI_SUBMITTED_DATE_KEY)).map(String.class::cast).ifPresent(
+            date -> data.put(WELSH_DECREE_NISI_SUBMITTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
 
         Optional<String> d8ReasonForDivorceBehaviourDetailsFlag =
             Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG))

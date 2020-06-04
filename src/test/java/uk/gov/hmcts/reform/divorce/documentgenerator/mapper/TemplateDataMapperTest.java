@@ -11,10 +11,8 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference;
-import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
-import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshStringConverter;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,12 +22,10 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ACCESS_CODE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_ID_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_CORESP;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CLIAM_COSTS_FROM_RESP;
@@ -45,7 +41,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
@@ -83,12 +78,6 @@ public class TemplateDataMapperTest {
     private ObjectMapper mapper;
 
     @Mock
-    private TemplateConfig templateConfig;
-
-    @Mock
-    private LocalDateToWelshStringConverter localDateToWelshStringConverter;
-
-    @Mock
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
 
     @Mock
@@ -120,27 +109,6 @@ public class TemplateDataMapperTest {
 
         Map<String, Map<LanguagePreference, Map<String, String>>> template =
                 ImmutableMap.of(RELATION, relation);
-    }
-
-    @Test
-    public void testAOSInvitationParameters() {
-        Map<String, Object> caseData = new HashMap<>();
-        String accessCode = "3333";
-        String caseIdKey = "2222";
-        expectedData.put(ACCESS_CODE_KEY, accessCode);
-        expectedData.put(CASE_ID_KEY, caseIdKey);
-        expectedData.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
-
-        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
-
-        Map<String, Object> requestData = ImmutableMap.of(
-                CASE_DETAILS, caseDetails,
-                ACCESS_CODE_KEY, accessCode,
-                FEATURE_TOGGLE_RESP_SOLCIITOR,true
-        );
-
-        Map<String, Object> actual = templateDataMapper.map(requestData);
-        assertEquals(expectedData, actual);
     }
 
     @Test

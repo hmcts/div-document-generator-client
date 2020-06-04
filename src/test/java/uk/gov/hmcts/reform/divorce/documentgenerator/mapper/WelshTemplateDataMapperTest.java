@@ -26,16 +26,22 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ACCESS_CODE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_ID_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_DIFFERENT_DETAILS_EN;
@@ -99,6 +105,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
@@ -106,6 +113,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ENGLISH_VALUE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.IS_DRAFT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LANGUAGE_PREFERENCE_WELSH_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.LAST_MODIFIED_KEY;
@@ -114,6 +122,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_CHANGED_DETAILS_DN_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PETITION_ISSUE_FEE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_COSTS_REASON_CY;
@@ -130,6 +139,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_DIVORCE_WHO_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_D8_MARRIAGE_DATE_KEY;
@@ -141,6 +152,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_GRANTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
@@ -164,7 +176,8 @@ public class WelshTemplateDataMapperTest {
 
     private Map<String, Object> expectedData;
     private final String lastModified = "2020-04-29T22:35:21.717";
-
+    private String accessCode = "3333";
+    private String caseIdKey = "2222";
 
     @Before
     public void setup() {
@@ -181,6 +194,7 @@ public class WelshTemplateDataMapperTest {
 
     @Test
     public void testDraftMiniPetitionParameters() {
+
         when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
         when(localDateToWelshStringConverter.convert("2015-11-01")).thenReturn("1 Tachwedd 2015");
         when(localDateToWelshStringConverter.convert("2017-03-01")).thenReturn("1 Mawrth 2017");
@@ -210,7 +224,14 @@ public class WelshTemplateDataMapperTest {
         expectedData.putAll(caseData);
         expectedData.put(D8_MARRIAGE_DATE_KEY, "2001-12-02");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -240,8 +261,14 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(LAST_MODIFIED_KEY, lastModified);
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
         expectedData.put(WELSH_PREVIOUS_ISSUE_DATE_KEY, "2 Rhagfyr 2012");
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -269,8 +296,15 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_MARRIAGE_DATE_KEY, "02 December 2001");
         expectedData.put(LAST_MODIFIED_KEY, lastModified);
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
+        expectedData.put(PETITION_ISSUE_FEE_KEY, "550");
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            PETITION_ISSUE_FEE_KEY, "550"
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals("LAST_MODIFIED_KEY set to todays date " , LocalDate.now(),
@@ -304,8 +338,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(LAST_MODIFIED_KEY, lastModified);
         expectedData.put(WELSH_LAST_MODIFIED_KEY, "29 Ebrill 2020");
         expectedData.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION, "10 Hydref 2019");
-
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -323,7 +362,13 @@ public class WelshTemplateDataMapperTest {
 
         expectedData.putAll(caseData);
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -341,7 +386,85 @@ public class WelshTemplateDataMapperTest {
 
         expectedData.putAll(caseData);
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void behaviourMostRecentIncidentDateDN() {
+        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2001-12-02");
+
+        expectedData.put(WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "2 Rhagfyr 2012");
+
+        expectedData.putAll(caseData);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void adulteryDateFoundOut() {
+        when(localDateToWelshStringConverter.convert("2001-12-12")).thenReturn("12 Rhagfyr 2012");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(ADULTERY_FOUND_OUT_DATE_KEY, "2001-12-12");
+
+        expectedData.put(WELSH_ADULTERY_FOUND_OUT_DATE_KEY, "12 Rhagfyr 2012");
+
+        expectedData.putAll(caseData);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void dnApplicationSubmittedDate() {
+        when(localDateToWelshStringConverter.convert("2017-03-01")).thenReturn("1 Mawrth 2017");
+
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        caseData.put(DECREE_NISI_SUBMITTED_DATE_KEY, "2017-03-01");
+
+        expectedData.put(WELSH_DECREE_NISI_SUBMITTED_DATE_KEY, "1 Mawrth 2017");
+
+        expectedData.putAll(caseData);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -360,7 +483,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -379,7 +508,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -398,7 +533,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -417,7 +558,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -436,7 +583,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -455,7 +608,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -474,7 +633,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -493,7 +658,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -512,7 +683,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN, "test value");
         expectedData.put(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -531,7 +708,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -550,7 +733,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -569,7 +758,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -588,7 +783,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -607,7 +808,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -626,7 +833,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -646,7 +859,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -665,7 +884,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -684,7 +909,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -703,7 +934,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -722,7 +959,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -741,7 +984,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN, "test value");
         expectedData.put(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -760,7 +1009,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -779,7 +1034,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -798,7 +1059,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_EN, "test value");
         expectedData.put(D8_LEGAL_PROCEEDINGS_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -817,7 +1084,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -836,7 +1109,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -855,7 +1134,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_EN, "test value");
         expectedData.put(RESP_JURISDICTION_DISAGREE_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -874,7 +1159,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -893,7 +1184,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -912,7 +1209,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN, "test value");
         expectedData.put(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -931,7 +1234,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_COSTS_REASON_EN, "test value");
         expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -950,7 +1259,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_COSTS_REASON_EN, "test value");
         expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+          ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -969,7 +1284,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(RESP_COSTS_REASON_EN, "test value");
         expectedData.put(RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -988,7 +1309,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
         expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1007,7 +1334,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
         expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1026,7 +1359,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(CO_RESP_COSTS_REASON_EN, "test value");
         expectedData.put(CO_RESP_COSTS_REASON_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1046,7 +1385,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
         expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1065,7 +1410,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
         expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1084,7 +1435,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(PETITION_CHANGED_DETAILS_DN_EN, "test value");
         expectedData.put(PETITION_CHANGED_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1103,7 +1460,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1122,7 +1485,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1141,7 +1510,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1161,7 +1536,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1180,7 +1561,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1199,7 +1586,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1218,7 +1611,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1237,7 +1636,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1256,7 +1661,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
         expectedData.put(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1276,7 +1687,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
         expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1295,7 +1712,13 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
         expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
@@ -1314,7 +1737,34 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
         expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
 
-        welshTemplateDataMapper.updateWithWelshTranslatedData(caseData);
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void testAOSInvitationParameters() {
+        Map<String, Object> caseData = new HashMap<>();
+        expectedData.put(ACCESS_CODE_KEY, accessCode);
+        expectedData.put(CASE_ID_KEY, caseIdKey);
+        expectedData.put(FEATURE_TOGGLE_RESP_SOLCIITOR, true);
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
         MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
         caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
         assertEquals(expectedData, caseData);
