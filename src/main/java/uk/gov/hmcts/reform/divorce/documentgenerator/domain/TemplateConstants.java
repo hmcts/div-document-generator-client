@@ -176,8 +176,8 @@ public class TemplateConstants {
     public static final String WELSH_DATE_OF_DOCUMENT_PRODUCTION = "welshDateOfDocumentProduction";
 
     //Add Translation
-    public static final String ENGLISH_VALUE = "ENGLISH";
-    public static final String WELSH_VALUE = "WELSH";
+    public static final String ENGLISH_VALUE = "EN";
+    public static final String WELSH_VALUE = "CY";
 
     public static final String D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS = "D8PetitionerNameChangedHowOtherDetails";
     public static final String D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN =

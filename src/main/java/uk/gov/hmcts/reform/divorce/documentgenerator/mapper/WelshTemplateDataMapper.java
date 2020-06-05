@@ -198,30 +198,11 @@ public class WelshTemplateDataMapper {
             divorceWho ->
                     data.put(WELSH_D8_DIVORCE_WHO_KEY, relationship.get(divorceWho)));
 
-        Optional.ofNullable(data.get(D8_MARRIAGE_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                data.put(WELSH_D8_MARRIAGE_DATE_KEY,
-                            localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                 data.put(WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY,
-                            localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(D8_MENTAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                 data.put(WELSH_D8_MENTAL_SEPARATION_DATE_KEY,
-                            localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(D8_PHYSICAL_SEPARATION_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                 data.put(WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY,
-                            localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                 data.put(WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY,
-                            localDateToWelshStringConverter.convert(date)));
+        setWelshEquivalentDates(data, D8_MARRIAGE_DATE_KEY, WELSH_D8_MARRIAGE_DATE_KEY);
+        setWelshEquivalentDates(data, D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY, WELSH_D8_REASON_FOR_DIVORCE_DESERTION_DATE_KEY);
+        setWelshEquivalentDates(data, D8_MENTAL_SEPARATION_DATE_KEY, WELSH_D8_MENTAL_SEPARATION_DATE_KEY);
+        setWelshEquivalentDates(data, D8_PHYSICAL_SEPARATION_DATE_KEY, WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY);
+        setWelshEquivalentDates(data, D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY, WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY);
 
         if (data.get(IS_DRAFT_KEY) == null) {
             Optional.ofNullable(data.get(PREVIOUS_ISSUE_DATE_KEY)).map(String.class::cast).ifPresent(
@@ -256,34 +237,16 @@ public class WelshTemplateDataMapper {
         data.put(WELSH_DATE_OF_DOCUMENT_PRODUCTION,
             localDateToWelshStringConverter.convert(dateOfDocumentProduction));
 
-        Optional.ofNullable(data.get(DN_APPROVAL_DATE_KEY)).map(String.class::cast).ifPresent(
-            date -> data.put(WELSH_DN_APPROVAL_DATE_KEY, localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(DECREE_NISI_GRANTED_DATE_KEY)).map(String.class::cast).ifPresent(
-            date -> data.put(WELSH_DECREE_NISI_GRANTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(DECREE_ABSOLUTE_GRANTED_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                data.put(WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY,
-                    localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY)).map(String.class::cast).ifPresent(
-            date ->
-                data.put(WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY,
-                    localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)).map(String.class::cast).ifPresent(
-            date -> data.put(WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(ADULTERY_FOUND_OUT_DATE_KEY)).map(String.class::cast).ifPresent(
-            date -> data.put(WELSH_ADULTERY_FOUND_OUT_DATE_KEY, localDateToWelshStringConverter.convert(date)));
-
-        Optional.ofNullable(data.get(DECREE_NISI_SUBMITTED_DATE_KEY)).map(String.class::cast).ifPresent(
-            date -> data.put(WELSH_DECREE_NISI_SUBMITTED_DATE_KEY, localDateToWelshStringConverter.convert(date)));
+        setWelshEquivalentDates(data, DN_APPROVAL_DATE_KEY, WELSH_DN_APPROVAL_DATE_KEY);
+        setWelshEquivalentDates(data, DECREE_NISI_GRANTED_DATE_KEY, WELSH_DECREE_NISI_GRANTED_DATE_KEY);
+        setWelshEquivalentDates(data, DECREE_ABSOLUTE_GRANTED_DATE_KEY, WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY);
+        setWelshEquivalentDates(data, DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY);
+        setWelshEquivalentDates(data, BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY);
+        setWelshEquivalentDates(data, ADULTERY_FOUND_OUT_DATE_KEY, WELSH_ADULTERY_FOUND_OUT_DATE_KEY);
+        setWelshEquivalentDates(data, DECREE_NISI_SUBMITTED_DATE_KEY, WELSH_DECREE_NISI_SUBMITTED_DATE_KEY);
 
         Optional<String> d8ReasonForDivorceBehaviourDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG))
-            .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceBehaviourDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceBehaviourDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -302,8 +265,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8ReasonForDivorceAdulteryDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceAdulteryDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceAdulteryDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -322,8 +284,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8PetitionerNameChangedHowOtherDetailsFlag =
-            Optional.ofNullable(data.get(D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG);
 
         if (d8PetitionerNameChangedHowOtherDetailsFlag.isPresent()) {
             if (d8PetitionerNameChangedHowOtherDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -342,8 +303,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8ReasonForDivorceAdulteryWhenDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceAdulteryWhenDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceAdulteryWhenDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -362,8 +322,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8ReasonForDivorceAdulteryWhereDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceAdulteryWhereDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceAdulteryWhereDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -382,8 +341,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8ReasonForDivorceAdultery2ndHandDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceAdultery2ndHandDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceAdultery2ndHandDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -402,8 +360,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8ReasonForDivorceDesertionDetailsFlag =
-            Optional.ofNullable(data.get(D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG);
 
         if (d8ReasonForDivorceDesertionDetailsFlag.isPresent()) {
             if (d8ReasonForDivorceDesertionDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -422,8 +379,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> d8LegalProceedingsDetailsFlag =
-            Optional.ofNullable(data.get(D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG);
 
         if (d8LegalProceedingsDetailsFlag.isPresent()) {
             if (d8LegalProceedingsDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -442,8 +398,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> respJurisdictionDisagreeReasonFlag =
-            Optional.ofNullable(data.get(RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data,RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG);
 
         if (respJurisdictionDisagreeReasonFlag.isPresent()) {
             if (respJurisdictionDisagreeReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -462,8 +417,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> respLegalProceedingsDescriptionFlag =
-            Optional.ofNullable(data.get(RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data,RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG);
 
         if (respLegalProceedingsDescriptionFlag.isPresent()) {
             if (respLegalProceedingsDescriptionFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -482,8 +436,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> respCostsReasonFlag =
-            Optional.ofNullable(data.get(RESP_COSTS_REASON_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data,RESP_COSTS_REASON_TRANS_LANG);
 
         if (respCostsReasonFlag.isPresent()) {
             if (respCostsReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -500,9 +453,9 @@ public class WelshTemplateDataMapper {
                 RESP_COSTS_REASON_CY, RESP_COSTS_REASON,
                 RESP_COSTS_REASON);
         }
+
         Optional<String> coRespCostsReasonFlag =
-            Optional.ofNullable(data.get(CO_RESP_COSTS_REASON_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data,CO_RESP_COSTS_REASON_TRANS_LANG);
 
         if (coRespCostsReasonFlag.isPresent()) {
             if (coRespCostsReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -521,8 +474,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> petitionChangedDetailsDNFlag =
-            Optional.ofNullable(data.get(PETITION_CHANGED_DETAILS_DN_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data,PETITION_CHANGED_DETAILS_DN_TRANS_LANG);
 
         if (petitionChangedDetailsDNFlag.isPresent()) {
             if (petitionChangedDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -541,8 +493,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> adulteryTimeLivedTogetherDetailsDNFlag =
-            Optional.ofNullable(data.get(ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
 
         if (adulteryTimeLivedTogetherDetailsDNFlag.isPresent()) {
             if (adulteryTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -561,8 +512,7 @@ public class WelshTemplateDataMapper {
         }
 
         Optional<String> behaviourTimeLivedTogetherDetailsDNFlag =
-            Optional.ofNullable(data.get(BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG))
-                .map(String.class::cast);
+            getLanguagePreferenceFlag(data, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
 
         if (behaviourTimeLivedTogetherDetailsDNFlag.isPresent()) {
             if (behaviourTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -580,9 +530,8 @@ public class WelshTemplateDataMapper {
                 BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN);
         }
 
-        Optional<String> desertionTimeLivedTogetherDetailsDNFlag =
-            Optional.ofNullable(data.get(DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG))
-                .map(String.class::cast);
+        Optional<String> desertionTimeLivedTogetherDetailsDNFlag = getLanguagePreferenceFlag(data,
+            DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
 
         if (desertionTimeLivedTogetherDetailsDNFlag.isPresent()) {
             if (desertionTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -600,9 +549,8 @@ public class WelshTemplateDataMapper {
                 DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN);
         }
 
-        Optional<String> costsDifferentDetailsFlag =
-            Optional.ofNullable(data.get(COSTS_DIFFERENT_DETAILS_TRANS_LANG))
-                .map(String.class::cast);
+        Optional<String> costsDifferentDetailsFlag = getLanguagePreferenceFlag(data,
+            COSTS_DIFFERENT_DETAILS_TRANS_LANG);
 
         if (costsDifferentDetailsFlag.isPresent()) {
             if (costsDifferentDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
@@ -625,5 +573,15 @@ public class WelshTemplateDataMapper {
                                        String englishValue, String welshValue) {
         data.put(englishKey,data.get(englishValue));
         data.put(welshKey,data.get(welshValue));
+    }
+
+    private Optional<String> getLanguagePreferenceFlag(Map<String, Object> data, String languageFlag) {
+        return Optional.ofNullable(data.get(languageFlag))
+            .map(String.class::cast);
+    }
+
+    private void setWelshEquivalentDates(Map<String, Object> data, String original, String translated) {
+        Optional.ofNullable(data.get(original)).map(String.class::cast).ifPresent(
+            date -> data.put(translated, localDateToWelshStringConverter.convert(date)));
     }
 }
