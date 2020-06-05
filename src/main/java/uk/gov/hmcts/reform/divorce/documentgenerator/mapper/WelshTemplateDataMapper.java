@@ -245,327 +245,83 @@ public class WelshTemplateDataMapper {
         setWelshEquivalentDates(data, ADULTERY_FOUND_OUT_DATE_KEY, WELSH_ADULTERY_FOUND_OUT_DATE_KEY);
         setWelshEquivalentDates(data, DECREE_NISI_SUBMITTED_DATE_KEY, WELSH_DECREE_NISI_SUBMITTED_DATE_KEY);
 
-        Optional<String> d8ReasonForDivorceBehaviourDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG);
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS);
 
-        if (d8ReasonForDivorceBehaviourDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceBehaviourDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS);
-            } else {
-                setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,
-                    D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS_CY,D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS,
-                D8_REASON_FOR_DIVORCE_BEHAVIOUR_DETAILS);
-        }
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS);
 
-        Optional<String> d8ReasonForDivorceAdulteryDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG);
+        setTranslatedData(data,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN,
+            D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,
+            D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS);
 
-        if (d8ReasonForDivorceAdulteryDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceAdulteryDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS);
-            } else {
-                setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS,
-                D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS);
-        }
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,
+            D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS);
 
-        Optional<String> d8PetitionerNameChangedHowOtherDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS_LANG);
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,
+            D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS);
 
-        if (d8PetitionerNameChangedHowOtherDetailsFlag.isPresent()) {
-            if (d8PetitionerNameChangedHowOtherDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN,
-                    D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS,
-                    D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS);
-            } else {
-                setWelshTranslatedData(data,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN,
-                    D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,
-                    D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data,D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_EN,
-                D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS_CY, D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS,
-                D8_PETITIONER_NAME_CHANGED_HOW_OTHER_DETAILS);
-        }
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY,D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,
+            D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS);
 
-        Optional<String> d8ReasonForDivorceAdulteryWhenDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG);
+        setTranslatedData(data,D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG,D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN,
+            D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY,D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS);
 
-        if (d8ReasonForDivorceAdulteryWhenDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceAdulteryWhenDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS);
-            } else {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS,
-                D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS);
-        }
+        setTranslatedData(data,D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG,D8_LEGAL_PROCEEDINGS_DETAILS_EN,
+            D8_LEGAL_PROCEEDINGS_DETAILS_CY,D8_LEGAL_PROCEEDINGS_DETAILS,D8_LEGAL_PROCEEDINGS_DETAILS_TRANS);
 
-        Optional<String> d8ReasonForDivorceAdulteryWhereDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG);
+        setTranslatedData(data,RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG,RESP_JURISDICTION_DISAGREE_REASON_EN,
+            RESP_JURISDICTION_DISAGREE_REASON_CY,RESP_JURISDICTION_DISAGREE_REASON,RESP_JURISDICTION_DISAGREE_REASON_TRANS);
 
-        if (d8ReasonForDivorceAdulteryWhereDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceAdulteryWhereDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS);
-            } else {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS,
-                D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS);
-        }
+        setTranslatedData(data,RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG,RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN,
+            RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY,RESP_LEGAL_PROCEEDINGS_DESCRIPTION,RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS);
 
-        Optional<String> d8ReasonForDivorceAdultery2ndHandDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG);
+        setTranslatedData(data,RESP_COSTS_REASON_TRANS_LANG,RESP_COSTS_REASON_EN,
+            RESP_COSTS_REASON_CY,RESP_COSTS_REASON,RESP_COSTS_REASON_TRANS);
 
-        if (d8ReasonForDivorceAdultery2ndHandDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceAdultery2ndHandDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS);
-            } else {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,
-                    D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY, D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS,
-                D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS);
-        }
+        setTranslatedData(data,CO_RESP_COSTS_REASON_TRANS_LANG,CO_RESP_COSTS_REASON_EN,
+            CO_RESP_COSTS_REASON_CY,CO_RESP_COSTS_REASON,CO_RESP_COSTS_REASON_TRANS);
 
-        Optional<String> d8ReasonForDivorceDesertionDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG);
+        setTranslatedData(data,PETITION_CHANGED_DETAILS_DN_TRANS_LANG,PETITION_CHANGED_DETAILS_DN_EN,
+            PETITION_CHANGED_DETAILS_DN_CY,PETITION_CHANGED_DETAILS_DN,PETITION_CHANGED_DETAILS_DN_TRANS);
 
-        if (d8ReasonForDivorceDesertionDetailsFlag.isPresent()) {
-            if (d8ReasonForDivorceDesertionDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS,
-                    D8_REASON_FOR_DIVORCE_DESERTION_DETAILS);
-            } else {
-                setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN,
-                    D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,
-                    D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN,
-                D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY, D8_REASON_FOR_DIVORCE_DESERTION_DETAILS,
-                D8_REASON_FOR_DIVORCE_DESERTION_DETAILS);
-        }
+        setTranslatedData(data,ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
+            ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY,ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
 
-        Optional<String> d8LegalProceedingsDetailsFlag =
-            getLanguagePreferenceFlag(data, D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG);
+        setTranslatedData(data,BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
+            BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY,BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
 
-        if (d8LegalProceedingsDetailsFlag.isPresent()) {
-            if (d8LegalProceedingsDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, D8_LEGAL_PROCEEDINGS_DETAILS_EN,
-                    D8_LEGAL_PROCEEDINGS_DETAILS_CY, D8_LEGAL_PROCEEDINGS_DETAILS_TRANS,
-                    D8_LEGAL_PROCEEDINGS_DETAILS);
-            } else {
-                setWelshTranslatedData(data, D8_LEGAL_PROCEEDINGS_DETAILS_EN,
-                    D8_LEGAL_PROCEEDINGS_DETAILS_CY, D8_LEGAL_PROCEEDINGS_DETAILS,
-                    D8_LEGAL_PROCEEDINGS_DETAILS_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, D8_LEGAL_PROCEEDINGS_DETAILS_EN,
-                D8_LEGAL_PROCEEDINGS_DETAILS_CY, D8_LEGAL_PROCEEDINGS_DETAILS,
-                D8_LEGAL_PROCEEDINGS_DETAILS);
-        }
+        setTranslatedData(data,DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
+            DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY,DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
 
-        Optional<String> respJurisdictionDisagreeReasonFlag =
-            getLanguagePreferenceFlag(data,RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG);
+        setTranslatedData(data,COSTS_DIFFERENT_DETAILS_TRANS_LANG,COSTS_DIFFERENT_DETAILS_EN,
+            COSTS_DIFFERENT_DETAILS_CY,COSTS_DIFFERENT_DETAILS,COSTS_DIFFERENT_DETAILS_TRANS);
 
-        if (respJurisdictionDisagreeReasonFlag.isPresent()) {
-            if (respJurisdictionDisagreeReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, RESP_JURISDICTION_DISAGREE_REASON_EN,
-                    RESP_JURISDICTION_DISAGREE_REASON_CY, RESP_JURISDICTION_DISAGREE_REASON_TRANS,
-                    RESP_JURISDICTION_DISAGREE_REASON);
-            } else {
-                setWelshTranslatedData(data, RESP_JURISDICTION_DISAGREE_REASON_EN,
-                    RESP_JURISDICTION_DISAGREE_REASON_CY, RESP_JURISDICTION_DISAGREE_REASON,
-                    RESP_JURISDICTION_DISAGREE_REASON_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, RESP_JURISDICTION_DISAGREE_REASON_EN,
-                RESP_JURISDICTION_DISAGREE_REASON_CY, RESP_JURISDICTION_DISAGREE_REASON,
-                RESP_JURISDICTION_DISAGREE_REASON);
-        }
+    }
 
-        Optional<String> respLegalProceedingsDescriptionFlag =
-            getLanguagePreferenceFlag(data,RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG);
+    private void setTranslatedData(Map<String, Object> data, String languageKey, String englishKey, String welshKey,
+                                   String englishValue, String translatedValue) {
 
-        if (respLegalProceedingsDescriptionFlag.isPresent()) {
-            if (respLegalProceedingsDescriptionFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN,
-                    RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS,
-                    RESP_LEGAL_PROCEEDINGS_DESCRIPTION);
-            } else {
-                setWelshTranslatedData(data, RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN,
-                    RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, RESP_LEGAL_PROCEEDINGS_DESCRIPTION,
-                    RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN,
-                RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY, RESP_LEGAL_PROCEEDINGS_DESCRIPTION,
-                RESP_LEGAL_PROCEEDINGS_DESCRIPTION);
-        }
-
-        Optional<String> respCostsReasonFlag =
-            getLanguagePreferenceFlag(data,RESP_COSTS_REASON_TRANS_LANG);
-
-        if (respCostsReasonFlag.isPresent()) {
-            if (respCostsReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, RESP_COSTS_REASON_EN,
-                    RESP_COSTS_REASON_CY, RESP_COSTS_REASON_TRANS,
-                    RESP_COSTS_REASON);
-            } else {
-                setWelshTranslatedData(data, RESP_COSTS_REASON_EN,
-                    RESP_COSTS_REASON_CY, RESP_COSTS_REASON,
-                    RESP_COSTS_REASON_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, RESP_COSTS_REASON_EN,
-                RESP_COSTS_REASON_CY, RESP_COSTS_REASON,
-                RESP_COSTS_REASON);
-        }
-
-        Optional<String> coRespCostsReasonFlag =
-            getLanguagePreferenceFlag(data,CO_RESP_COSTS_REASON_TRANS_LANG);
-
-        if (coRespCostsReasonFlag.isPresent()) {
-            if (coRespCostsReasonFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, CO_RESP_COSTS_REASON_EN,
-                    CO_RESP_COSTS_REASON_CY, CO_RESP_COSTS_REASON_TRANS,
-                    CO_RESP_COSTS_REASON);
-            } else {
-                setWelshTranslatedData(data, CO_RESP_COSTS_REASON_EN,
-                    CO_RESP_COSTS_REASON_CY, CO_RESP_COSTS_REASON,
-                    CO_RESP_COSTS_REASON_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, CO_RESP_COSTS_REASON_EN,
-                CO_RESP_COSTS_REASON_CY, CO_RESP_COSTS_REASON,
-                CO_RESP_COSTS_REASON);
-        }
-
-        Optional<String> petitionChangedDetailsDNFlag =
-            getLanguagePreferenceFlag(data,PETITION_CHANGED_DETAILS_DN_TRANS_LANG);
-
-        if (petitionChangedDetailsDNFlag.isPresent()) {
-            if (petitionChangedDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, PETITION_CHANGED_DETAILS_DN_EN,
-                    PETITION_CHANGED_DETAILS_DN_CY, PETITION_CHANGED_DETAILS_DN_TRANS,
-                    PETITION_CHANGED_DETAILS_DN);
-            } else {
-                setWelshTranslatedData(data, PETITION_CHANGED_DETAILS_DN_EN,
-                    PETITION_CHANGED_DETAILS_DN_CY, PETITION_CHANGED_DETAILS_DN,
-                    PETITION_CHANGED_DETAILS_DN_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, PETITION_CHANGED_DETAILS_DN_EN,
-                PETITION_CHANGED_DETAILS_DN_CY, PETITION_CHANGED_DETAILS_DN,
-                PETITION_CHANGED_DETAILS_DN);
-        }
-
-        Optional<String> adulteryTimeLivedTogetherDetailsDNFlag =
-            getLanguagePreferenceFlag(data, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
-
-        if (adulteryTimeLivedTogetherDetailsDNFlag.isPresent()) {
-            if (adulteryTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,
-                    ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN);
-            } else {
-                setWelshTranslatedData(data, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,
-                    ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY, ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN,
-                ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN);
-        }
-
-        Optional<String> behaviourTimeLivedTogetherDetailsDNFlag =
-            getLanguagePreferenceFlag(data, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
-
-        if (behaviourTimeLivedTogetherDetailsDNFlag.isPresent()) {
-            if (behaviourTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,
-                    BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN);
-            } else {
-                setWelshTranslatedData(data, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,
-                    BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY, BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN,
-                BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN);
-        }
-
-        Optional<String> desertionTimeLivedTogetherDetailsDNFlag = getLanguagePreferenceFlag(data,
-            DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG);
-
-        if (desertionTimeLivedTogetherDetailsDNFlag.isPresent()) {
-            if (desertionTimeLivedTogetherDetailsDNFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,
-                    DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN);
-            } else {
-                setWelshTranslatedData(data, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                    DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,
-                    DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
-            }
-        } else {
-            setWelshTranslatedData(data, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
-                DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN,
-                DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN);
-        }
-
-        Optional<String> costsDifferentDetailsFlag = getLanguagePreferenceFlag(data,
-            COSTS_DIFFERENT_DETAILS_TRANS_LANG);
+        Optional<String> costsDifferentDetailsFlag =  Optional.ofNullable(data.get(languageKey))
+            .map(String.class::cast);
 
         if (costsDifferentDetailsFlag.isPresent()) {
             if (costsDifferentDetailsFlag.get().equalsIgnoreCase(ENGLISH_VALUE)) {
-                setWelshTranslatedData(data, COSTS_DIFFERENT_DETAILS_EN,
-                    COSTS_DIFFERENT_DETAILS_CY, COSTS_DIFFERENT_DETAILS_TRANS,
-                    COSTS_DIFFERENT_DETAILS);
+                setWelshTranslatedData(data, englishKey,
+                    welshKey, translatedValue,
+                    englishValue);
             } else {
-                setWelshTranslatedData(data, COSTS_DIFFERENT_DETAILS_EN,
-                    COSTS_DIFFERENT_DETAILS_CY, COSTS_DIFFERENT_DETAILS,
-                    COSTS_DIFFERENT_DETAILS_TRANS);
+                setWelshTranslatedData(data, englishKey,
+                    welshKey, englishValue,
+                    translatedValue);
             }
         } else {
-            setWelshTranslatedData(data, COSTS_DIFFERENT_DETAILS_EN,
-                COSTS_DIFFERENT_DETAILS_CY, COSTS_DIFFERENT_DETAILS,
-                COSTS_DIFFERENT_DETAILS);
+            setWelshTranslatedData(data, englishKey,
+                welshKey, englishValue,
+                englishValue);
         }
     }
 
@@ -573,11 +329,6 @@ public class WelshTemplateDataMapper {
                                        String englishValue, String welshValue) {
         data.put(englishKey,data.get(englishValue));
         data.put(welshKey,data.get(welshValue));
-    }
-
-    private Optional<String> getLanguagePreferenceFlag(Map<String, Object> data, String languageFlag) {
-        return Optional.ofNullable(data.get(languageFlag))
-            .map(String.class::cast);
     }
 
     private void setWelshEquivalentDates(Map<String, Object> data, String original, String translated) {
