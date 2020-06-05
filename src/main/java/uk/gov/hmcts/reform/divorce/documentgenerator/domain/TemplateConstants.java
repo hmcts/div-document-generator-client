@@ -317,4 +317,18 @@ public class TemplateConstants {
     public static final String WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "welshBehaviourMostRecentIncidentDateDN";
     public static final String WELSH_ADULTERY_FOUND_OUT_DATE_KEY = "welshAdulteryDateFoundOut";
     public static final String WELSH_DECREE_NISI_SUBMITTED_DATE_KEY = "welshDNApplicationSubmittedDate";
+
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS  = "DesertionAskedToResumeDNDetails";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN  = "DesertionAskedToResumeDNDetailsEN";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY  = "DesertionAskedToResumeDNDetailsCY";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS  = "DesertionAskedToResumeDNDetailsTrans";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG  = "DesertionAskedToResumeDNDetailsTransLang";
+
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN  = "SeparationTimeLivedTogetherDetailsDN";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN  = "SeparationTimeLivedTogetherDetailsDNEN";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "SeparationTimeLivedTogetherDetailsDNCY";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "SeparationTimeLivedTogetherDetailsDNTrans";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "SeparationTimeLivedTogetherDetailsDNTransLang";
+
+
 }

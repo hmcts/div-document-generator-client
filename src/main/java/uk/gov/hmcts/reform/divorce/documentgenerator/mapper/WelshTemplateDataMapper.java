@@ -97,6 +97,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
@@ -130,6 +135,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
@@ -300,6 +310,11 @@ public class WelshTemplateDataMapper {
         setTranslatedData(data,COSTS_DIFFERENT_DETAILS_TRANS_LANG,COSTS_DIFFERENT_DETAILS_EN,
             COSTS_DIFFERENT_DETAILS_CY,COSTS_DIFFERENT_DETAILS,COSTS_DIFFERENT_DETAILS_TRANS);
 
+        setTranslatedData(data,DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG,DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN,
+            DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY,DESERTION_ASKED_TO_RESUME_DN_DETAILS,DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS);
+
+        setTranslatedData(data,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
+            SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
     }
 
     private void setTranslatedData(Map<String, Object> data, String languageKey, String englishKey, String welshKey,

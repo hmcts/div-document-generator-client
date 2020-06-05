@@ -106,6 +106,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
@@ -139,6 +144,11 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
@@ -1736,6 +1746,156 @@ public class WelshTemplateDataMapperTest {
         expectedData.put(COSTS_DIFFERENT_DETAILS_TRANS,"gwerth prawf");
         expectedData.put(COSTS_DIFFERENT_DETAILS_EN, "test value");
         expectedData.put(COSTS_DIFFERENT_DETAILS_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionAskedToResumeDNDetails_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"gwerth prawf");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"test value");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"gwerth prawf");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN, "test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionAskedToResumeDNDetails_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"test value");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN, "test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void desertionAskedToResumeDNDetails_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"test value");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"gwerth prawf");
+        caseData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS,"test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS,"gwerth prawf");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN, "test value");
+        expectedData.put(DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void separationTimeLivedTogetherDetailsDN_EN() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, ENGLISH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"gwerth prawf");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void separationTimeLivedTogetherDetailsDN_CY() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG, WELSH_VALUE);
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
+
+        ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
+        Map<String, Object> requestData = ImmutableMap.of(
+            CASE_DETAILS, caseDetails,
+            ACCESS_CODE_KEY, accessCode,
+            FEATURE_TOGGLE_RESP_SOLCIITOR,true
+        );
+        welshTemplateDataMapper.updateWithWelshTranslatedData(requestData);
+        MapDifference<String, Object> diff = Maps.difference(expectedData, caseData);
+        caseData.keySet().removeAll(diff.entriesOnlyOnRight().keySet());
+        assertEquals(expectedData, caseData);
+    }
+
+    @Test
+    public void separationTimeLivedTogetherDetailsDN_NONE() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        caseData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,"");
+        caseData.put(LANGUAGE_PREFERENCE_WELSH_KEY, YES_VALUE);
+        expectedData.putAll(caseData);
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,"test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS,"gwerth prawf");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN, "test value");
+        expectedData.put(SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY, "gwerth prawf");
 
         ImmutableMap<String, Object> caseDetails = ImmutableMap.of(CASE_DATA, caseData, CASE_ID_KEY, caseIdKey);
         Map<String, Object> requestData = ImmutableMap.of(
