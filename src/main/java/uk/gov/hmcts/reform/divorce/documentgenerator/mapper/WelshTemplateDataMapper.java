@@ -140,8 +140,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
-import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_COURT_HEARING_DATE_KEY;
