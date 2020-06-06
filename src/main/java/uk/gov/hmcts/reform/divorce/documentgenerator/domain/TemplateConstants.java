@@ -155,6 +155,8 @@ public class TemplateConstants {
     public static final String PREVIOUS_ISSUE_DATE_KEY = "PreviousIssueDate";
     public static final String LAST_MODIFIED_KEY = "last_modified";
     public static final String DATE_OF_DOCUMENT_PRODUCTION = "dateOfDocumentProduction";
+    public static final String WELSH_SERVICE_COURT_NAME_KEY = "welshServiceCourtName";
+    public static final String WELSH_SERVICE_CENTRE_COURT_NAME = "Canolfan Gwasanaethau y Llysoedd a’r Tribiwnlysoedd";
     public static final String WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY = "welshDAEligibleFromDate";
     public static final String WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY = "welshDecreeAbsoluteGrantedDate";
     public static final String WELSH_DECREE_NISI_GRANTED_DATE_KEY = "welshDecreeNisiGrantedDate";

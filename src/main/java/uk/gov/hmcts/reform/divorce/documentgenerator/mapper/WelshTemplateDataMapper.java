@@ -158,6 +158,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_DN_APPROVAL_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_LAST_MODIFIED_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_PREVIOUS_ISSUE_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_SERVICE_CENTRE_COURT_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.WELSH_SERVICE_COURT_NAME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 
@@ -315,6 +317,8 @@ public class WelshTemplateDataMapper {
 
         setTranslatedData(data,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN,
             SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN,SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS);
+
+        data.put(WELSH_SERVICE_COURT_NAME_KEY, WELSH_SERVICE_CENTRE_COURT_NAME);
     }
 
     private void setTranslatedData(Map<String, Object> data, String languageKey, String englishKey, String welshKey,
