@@ -251,7 +251,7 @@ public class WelshTemplateDataMapper {
 
         setWelshEquivalentDates(data, DN_APPROVAL_DATE_KEY, WELSH_DN_APPROVAL_DATE_KEY);
         setWelshEquivalentDates(data, DECREE_NISI_GRANTED_DATE_KEY, WELSH_DECREE_NISI_GRANTED_DATE_KEY);
-        setWelshEquivalentDates(data, DECREE_ABSOLUTE_GRANTED_DATE_KEY, WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY);
+        setWelshEquivalentDateTime(data, DECREE_ABSOLUTE_GRANTED_DATE_KEY, WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY);
         setWelshEquivalentDates(data, DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY, WELSH_DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY);
         setWelshEquivalentDates(data, BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY);
         setWelshEquivalentDates(data, ADULTERY_FOUND_OUT_DATE_KEY, WELSH_ADULTERY_FOUND_OUT_DATE_KEY);
@@ -353,5 +353,10 @@ public class WelshTemplateDataMapper {
     private void setWelshEquivalentDates(Map<String, Object> data, String original, String translated) {
         Optional.ofNullable(data.get(original)).map(String.class::cast).ifPresent(
             date -> data.put(translated, localDateToWelshStringConverter.convert(date)));
+    }
+
+    private void setWelshEquivalentDateTime(Map<String, Object> data, String original, String translated) {
+        Optional.ofNullable(data.get(original)).map(String.class::cast).ifPresent(
+            date -> data.put(translated, localDateToWelshStringConverter.convertDateTime(date)));
     }
 }

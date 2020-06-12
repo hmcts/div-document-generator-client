@@ -327,9 +327,10 @@ public class WelshTemplateDataMapperTest {
 
     @Test
     public void decreeAbsoluteGrantedDate() {
-        when(localDateToWelshStringConverter.convert("2001-12-02")).thenReturn("2 Rhagfyr 2012");
+        when(localDateToWelshStringConverter.convertDateTime("2001-12-02T17:13:21.569"))
+            .thenReturn("2 Rhagfyr 2012");
         Map<String, Object> caseData = new HashMap<>();
-        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2001-12-02");
+        caseData.put(DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2001-12-02T17:13:21.569");
         expectedData.put(WELSH_DECREE_ABSOLUTE_GRANTED_DATE_KEY, "2 Rhagfyr 2012");
         assertTestData(caseData,expectedData);
     }

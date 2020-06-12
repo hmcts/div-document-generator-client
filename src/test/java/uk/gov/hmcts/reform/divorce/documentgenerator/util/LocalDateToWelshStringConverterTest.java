@@ -63,6 +63,13 @@ public class LocalDateToWelshStringConverterTest {
     }
 
     @Test
+    public void testLocalDateTimeConvertedToWelsh() {
+        String localDate = "2020-12-27T17:13:21.569";
+        String welshDate = localDateToWelshStringConverter.convertDateTime(localDate);
+        Assert.assertEquals("27 Rhagfyr 2020", welshDate);
+    }
+
+    @Test
     public void testLocalDateConvertedToWelshString() {
         LocalDate localDate = LocalDate.of(2020, 12, 27);
         String welshDate = localDateToWelshStringConverter.convert(localDate);
