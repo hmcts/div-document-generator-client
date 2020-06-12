@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
@@ -30,5 +31,9 @@ public class LocalDateToWelshStringConverter {
 
     public String convert(String localDateFormat) {
         return convert(LocalDate.parse(localDateFormat));
+    }
+
+    public String convertDateTime(String localDateTimeFormat) {
+        return convert(LocalDateTime.parse(localDateTimeFormat).toLocalDate());
     }
 }
