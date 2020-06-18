@@ -1,17 +1,17 @@
 {
-    "template":"FL-DIV-LET-ENG-00075.doc",
-    "values":{
-        "caseDetails":{
-            "id":"1517833758870511",
-            "jurisdiction":"DIVORCE",
-            "state":"Issued",
-            "case_type_id":"DIVORCE",
-            "created_date":"2018-02-05T12:29:17.81",
-            "last_modified":"2018-02-05T14:57:11.346",
-            "security_classification":"PUBLIC",
-            "case_data":{
-                "D8DerivedRespondentHomeAddress":"Flat 12\nIvy Tower\n34 Grange Road\nBirmingham\nB71 9PW",
-                "D8DerivedPetitionerHomeAddress":"82 Landor Road\nLondon\nSW9 9PE",
+    "template": "FL-DIV-LET-ENG-00075.doc",
+    "values": {
+        "caseDetails": {
+            "id": "1517833758870511",
+            "jurisdiction": "DIVORCE",
+            "state": "Issued",
+            "case_type_id": "DIVORCE",
+            "created_date": "2018-02-05T12:29:17.81",
+            "last_modified": "2018-02-05T14:57:11.346",
+            "security_classification": "PUBLIC",
+            "case_data": {
+                "D8DerivedRespondentHomeAddress": "Flat 12\nIvy Tower\n34 Grange Road\nBirmingham\nB71 9PW",
+                "D8DerivedPetitionerHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
                 "D8DivorceClaimFrom": [
                     "respondent"
                 ],
