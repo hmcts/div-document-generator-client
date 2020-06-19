@@ -13,7 +13,7 @@
                 "respondentFullName": "Respondent Baker",
                 "letterDate": "05 May 2020",
                 "hearingDate": "15 Jun 2020",
-                "courtOrderBeenGranted": true,
+                "costClaimGranted": true,
                 "ctscContactDetails": {
                     "serviceCentre": "Courts and Tribunals Service Centre",
                     "careOf": "HMCTS Digital Divorce",
