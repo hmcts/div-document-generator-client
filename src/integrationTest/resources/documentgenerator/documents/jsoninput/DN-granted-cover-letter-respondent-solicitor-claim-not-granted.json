@@ -22,10 +22,9 @@
                 "solicitorReference": "SolRef1234",
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
-                "letterDate": "05 May 2020",
-                "hearingDate": "15 Jun 2020",
-                "costClaimGranted": false,
-                "costOrderAttached": false
+                "letterDate": "5 May 2020",
+                "hearingDate": "15 June 2020",
+                "costClaimGranted": false
             }
         }
     }

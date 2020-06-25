@@ -73,8 +73,6 @@ public class PDFGenerationSupport {
             "Cost-Order-notification-letter-co-respondent-solicitor",
             "COE-cover-letter-respondent-solicitor-costs-claim-granted",
             "COE-cover-letter-respondent-solicitor-costs-claim-not-granted",
-            "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-granted",
-            "DN-granted-and-cost-order-cover-letter-respondent-solicitor-claim-not-granted",
             "DN-granted-cover-letter-respondent-solicitor-claim-granted",
             "DN-granted-cover-letter-respondent-solicitor-claim-not-granted",
             "COE-cover-letter-co-respondent-costs-claim-granted",
