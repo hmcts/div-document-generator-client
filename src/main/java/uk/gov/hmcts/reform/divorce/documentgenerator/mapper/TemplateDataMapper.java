@@ -5,8 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
+import uk.gov.hmcts.reform.divorce.documentgenerator.util.LocalDateToWelshStringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -69,6 +71,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
+
 @Component
 public class TemplateDataMapper {
 
@@ -78,10 +81,22 @@ public class TemplateDataMapper {
     @Autowired
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
 
+    @Autowired
+    private TemplateConfig templateConfig;
+
+    @Autowired
+    private WelshTemplateDataMapper welshTemplateDataMapper;
+
+    @Autowired
+    private LocalDateToWelshStringConverter localDateToWelshStringConverter;
+
     @SuppressWarnings("unchecked")
     public Map<String, Object> map(Map<String, Object> placeholders) {
+
         // Get case data
         Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
+
+        welshTemplateDataMapper.updateWithWelshTranslatedData(placeholders);
 
         if (Objects.nonNull(data.get(DN_APPROVAL_DATE_KEY))) {
             data.put(DN_APPROVAL_DATE_KEY, formatDateFromCCD((String) data.get(DN_APPROVAL_DATE_KEY)));
@@ -198,7 +213,6 @@ public class TemplateDataMapper {
 
         // Get page assets
         data.putAll(getPageAssets());
-
         return data;
     }
 

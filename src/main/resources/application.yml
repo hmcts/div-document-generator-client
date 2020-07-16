@@ -151,6 +151,69 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00449.docx
                 filename: CoECoverLetterForCoRespondent.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00247.docx
+                filename: AOSOffline5YearSeparationFormWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00246.docx
+                filename: AOSOffline2YearSeparationFormWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00248.docx
+                filename: AOSOfflineBehaviourDesertionFormWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00249.docx
+                filename: AOSOfflineAdulteryFormRespondentWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00250.docx
+                filename: AOSOfflineAdulteryFormCoRespondentWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-WEL-00240.docx
+                filename: CostsOrderWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-WEL-00251.docx
+                filename: DecreeNisiClarificationOrderWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-WEL-00252.docx
+                filename: DecreeNisiRefusalOrderWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-WEL-00238.docx
+                filename: CertificateOfEntitlementWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-WEL-00239.docx
+                filename: DecreeNisiPronouncementWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-APP-WEL-00253.docx
+                filename: DecreeNisiAnswersWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-WEL-00241.docx
+                filename: CaseListForPronouncementWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-WEL-00245.docx
+                filename: SolicitorPersonalServiceWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GOR-WEL-00242.docx
+                filename: DecreeAbsoluteWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00243.docx
+                filename: AOSOfflineInvitationLetterRespondentWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00244.docx
+                filename: AOSOfflineInvitationLetterCoRespondentWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-GNO-WEL-00256.docx
+                filename: DivorcePetitionWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00257.docx
+                filename: AOSInvitationWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00258.docx
+                filename: CoRespondentAnswersWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00259.docx
+                filename: CoRespondentInvitationWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-WEL-00260.docx
+                filename: RespondentAnswersWelsh.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -158,6 +221,31 @@ document:
         hmctsImgVal: "[userImage:hmcts.png]"
         displayTemplateKey: "displayTemplateOnly"
         displayTemplateVal: "1"
+
+template:
+  relation:
+    english:
+      "male": "husband"
+      "female": "wife"
+    welsh:
+      "male": "gŵr"
+      "female": "gwraig"
+      "husband": "gŵr"
+      "wife": "gwraig"
+  months:
+    welsh:
+      1: "Ionawr"
+      2: "Chwefror"
+      3: "Mawrth"
+      4: "Ebrill"
+      5: "Mai"
+      6: "Mehefin"
+      7: "Gorffennaf"
+      8: "Awst"
+      9: "Medi"
+      10: "Hydref"
+      11: "Tachwedd"
+      12: "Rhagfyr"
 
 service-auth-provider:
     service:

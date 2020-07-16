@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference.WELSH;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig.RELATION;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ADULTERY_FOUND_OUT_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.BEHAVIOUR_MOST_RECENT_DATE_DN_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
@@ -78,10 +82,14 @@ public class TemplateDataMapperTest {
     @Mock
     private DocmosisBasePdfConfig docmosisBasePdfConfig;
 
+    @Mock
+    private WelshTemplateDataMapper welshTemplateDataMapper;
+
     @InjectMocks
     private TemplateDataMapper templateDataMapper;
 
     private Map<String, Object> expectedData;
+
 
     @Before
     public void setup() {
@@ -96,6 +104,14 @@ public class TemplateDataMapperTest {
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
+        Map<String, String> welshRelationship = ImmutableMap.of("male", "gŵr",
+                "female", "gwraig",
+                "husband", "gŵr", "wife", "gwraig");
+
+        Map<LanguagePreference, Map<String, String>> relation = ImmutableMap.of(WELSH, welshRelationship);
+
+        Map<String, Map<LanguagePreference, Map<String, String>>> template =
+                ImmutableMap.of(RELATION, relation);
     }
 
     @Test

@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FEATURE_TOGGLE_RESP_SOLCIITOR;
 
 @Service
 @Slf4j
@@ -27,7 +28,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
     private static final String CURRENT_DATE_KEY = "current_date";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 
-    private static final String FEATURE_TOGGLE_RESP_SOLCIITOR = "featureToggleRespSolicitor";
+    private static final String DRAFT_PREFIX = "Draft";
+    private static final String IS_DRAFT = "isDraft";
 
     private final Clock clock = Clock.systemDefaultZone();
 
@@ -45,7 +47,25 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
-                                                          String authorizationToken) {
+        String authorizationToken) {
+        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
+    }
+
+    @Override
+    public GeneratedDocumentInfo generateAndStoreDraftDocument(String templateName,
+                Map<String, Object> placeholders, String authorizationToken) {
+        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
+        if (!fileName.startsWith(DRAFT_PREFIX)) {
+            fileName = String.join("", DRAFT_PREFIX, fileName);
+        }
+        placeholders.put(IS_DRAFT, true);
+
+        return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
+    }
+
+    private GeneratedDocumentInfo getGeneratedDocumentInfo(String templateName, Map<String, Object> placeholders,
+                                                           String authorizationToken, String fileName) {
         log.debug("Generate and Store Document requested with templateName [{}], placeholders of size [{}]",
             templateName, placeholders.size());
         String caseId = getCaseId(placeholders);
@@ -62,13 +82,8 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
                 )
         );
         placeholders.put(FEATURE_TOGGLE_RESP_SOLCIITOR, Boolean.valueOf(featureToggleRespSolicitor));
-
-        String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
-
         byte[] generatedDocument = generateDocument(templateName, placeholders);
-
         log.info("Document generated for case Id {}", caseId);
-
         return storeDocument(generatedDocument, authorizationToken, fileName);
     }
 
