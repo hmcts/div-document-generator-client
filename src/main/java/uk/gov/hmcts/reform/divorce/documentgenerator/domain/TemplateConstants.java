@@ -40,7 +40,7 @@ public class TemplateConstants {
     public static final String COE_COVER_LETTER_FOR_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00360.docx";
     public static final String COE_COVER_LETTER_FOR_CORESPONDENT_TEMPLATE_ID = "FL-DIV-GNO-ENG-00449.docx";
     public static final String COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID = "FL-DIV-GNO-ENG-00370.docx";
-    public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358.docx";
+    public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358A.docx";
     public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
     public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR = "FL-DIV-GNO-ENG-00423.docx";
 

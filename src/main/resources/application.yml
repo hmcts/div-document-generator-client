@@ -133,7 +133,7 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00356.docx
                 filename: DecreeNisiGrantedCoverLetterForRespondentSolicitor.pdf
                 document-generator: docmosis
-            -   templateName: FL-DIV-LET-ENG-00358.docx
+            -   templateName: FL-DIV-LET-ENG-00358A.docx
                 filename: CostOrderCoverLetterForCoRespondent.pdf
                 document-generator: docmosis
             -   templateName: FL-DIV-LET-ENG-00360.docx
