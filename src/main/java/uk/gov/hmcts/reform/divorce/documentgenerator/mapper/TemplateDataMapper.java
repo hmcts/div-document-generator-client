@@ -41,6 +41,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.FREE_TEXT_ORDER_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
@@ -63,6 +64,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PREVIOUS_PROCEEDINGS_CLARIFICATION_VALUE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_ADDRESS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -159,6 +161,10 @@ public class TemplateDataMapper {
 
         if (Objects.isNull(data.get(COURT_CONTACT_KEY))) {
             data.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
+        }
+
+        if (Objects.isNull(data.get(DN_COURT_CONTACT_KEY))) {
+            data.put(DN_COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_ADDRESS);
         }
 
         if (Objects.nonNull(data.get(CLIAM_COSTS_FROM))) {

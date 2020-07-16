@@ -41,6 +41,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_GRANTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_SUBMITTED_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_APPROVAL_DATE_KEY;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_COURT_CONTACT_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_CASE_DETAILS_STATEMENT_CLARIFICATION_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_FREE_TEXT_ORDER_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.HAS_INSUFFICIENT_DETAILS_REJECTION_KEY;
@@ -54,6 +55,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ISSUE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_CLARIFICATION_REASONS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.REFUSAL_REJECTION_REASONS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_ADDRESS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_CONTACT_DETAILS;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_CENTRE_COURT_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SERVICE_COURT_NAME_KEY;
@@ -98,6 +100,7 @@ public class TemplateDataMapperTest {
         expectedData = new HashMap<>();
         expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
+        expectedData.put(DN_COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_ADDRESS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -380,6 +383,23 @@ public class TemplateDataMapperTest {
 
         expectedData.putAll(caseData);
         expectedData.put(COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenExistingDnCourtContactKey_whenTemplateDataMapperIsCalled_returnFormattedData() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(DN_COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.putAll(caseData);
+        expectedData.put(DN_COURT_CONTACT_KEY, TEST_COURT_ADDRESS);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
