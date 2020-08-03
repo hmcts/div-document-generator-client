@@ -43,6 +43,7 @@ public class TemplateConstants {
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358A.docx";
     public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
     public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR = "FL-DIV-GNO-ENG-00423.docx";
+    public static final String ORDER_TO_DISPENSE_TEMPLATE_ID = "FL-DIV-DEC-ENG-00531.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -90,6 +91,8 @@ public class TemplateConstants {
         "CertificateOfEntitlementCoverLetterForRespondentSolicitor.pdf";
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME =
         "CostOrderCoverLetterForCoRespondent.pdf";
+    public static final String ORDER_TO_DISPENSE_FILE_NAME =
+        "OrderToDispense.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";

@@ -81,6 +81,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ORDER_TO_DISPENSE_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ORDER_TO_DISPENSE_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_TEMPLATE_ID;
@@ -166,7 +168,9 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID,
                 COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID,
-                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE)
+                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(ORDER_TO_DISPENSE_TEMPLATE_ID,
+                ORDER_TO_DISPENSE_FILE_NAME, DOCMOSIS_TYPE)
         );
     }
 

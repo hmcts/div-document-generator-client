@@ -1,0 +1,25 @@
+{
+    "template": "FL-DIV-DEC-ENG-00531.docx",
+    "values": {
+        "caseDetails": {
+            "id": "1517833758870511",
+            "case_data": {
+                "ctscContactDetails": {
+                    "serviceCentre": "Courts and Tribunals Service Centre",
+                    "centreName": "HMCTS Digital Divorce",
+                    "poBox": "PO Box 12706",
+                    "town": "Harlow",
+                    "postcode": "CM20 9QT",
+                    "emailAddress": "divorcecase@justice.gov.uk",
+                    "phoneNumber": "0300 303 0642"
+                },
+                "caseReference": "LV17D80102",
+                "petitionerFullName": "Applicant Baker",
+                "respondentFullName": "Respondent Baker",
+                "documentIssuedOn": "19 November 2020",
+                "serviceApplicationDecisionDate": "04 December 2020",
+                "dispensedDate": "14 December 2020"
+            }
+        }
+    }
+}
