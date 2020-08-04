@@ -214,6 +214,9 @@ document:
             -   templateName: FL-DIV-LET-WEL-00260.docx
                 filename: RespondentAnswersWelsh.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00531.docx
+                filename: OrderToDispense.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
