@@ -77,7 +77,8 @@ public class PDFGenerationSupport {
             "DN-granted-cover-letter-respondent-solicitor-claim-not-granted",
             "COE-cover-letter-co-respondent-costs-claim-granted",
             "COE-cover-letter-co-respondent-costs-claim-not-granted",
-            "Order-to-dispense"
+            "Order-to-dispense",
+            "Deemed-service-order"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
