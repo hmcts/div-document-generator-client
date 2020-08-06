@@ -220,6 +220,9 @@ document:
             -   templateName: FL-DIV-DEC-ENG-00534.docx
                 filename: DeemedServiceOrder.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00533.docx
+                filename: DeemedServiceRefusalOrder.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
