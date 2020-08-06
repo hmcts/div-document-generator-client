@@ -78,6 +78,7 @@ public class PDFGenerationSupport {
             "COE-cover-letter-co-respondent-costs-claim-granted",
             "COE-cover-letter-co-respondent-costs-claim-not-granted",
             "Order-to-dispense",
+            "Deemed-service-order",
             "Deemed-service-refusal-order"
         );
 
