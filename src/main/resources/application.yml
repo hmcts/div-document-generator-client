@@ -217,6 +217,9 @@ document:
             -   templateName: FL-DIV-DEC-ENG-00531.docx
                 filename: OrderToDispense.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00534.docx
+                filename: DeemedServiceOrder.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
