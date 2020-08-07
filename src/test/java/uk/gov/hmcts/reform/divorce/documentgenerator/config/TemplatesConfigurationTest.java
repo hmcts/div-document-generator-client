@@ -71,6 +71,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_ORDER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME;
@@ -178,7 +180,9 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(DEEMED_SERVICE_ORDER_TEMPLATE_ID,
                 DEEMED_SERVICE_ORDER_FILE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID,
-                DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE)
+                DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID,
+                DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE)
         );
     }
 
