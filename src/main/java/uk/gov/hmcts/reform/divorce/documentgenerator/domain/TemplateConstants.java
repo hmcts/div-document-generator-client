@@ -95,7 +95,7 @@ public class TemplateConstants {
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME =
         "CostOrderCoverLetterForCoRespondent.pdf";
     public static final String ORDER_TO_DISPENSE_FILE_NAME = "OrderToDispense.pdf";
-    public static final String DEEMED_SERVICE_ORDER_FILE_NAME ="DeemedServiceOrder.pdf";
+    public static final String DEEMED_SERVICE_ORDER_FILE_NAME = "DeemedServiceOrder.pdf";
     public static final String DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DeemedServiceRefusalOrder.pdf";
     public static final String DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DispensedServiceRefusalOrder.pdf";
 
