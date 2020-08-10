@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/hmcts/div-document-generator-client.svg?branch=master)](https://travis-ci.org/hmcts/div-document-generator-client)
 [![codecov](https://codecov.io/gh/hmcts/div-document-generator-client/branch/master/graph/badge.svg)](https://codecov.io/gh/hmcts/div-document-generator-client)
-[![How to add template](https://img.shields.io/static/v1?label=DGS&message=Documentation&color=informational)](https://tools.hmcts.net/confluence/display/DIV/Add+a+new+template+to+DGS)
+[![How to add template](https://img.shields.io/static/v1?label=Documentation&message=DGS&color=informational&logo=confluence)](https://tools.hmcts.net/confluence/display/DIV/Add+a+new+template+to+DGS)
 
 This is a document generation and template management service. This allows to generate documents based on a
 given template name and placeholder data in JSON format and will also store the generated document in the
