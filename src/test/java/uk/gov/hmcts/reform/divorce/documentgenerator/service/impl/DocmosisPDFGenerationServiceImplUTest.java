@@ -21,7 +21,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.PdfDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
-import uk.gov.hmcts.reform.divorce.documentgenerator.mapper.TemplateDataMapper;
 import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 
 import java.util.Collections;
@@ -36,19 +35,15 @@ import static org.powermock.api.mockito.PowerMockito.doThrow;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-@PowerMockIgnore("com.microsoft.applicationinsights.*")
+@PowerMockIgnore({"com.microsoft.applicationinsights.*", "javax.xml.*", "org.xml.*", "com.sun.org.apache.xerces.*"})
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DocmosisPDFGenerationServiceImpl.class, NullOrEmptyValidator.class, Objects.class})
 public class DocmosisPDFGenerationServiceImplUTest {
-
     private static final String PDF_SERVICE_ENDPOINT = "pdf_service_endpoint";
     private static final String PDF_SERVICE_KEY = "pdf_service_key" ;
 
     @Mock
     private RestTemplate restTemplate;
-
-    @Mock
-    private TemplateDataMapper templateDataMapper;
 
     @InjectMocks
     @Spy
@@ -70,8 +65,6 @@ public class DocmosisPDFGenerationServiceImplUTest {
 
         doNothing().when(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonBlank(template);
-        doReturn(placeholders).when(Objects.class);
-        Objects.requireNonNull(placeholders);
         PdfDocumentRequest pdfDocumentRequest = PdfDocumentRequest.builder()
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)
@@ -107,8 +100,6 @@ public class DocmosisPDFGenerationServiceImplUTest {
 
         doNothing().when(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonBlank(template);
-        doReturn(placeholders).when(Objects.class);
-        Objects.requireNonNull(placeholders);
         PdfDocumentRequest pdfDocumentRequest = PdfDocumentRequest.builder()
             .accessKey(PDF_SERVICE_KEY)
             .data(placeholders)

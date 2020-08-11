@@ -130,11 +130,10 @@ def versions = [
     jsonAssert: '1.2.3',
     junit: '4.12',
     lombok: '1.18.12',
-    mockito: '2.8.9',
     nimbus: '5.1',
     pdfbox: '2.0.8',
     pitest: '1.4.10',
-    powerMock: '1.7.3',
+    powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformHealth: '0.0.5',
     reformPropertiesVolume: '0.0.4',
@@ -256,10 +255,7 @@ dependencies {
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
-    testCompile group: 'org.mockito', name: 'mockito-core', version: versions.mockito
-
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
