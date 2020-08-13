@@ -226,6 +226,9 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00535.docx
                 filename: DispensedServiceRefusalOrder.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00537.odt
+                filename: AosOverdueCoverLetter.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
