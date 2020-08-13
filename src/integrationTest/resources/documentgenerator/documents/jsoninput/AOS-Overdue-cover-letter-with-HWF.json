@@ -6,7 +6,7 @@
                 "caseReference": "1234-5678-9012-3456",
                 "addressee": {
                     "name": "Mr. Peter Child",
-                    "formattedAddress": "10 Farringdon Lane\nLondon\nGE12 4EH"
+                    "formattedAddress": "Flat 10\nAustin Court\n10 Farringdon Lane\nGuildford\nSurrey\nGE12 4EH\nUnited Kingdom"
                 },
                 "ctscContactDetails": {
                     "centreName": "Centre name",
