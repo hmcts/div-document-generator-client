@@ -9,10 +9,7 @@
                     "formattedAddress": "Flat 10\nAustin Court\n10 Farringdon Lane\nGuildford\nSurrey\nGE12 4EH\nUnited Kingdom"
                 },
                 "ctscContactDetails": {
-                    "centreName": "Centre name",
-                    "poBox": "PO BOX 12345",
-                    "town": "Harwich",
-                    "postcode": "HA3 4EI"
+                    "emailAddress": "divorce@divorce.gov.uk"
                 },
                 "hasHelpWithFeesNumber": true,
                 "helpWithFeesNumber": "12344321"
