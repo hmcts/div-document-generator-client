@@ -82,7 +82,9 @@ public class PDFGenerationSupport {
             "Deemed-service-refusal-order",
             "Dispensed-service-refusal-order",
             "AOS-Overdue-cover-letter-with-HWF",
-            "AOS-Overdue-cover-letter-with-no-HWF"
+            "AOS-Overdue-cover-letter-with-no-HWF",
+            "General-order-document-with-corespondent",
+            "General-order-document-without-corespondent"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
