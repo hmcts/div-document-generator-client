@@ -1,0 +1,29 @@
+{
+    "template": "FL-DIV-GOR-ENG-00558.docx",
+    "values": {
+        "caseDetails": {
+            "id": "1517833758870511",
+            "case_data": {
+                "ctscContactDetails": {
+                    "serviceCentre": "Courts and Tribunals Service Centre",
+                    "centreName": "HMCTS Digital Divorce",
+                    "poBox": "PO Box 12706",
+                    "town": "Harlow",
+                    "postcode": "CM20 9QT",
+                    "emailAddress": "divorcecase@justice.gov.uk",
+                    "phoneNumber": "0300 303 0642"
+                },
+                "caseReference": "7581783308715511",
+                "petitionerFullName": "Applicant Baker",
+                "respondentFullName": "Respondent Baker",
+                "hasCoRespondent": true,
+                "coRespondentFullName": "Co Respondent Eater",
+                "generalOrderRecitals": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.\n\nThe point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+                "judgeType": "District Judge",
+                "judgeName": "Frankey McDornald",
+                "generalOrderDate": "19 November 2020",
+                "generalOrderDetails": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
+            }
+        }
+    }
+}
