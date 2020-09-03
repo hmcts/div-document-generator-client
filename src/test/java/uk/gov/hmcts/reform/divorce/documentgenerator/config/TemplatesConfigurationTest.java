@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +16,9 @@ import java.util.Set;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.rules.ExpectedException.none;
+import static org.junit.Assert.assertThrows;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
@@ -103,9 +102,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @SpringBootTest
 @Slf4j
 public class TemplatesConfigurationTest {
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     @Autowired
     private TemplatesConfiguration classUnderTest;
@@ -216,10 +212,10 @@ public class TemplatesConfigurationTest {
     @Test
     public void shouldThrowExceptionWhenUnknownTemplateIsRequested() {
         String templateName = "unknown-template";
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Unknown template: " + templateName);
-
-        classUnderTest.getFileNameByTemplateName(templateName);
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
+            classUnderTest.getFileNameByTemplateName(templateName);
+        });
+        assertThat(illegalArgumentException.getMessage(), containsString("Unknown template: " + templateName));
     }
 
     @Test
@@ -227,15 +223,13 @@ public class TemplatesConfigurationTest {
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName("non-existent-template"), is(PDF_GENERATOR_TYPE));
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void shouldThrowAnExceptionWhenTemplateNameIsDuplicated() {
         TemplatesConfiguration templatesConfiguration = new TemplatesConfiguration();
         templatesConfiguration.setConfigurationList(asList(
             new TemplateConfiguration("thisName", null, null),
             new TemplateConfiguration("thisName", null, null)
         ));
-
-        expectedException.expect(Exception.class);
 
         templatesConfiguration.init();
     }
