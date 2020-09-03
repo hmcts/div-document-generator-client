@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplatesConfiguration;
@@ -44,14 +43,14 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDocument(String templateName, Map<String, Object> placeholders,
-        String authorizationToken) {
+                                                          String authorizationToken) {
         String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
         return getGeneratedDocumentInfo(templateName, placeholders, authorizationToken, fileName);
     }
 
     @Override
     public GeneratedDocumentInfo generateAndStoreDraftDocument(String templateName,
-                Map<String, Object> placeholders, String authorizationToken) {
+                                                               Map<String, Object> placeholders, String authorizationToken) {
         String fileName = templatesConfiguration.getFileNameByTemplateName(templateName);
         if (!fileName.startsWith(DRAFT_PREFIX)) {
             fileName = String.join("", DRAFT_PREFIX, fileName);
