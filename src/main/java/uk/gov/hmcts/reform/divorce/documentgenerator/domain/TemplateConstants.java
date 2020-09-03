@@ -48,6 +48,7 @@ public class TemplateConstants {
     public static final String DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00533.docx";
     public static final String DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00535.docx";
     public static final String AOS_OVERDUE_COVER_LETTER_TEMPLATE_ID = "FL-DIV-LET-ENG-00537.odt";
+    public static final String GENERAL_ORDER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00558.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -100,6 +101,7 @@ public class TemplateConstants {
     public static final String DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DeemedServiceRefusalOrder.pdf";
     public static final String DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DispensedServiceRefusalOrder.pdf";
     public static final String AOS_OVERDUE_COVER_LETTER_FILE_NAME = "AosOverdueCoverLetter.pdf";
+    public static final String GENERAL_ORDER_FILE_NAME = "GeneralOrder.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
