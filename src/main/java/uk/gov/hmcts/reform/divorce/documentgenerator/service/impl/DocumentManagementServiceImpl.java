@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class DocumentManagementServiceImpl implements DocumentManagementService {
 
     private static final String CURRENT_DATE_KEY = "current_date";
@@ -33,14 +35,9 @@ public class DocumentManagementServiceImpl implements DocumentManagementService 
 
     private final Clock clock = Clock.systemDefaultZone();
 
-    @Autowired
-    private PDFGenerationFactory pdfGenerationFactory;
-
-    @Autowired
-    private EvidenceManagementService evidenceManagementService;
-
-    @Autowired
-    private TemplatesConfiguration templatesConfiguration;
+    private final PDFGenerationFactory pdfGenerationFactory;
+    private final EvidenceManagementService evidenceManagementService;
+    private final TemplatesConfiguration templatesConfiguration;
 
     @Value("${feature-toggle.toggle.feature_resp_solicitor_details}")
     private String featureToggleRespSolicitor;
