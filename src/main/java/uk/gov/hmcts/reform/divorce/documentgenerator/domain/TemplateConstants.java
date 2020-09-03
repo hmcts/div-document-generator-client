@@ -346,6 +346,4 @@ public class TemplateConstants {
     public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "SeparationTimeLivedTogetherDetailsDNCY";
     public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "SeparationTimeLivedTogetherDetailsDNTrans";
     public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "SeparationTimeLivedTogetherDetailsDNTransLang";
-
-
 }
