@@ -155,8 +155,7 @@ def versions = [
     springSecurityCrypto: '5.2.4.RELEASE',
     tomcatEmbedCore: '9.0.37',
     tomcatEmbedWebsocket: '9.0.37',
-    tomcatEmbedEl: '9.0.33',
-    snakeYaml: '1.26'
+    tomcatEmbedEl: '9.0.33'
 ]
 
 dependencies {

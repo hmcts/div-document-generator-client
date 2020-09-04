@@ -305,6 +305,7 @@ management:
             cache:
                 time-to-live: 5000
             probes:
+                #This disables the Kubernetes probes provided by Spring, since we already provide a custom liveness probe (see uk.gov.hmcts.reform.health.Liveness)
                 enabled: false
     endpoints:
         web:
