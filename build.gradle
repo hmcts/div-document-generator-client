@@ -275,6 +275,8 @@ dependencyManagement {
             entry 'jackson-core'
             entry 'jackson-databind'
         }
+        //CVE-2017-18640
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
     }
 }
 
