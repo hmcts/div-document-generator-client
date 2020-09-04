@@ -208,7 +208,6 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
-    implementation group: 'org.yaml', name: 'snakeyaml', version: versions.snakeYaml
 
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
     compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
