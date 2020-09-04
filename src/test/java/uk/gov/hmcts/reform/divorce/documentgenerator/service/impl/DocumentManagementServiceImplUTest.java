@@ -1,9 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,8 +18,8 @@ import java.util.HashMap;
 
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.rules.ExpectedException.none;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -36,9 +34,6 @@ public class DocumentManagementServiceImplUTest {
     private static final byte[] TEST_GENERATED_DOCUMENT = new byte[] {1};
 
     private FileUploadResponse expectedFileUploadResponse;
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     @Mock
     private PDFGenerationFactory pdfGenerationFactory;
@@ -106,10 +101,11 @@ public class DocumentManagementServiceImplUTest {
         when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName))
             .thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(equalTo("Unknown template: " + unknownTemplateName));
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
+            classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
+        });
 
-        classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
+        assertThat(illegalArgumentException.getMessage(), equalTo("Unknown template: " + unknownTemplateName));
     }
 
     private void assertGeneratedDocumentInfoIsAsExpected(GeneratedDocumentInfo generatedDocumentInfo) {

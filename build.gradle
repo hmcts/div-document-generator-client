@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 buildscript {
     ext {
-        springBootVersion = '2.2.4.RELEASE'
+        springBootVersion = '2.3.3.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -145,7 +145,7 @@ def versions = [
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.8.RELEASE',
-    springBoot: '2.2.4.RELEASE',
+    springBoot: '2.3.3.RELEASE',
     springCloud: '2.2.1.RELEASE',
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
@@ -206,7 +206,8 @@ dependencies {
 
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
-    compile('org.springframework.boot:spring-boot-starter-actuator')
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
+
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
     compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
     compile (group: 'com.fasterxml.jackson.core', name:'jackson-databind', version: versions.jacksonDatabind) {
