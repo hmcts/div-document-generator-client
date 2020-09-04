@@ -68,7 +68,6 @@ public class PDFGenerationTest extends IntegrationTest {
      * <p>Should be @ignored in master branch.
      */
     @Test
-    @Ignore
     public void ignoreMe_updateGeneratedPdfs() throws Exception {
         Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
         savePdf(responseFromEvidenceManagement.asByteArray());
