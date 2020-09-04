@@ -304,6 +304,8 @@ management:
             show-details: "ALWAYS"
             cache:
                 time-to-live: 5000
+            probes:
+                enabled: false
     endpoints:
         web:
             base-path: /
