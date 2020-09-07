@@ -67,8 +67,8 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
             });
 
         return Optional.ofNullable(responseEntity.getBody())
-            .map(fileUploadResponses -> fileUploadResponses.get(0))
-            .orElseThrow(() -> new DocumentStorageException("No document found in response"));
+                        .map(fileUploadResponseList -> fileUploadResponseList.get(0))
+                        .orElseGet(() -> new FileUploadResponse(HttpStatus.SERVICE_UNAVAILABLE));
     }
 
     private HttpHeaders getHttpHeaders(String authToken) {
