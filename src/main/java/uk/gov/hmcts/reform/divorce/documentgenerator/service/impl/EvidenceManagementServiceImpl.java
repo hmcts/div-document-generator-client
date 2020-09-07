@@ -66,14 +66,9 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
             new ParameterizedTypeReference<List<FileUploadResponse>>() {
             });
 
-        Optional<FileUploadResponse> fileUploadResponse = Optional.ofNullable(responseEntity.getBody())
-            .map((fileUploadResponses) -> fileUploadResponses.get(0));
-
-        if (fileUploadResponse.isPresent()) {
-            return fileUploadResponse.get();
-        } else {
-            throw new DocumentStorageException("No document found in response");
-        }
+        return Optional.ofNullable(responseEntity.getBody())
+            .map((fileUploadResponses) -> fileUploadResponses.get(0))
+            .orElseThrow(() -> new DocumentStorageException("No document found in response"));
     }
 
     private HttpHeaders getHttpHeaders(String authToken) {
