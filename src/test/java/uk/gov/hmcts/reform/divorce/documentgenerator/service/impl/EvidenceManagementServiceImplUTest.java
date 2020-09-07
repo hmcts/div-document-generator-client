@@ -30,7 +30,11 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -106,26 +110,28 @@ public class EvidenceManagementServiceImplUTest {
             data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
     }
 
-    @Test(expected = DocumentStorageException.class)
+    @Test
     public void givenStoreDocumentReturnsNull_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
         final byte[] data = {1};
         final String authToken = "someToken";
+        final ResponseEntity<List<FileUploadResponse>> responseEntity = new ResponseEntity<>(null, HttpStatus.OK);
 
         when(restTemplate.exchange(
             anyString(),
             eq(HttpMethod.POST),
             any(HttpEntity.class),
             any(ParameterizedTypeReference.class)
-        )).thenReturn(null);
+        )).thenReturn(responseEntity);
 
-        classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class, () -> {
+            classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        });
 
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument",
-            data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        assertThat(documentStorageException.getMessage(), is("Error storing document FileUploadResponse is null"));
     }
 
-    @Test(expected = DocumentStorageException.class)
-    public void givenStoreDocumentReturnsEmptyResponse_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
+    @Test
+    public void givenStoreDocumentResponseIsEmptyList_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
         final byte[] data = {1};
         final String authToken = "someToken";
         final ResponseEntity<List<FileUploadResponse>> responseEntity = new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
@@ -137,10 +143,11 @@ public class EvidenceManagementServiceImplUTest {
             any(ParameterizedTypeReference.class)
         )).thenReturn(responseEntity);
 
-        classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class, () -> {
+            classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        });
 
-        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument",
-            data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+        assertThat(documentStorageException.getMessage(), containsString("Error storing document"));
     }
 
     @Test
