@@ -67,7 +67,7 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
             });
 
         return Optional.ofNullable(responseEntity.getBody())
-            .map((fileUploadResponses) -> fileUploadResponses.get(0))
+            .map(fileUploadResponses -> fileUploadResponses.get(0))
             .orElseThrow(() -> new DocumentStorageException("No document found in response"));
     }
 
