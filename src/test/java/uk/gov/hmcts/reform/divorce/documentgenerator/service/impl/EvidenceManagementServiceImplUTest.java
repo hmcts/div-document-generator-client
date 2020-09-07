@@ -39,6 +39,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
@@ -128,6 +129,10 @@ public class EvidenceManagementServiceImplUTest {
         });
 
         assertThat(documentStorageException.getMessage(), is("Error storing document FileUploadResponse is null"));
+        verify(restTemplate).exchange(anyString(),
+            eq(HttpMethod.POST),
+            any(HttpEntity.class),
+            any(ParameterizedTypeReference.class));
     }
 
     @Test
@@ -148,6 +153,10 @@ public class EvidenceManagementServiceImplUTest {
         });
 
         assertThat(documentStorageException.getMessage(), containsString("Error storing document"));
+        verify(restTemplate).exchange(anyString(),
+            eq(HttpMethod.POST),
+            any(HttpEntity.class),
+            any(ParameterizedTypeReference.class));
     }
 
     @Test
