@@ -32,6 +32,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
@@ -69,9 +73,9 @@ public class EvidenceManagementServiceImplUTest {
         final RuntimeException documentStorageException = new RuntimeException();
 
         doThrow(documentStorageException).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
-                    byte[].class, String.class, String.class))
-                .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
+                byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
         try {
             classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
@@ -92,9 +96,46 @@ public class EvidenceManagementServiceImplUTest {
         final FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.SERVICE_UNAVAILABLE);
 
         doReturn(fileUploadResponse).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
-                    byte[].class, String.class, String.class))
-                .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
+                byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+
+        classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument",
+            data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test(expected = DocumentStorageException.class)
+    public void givenStoreDocumentReturnsNull_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
+        final byte[] data = {1};
+        final String authToken = "someToken";
+
+        when(restTemplate.exchange(
+            anyString(),
+            eq(HttpMethod.POST),
+            any(HttpEntity.class),
+            any(ParameterizedTypeReference.class)
+        )).thenReturn(null);
+
+        classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+
+        verifyPrivate(classUnderTest, Mockito.times(1)).invoke("storeDocument",
+            data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+    }
+
+    @Test(expected = DocumentStorageException.class)
+    public void givenStoreDocumentReturnsEmptyResponse_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
+        final byte[] data = {1};
+        final String authToken = "someToken";
+        final ResponseEntity<List<FileUploadResponse>> responseEntity = new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+
+        when(restTemplate.exchange(
+            anyString(),
+            eq(HttpMethod.POST),
+            any(HttpEntity.class),
+            any(ParameterizedTypeReference.class)
+        )).thenReturn(responseEntity);
 
         classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
@@ -110,9 +151,9 @@ public class EvidenceManagementServiceImplUTest {
         final FileUploadResponse expected = new FileUploadResponse(HttpStatus.OK);
 
         doReturn(expected).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
-                    byte[].class, String.class, String.class))
-                .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "storeDocument",
+                byte[].class, String.class, String.class))
+            .withArguments(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
         FileUploadResponse actual = classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
 
@@ -130,7 +171,8 @@ public class EvidenceManagementServiceImplUTest {
         final FileUploadResponse expected = new FileUploadResponse(HttpStatus.OK);
 
         final ParameterizedTypeReference<List<FileUploadResponse>> parameterizedTypeReference =
-                new ParameterizedTypeReference<List<FileUploadResponse>>() {};
+            new ParameterizedTypeReference<List<FileUploadResponse>>() {
+            };
 
         final ResponseEntity responseEntity = new ResponseEntity(Collections.singletonList(expected), HttpStatus.OK);
 
@@ -142,13 +184,13 @@ public class EvidenceManagementServiceImplUTest {
         doNothing().when(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonEmpty(document);
         doReturn(request).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "buildRequest", byte[].class, String.class))
-                .withArguments(document, DEFAULT_NAME_FOR_PDF_FILE);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "buildRequest", byte[].class, String.class))
+            .withArguments(document, DEFAULT_NAME_FOR_PDF_FILE);
         doReturn(httpHeaders).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "getHttpHeaders", String.class))
-                .withArguments(authToken);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "getHttpHeaders", String.class))
+            .withArguments(authToken);
         doReturn(responseEntity).when(restTemplate).exchange(EVIDENCE_MANAGEMENT_ENDPOINT, HttpMethod.POST, httpEntity,
-                parameterizedTypeReference);
+            parameterizedTypeReference);
 
         FileUploadResponse actual = storeDocument(document, authToken, null);
 
@@ -157,10 +199,10 @@ public class EvidenceManagementServiceImplUTest {
         verifyStatic(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonEmpty(document);
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("buildRequest", document,
-                DEFAULT_NAME_FOR_PDF_FILE);
+            DEFAULT_NAME_FOR_PDF_FILE);
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("getHttpHeaders", authToken);
         Mockito.verify(restTemplate, Mockito.times(1)).exchange(EVIDENCE_MANAGEMENT_ENDPOINT,
-                HttpMethod.POST, httpEntity, parameterizedTypeReference);
+            HttpMethod.POST, httpEntity, parameterizedTypeReference);
     }
 
     @Test
@@ -172,7 +214,8 @@ public class EvidenceManagementServiceImplUTest {
         final FileUploadResponse expected = new FileUploadResponse(HttpStatus.OK);
 
         final ParameterizedTypeReference<List<FileUploadResponse>> parameterizedTypeReference =
-                new ParameterizedTypeReference<List<FileUploadResponse>>() {};
+            new ParameterizedTypeReference<List<FileUploadResponse>>() {
+            };
 
         final ResponseEntity responseEntity = new ResponseEntity(Collections.singletonList(expected), HttpStatus.OK);
 
@@ -184,13 +227,13 @@ public class EvidenceManagementServiceImplUTest {
         doNothing().when(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonEmpty(document);
         doReturn(request).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "buildRequest", byte[].class, String.class))
-                .withArguments(document, testFileName);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "buildRequest", byte[].class, String.class))
+            .withArguments(document, testFileName);
         doReturn(httpHeaders).when(classUnderTest,
-                MemberMatcher.method(EvidenceManagementServiceImpl.class, "getHttpHeaders", String.class))
-                .withArguments(authToken);
+            MemberMatcher.method(EvidenceManagementServiceImpl.class, "getHttpHeaders", String.class))
+            .withArguments(authToken);
         doReturn(responseEntity).when(restTemplate).exchange(EVIDENCE_MANAGEMENT_ENDPOINT, HttpMethod.POST, httpEntity,
-                parameterizedTypeReference);
+            parameterizedTypeReference);
 
         FileUploadResponse actual = storeDocument(document, authToken, testFileName);
 
@@ -199,10 +242,10 @@ public class EvidenceManagementServiceImplUTest {
         verifyStatic(NullOrEmptyValidator.class);
         NullOrEmptyValidator.requireNonEmpty(document);
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("buildRequest", document,
-                testFileName);
+            testFileName);
         verifyPrivate(classUnderTest, Mockito.times(1)).invoke("getHttpHeaders", authToken);
         Mockito.verify(restTemplate, Mockito.times(1)).exchange(EVIDENCE_MANAGEMENT_ENDPOINT,
-                HttpMethod.POST, httpEntity, parameterizedTypeReference);
+            HttpMethod.POST, httpEntity, parameterizedTypeReference);
     }
 
     @Test
