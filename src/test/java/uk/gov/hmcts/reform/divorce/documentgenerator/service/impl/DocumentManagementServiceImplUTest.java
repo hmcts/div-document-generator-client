@@ -98,11 +98,12 @@ public class DocumentManagementServiceImplUTest {
     @Test
     public void givenTemplateNameIsInvalid_whenGenerateAndStoreDocument_thenThrowException() {
         String unknownTemplateName = "unknown-template";
+        HashMap<String, Object> placeholders = new HashMap<>();
         when(templatesConfiguration.getFileNameByTemplateName(unknownTemplateName))
             .thenThrow(new IllegalArgumentException("Unknown template: " + unknownTemplateName));
 
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
-            classUnderTest.generateAndStoreDocument(unknownTemplateName, new HashMap<>(), "some-auth-token");
+            classUnderTest.generateAndStoreDocument(unknownTemplateName, placeholders, "some-auth-token");
         });
 
         assertThat(illegalArgumentException.getMessage(), equalTo("Unknown template: " + unknownTemplateName));
