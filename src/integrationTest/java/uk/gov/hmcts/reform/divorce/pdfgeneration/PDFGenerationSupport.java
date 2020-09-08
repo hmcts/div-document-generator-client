@@ -84,7 +84,9 @@ public class PDFGenerationSupport {
             "AOS-Overdue-cover-letter-with-HWF",
             "AOS-Overdue-cover-letter-with-no-HWF",
             "General-order-document-with-corespondent",
-            "General-order-document-without-corespondent"
+            "General-order-document-without-corespondent",
+            "General-letter-with-no-solicitor",
+            "General-letter-with-solicitor"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
