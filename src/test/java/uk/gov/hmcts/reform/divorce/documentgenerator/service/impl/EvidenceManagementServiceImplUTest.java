@@ -113,20 +113,17 @@ public class EvidenceManagementServiceImplUTest {
 
     @Test
     public void givenStoreDocumentReturnsNull_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
-        final byte[] data = {1};
-        final String authToken = "someToken";
-        final ResponseEntity<List<FileUploadResponse>> responseEntity = new ResponseEntity<>(null, HttpStatus.OK);
-
         when(restTemplate.exchange(
             anyString(),
             eq(HttpMethod.POST),
             any(HttpEntity.class),
             any(ParameterizedTypeReference.class)
-        )).thenReturn(responseEntity);
+        )).thenReturn(new ResponseEntity<>(null, HttpStatus.OK));
 
-        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class, () -> {
-            classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
-        });
+        final byte[] documentData = {1};
+        final String authToken = "someToken";
+        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class,
+            () -> classUnderTest.storeDocumentAndGetInfo(documentData, authToken, DEFAULT_NAME_FOR_PDF_FILE));
 
         assertThat(documentStorageException.getMessage(), is("Error storing document FileUploadResponse is null"));
         verify(restTemplate).exchange(anyString(),
@@ -137,20 +134,17 @@ public class EvidenceManagementServiceImplUTest {
 
     @Test
     public void givenStoreDocumentResponseIsEmptyList_whenStoreDocumentAndGetInfo_thenThrowDocumentStorageException() throws Exception {
-        final byte[] data = {1};
-        final String authToken = "someToken";
-        final ResponseEntity<List<FileUploadResponse>> responseEntity = new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
-
         when(restTemplate.exchange(
             anyString(),
             eq(HttpMethod.POST),
             any(HttpEntity.class),
             any(ParameterizedTypeReference.class)
-        )).thenReturn(responseEntity);
+        )).thenReturn(new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK));
 
-        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class, () -> {
-            classUnderTest.storeDocumentAndGetInfo(data, authToken, DEFAULT_NAME_FOR_PDF_FILE);
-        });
+        final byte[] documentData = {1};
+        final String authToken = "someToken";
+        DocumentStorageException documentStorageException = assertThrows(DocumentStorageException.class,
+            () -> classUnderTest.storeDocumentAndGetInfo(documentData, authToken, DEFAULT_NAME_FOR_PDF_FILE));
 
         assertThat(documentStorageException.getMessage(), containsString("Error storing document"));
         verify(restTemplate).exchange(anyString(),
