@@ -35,12 +35,8 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
     @Value("${service.evidence-management-client-api.uri}")
     private String evidenceManagementEndpoint;
 
-    private RestTemplate restTemplate;
-
     @Autowired
-    public void setRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate restTemplate;
 
     @Override
     public FileUploadResponse storeDocumentAndGetInfo(byte[] document, String authorizationToken, String fileName) {
@@ -73,9 +69,9 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
         List<FileUploadResponse> responseEntityBody = responseEntity.getBody();
         if (responseEntityBody == null) {
             throw new DocumentStorageException("FileUploadResponse is null");
-        } else {
-            return responseEntityBody.get(0);
         }
+
+        return responseEntityBody.get(0);
     }
 
     private HttpHeaders getHttpHeaders(String authToken) {
