@@ -313,6 +313,10 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
         main = bootJar.mainClassName
         classpath = sourceSets.main.runtimeClasspath
         systemProperty 'spring.profiles.active', 'aat'
+        systemProperty 'http.proxyHost', 'proxyout.reform.hmcts.net'
+        systemProperty 'http.proxyPort', '8080'
+        systemProperty 'https.proxyHost', 'proxyout.reform.hmcts.net'
+        systemProperty 'https.proxyPort', '8080'
     }
 }
 
