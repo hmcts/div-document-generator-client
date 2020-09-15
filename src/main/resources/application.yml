@@ -229,6 +229,12 @@ document:
             -   templateName: FL-DIV-LET-ENG-00537.odt
                 filename: AosOverdueCoverLetter.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GOR-ENG-00572.docx
+                filename: GeneralOrder.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-LET-ENG-00561.docx
+                filename: GeneralLetter.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
@@ -301,6 +307,9 @@ management:
             show-details: "ALWAYS"
             cache:
                 time-to-live: 5000
+            probes:
+                #This disables the Kubernetes probes provided by Spring, since we already provide a custom liveness probe (see uk.gov.hmcts.reform.health.Liveness)
+                enabled: false
     endpoints:
         web:
             base-path: /
