@@ -30,8 +30,8 @@ apply plugin: 'net.serenity-bdd.aggregator'
 
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 sourceSets {
     integrationTest {
@@ -129,12 +129,11 @@ def versions = [
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
     junit: '4.12',
-    lombok: '1.16.16',
-    mockito: '2.8.9',
+    lombok: '1.18.12',
     nimbus: '5.1',
     pdfbox: '2.0.8',
     pitest: '1.4.10',
-    powerMock: '1.7.3',
+    powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformHealth: '0.0.5',
     reformPropertiesVolume: '0.0.4',
@@ -151,7 +150,6 @@ def versions = [
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
-    reformSpringBootAutoConfigure: '2.0.0',
     springSecurityCrypto: '5.2.4.RELEASE',
     tomcatEmbedCore: '9.0.37',
     tomcatEmbedWebsocket: '9.0.37',
@@ -219,7 +217,6 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
-    compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: versions.reformSpringBootAutoConfigure
 
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: versions.springCloud
     compile (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign',  version: versions.springCloud) {
@@ -258,10 +255,7 @@ dependencies {
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito-common', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
-    testCompile group: 'org.mockito', name: 'mockito-core', version: versions.mockito
-
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
@@ -281,6 +275,8 @@ dependencyManagement {
             entry 'jackson-core'
             entry 'jackson-databind'
         }
+        //CVE-2017-18640
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.26'
     }
 }
 
@@ -317,6 +313,10 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
         main = bootJar.mainClassName
         classpath = sourceSets.main.runtimeClasspath
         systemProperty 'spring.profiles.active', 'aat'
+        systemProperty 'http.proxyHost', 'proxyout.reform.hmcts.net'
+        systemProperty 'http.proxyPort', '8080'
+        systemProperty 'https.proxyHost', 'proxyout.reform.hmcts.net'
+        systemProperty 'https.proxyPort', '8080'
     }
 }
 

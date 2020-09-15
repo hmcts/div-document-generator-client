@@ -48,7 +48,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
-@PowerMockIgnore("com.microsoft.applicationinsights.*")
+@PowerMockIgnore({"com.microsoft.applicationinsights.*","com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*"})
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EvidenceManagementServiceImpl.class, NullOrEmptyValidator.class})
 public class EvidenceManagementServiceImplUTest {
