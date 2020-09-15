@@ -59,14 +59,16 @@ public class EvidenceManagementServiceImpl implements EvidenceManagementService 
         NullOrEmptyValidator.requireNonEmpty(document);
 
         ResponseEntity<List<FileUploadResponse>> responseEntity = restTemplate.exchange(evidenceManagementEndpoint,
-                HttpMethod.POST,
-                new HttpEntity<>(
-                        buildRequest(document, Optional.ofNullable(fileName).orElse(DEFAULT_NAME_FOR_PDF_FILE)),
-                    getHttpHeaders(authorizationToken)),
-                new ParameterizedTypeReference<List<FileUploadResponse>>() {
-                });
+            HttpMethod.POST,
+            new HttpEntity<>(
+                buildRequest(document, Optional.ofNullable(fileName).orElse(DEFAULT_NAME_FOR_PDF_FILE)),
+                getHttpHeaders(authorizationToken)),
+            new ParameterizedTypeReference<List<FileUploadResponse>>() {
+            });
 
-        return responseEntity.getBody().get(0);
+        return Optional.ofNullable(responseEntity.getBody())
+            .map(fileUploadResponses -> fileUploadResponses.get(0))
+            .orElseThrow(() -> new DocumentStorageException("FileUploadResponse is null"));
     }
 
     private HttpHeaders getHttpHeaders(String authToken) {

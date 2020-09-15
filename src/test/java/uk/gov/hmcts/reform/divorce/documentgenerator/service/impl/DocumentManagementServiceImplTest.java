@@ -34,11 +34,6 @@ public class DocumentManagementServiceImplTest {
 
     private static final String DRAFT_MINI_PETITION_TEMPLATE_ID = "divorcedraftminipetition";
 
-    private Map<String, String> templateMap;
-
-    @Rule
-    public ExpectedException expectedException = none();
-
     @Mock
     private PDFGenerationFactory pdfGenerationFactory;
 
@@ -83,14 +78,14 @@ public class DocumentManagementServiceImplTest {
         final byte[] data = {126};
 
         when(pdfGenerationFactory.getGeneratorService(DRAFT_MINI_PETITION_TEMPLATE_ID))
-                .thenReturn(pdfGenerationService);
+            .thenReturn(pdfGenerationService);
         when(pdfGenerationService.generate(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap)).thenReturn(data);
         when(templatesConfiguration.getFileNameByTemplateName(DRAFT_MINI_PETITION_TEMPLATE_ID)).thenReturn(DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
 
         classUnderTest.generateAndStoreDraftDocument(DRAFT_MINI_PETITION_TEMPLATE_ID, placeholderMap, authToken);
 
         verify(evidenceManagementService).storeDocumentAndGetInfo(data, authToken,
-                DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
+            DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE);
 
         verify(pdfGenerationService).generate(same(DRAFT_MINI_PETITION_TEMPLATE_ID), placeHolderCaptor.capture());
         Map<String, Object> value = placeHolderCaptor.getValue();

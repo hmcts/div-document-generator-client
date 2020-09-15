@@ -1,27 +1,22 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.service.impl;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.ErrorLoadingTemplateException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.TemplateManagementService;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.rules.ExpectedException.none;
+import static org.junit.Assert.assertThrows;
 
 public class TemplateManagementServiceImplUTest {
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     private static final String TEST_TEMPLATE_NAME = "testtemplate";
     private static final String RESOURCE_PATH = "data/templates/testtemplate.html";
@@ -43,10 +38,11 @@ public class TemplateManagementServiceImplUTest {
 
     @Test
     public void shouldThrowExceptionWhenTemplateNameDoesNotExist() {
-        expectedException.expect(ErrorLoadingTemplateException.class);
-        expectedException.expectMessage(containsString("non-existent-template"));
+        ErrorLoadingTemplateException errorLoadingTemplateException = assertThrows(ErrorLoadingTemplateException.class, () -> {
+            classUnderTest.getTemplateByName("non-existent-template");
+        });
 
-        classUnderTest.getTemplateByName("non-existent-template");
+        assertThat(errorLoadingTemplateException.getMessage(), containsString("non-existent-template"));
     }
 
 }
