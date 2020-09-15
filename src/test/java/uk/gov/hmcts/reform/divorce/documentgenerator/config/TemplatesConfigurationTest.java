@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +16,9 @@ import java.util.Set;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.rules.ExpectedException.none;
+import static org.junit.Assert.assertThrows;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
@@ -36,6 +35,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_INVITATION_LETTER_CO_RESPONDENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_INVITATION_LETTER_RESPONDENT_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OVERDUE_COVER_LETTER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OVERDUE_COVER_LETTER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CERTIFICATE_OF_ENTITLEMENT_NAME_FOR_PDF_FILE;
@@ -67,6 +68,12 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_ANSWERS_TEMPLATE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_NISI_TEMPLATE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_ORDER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_ORDER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_ANSWERS_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_FILE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME;
@@ -79,8 +86,14 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DOCMOSIS_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_LETTER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_LETTER_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_ORDER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_ORDER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ORDER_TO_DISPENSE_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.ORDER_TO_DISPENSE_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.PDF_GENERATOR_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.RESPONDENT_ANSWERS_TEMPLATE_ID;
@@ -91,9 +104,6 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 @SpringBootTest
 @Slf4j
 public class TemplatesConfigurationTest {
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     @Autowired
     private TemplatesConfiguration classUnderTest;
@@ -166,7 +176,21 @@ public class TemplatesConfigurationTest {
             new ImmutableTriple<>(COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID,
                 COE_COVER_LETTER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_TEMPLATE_ID,
-                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE)
+                DN_GRANTED_AND_COST_ORDER_FOR_RESPONDENT_SOLICITOR_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(ORDER_TO_DISPENSE_TEMPLATE_ID,
+                ORDER_TO_DISPENSE_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(DEEMED_SERVICE_ORDER_TEMPLATE_ID,
+                DEEMED_SERVICE_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID,
+                DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID,
+                DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(AOS_OVERDUE_COVER_LETTER_TEMPLATE_ID,
+                AOS_OVERDUE_COVER_LETTER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(GENERAL_ORDER_TEMPLATE_ID,
+                GENERAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(GENERAL_LETTER_TEMPLATE_ID,
+                GENERAL_LETTER_FILE_NAME, DOCMOSIS_TYPE)
         );
     }
 
@@ -192,10 +216,10 @@ public class TemplatesConfigurationTest {
     @Test
     public void shouldThrowExceptionWhenUnknownTemplateIsRequested() {
         String templateName = "unknown-template";
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Unknown template: " + templateName);
-
-        classUnderTest.getFileNameByTemplateName(templateName);
+        IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
+            classUnderTest.getFileNameByTemplateName(templateName);
+        });
+        assertThat(illegalArgumentException.getMessage(), containsString("Unknown template: " + templateName));
     }
 
     @Test
@@ -203,15 +227,13 @@ public class TemplatesConfigurationTest {
         assertThat(classUnderTest.getGeneratorServiceNameByTemplateName("non-existent-template"), is(PDF_GENERATOR_TYPE));
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void shouldThrowAnExceptionWhenTemplateNameIsDuplicated() {
         TemplatesConfiguration templatesConfiguration = new TemplatesConfiguration();
         templatesConfiguration.setConfigurationList(asList(
             new TemplateConfiguration("thisName", null, null),
             new TemplateConfiguration("thisName", null, null)
         ));
-
-        expectedException.expect(Exception.class);
 
         templatesConfiguration.init();
     }

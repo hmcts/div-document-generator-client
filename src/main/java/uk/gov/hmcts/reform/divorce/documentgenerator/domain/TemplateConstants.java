@@ -43,6 +43,13 @@ public class TemplateConstants {
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID = "FL-DIV-LET-ENG-00358A.docx";
     public static final String CoE_CO_RESPONDENT_SOLICITOR_CL = "FL-DIV-GNO-ENG-00447.docx";
     public static final String CO_LETTER_CO_RESPONDENT_SOLICITOR = "FL-DIV-GNO-ENG-00423.docx";
+    public static final String ORDER_TO_DISPENSE_TEMPLATE_ID = "FL-DIV-DEC-ENG-00531.docx";
+    public static final String DEEMED_SERVICE_ORDER_TEMPLATE_ID = "FL-DIV-DEC-ENG-00534.docx";
+    public static final String DEEMED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00533.docx";
+    public static final String DISPENSED_SERVICE_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00535.docx";
+    public static final String AOS_OVERDUE_COVER_LETTER_TEMPLATE_ID = "FL-DIV-LET-ENG-00537.odt";
+    public static final String GENERAL_ORDER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00572.docx";
+    public static final String GENERAL_LETTER_TEMPLATE_ID = "FL-DIV-LET-ENG-00561.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -90,6 +97,13 @@ public class TemplateConstants {
         "CertificateOfEntitlementCoverLetterForRespondentSolicitor.pdf";
     public static final String COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME =
         "CostOrderCoverLetterForCoRespondent.pdf";
+    public static final String ORDER_TO_DISPENSE_FILE_NAME = "OrderToDispense.pdf";
+    public static final String DEEMED_SERVICE_ORDER_FILE_NAME = "DeemedServiceOrder.pdf";
+    public static final String DEEMED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DeemedServiceRefusalOrder.pdf";
+    public static final String DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME = "DispensedServiceRefusalOrder.pdf";
+    public static final String AOS_OVERDUE_COVER_LETTER_FILE_NAME = "AosOverdueCoverLetter.pdf";
+    public static final String GENERAL_ORDER_FILE_NAME = "GeneralOrder.pdf";
+    public static final String GENERAL_LETTER_FILE_NAME = "GeneralLetter.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";
@@ -172,7 +186,7 @@ public class TemplateConstants {
     public static final String WELSH_D8_MENTAL_SEPARATION_DATE_KEY = "welshD8MentalSeparationDate";
     public static final String WELSH_D8_PHYSICAL_SEPARATION_DATE_KEY = "welshD8PhysicalSeparationDate";
     public static final String WELSH_D8_REASON_FOR_DIVORCE_SEPERATION_DATE_KEY =
-            "welshD8ReasonForDivorceSeperationDate";
+        "welshD8ReasonForDivorceSeperationDate";
     public static final String WELSH_COURT_HEARING_DATE_KEY = "welshDateOfHearing";
     public static final String LANGUAGE_PREFERENCE_WELSH_KEY = "LanguagePreferenceWelsh";
     public static final String IS_DRAFT_KEY = "isDraft";
@@ -209,131 +223,129 @@ public class TemplateConstants {
     public static final String D8_REASON_FOR_DIVORCE_ADULTERY_DETAILS_TRANS_LANG =
         "D8ReasonForDivorceAdulteryDetailsTransLang";
 
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS  = "D8ReasonForDivorceAdulteryWhenDetails";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS = "D8ReasonForDivorceAdulteryWhenDetails";
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_EN =
         "D8ReasonForDivorceAdulteryWhenDetailsEN";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_CY =
         "D8ReasonForDivorceAdulteryWhenDetailsCY";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS =
         "D8ReasonForDivorceAdulteryWhenDetailsTrans";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHEN_DETAILS_TRANS_LANG =
         "D8ReasonForDivorceAdulteryWhenDetailsTransLang";
 
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS  = "D8ReasonForDivorceAdulteryWhereDetails";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS = "D8ReasonForDivorceAdulteryWhereDetails";
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_EN =
         "D8ReasonForDivorceAdulteryWhereDetailsEN";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_CY =
         "D8ReasonForDivorceAdulteryWhereDetailsCY";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS =
         "D8ReasonForDivorceAdulteryWhereDetailsTrans";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_WHERE_DETAILS_TRANS_LANG =
         "D8ReasonForDivorceAdulteryWhereDetailsTransLang";
 
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS =
         "D8ReasonForDivorceAdultery2ndHandDetails";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_EN =
         "D8ReasonForDivorceAdultery2ndHandDetailsEN";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_CY =
         "D8ReasonForDivorceAdultery2ndHandDetailsCY";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS =
         "D8ReasonForDivorceAdultery2ndHandDetailsTrans";
-    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG  =
+    public static final String D8_REASON_FOR_DIVORCE_ADULTERY_2ND_HAND_DETAILS_TRANS_LANG =
         "D8ReasonForDivorceAdultery2ndHandDetailsTransLang";
 
-    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS  =
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS =
         "D8ReasonForDivorceDesertionDetails";
-    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN  =
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_EN =
         "D8ReasonForDivorceDesertionDetailsEN";
-    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY  =
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_CY =
         "D8ReasonForDivorceDesertionDetailsCY";
-    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS  =
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS =
         "D8ReasonForDivorceDesertionDetailsTrans";
-    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG  =
+    public static final String D8_REASON_FOR_DIVORCE_DESERTION_DETAILS_TRANS_LANG =
         "D8ReasonForDivorceDesertionDetailsTransLang";
 
-    public static final String D8_LEGAL_PROCEEDINGS_DETAILS  = "D8LegalProceedingsDetails";
-    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_EN  = "D8LegalProceedingsDetails_EN";
-    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_CY  = "D8LegalProceedingsDetails_CY";
-    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_TRANS  =
+    public static final String D8_LEGAL_PROCEEDINGS_DETAILS = "D8LegalProceedingsDetails";
+    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_EN = "D8LegalProceedingsDetails_EN";
+    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_CY = "D8LegalProceedingsDetails_CY";
+    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_TRANS =
         "D8LegalProceedingsDetailsTrans";
-    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG  =
+    public static final String D8_LEGAL_PROCEEDINGS_DETAILS_TRANS_LANG =
         "D8LegalProceedingsDetailsTransLang";
 
-    public static final String RESP_JURISDICTION_DISAGREE_REASON  = "RespJurisdictionDisagreeReason";
-    public static final String RESP_JURISDICTION_DISAGREE_REASON_EN  = "RespJurisdictionDisagreeReasonEN";
-    public static final String RESP_JURISDICTION_DISAGREE_REASON_CY  = "RespJurisdictionDisagreeReasonCY";
-    public static final String RESP_JURISDICTION_DISAGREE_REASON_TRANS  =
+    public static final String RESP_JURISDICTION_DISAGREE_REASON = "RespJurisdictionDisagreeReason";
+    public static final String RESP_JURISDICTION_DISAGREE_REASON_EN = "RespJurisdictionDisagreeReasonEN";
+    public static final String RESP_JURISDICTION_DISAGREE_REASON_CY = "RespJurisdictionDisagreeReasonCY";
+    public static final String RESP_JURISDICTION_DISAGREE_REASON_TRANS =
         "RespJurisdictionDisagreeReasonTrans";
-    public static final String RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG  =
+    public static final String RESP_JURISDICTION_DISAGREE_REASON_TRANS_LANG =
         "RespJurisdictionDisagreeReasonTransLang";
 
-    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION  = "RespLegalProceedingsDescription";
-    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN  = "RespLegalProceedingsDescriptionEN";
-    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY  = "RespLegalProceedingsDescriptionCY";
-    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS  =
+    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION = "RespLegalProceedingsDescription";
+    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_EN = "RespLegalProceedingsDescriptionEN";
+    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_CY = "RespLegalProceedingsDescriptionCY";
+    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS =
         "RespLegalProceedingsDescriptionTrans";
-    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG  =
+    public static final String RESP_LEGAL_PROCEEDINGS_DESCRIPTION_TRANS_LANG =
         "RespLegalProceedingsDescriptionTransLang";
 
-    public static final String RESP_COSTS_REASON  = "RespCostsReason";
-    public static final String RESP_COSTS_REASON_EN  = "RespCostsReasonEN";
-    public static final String RESP_COSTS_REASON_CY  = "RespCostsReasonCY";
-    public static final String RESP_COSTS_REASON_TRANS  = "RespCostsReasonTrans";
-    public static final String RESP_COSTS_REASON_TRANS_LANG  = "RespCostsReasonTransLang";
+    public static final String RESP_COSTS_REASON = "RespCostsReason";
+    public static final String RESP_COSTS_REASON_EN = "RespCostsReasonEN";
+    public static final String RESP_COSTS_REASON_CY = "RespCostsReasonCY";
+    public static final String RESP_COSTS_REASON_TRANS = "RespCostsReasonTrans";
+    public static final String RESP_COSTS_REASON_TRANS_LANG = "RespCostsReasonTransLang";
 
-    public static final String CO_RESP_COSTS_REASON  = "CoRespCostsReason";
-    public static final String CO_RESP_COSTS_REASON_EN  = "CoRespCostsReasonEN";
-    public static final String CO_RESP_COSTS_REASON_CY  = "CoRespCostsReasonCY";
-    public static final String CO_RESP_COSTS_REASON_TRANS  = "CoRespCostsReasonTrans";
-    public static final String CO_RESP_COSTS_REASON_TRANS_LANG  = "CoRespCostsReasonTransLang";
+    public static final String CO_RESP_COSTS_REASON = "CoRespCostsReason";
+    public static final String CO_RESP_COSTS_REASON_EN = "CoRespCostsReasonEN";
+    public static final String CO_RESP_COSTS_REASON_CY = "CoRespCostsReasonCY";
+    public static final String CO_RESP_COSTS_REASON_TRANS = "CoRespCostsReasonTrans";
+    public static final String CO_RESP_COSTS_REASON_TRANS_LANG = "CoRespCostsReasonTransLang";
 
-    public static final String PETITION_CHANGED_DETAILS_DN  = "PetitionChangedDetailsDN";
-    public static final String PETITION_CHANGED_DETAILS_DN_EN  = "PetitionChangedDetailsDNEN";
-    public static final String PETITION_CHANGED_DETAILS_DN_CY  = "PetitionChangedDetailsDNCY";
-    public static final String PETITION_CHANGED_DETAILS_DN_TRANS  = "PetitionChangedDetailsDNTrans";
-    public static final String PETITION_CHANGED_DETAILS_DN_TRANS_LANG  = "PetitionChangedDetailsDNTransLang";
+    public static final String PETITION_CHANGED_DETAILS_DN = "PetitionChangedDetailsDN";
+    public static final String PETITION_CHANGED_DETAILS_DN_EN = "PetitionChangedDetailsDNEN";
+    public static final String PETITION_CHANGED_DETAILS_DN_CY = "PetitionChangedDetailsDNCY";
+    public static final String PETITION_CHANGED_DETAILS_DN_TRANS = "PetitionChangedDetailsDNTrans";
+    public static final String PETITION_CHANGED_DETAILS_DN_TRANS_LANG = "PetitionChangedDetailsDNTransLang";
 
-    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN  = "AdulteryTimeLivedTogetherDetailsDN";
-    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN  = "AdulteryTimeLivedTogetherDetailsDNEN";
-    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "AdulteryTimeLivedTogetherDetailsDNCY";
-    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "AdulteryTimeLivedTogetherDetailsDNTrans";
-    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "AdulteryTimeLivedTogetherDetailsDNTransLang";
+    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN = "AdulteryTimeLivedTogetherDetailsDN";
+    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_EN = "AdulteryTimeLivedTogetherDetailsDNEN";
+    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_CY = "AdulteryTimeLivedTogetherDetailsDNCY";
+    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS = "AdulteryTimeLivedTogetherDetailsDNTrans";
+    public static final String ADULTERY_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG = "AdulteryTimeLivedTogetherDetailsDNTransLang";
 
-    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN  = "BehaviourTimeLivedTogetherDetailsDN";
-    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN  = "BehaviourTimeLivedTogetherDetailsDNEN";
-    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "BehaviourTimeLivedTogetherDetailsDNCY";
-    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "BehaviourTimeLivedTogetherDetailsDNTrans";
-    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "BehaviourTimeLivedTogetherDetailsDNTransLang";
+    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN = "BehaviourTimeLivedTogetherDetailsDN";
+    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_EN = "BehaviourTimeLivedTogetherDetailsDNEN";
+    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_CY = "BehaviourTimeLivedTogetherDetailsDNCY";
+    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS = "BehaviourTimeLivedTogetherDetailsDNTrans";
+    public static final String BEHAVIOUR_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG = "BehaviourTimeLivedTogetherDetailsDNTransLang";
 
 
-    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN  = "DesertionTimeLivedTogetherDetailsDN";
-    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN  = "DesertionTimeLivedTogetherDetailsDNEN";
-    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "DesertionTimeLivedTogetherDetailsDNCY";
-    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "DesertionTimeLivedTogetherDetailsDNTrans";
-    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "DesertionTimeLivedTogetherDetailsDNTransLang";
+    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN = "DesertionTimeLivedTogetherDetailsDN";
+    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_EN = "DesertionTimeLivedTogetherDetailsDNEN";
+    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_CY = "DesertionTimeLivedTogetherDetailsDNCY";
+    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS = "DesertionTimeLivedTogetherDetailsDNTrans";
+    public static final String DESERTION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG = "DesertionTimeLivedTogetherDetailsDNTransLang";
 
-    public static final String COSTS_DIFFERENT_DETAILS  = "CostsDifferentDetails";
-    public static final String COSTS_DIFFERENT_DETAILS_EN  = "CostsDifferentDetailsEN";
-    public static final String COSTS_DIFFERENT_DETAILS_CY  = "CostsDifferentDetailsCY";
-    public static final String COSTS_DIFFERENT_DETAILS_TRANS  = "CostsDifferentDetailsTrans";
-    public static final String COSTS_DIFFERENT_DETAILS_TRANS_LANG  = "CostsDifferentDetailsTransLang";
+    public static final String COSTS_DIFFERENT_DETAILS = "CostsDifferentDetails";
+    public static final String COSTS_DIFFERENT_DETAILS_EN = "CostsDifferentDetailsEN";
+    public static final String COSTS_DIFFERENT_DETAILS_CY = "CostsDifferentDetailsCY";
+    public static final String COSTS_DIFFERENT_DETAILS_TRANS = "CostsDifferentDetailsTrans";
+    public static final String COSTS_DIFFERENT_DETAILS_TRANS_LANG = "CostsDifferentDetailsTransLang";
 
     public static final String PETITION_ISSUE_FEE_KEY = "petitionIssueFee";
     public static final String WELSH_BEHAVIOUR_MOST_RECENT_DATE_DN_KEY = "welshBehaviourMostRecentIncidentDateDN";
     public static final String WELSH_ADULTERY_FOUND_OUT_DATE_KEY = "welshAdulteryDateFoundOut";
     public static final String WELSH_DECREE_NISI_SUBMITTED_DATE_KEY = "welshDNApplicationSubmittedDate";
 
-    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS  = "DesertionAskedToResumeDNDetails";
-    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN  = "DesertionAskedToResumeDNDetailsEN";
-    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY  = "DesertionAskedToResumeDNDetailsCY";
-    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS  = "DesertionAskedToResumeDNDetailsTrans";
-    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG  = "DesertionAskedToResumeDNDetailsTransLang";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS = "DesertionAskedToResumeDNDetails";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_EN = "DesertionAskedToResumeDNDetailsEN";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_CY = "DesertionAskedToResumeDNDetailsCY";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS = "DesertionAskedToResumeDNDetailsTrans";
+    public static final String DESERTION_ASKED_TO_RESUME_DN_DETAILS_TRANS_LANG = "DesertionAskedToResumeDNDetailsTransLang";
 
-    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN  = "SeparationTimeLivedTogetherDetailsDN";
-    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN  = "SeparationTimeLivedTogetherDetailsDNEN";
-    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY  = "SeparationTimeLivedTogetherDetailsDNCY";
-    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS  = "SeparationTimeLivedTogetherDetailsDNTrans";
-    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG  = "SeparationTimeLivedTogetherDetailsDNTransLang";
-
-
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN = "SeparationTimeLivedTogetherDetailsDN";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_EN = "SeparationTimeLivedTogetherDetailsDNEN";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_CY = "SeparationTimeLivedTogetherDetailsDNCY";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS = "SeparationTimeLivedTogetherDetailsDNTrans";
+    public static final String SEPARATION_TIME_LIVED_TOGETHER_DETAILS_DN_TRANS_LANG = "SeparationTimeLivedTogetherDetailsDNTransLang";
 }
