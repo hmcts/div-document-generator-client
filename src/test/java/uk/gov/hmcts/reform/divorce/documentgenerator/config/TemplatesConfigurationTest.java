@@ -86,6 +86,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DOCMOSIS_TYPE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DRAFT_MINI_PETITION_TEMPLATE_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_LETTER_FILE_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_LETTER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_ORDER_FILE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.GENERAL_ORDER_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.MINI_PETITION_NAME_FOR_PDF_FILE;
@@ -185,8 +187,10 @@ public class TemplatesConfigurationTest {
                 DISPENSED_SERVICE_REFUSAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(AOS_OVERDUE_COVER_LETTER_TEMPLATE_ID,
                 AOS_OVERDUE_COVER_LETTER_FILE_NAME, DOCMOSIS_TYPE),
-            new ImmutableTriple<>(GENERAL_ORDER_TEMPLATE_ID, GENERAL_ORDER_FILE_NAME,
-                DOCMOSIS_TYPE)
+            new ImmutableTriple<>(GENERAL_ORDER_TEMPLATE_ID,
+                GENERAL_ORDER_FILE_NAME, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(GENERAL_LETTER_TEMPLATE_ID,
+                GENERAL_LETTER_FILE_NAME, DOCMOSIS_TYPE)
         );
     }
 

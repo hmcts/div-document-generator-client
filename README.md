@@ -16,7 +16,7 @@ Store and return the link to the stored data.
 
 **Prerequisites**
 
-- [JDK 8](https://www.oracle.com/java)
+- [JDK 11](https://openjdk.java.net/)
 - [Docker](https://www.docker.com)
 
 
