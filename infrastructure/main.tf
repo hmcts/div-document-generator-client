@@ -1,5 +1,5 @@
 provider "azurerm" {
-  version = "1.21.0"
+    features {}
 }
 
 locals {
@@ -13,7 +13,7 @@ locals {
   previewVaultName = "${var.reform_team}-aat"
   nonPreviewVaultName = "${var.reform_team}-${var.env}"
   vaultName = "${var.env == "preview" ? local.previewVaultName : local.nonPreviewVaultName}"
-  vaultUri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+  vaultUri = data.azurerm_key_vault.div_key_vault.vault_uri
 
   asp_name = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
   asp_rg = "${var.env == "prod" ? "div-dgs-prod" : "${var.raw_product}-${var.env}"}"
@@ -21,20 +21,20 @@ locals {
 
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.component}-${var.env}"
-  location = "${var.location}"
+  location = var.location
 }
 
 data "azurerm_key_vault" "div_key_vault" {
-    name                = "${local.vaultName}"
-    resource_group_name = "${local.vaultName}"
+    name                = local.vaultName
+    resource_group_name = local.vaultName
 }
 
 data "azurerm_key_vault_secret" "div-doc-s2s-auth-secret" {
     name      = "div-doc-s2s-auth-secret"
-    vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+    key_vault_id = data.azurerm_key_vault.div_key_vault.id
 }
 
 data "azurerm_key_vault_secret" "idam-secret" {
     name      = "idam-secret"
-    vault_uri = "${data.azurerm_key_vault.div_key_vault.vault_uri}"
+    key_vault_id = data.azurerm_key_vault.div_key_vault.id
 }
