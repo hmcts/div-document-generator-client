@@ -145,7 +145,7 @@ def versions = [
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.8.RELEASE',
     springBoot: '2.3.3.RELEASE',
-    springCloud: '2.2.1.RELEASE',
+    springCloud: '2.2.5.RELEASE',
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
@@ -277,6 +277,8 @@ dependencyManagement {
         }
         //CVE-2017-18640
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.27'
+
+        dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.0'
     }
 }
 
