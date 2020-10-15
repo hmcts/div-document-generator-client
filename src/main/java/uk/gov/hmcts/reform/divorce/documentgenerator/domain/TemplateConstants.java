@@ -51,6 +51,7 @@ public class TemplateConstants {
     public static final String GENERAL_ORDER_TEMPLATE_ID = "FL-DIV-GOR-ENG-00572.docx";
     public static final String GENERAL_LETTER_TEMPLATE_ID = "FL-DIV-LET-ENG-00561.docx";
     public static final String BAILIFF_SERVICE_REFUSAL_ORDER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00594.docx";
+    public static final String BAILIFF_COVER_LETTER_TEMPLATE_ID = "FL-DIV-GNO-ENG-00595.docx";
 
     // Template Names
     public static final String AOS_INVITATION_NAME_FOR_PDF_FILE = "AOSInvitation.pdf";
@@ -106,6 +107,7 @@ public class TemplateConstants {
     public static final String GENERAL_ORDER_FILE_NAME = "GeneralOrder.pdf";
     public static final String GENERAL_LETTER_FILE_NAME = "GeneralLetter.pdf";
     public static final String BAILIFF_SERVICE_REFUSAL_ORDER_FILE_NAME = "BailiffServiceRefusalOrder.pdf";
+    public static final String BAILIFF_COVER_LETTER_FILE_NAME = "BailiffCoverLetter.pdf";
 
     // Template Data Mapper Constants
     public static final String CASE_DATA = "case_data";

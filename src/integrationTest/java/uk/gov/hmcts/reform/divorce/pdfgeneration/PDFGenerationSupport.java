@@ -87,7 +87,8 @@ public class PDFGenerationSupport {
             "General-order-document-without-corespondent",
             "General-letter-with-no-solicitor",
             "General-letter-with-solicitor",
-            "Bailiff-service-refusal-order"
+            "Bailiff-service-refusal-order",
+            "Bailiff-cover-letter"
         );
 
         List<String> testData = new ArrayList<>(basicTestData);
