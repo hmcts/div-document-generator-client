@@ -238,7 +238,7 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00594.docx
                 filename: BailiffServiceRefusalOrder.pdf
                 document-generator: docmosis
-            -   templateName: FL-DIV-GNO-ENG-00595.docx
+            -   templateName: FL-DIV-LET-ENG-00598.docx
                 filename: BailiffCoverLetter.pdf
                 document-generator: docmosis
 
