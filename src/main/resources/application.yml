@@ -235,6 +235,10 @@ document:
             -   templateName: FL-DIV-LET-ENG-00561.docx
                 filename: GeneralLetter.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-GNO-ENG-00594.docx
+                filename: BailiffServiceRefusalOrder.pdf
+                document-generator: docmosis
+
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
