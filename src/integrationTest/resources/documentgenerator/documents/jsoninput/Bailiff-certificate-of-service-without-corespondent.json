@@ -16,7 +16,7 @@
                 "caseReference": "LV17D80102",
                 "petitionerFullName": "Applicant Baker",
                 "respondentFullName": "Respondent Baker",
-                "hasCoRespondent": "false"
+                "hasCoRespondent": false
             }
         }
     }
