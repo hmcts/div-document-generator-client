@@ -87,6 +87,7 @@ public class PDFGenerationSupport {
             "General-order-document-without-corespondent",
             "General-letter-with-no-solicitor",
             "General-letter-with-solicitor",
+            "Bailiff-service-refusal-order",
             "Bailiff-certificate-of-service-with-corespondent",
             "Bailiff-certificate-of-service-without-corespondent"
         );
