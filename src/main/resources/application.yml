@@ -238,7 +238,9 @@ document:
             -   templateName: FL-DIV-GNO-ENG-00594.docx
                 filename: BailiffServiceRefusalOrder.pdf
                 document-generator: docmosis
-
+            -   templateName: FL-DIV-GNO-ENG-00595.docx
+                filename: BailiffCertificateOfService.pdf
+                document-generator: docmosis
     pdf:
         familyCourtImgKey: "familycourt"
         familyCourtImgVal: "[userImage:familycourt.png]"
