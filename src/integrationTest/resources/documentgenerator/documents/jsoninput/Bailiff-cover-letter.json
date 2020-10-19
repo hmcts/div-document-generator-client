@@ -1,12 +1,12 @@
 {
-    "template": "FL-DIV-LET-ENG-00598.docx",
+    "template": "FL-DIV-LET-ENG-00600.docx",
     "values": {
         "caseDetails": {
             "id": "1517833758870511",
             "case_data": {
                 "ctscContactDetails": {
                     "serviceCentre": "Courts and Tribunals Service Centre",
-                    "centreName": "HMCTS Digital Divorce",
+                    "careOf": "c/o HMCTS Digital Divorce",
                     "poBox": "PO Box 12706",
                     "town": "Harlow",
                     "postcode": "CM20 9QT",
@@ -20,7 +20,7 @@
                 "courtName": "Example Bailiff Court",
                 "addressee": {
                     "name": "Test Addressee",
-                    "formattedAddress": "Test Court Address\nAddress Line 2\nAddress Line 3\nTest City\nTest Postcode"
+                    "formattedAddress": "Test Court Address\nAddress Line 2\nTest City\nTest Postcode"
                 }
             }
         }
