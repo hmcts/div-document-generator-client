@@ -16,10 +16,34 @@ def type = "java"
 def product = "div"
 def component = "dgs"
 
+def secrets = [
+    'div-${env}': [
+        secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
+        secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
+        secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
+        secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+    ]
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [$class     : 'AzureKeyVaultSecret',
+     secretType : 'Secret',
+     name       : secretName,
+     version    : '',
+     envVariable: envVar
+    ]
+}
+
 withNightlyPipeline(type, product, component) {
     env.TEST_URL = params.URL_TO_TEST
+    env.test_environment = 'aat'
     
+    after('fullFunctionalTest') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
     env.Rules = params.SecurityRules
+    enableFullFunctionalTest()
     enableMutationTest()
     enableSecurityScan()
 }
