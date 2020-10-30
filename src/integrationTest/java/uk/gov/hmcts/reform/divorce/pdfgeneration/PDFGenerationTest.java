@@ -43,9 +43,7 @@ public class PDFGenerationTest extends IntegrationTest {
     private boolean isDraftDoc = false;
 
     public PDFGenerationTest(String formName) {
-        if (formName != null && formName.toLowerCase().contains(DRAFT_KEY)) {
-            this.isDraftDoc = true;
-        }
+        this.isDraftDoc = isDraftPdfToBeGenerated(formName);
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, formName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, formName);
         this.tempOutput = String.format(TEMP_OUTPUT_CONTEXT_PATH, formName);
@@ -134,5 +132,10 @@ public class PDFGenerationTest extends IntegrationTest {
             PDFTextStripper stripper = new PDFTextStripper();
             return stripper.getText(document);
         }
+    }
+
+
+    private boolean isDraftPdfToBeGenerated(String pdfName) {
+        return pdfName != null && pdfName.toLowerCase().contains(DRAFT_KEY);
     }
 }

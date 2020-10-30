@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RunWith(SerenityRunner.class)
 public class EMStoreIntegrationTest extends IntegrationTest {
@@ -32,7 +34,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     public void checkPDFGenerated(String filename) throws Exception {
         String requestBody = loadJson(filename);
         Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        Assert.assertEquals(OK.value(), response.getStatusCode());
         String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
         Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
@@ -42,7 +44,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
 
     public void checkDataPresentInEvidenceManagement(String documentUri) {
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri);
-        Assert.assertEquals(HttpStatus.OK.value(), responseFromEvidenceManagement.getStatusCode());
+        Assert.assertEquals(OK.value(), responseFromEvidenceManagement.getStatusCode());
         Assert.assertEquals(documentUri, responseFromEvidenceManagement.getBody().jsonPath().get(X_PATH_TO_URL));
     }
 
@@ -91,28 +93,28 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     public void givenTemplateIsNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
         Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
     }
 
     @Test
     public void givenTemplateIsNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
         Response response = callGenerateDraftPdf(requestBody);
-        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
     }
 
     @Test
     public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
         Response response = callDivDocumentGenerator(requestBody);
-        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
     }
 
     @Test
     public void givenRequiredTemplateDataNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
         Response response = callGenerateDraftPdf(requestBody);
-        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
     }
 
     private String loadJson(final String fileName) throws Exception {
