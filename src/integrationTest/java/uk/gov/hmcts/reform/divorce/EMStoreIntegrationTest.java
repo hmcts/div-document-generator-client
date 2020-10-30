@@ -95,9 +95,23 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     }
 
     @Test
+    public void givenTemplateIsNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
+        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
+        Response response = callGenerateDraftPdf(requestBody);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+    }
+
+    @Test
     public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
         String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
         Response response = callDivDocumentGenerator(requestBody);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+    }
+
+    @Test
+    public void givenRequiredTemplateDataNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
+        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
+        Response response = callGenerateDraftPdf(requestBody);
         Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
     }
 
