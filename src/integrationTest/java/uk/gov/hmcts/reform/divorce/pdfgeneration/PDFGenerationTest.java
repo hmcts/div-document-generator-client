@@ -30,6 +30,8 @@ public class PDFGenerationTest extends IntegrationTest {
     private static final String DOCUMENT_URL_KEY = "url";
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
+    private static final String DRAFT_KEY = "draft";
+    private static final String IS_DRAFT = "isDraft";
 
     private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/documents/jsoninput/%s.json";
     private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/documents/pdfoutput/%s.pdf";
@@ -38,8 +40,12 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String inputJson;
     private final String expectedOutput;
     private final String tempOutput;
+    private boolean isDraftDoc = false;
 
     public PDFGenerationTest(String formName) {
+        if (formName != null && formName.toLowerCase().contains(DRAFT_KEY)) {
+            this.isDraftDoc = true;
+        }
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, formName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, formName);
         this.tempOutput = String.format(TEMP_OUTPUT_CONTEXT_PATH, formName);
@@ -85,7 +91,12 @@ public class PDFGenerationTest extends IntegrationTest {
     private Response generatePdfSuccessfully(String inputJson) throws Exception {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
-        Response response = callDivDocumentGenerator(requestBody);
+        Response response;
+        if (isDraftDoc) {
+            response = callGenerateDraftPdf(requestBody);
+        } else {
+            response = callDivDocumentGenerator(requestBody);
+        }
         assertEquals(
             "Unexpected status code when generating PDF for " + inputJson,
             HttpStatus.OK.value(),
