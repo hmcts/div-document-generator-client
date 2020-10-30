@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SerenityRunner.class)
 public class EMStoreIntegrationTest extends IntegrationTest {
