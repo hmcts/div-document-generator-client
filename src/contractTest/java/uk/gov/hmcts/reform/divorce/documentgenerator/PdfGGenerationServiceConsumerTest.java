@@ -29,7 +29,6 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.service.impl.PDFGenerationS
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,10 +42,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest({
     "service.pdf-service.uri : http://localhost:8891/pdfs"
 })
-public class PDFDGenerationServiceConsumerTest {
+public class PdfGGenerationServiceConsumerTest {
 
     private static final String SERVICE_AUTHORIZATION_HEADER = "ServiceAuthorization";
-    private static final String SOME_SERVICE_AUTHORIZATION_TOKEN = "ServiceToken";
 
     @Autowired
     PDFGenerationServiceImpl pdfGenerationService;
@@ -59,7 +57,7 @@ public class PDFDGenerationServiceConsumerTest {
     @MockBean
     private TemplateManagementService templateManagementService;
     private final String someServiceAuthToken = "someServiceAuthToken";
-    private final String template =  "<html><body><div>Case number: {{ caseNo }}</div></body></html>";
+    private final String template = "<html><body><div>Case number: {{ caseNo }}</div></body></html>";
     private Map placeholders = Map.of("caseNo", "12345");
 
     @BeforeEach
@@ -73,7 +71,7 @@ public class PDFDGenerationServiceConsumerTest {
     }
 
     @Pact(provider = "rpePdfService_PDFGenerationEndpointV2", consumer = "divorce_documentGeneratorClient")
-    RequestResponsePact generatePdfFromTemplate(PactDslWithProvider builder) throws JSONException, IOException{
+    RequestResponsePact generatePdfFromTemplate(PactDslWithProvider builder) throws JSONException, IOException {
         // @formatter:off
 
         return builder
@@ -81,7 +79,8 @@ public class PDFDGenerationServiceConsumerTest {
             .uponReceiving("a request to generate a divorce pdf document with a template")
             .method("POST")
             .headers(SERVICE_AUTHORIZATION_HEADER, someServiceAuthToken)
-            .body(createJsonObject(new GenerateDocumentRequest(template, placeholders)), "application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8")
+            .body(createJsonObject(new GenerateDocumentRequest(template, placeholders)),
+                "application/vnd.uk.gov.hmcts.pdf-service.v2+json;charset=UTF-8")
             .path("/pdfs")
             .willRespondWith()
             .withBinaryData("".getBytes(), "application/octet-stream")
@@ -99,7 +98,7 @@ public class PDFDGenerationServiceConsumerTest {
 
         when(templateManagementService.getTemplateByName("someTemplateName")).thenReturn(template.getBytes());
         when(serviceTokenGenerator.generate()).thenReturn(someServiceAuthToken);
-        
+
         byte[] response = pdfGenerationService.generate("someTemplateName", placeholders);
 
     }
@@ -116,7 +115,7 @@ public class PDFDGenerationServiceConsumerTest {
         Map<String, Object> placeholders = new HashMap<>();
         placeholders.put("caseNo", "12345");
 
-        return  new GenerateDocumentRequest(template, placeholders);
+        return new GenerateDocumentRequest(template, placeholders);
 
     }
 
