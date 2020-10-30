@@ -31,7 +31,6 @@ public class PDFGenerationTest extends IntegrationTest {
     private static final String MIME_TYPE_KEY = "mimeType";
     private static final String APPLICATION_PDF_MIME_TYPE = "application/pdf";
     private static final String DRAFT_KEY = "draft";
-    private static final String IS_DRAFT = "isDraft";
 
     private static final String INPUT_CONTEXT_PATH_FORMAT = "documentgenerator/documents/jsoninput/%s.json";
     private static final String EXPECTED_OUTPUT_CONTEXT_PATH = "documentgenerator/documents/pdfoutput/%s.pdf";
