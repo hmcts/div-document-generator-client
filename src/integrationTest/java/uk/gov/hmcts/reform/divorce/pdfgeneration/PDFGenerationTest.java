@@ -40,10 +40,10 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String inputJson;
     private final String expectedOutput;
     private final String tempOutput;
-    private boolean isDraftDoc = false;
+    private boolean generateDraftPdf;
 
     public PDFGenerationTest(String formName) {
-        this.isDraftDoc = isDraftPdfToBeGenerated(formName);
+        this.generateDraftPdf = isDraftPdfToBeGenerated(formName);
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, formName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, formName);
         this.tempOutput = String.format(TEMP_OUTPUT_CONTEXT_PATH, formName);
@@ -90,7 +90,7 @@ public class PDFGenerationTest extends IntegrationTest {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
         Response response;
-        if (isDraftDoc) {
+        if (generateDraftPdf) {
             response = callGenerateDraftPdf(requestBody);
         } else {
             response = callDivDocumentGenerator(requestBody);
