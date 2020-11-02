@@ -469,3 +469,4 @@ pact {
         version = project.pactVersion
     }
 }
+
