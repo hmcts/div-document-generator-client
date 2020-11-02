@@ -24,6 +24,7 @@ plugins {
     id 'org.sonarqube' version '3.0'
     id 'org.springframework.boot' version '2.3.3.RELEASE'
     id 'info.solidsoft.pitest' version '1.5.2'
+    id 'au.com.dius.pact' version '4.1.0'
 }
 
 apply plugin: 'net.serenity-bdd.aggregator'
@@ -44,11 +45,21 @@ sourceSets {
             srcDirs = ['src/integrationTest/resources']
         }
     }
+    contractTest {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDir file('src/contractTest/java')
+        }
+        resources.srcDir file('src/contractTest/resources')
+    }
 }
 
 configurations {
     integrationTestCompile.extendsFrom testCompile
     integrationTestRuntime.extendsFrom testRuntime
+    contractTestCompile.extendsFrom testCompile
+    contractTestRuntime.extendsFrom testRuntime
 }
 
 bootJar {
@@ -151,9 +162,10 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.19.0',
     springSecurityCrypto: '5.2.4.RELEASE',
-    tomcatEmbedCore: '9.0.37',
-    tomcatEmbedWebsocket: '9.0.37',
-    tomcatEmbedEl: '9.0.33'
+    tomcatEmbedCore: '9.0.39',
+    tomcatEmbedWebsocket: '9.0.39',
+    tomcatEmbedEl: '9.0.33',
+    pact_version: '4.1.7'
 ]
 
 dependencies {
@@ -263,6 +275,20 @@ dependencies {
     runtime('org.springframework.boot:spring-boot-devtools')
 
     runtime("org.springframework.boot:spring-boot-properties-migrator")
+
+    contractTestCompile group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
+    contractTestCompile group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
+    contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
+    contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
+
+    contractTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
+    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
+
+    contractTestCompile sourceSets.main.runtimeClasspath
+    contractTestCompile sourceSets.test.runtimeClasspath
+
 }
 
 dependencyManagement {
@@ -292,6 +318,15 @@ sourceSets {
         resources {
             srcDir('src/integrationTest/resources')
         }
+    }
+
+    contractTest {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDir file('src/contractTest/java')
+        }
+        resources.srcDir file('src/contractTest/resources')
     }
 }
 
@@ -328,6 +363,16 @@ task functional(type: Test, description: 'Runs the functional tests.', group: 'V
 
     finalizedBy aggregate
 }
+
+task contract(type: Test) {
+    group = 'Delivery pipeline'
+    description = 'Runs the consumer Pact tests'
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+    systemProperty 'pact.rootDir', "pacts"
+}
+
 
 task printVersion {
     doLast {
@@ -394,5 +439,33 @@ def debug = System.getProperty("debug")
 run {
     if (debug == 'true') {
         jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5010']
+    }
+}
+
+project.ext {
+    pactVersion = getCheckedOutGitCommitHash()
+}
+
+task runAndPublishConsumerPactTests(type: Test){
+    logger.lifecycle("Runs pact Tests")
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+
+}
+
+runAndPublishConsumerPactTests.dependsOn contract
+
+runAndPublishConsumerPactTests.finalizedBy pactPublish
+
+def getCheckedOutGitCommitHash() {
+    'git rev-parse --verify --short HEAD'.execute().text.trim()
+}
+
+pact {
+    publish {
+        pactDirectory = 'pacts'
+        pactBrokerUrl = System.getenv("PACT_BROKER_FULL_URL") ?: 'http://localhost:80'
+        tags = [System.getenv("PACT_BRANCH_NAME") ?:'Dev']
+        version = project.pactVersion
     }
 }
