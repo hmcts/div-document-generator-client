@@ -139,7 +139,7 @@ def versions = [
     jacksonDatabind: '2.10.2',
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
-    junit: '4.12',
+    junit: '4.13.1',
     lombok: '1.18.12',
     nimbus: '5.1',
     pdfbox: '2.0.8',
@@ -173,7 +173,6 @@ dependencies {
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
     integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
-    integrationTestCompile group: 'junit', name: 'junit', version: versions.junit
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
@@ -260,6 +259,7 @@ dependencies {
         exclude group: 'org.bouncycastle'
     }
 
+    compile group: 'junit', name: 'junit', version: versions.junit
     compile group: 'org.pitest', name: 'pitest', version: versions.pitest
     compile group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
     compile group:'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
