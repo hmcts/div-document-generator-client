@@ -139,7 +139,7 @@ def versions = [
     jacksonDatabind: '2.10.2',
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
-    junit: '4.12',
+    junit: '4.13.1',
     lombok: '1.18.12',
     nimbus: '5.1',
     pdfbox: '2.0.8',
@@ -272,6 +272,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
     testCompile('org.springframework.security:spring-security-test')
+    testCompile group: 'junit', name: 'junit', version: versions.junit
     runtime('org.springframework.boot:spring-boot-devtools')
 
     runtime("org.springframework.boot:spring-boot-properties-migrator")
