@@ -136,7 +136,7 @@ def versions = [
     feignHttpClient: '10.2.0',
     gradlePitest: '1.4.5',
     guava: '28.1-jre',
-    jacksonDatabind: '2.10.2',
+    jacksonDatabind: '2.11.2',
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
     junit: '4.13.1',
@@ -160,10 +160,10 @@ def versions = [
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
-    wiremockVersion: '2.19.0',
+    wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.2.4.RELEASE',
-    tomcatEmbedCore: '9.0.39',
-    tomcatEmbedWebsocket: '9.0.39',
+    tomcatEmbedCore: '9.0.40',
+    tomcatEmbedWebsocket: '9.0.40',
     tomcatEmbedEl: '9.0.33',
     pact_version: '4.1.11',
     httpComponents: '4.5.13'
@@ -220,9 +220,6 @@ dependencies {
 
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
     compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
-    compile (group: 'com.fasterxml.jackson.core', name:'jackson-databind', version: versions.jacksonDatabind) {
-        force = true
-    }
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
@@ -300,7 +297,7 @@ dependencyManagement {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
         dependencySet(
             group: 'com.fasterxml.jackson.core',
-            version: '2.10.2'
+            version: versions.jacksonDatabind
         ) {
             entry 'jackson-core'
             entry 'jackson-databind'
