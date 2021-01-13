@@ -135,7 +135,7 @@ def versions = [
     commonsBeanUtils: '1.9.4',
     feignHttpClient: '10.2.0',
     gradlePitest: '1.4.5',
-    guava: '28.1-jre',
+    guava: '30.0-jre',
     jacksonDatabind: '2.11.2',
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
@@ -166,7 +166,8 @@ def versions = [
     tomcatEmbedWebsocket: '9.0.40',
     tomcatEmbedEl: '9.0.33',
     pact_version: '4.1.11',
-    httpComponents: '4.5.13'
+    httpComponents: '4.5.13',
+    bouncycastle: '1.61'
 ]
 
 dependencies {
@@ -217,6 +218,7 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
     compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
     compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
