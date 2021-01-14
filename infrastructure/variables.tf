@@ -14,17 +14,11 @@ variable "instance_size" {
     default = "I2"
 }
 
-variable "component" {
-  type = "string"
-}
+variable "component" {}
 
-variable "env" {
-  type = "string"
-}
+variable "env" {}
 
-variable "product" {
-  type = "string"
-}
+variable "product" {}
 
 variable "raw_product" {
   default = "div"
@@ -33,7 +27,6 @@ variable "raw_product" {
 variable "tenant_id" {}
 
 variable "jenkins_AAD_objectId" {
-  type        = "string"
   description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
 }
 
@@ -69,7 +62,6 @@ variable "evidence_management_client_api_health_endpoint" {
 variable "subscription" {}
 
 variable "location" {
-  type    = "string"
   default = "UK South"
 }
 
@@ -80,16 +72,14 @@ variable "vault_env" {
 }
 
 variable "common_tags" {
-    type = "map"
+    type = map(string)
 }
 
 variable "health_check_ttl" {
-    type = "string"
     default = "5000"
 }
 
 variable "feature_resp_solicitor_details" {
-  type    = "string"
   default = "false"
 }
 
