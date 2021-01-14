@@ -10,9 +10,6 @@ public class PDFGenerationSupport {
     static List<Object[]> getTestScenarios(final boolean respSolicitorEnabled) {
         List<String> basicTestData = Arrays.asList(
             "mini-petition-resp-confidential-addr",
-            "mini-petition-draft-resp-confidential-addr",
-            "mini-petition-draft",
-            "mini-petition-draft-no-place-of-marriage",
             "CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO",
             "CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--Corres_FO--No_CN--C_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",

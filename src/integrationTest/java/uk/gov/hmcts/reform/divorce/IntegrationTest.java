@@ -31,6 +31,9 @@ public abstract class IntegrationTest {
     @Value("${divorce.document.generator.uri}")
     protected String divDocumentGeneratorURI;
 
+    @Value("${divorce.document.generateDraft.uri}")
+    protected String divDocumentGenerateDraftURI;
+
     @Value("${document.management.store.baseUrl}")
     protected String documentManagementURL;
 
@@ -79,6 +82,12 @@ public abstract class IntegrationTest {
                                                 getUserToken());
     }
 
+
+    public Response callGenerateDraftPdf(String requestBody) {
+        return DocumentGeneratorUtil.generatePDF(requestBody,
+                                                divDocumentGenerateDraftURI,
+                                                getUserToken());
+    }
 
     private synchronized String getUserToken() {
         username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
