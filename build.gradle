@@ -192,6 +192,7 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
     }
+    integrationTestImplementation group: 'com.vladsch.flexmark', name: 'flexmark-all', version: '0.62.2'
 
     integrationTestCompile (group: 'com.google.guava', name:'guava', version: versions.guava) {
         force = true
@@ -472,4 +473,3 @@ pact {
         version = project.pactVersion
     }
 }
-
