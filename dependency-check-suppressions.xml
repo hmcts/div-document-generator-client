@@ -104,16 +104,4 @@
          </notes>
         <cve>CVE-2020-9488</cve>
     </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: tomcat-embed-core-9.0.39.jar
-   ]]></notes>
-        <cve>CVE-2020-13943</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: tomcat-embed-websocket-9.0.39.jar
-   ]]></notes>
-        <cve>CVE-2020-13943</cve>
-    </suppress>
 </suppressions>
