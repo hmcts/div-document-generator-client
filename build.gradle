@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.2")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.12")
     }
 }
 
@@ -150,7 +150,7 @@ def versions = [
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
     restAssured: '3.0.3',
-    serenity: '2.2.2',
+    serenity: '2.3.12',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
