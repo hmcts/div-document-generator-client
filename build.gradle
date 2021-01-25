@@ -150,7 +150,7 @@ def versions = [
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
     restAssured: '3.0.3',
-    serenity: '2.3.12',
+    serenity: '2.2.2',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
