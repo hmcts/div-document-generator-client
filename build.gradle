@@ -151,7 +151,7 @@ def versions = [
     reformsJavaLogging: '5.1.1',
     restAssured: '3.0.3',
     serenity: '2.3.12',
-    serenityCucumber: '2.3.12',
+    serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.8.RELEASE',
@@ -176,7 +176,7 @@ dependencies {
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
     integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber6', version: versions.serenityCucumber
+    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
