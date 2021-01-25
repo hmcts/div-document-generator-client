@@ -140,7 +140,7 @@ def versions = [
     apacheLogging: '2.13.2',
     jsonAssert: '1.2.3',
     junit: '4.13.1',
-    lombok: '1.18.12',
+    lombok: '1.18.16',
     nimbus: '5.1',
     pdfbox: '2.0.8',
     pitest: '1.4.10',
@@ -285,9 +285,9 @@ dependencies {
     contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
 
     contractTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.0")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
-    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
+    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
 
     contractTestCompile sourceSets.main.runtimeClasspath
     contractTestCompile sourceSets.test.runtimeClasspath
