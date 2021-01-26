@@ -270,7 +270,7 @@
 
 <h2 class="heading-medium">Why the court can deal with the case (jurisdiction)</h2>
 <p class="response-text">
-{% if newPolicy != "YES" %}
+{% if newPolicy != "Yes" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
 <ul class="list-bullet">
     {% endif %}
@@ -353,7 +353,7 @@
     {% endif %}
 {% endif %}
 
-{% if newPolicy == "YES" %}
+{% if newPolicy == "Yes" %}
     {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
 <ul class="list-bullet">
     {% endif %}
@@ -435,7 +435,7 @@
     {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
     <li>
         {% endif %}
-        The applicant is domiciled in England and Wales.
+        The Applicant is domiciled in England and Wales.
 
         {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
     </li>
