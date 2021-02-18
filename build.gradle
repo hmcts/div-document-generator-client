@@ -146,7 +146,6 @@ def versions = [
     pitest: '1.4.10',
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
-    reformHealth: '0.0.5',
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
     restAssured: '3.0.3',
@@ -155,7 +154,7 @@ def versions = [
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.8.RELEASE',
-    springBoot: '2.3.3.RELEASE',
+    springBoot: '2.3.4.RELEASE',
     springCloud: '2.2.5.RELEASE',
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
@@ -245,7 +244,6 @@ dependencies {
     compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: versions.reformHealth
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
@@ -267,6 +265,7 @@ dependencies {
 
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
