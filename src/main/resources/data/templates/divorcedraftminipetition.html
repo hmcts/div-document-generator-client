@@ -164,6 +164,7 @@
 {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
 {% set financialOrderFor = caseDetails.case_data.D8FinancialOrderFor %}
 {% set claimFrom = caseDetails.case_data.D8DivorceClaimFrom %}
+{% set costsClaimExplain = caseDetails.case_data.D8DivorceCostsClaimExplain %}
 {% set reasonForDivorceDesertionDetails = caseDetails.case_data.D8ReasonForDivorceDesertionDetails | default("") %}
 {% set desertionDate = caseDetails.case_data.D8ReasonForDivorceDesertionDate | date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set reasonForDivorceDesertionAgreed = caseDetails.case_data.D8ReasonForDivorceDesertionAgreed | upper | default("NO") %}
@@ -535,6 +536,11 @@
 <p class="response-text">
     The applicant is also applying to the court to claim the costs of the divorce from the respondent.
 </p>
+{% endif %}
+
+{% if costsClaimExplain != "" and costsClaimExplain is not empty %}
+<h3 class="heading-small">Costs details</h3>
+<p class="response-text">costsClaimExplain</p>
 {% endif %}
 
 {% else %}
