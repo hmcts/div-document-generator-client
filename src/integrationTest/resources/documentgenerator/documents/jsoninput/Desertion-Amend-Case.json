@@ -7,7 +7,6 @@
       "case_type_id": "DIVORCE",
       "created_date": "2018-02-05T12:29:17.81",
       "last_modified": "2019-02-02T14:57:11.346",
-      "security_classification": "PUBLIC",
       "case_data": {
         "D8caseReference": "LV17D80100",
         "D8PetitionerFirstName": "John",
@@ -38,7 +37,7 @@
         "D8DivorceClaimFrom": [
           "respondent"
         ],
-        "D8ReasonForDivorceDesertionDetails": "He told me that he is going to his mother. ",    
+        "D8ReasonForDivorceDesertionDetails": "He told me that he is going to his mother. ",
         "D8ReasonForDivorceDesertionDate": "2015-02-01",
         "D8ReasonForDivorceDesertionAgreed": "YES",
         "D8ReasonForDivorceSeperationDate": "2011-01-01",

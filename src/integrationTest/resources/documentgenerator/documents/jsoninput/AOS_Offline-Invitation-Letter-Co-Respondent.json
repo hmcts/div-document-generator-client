@@ -8,7 +8,6 @@
             "case_type_id": "DIVORCE",
             "created_date": "2018-02-05T12:29:17.81",
             "last_modified": "2018-02-05T14:57:11.346",
-            "security_classification": "PUBLIC",
             "case_data": {
                 "D8DerivedRespondentHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
                 "D8DerivedPetitionerHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
