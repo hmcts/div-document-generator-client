@@ -295,7 +295,7 @@
                     </div>
 
                     <div class="response-text">
-                        <strong>You need to respond within 7 days from receipt of this letter.</strong> If you don't respond, the applicant can ask the court to move the divorce forwards without the respondent. They may have to pay extra fees if this happens.
+                        <strong>You need to respond within 7 working days from receipt of this letter.</strong> If you don't respond, the applicant can ask the court to move the divorce forwards without the respondent. They may have to pay extra fees if this happens.
                     </div>
                 {% else %}
                     <div class="response-text">
@@ -307,7 +307,11 @@
                     </div>
 
                     <div class="response-text">
-                        <strong>You need to respond within 7 days from receipt of this letter.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+                        <strong>You need to respond within 7 working days from receipt of this letter.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+                    </div>
+                    <div class="response-text">
+                        If you are a respondent living outside of England and Wales, then you may have more days to reply to this divorce. Please refer to the link below:<br/>
+                        <a href="https://divdocstorage.file.core.windows.net">AOS for respondents abroad time frames out of jurisdiction</a>
                     </div>
                 {% endif %}
 
@@ -334,7 +338,7 @@
                     </ol>
 
                     <p class="response-text">
-                        Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+                        Please contact us if you can't use the online service for any reason, or if the 7 working days have passed.
                     </p>
 
                 {% elseif journeyType == "solicitor" %}
@@ -379,7 +383,7 @@
                         Once these details have been confirmed, you will see the case details appear on your account dashboard. You can then begin completing the acknowledgement of service.
                     </p>
                     <p class="response-text">
-                        Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+                        Please contact us if you can't use the online service for any reason, or if the 7 working days have passed.
                     </p>
                 {% endif %}
 
@@ -441,7 +445,7 @@
                 </div>
 
                 <div class="response-text">
-                    <strong>You need to respond within 7 days from receipt of this letter.</strong> If you don't respond, the applicant can ask the court to move the divorce forwards without a response. Your client may have to pay extra fees if this happens.
+                    <strong>You need to respond within 7 working days from receipt of this letter.</strong> If you don't respond, the applicant can ask the court to move the divorce forwards without a response. Your client may have to pay extra fees if this happens.
                 </div>
                 {% else %}
                 <div class="response-text">
@@ -453,13 +457,17 @@
                 </div>
 
                 <div class="response-text">
-                    <strong>You need to respond within 7 days from receipt of this letter.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+                    <strong>You need to respond within 7 working days from receipt of this letter.</strong> If you don't respond, your {{ husbandOrWife }} can ask the court to move the divorce forwards without you. You may have to pay extra fees if this happens.
+                </div>
+                <div class="response-text">
+                    If you are a respondent living outside of England and Wales, then you may have more days to reply to this divorce. Please refer to the link below:<br/>
+                    <a href="https://divdocstorage.file.core.windows.net">AOS for respondents abroad time frames out of jurisdiction</a>
                 </div>
                 {% endif %}
 
                 {% if journeyType != "online" %}
                 <div class="response-text">
-                    Please contact us if you can't respond for any reason, or if the 7 days have passed.
+                    Please contact us if you can't respond for any reason, or if the 7 working days have passed.
                 </div>
                 {% endif %}
 
@@ -487,7 +495,7 @@
                 </ol>
 
                 <p class="response-text">
-                    Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+                    Please contact us if you can't use the online service for any reason, or if the 7 working days have passed.
                 </p>
                 {% else %}
                 <ol class="list-bullet">
@@ -498,7 +506,7 @@
                         Complete the 'Respond to a divorce application' form included with this letter.
                     </li>
                     <li class="list-bullet-counter">
-                        Return the form to the divorce centre within 7 days.
+                        Return the form to the divorce centre within 7 working days.
                     </li>
                 </ol>
                 {% endif %}
