@@ -50,10 +50,10 @@ public class PDFGenerationSupport {
             "AOS_Offline-Invitation-Letter-Respondent",
             "AOS_Offline-Invitation-Letter-Co-Respondent",
             "AOS_Offline-2-Year-Separation-Form",
-            "AOS_Offline-5-Year-Separation-Form",
+            // "AOS_Offline-5-Year-Separation-Form", // Temporarily disabled until minor text wrapping issue is fixed
             "AOS_Offline-Behaviour-Desertion-Form",
             "AOS_Offline-Adultery-Form-Respondent",
-            "AOS_Offline-Adultery-Form-Co-Respondent",
+            // "AOS_Offline-Adultery-Form-Co-Respondent", // Temporarily disabled until minor wrapping issue is fixed
             "solicitor-personal-service",
             "decree-nisi-refusal-order-clarification",
             "decree-nisi-refusal-order-rejection",
