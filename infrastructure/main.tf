@@ -24,6 +24,14 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
+resource "azurerm_storage_account" "div_file_storage" {
+    name                     = "divdocstorage"
+    resource_group_name      = azurerm_resource_group.rg.name
+    location                 = azurerm_resource_group.rg.location
+    account_tier             = "Standard"
+    account_replication_type = "GRS"
+}
+
 data "azurerm_key_vault" "div_key_vault" {
     name                = local.vaultName
     resource_group_name = local.vaultName
