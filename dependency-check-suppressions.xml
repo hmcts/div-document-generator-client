@@ -1,38 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
     <suppress>
-        <notes><![CDATA[
-            file name: applicationinsights-core-2.1.2.jar
-            Depends on guava, but can't be updated at the moment.
-            ]]>
-        </notes>
-        <gav regex="true">^com\.google\.guava:guava:.*</gav>
-        <cpe>cpe:/a:google:guava:20.0</cpe>
-        <cve>CVE-2018-10237</cve>
-    </suppress>
-
-    <suppress>
-        <notes><![CDATA[
-            file name: spring-security-rsa-1.0.8.RELEASE.jar
-            This has been updated, but it still shown some vulnerabilities that shouldn't be there
-            Issue reported on the DependencyCheck GitHub repo
-            https://github.com/jeremylong/DependencyCheck/issues/1665
-        ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cpe>cpe:/a:vmware:springsource_spring_security:1.0.8</cpe>
-        <cpe>cpe:/a:pivotal_software:spring_security:1.0.8,</cpe>
-        <cpe>cpe:/a:pivotal_software:spring_security_oauth:1.0.8</cpe>
-        <cpe>cpe:/a:pivotal:spring_security_oauth:1.0.8</cpe>
-        <cve>CVE-2011-2731</cve>
-        <cve>CVE-2011-2732</cve>
-        <cve>CVE-2012-5055</cve>
-        <cve>CVE-2018-1260</cve>
-        <cve>CVE-2018-1258</cve>
-        <cve>CVE-2019-15052</cve>
-    </suppress>
-
-    <suppress>
         <notes>
             <![CDATA[
             file name: jersey-apache-client4-1.19.1.jar
@@ -42,41 +10,6 @@
         <gav regex="true">.*</gav>
         <cpe>cpe:/a:oracle:oracle_client:1.19.1</cpe>
         <cve>CVE-2006-0550</cve>
-    </suppress>
-
-    <suppress>
-        <notes>
-            <![CDATA[
-            file name: spring-security-rsa-1.0.8.RELEASE.jar
-            file name: spring-security-crypto-5.1.3.RELEASE.jar
-             If the application does not use Spring Framework 5.0.5.RELEASE then it is not impacted.
-             Spring Boot 2.1.2 uses Spring Framework 5.1.4
-            ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cpe>cpe:/a:pivotal_software:spring_security:1.0.8</cpe>
-        <cpe>cpe:/a:pivotal_software:spring_security:5.1.3</cpe>
-        <cve>CVE-2018-1258</cve>
-        <cve>CVE-2020-5408</cve>
-        <cve>CVE-2020-5407</cve>
-    </suppress>
-
-    <suppress>
-        <notes><![CDATA[
-            This is exploitable in com.zaxxer.hikari.HikariConfig and com.zaxxer.hikari.HikariDataSource
-            which we do not use. Pending the release of a stable jackson databind version (>2.9.9.3) ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cve>CVE-2019-14540</cve>
-        <cve>CVE-2019-16335</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-            To address gradle-pitest-plugin, suppressing until a suitable solution is found.
-            Suppressed on 20/09/2019 ]]>
-        </notes>
-        <gav regex="true">.*</gav>
-        <cve>CVE-2019-16370</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
@@ -91,11 +24,5 @@
         <cve>CVE-2020-1935</cve>
         <cve>CVE-2020-9484</cve>
         <cve>CVE-2020-11996</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-        file name: log4j-api-2.12.1.jar]]>
-        </notes>
-        <cve>CVE-2020-9488</cve>
     </suppress>
 </suppressions>
