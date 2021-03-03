@@ -160,7 +160,7 @@ def versions = [
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
-    springSecurityCrypto: '5.2.9.RELEASE',
+    springSecurityCrypto: '5.2.4.RELEASE',
     tomcatEmbedCore: '9.0.40',
     tomcatEmbedWebsocket: '9.0.40',
     tomcatEmbedEl: '9.0.33',

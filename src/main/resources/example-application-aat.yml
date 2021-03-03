@@ -28,5 +28,5 @@ idam:
 docmosis:
   service:
     pdf-service:
-      uri: ${DOCMOSIS_SERVICE_RENDER_URL:https://docmosis.aat.platform.hmcts.net/rs/render}
+      uri: ${DOCMOSIS_SERVICE_RENDER_URL:https://docmosis-development.platform.hmcts.net/rs/render}
       accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:replace_me}
