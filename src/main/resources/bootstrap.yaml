@@ -7,3 +7,4 @@ spring:
       aliases:
         div.div-doc-s2s-auth-secret: AUTH_PROVIDER_SERVICE_CLIENT_KEY
         div.docmosis-api-key: DOCMOSIS_SERVICE_ACCESS_KEY
+        div.AppInsightsInstrumentationKey: azure.application-insights.instrumentation-key

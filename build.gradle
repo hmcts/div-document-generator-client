@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.2.13")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.13")
     }
 }
 
@@ -20,11 +20,11 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.36.0'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'jacoco'
-    id 'org.owasp.dependencycheck' version '6.0.2'
-    id 'org.sonarqube' version '3.0'
+    id 'org.owasp.dependencycheck' version '6.1.1'
+    id 'org.sonarqube' version '3.1.1'
     id 'org.springframework.boot' version '2.3.3.RELEASE'
     id 'info.solidsoft.pitest' version '1.5.2'
-    id 'au.com.dius.pact' version '4.1.14'
+    id 'au.com.dius.pact' version '4.2.0'
 }
 
 apply plugin: 'net.serenity-bdd.aggregator'
@@ -153,16 +153,16 @@ def versions = [
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
-    spring_security_rsa: '1.0.8.RELEASE',
+    spring_security_rsa: '1.0.9.RELEASE',
     springBoot: '2.3.4.RELEASE',
     springCloud: '2.2.5.RELEASE',
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
-    springSecurityCrypto: '5.2.4.RELEASE',
-    tomcatEmbedCore: '9.0.40',
-    tomcatEmbedWebsocket: '9.0.40',
+    springSecurityCrypto: '5.4.5',
+    tomcatEmbedCore: '9.0.43',
+    tomcatEmbedWebsocket: '9.0.43',
     tomcatEmbedEl: '9.0.33',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
@@ -284,8 +284,8 @@ dependencies {
     contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
 
     contractTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
+    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.1")
     contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
 
     contractTestCompile sourceSets.main.runtimeClasspath
@@ -304,7 +304,7 @@ dependencyManagement {
             entry 'jackson-databind'
         }
         //CVE-2017-18640
-        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.27'
+        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
 
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.0'
     }
