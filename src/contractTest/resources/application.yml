@@ -58,9 +58,6 @@ document:
             -   templateName: aosinvitation
                 filename: AOSInvitation.pdf
                 document-generator: pdfgenerator
-            -   templateName: aosinvitation-rep-resp-journey
-                    filename: AOSInvitation.pdf
-                    document-generator: pdfgenerator
             -   templateName: co-respondentinvitation
                 filename: CoRespondentInvitation.pdf
                 document-generator: pdfgenerator
@@ -328,6 +325,7 @@ logging:
     level:
         org.springframework.web: ERROR
         uk.gov.hmcts.reform.divorce.documentgenerator: DEBUG
+        au.com.dius.pact: DEBUG
     pattern:
         console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
 

@@ -16,6 +16,7 @@ import uk.gov.hmcts.reform.divorce.ResourceLoader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertEquals;
  */
 @Slf4j
 @RunWith(SerenityParameterizedRunner.class)
-public class PDFGenerationTest extends IntegrationTest {
+public class GenerateDraftPDFTest extends IntegrationTest {
 
     private static final String DOCUMENT_URL_KEY = "url";
     private static final String MIME_TYPE_KEY = "mimeType";
@@ -39,7 +40,7 @@ public class PDFGenerationTest extends IntegrationTest {
     private final String expectedOutput;
     private final String tempOutput;
 
-    public PDFGenerationTest(String formName) {
+    public GenerateDraftPDFTest(String formName) {
         this.inputJson = String.format(INPUT_CONTEXT_PATH_FORMAT, formName);
         this.expectedOutput = String.format(EXPECTED_OUTPUT_CONTEXT_PATH, formName);
         this.tempOutput = String.format(TEMP_OUTPUT_CONTEXT_PATH, formName);
@@ -47,7 +48,11 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        return PDFGenerationSupport.getTestScenarios(featureToggleRespSolicitor);
+        return Arrays.asList(new Object[][]{
+            {"mini-petition-draft-resp-confidential-addr"},
+            {"mini-petition-draft"},
+            {"mini-petition-draft-no-place-of-marriage"}
+        });
     }
 
     @Test
@@ -85,9 +90,9 @@ public class PDFGenerationTest extends IntegrationTest {
     private Response generatePdfSuccessfully(String inputJson) throws Exception {
         String requestBody = ResourceLoader.loadJson(inputJson);
         log.info("Generating PDF {} based on request \n{}", inputJson, requestBody);
-        Response response = callDivDocumentGenerator(requestBody);
+        Response response = callGenerateDraftPdf(requestBody);
         assertEquals(
-            "Unexpected status code when generating PDF for " + inputJson,
+            "Unexpected status code when generating draft PDF for " + inputJson,
             HttpStatus.OK.value(),
             response.getStatusCode()
         );
@@ -97,7 +102,7 @@ public class PDFGenerationTest extends IntegrationTest {
         log.info("Read data from Evidence Management service: {}", documentUri);
         Response responseFromEvidenceManagement = readDataFromEvidenceManagement(documentUri + "/binary");
         assertEquals(
-            String.format("Failed to generate PDF:  %s", documentUri),
+            String.format("Failed to generate draft PDF:  %s", documentUri),
             HttpStatus.OK.value(),
             responseFromEvidenceManagement.getStatusCode()
         );

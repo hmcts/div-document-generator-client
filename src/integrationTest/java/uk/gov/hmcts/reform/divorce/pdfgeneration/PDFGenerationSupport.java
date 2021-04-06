@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.pdfgeneration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +9,6 @@ public class PDFGenerationSupport {
     static List<Object[]> getTestScenarios(final boolean respSolicitorEnabled) {
         List<String> basicTestData = Arrays.asList(
             "mini-petition-resp-confidential-addr",
-            "mini-petition-draft-resp-confidential-addr",
-            "mini-petition-draft",
-            "mini-petition-draft-no-place-of-marriage",
             "CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO",
             "CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--Corres_FO--No_CN--C_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
@@ -86,34 +82,27 @@ public class PDFGenerationSupport {
             "General-order-document-with-corespondent",
             "General-order-document-without-corespondent",
             "General-letter-with-no-solicitor",
-            "General-letter-with-solicitor"
+            "General-letter-with-solicitor",
+            "Bailiff-service-refusal-order",
+            "Bailiff-certificate-of-service-with-corespondent",
+            "Bailiff-certificate-of-service-without-corespondent",
+            "AOS_Solicitor",
+            "AOS_Solicitor-rep-resp-journey",
+            "AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl",
+            "AOS_Same-Sex-Female-Sol-Online-Avl",
+            "AOS_Same-Sex-Male-Sol-Online-Avl",
+            "AOS_Amend_Petition-Sol-Online-Avl",
+            "AOS_Hus_Res-Addr_DivUnit-EM-Sol-Online-Avl",
+            "AOS_Wife_Sol-Addr_DivUnit-WM",
+            "AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company",
+            "AOS_Hus_Res-Addr_DivUnit-SC",
+            "AOS_Same-Sex-Female",
+            "AOS_Same-Sex-Male",
+            "AOS_Amend_Petition",
+            "AOS_Hus_Res-Addr_DivUnit-EM"
         );
 
-        List<String> testData = new ArrayList<>(basicTestData);
-
-        if (respSolicitorEnabled) {
-            testData.addAll(Arrays.asList(
-                "AOS_Solicitor",
-                "AOS_Solicitor-rep-resp-journey",
-                "AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl",
-                "AOS_Same-Sex-Female-Sol-Online-Avl",
-                "AOS_Same-Sex-Male-Sol-Online-Avl",
-                "AOS_Amend_Petition-Sol-Online-Avl",
-                "AOS_Hus_Res-Addr_DivUnit-EM-Sol-Online-Avl"
-            ));
-        } else {
-            testData.addAll(Arrays.asList(
-                "AOS_Wife_Sol-Addr_DivUnit-WM",
-                "AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company",
-                "AOS_Hus_Res-Addr_DivUnit-SC",
-                "AOS_Same-Sex-Female",
-                "AOS_Same-Sex-Male",
-                "AOS_Amend_Petition",
-                "AOS_Hus_Res-Addr_DivUnit-EM"
-            ));
-        }
-
-        return testData.stream()
+        return basicTestData.stream()
             .map(s -> new Object[]{s})
             .collect(Collectors.toList());
     }
