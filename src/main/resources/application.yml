@@ -59,8 +59,8 @@ document:
                 filename: AOSInvitation.pdf
                 document-generator: pdfgenerator
             -   templateName: aosinvitation-rep-resp-journey
-                    filename: AOSInvitation.pdf
-                    document-generator: pdfgenerator
+                filename: AOSInvitation.pdf
+                document-generator: pdfgenerator
             -   templateName: co-respondentinvitation
                 filename: CoRespondentInvitation.pdf
                 document-generator: pdfgenerator
