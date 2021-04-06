@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThrows;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_RESP_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_INVITATION_TEMPLATE_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.AOS_OFFLINE_2_YEAR_SEPARATION_FORM_TEMPLATE_ID;
@@ -114,6 +115,8 @@ public class TemplatesConfigurationTest {
     public static void setUp() {
         expectedTemplateConfigs = Sets.newHashSet(
             new ImmutableTriple<>(AOS_INVITATION_TEMPLATE_ID,
+                AOS_INVITATION_NAME_FOR_PDF_FILE, PDF_GENERATOR_TYPE),
+            new ImmutableTriple<>(AOS_INVITATION_RESP_TEMPLATE_ID,
                 AOS_INVITATION_NAME_FOR_PDF_FILE, PDF_GENERATOR_TYPE),
             new ImmutableTriple<>(CO_RESPONDENT_INVITATION_TEMPLATE_ID,
                 CO_RESPONDENT_INVITATION_NAME_FOR_PDF_FILE, PDF_GENERATOR_TYPE),

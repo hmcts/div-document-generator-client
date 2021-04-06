@@ -61,15 +61,8 @@ public class PDFGenerationTest extends IntegrationTest {
         assertEquals("Comparison failed for " + inputJson, expectedText, actualText);
     }
 
-    /**
-     * This is not really a test, just a utility to re-generate the PDFs from templates exist in the Docmosis Tornado.
-     * The generated PDFs are stored at `integrationTest/resources/documentgenerator/documents/regenerated`
-     *
-     * <p>Should be @ignored in master branch.
-     */
     @Test
-    @Ignore
-    public void ignoreMe_updateGeneratedPdfs() throws Exception {
+    public void updateGeneratedPdfs() throws Exception {
         Response responseFromEvidenceManagement = generatePdfSuccessfully(inputJson);
         savePdf(responseFromEvidenceManagement.asByteArray());
     }

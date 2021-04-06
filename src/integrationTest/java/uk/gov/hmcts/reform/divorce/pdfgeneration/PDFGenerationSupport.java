@@ -94,6 +94,7 @@ public class PDFGenerationSupport {
         if (respSolicitorEnabled) {
             testData.addAll(Arrays.asList(
                 "AOS_Solicitor",
+                "AOS_Solicitor-rep-resp-journey",
                 "AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl",
                 "AOS_Same-Sex-Female-Sol-Online-Avl",
                 "AOS_Same-Sex-Male-Sol-Online-Avl",
