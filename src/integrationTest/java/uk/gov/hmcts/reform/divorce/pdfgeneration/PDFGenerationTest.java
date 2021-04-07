@@ -47,7 +47,7 @@ public class PDFGenerationTest extends IntegrationTest {
 
     @TestData
     public static Collection<Object[]> testData() {
-        return PDFGenerationSupport.getTestScenarios();
+        return PDFGenerationSupport.getTestScenarios(featureToggleRespSolicitor);
     }
 
     @Test
