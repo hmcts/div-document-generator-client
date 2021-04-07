@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class PDFGenerationSupport {
 
-    static List<Object[]> getTestScenarios(final boolean respSolicitorEnabled) {
+    static List<Object[]> getTestScenarios() {
         List<String> basicTestData = Arrays.asList(
             "mini-petition-resp-confidential-addr",
             "CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO",
@@ -88,6 +88,7 @@ public class PDFGenerationSupport {
             "Bailiff-certificate-of-service-without-corespondent",
             "AOS_Solicitor",
             "AOS_Solicitor-rep-resp-journey",
+            "AOS_Online-rep-resp-journey",
             "AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl",
             "AOS_Same-Sex-Female-Sol-Online-Avl",
             "AOS_Same-Sex-Male-Sol-Online-Avl",

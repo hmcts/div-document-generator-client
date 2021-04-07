@@ -1,4 +1,5 @@
-{ "template" : "aosinvitation-rep-resp-journey",
+{
+    "template" : "aosinvitation-rep-resp-journey",
     "values": {
         "access_code" : "4321",
         "caseDetails" : {
@@ -10,8 +11,8 @@
                 "D8caseReference": "LV17D80100",
                 "D8RespondentSolicitorName": "Saul Goodman",
                 "D8RespondentSolicitorCompany": "Legal Guys LLP",
-                "D8DerivedRespondentSolicitorAddr": "82 Landor Road\nLondon\nSW9 9PE"
-
+                "D8DerivedRespondentSolicitorAddr": "82 Landor Road\nLondon\nSW9 9PE",
+                "D8RespondentSolicitorEmail": "saulg@hmcts.net"
             }
         }
     }

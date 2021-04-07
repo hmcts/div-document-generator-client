@@ -213,7 +213,7 @@
         {% set respondentsSolicitorName = caseDetails.case_data.D8RespondentSolicitorName | default("") %}
         {% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
         {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
-        {% set respondentsSolicitorEmail = caseDetails.case_data.D8RespondentSolicitorEmail %}
+        {% set respondentsSolicitorEmail = caseDetails.case_data.D8RespondentSolicitorEmail | default("") %}
 
         {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 (Monday to Friday 8am to 8pm, Saturday 8am to 2pm)" %}
 
