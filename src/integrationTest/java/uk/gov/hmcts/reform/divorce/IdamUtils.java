@@ -43,7 +43,6 @@ public class IdamUtils {
             .forename("Test")
             .surname("User")
             .roles(new UserCode[] { UserCode.builder().code("citizen").build() })
-            .userGroup(UserCode.builder().code("citizens").build())
             .build();
 
         SerenityRest.given()
@@ -65,7 +64,6 @@ public class IdamUtils {
             .forename("Test")
             .surname("User")
             .roles(new UserCode[] { UserCode.builder().code("caseworker-divorce-courtadmin").build() })
-            .userGroup(UserCode.builder().code("caseworker").build())
             .build();
 
         SerenityRest.given()
