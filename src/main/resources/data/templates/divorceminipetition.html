@@ -148,6 +148,8 @@
 {% set costClaims = caseDetails.case_data.D8DivorceCostsClaim | upper | default("NO") %}
 {% set financialOrder = caseDetails.case_data.D8FinancialOrder | upper | default("NO") %}
 {% set jurisdictionConnection = caseDetails.case_data.D8JurisdictionConnection %}
+{% set jurisdictionConnectionNewPolicy = caseDetails.case_data.D8JurisdictionConnectionNewPolicy %}
+{% set newPolicy = caseDetails.case_data.NewLegalConnectionPolicy %}
 {% set isCorrespondentNamed = caseDetails.case_data.D8ReasonForDivorceAdulteryWishToName | upper | default("NO") %}
 {% set isCorrespondentNamedBySolicitor = caseDetails.case_data.D8ReasonForDivorceAdulteryIsNamed | upper | default("NO") %}
 {% set correspondentFirstName = caseDetails.case_data.D8ReasonForDivorceAdultery3rdPartyFName | default("") %}
@@ -269,6 +271,7 @@
 
 <h2 class="heading-medium">Why the court can deal with the case (jurisdiction)</h2>
 <p class="response-text">
+{% if newPolicy != "Yes" %}
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
 <ul class="list-bullet">
     {% endif %}
@@ -348,6 +351,112 @@
 
     {% if jurisdictionConnection|length > 1 and jurisdictionConnection != ["A", "C"] and jurisdictionConnection != ["C", "A"] %}
 </ul>
+    {% endif %}
+{% endif %}
+
+{% if newPolicy == "Yes" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+<ul class="list-bullet">
+    {% endif %}
+
+
+    {% if jurisdictionConnectionNewPolicy contains "A" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+
+        The applicant and respondent are habitually resident in England and Wales.
+        {% if jurisdictionConnectionNewPolicy|length > 1  and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "B" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The applicant and respondent were last habitually resident in England and Wales and one of them still resides there.
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "C" and (not (jurisdictionConnectionNewPolicy contains "A")) %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The respondent is habitually resident in England and Wales.
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "D" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The applicant is habitually resident in England and Wales and has resided there for at least a year immediately prior to the presentation of the application.
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "E" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The applicant is domiciled and habitually resident in England and Wales and has resided there for at least six months immediately prior to the application.
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "F" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The applicant and respondent are both domiciled in England and Wales.
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "G" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The courts of England and Wales have jurisdiction on a residual basis (same sex married couple)
+
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "H" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The Applicant is domiciled in England and Wales.
+
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy contains "I" %}
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    <li>
+        {% endif %}
+        The Respondent is domiciled in England and Wales.
+
+        {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+    </li>
+    {% endif %}
+    {% endif %}
+
+    {% if jurisdictionConnectionNewPolicy|length > 1 and jurisdictionConnectionNewPolicy != ["A", "C"] and jurisdictionConnectionNewPolicy != ["C", "A"] %}
+</ul>
+    {% endif %}
 {% endif %}
 </p>
 <p class="single-block">
