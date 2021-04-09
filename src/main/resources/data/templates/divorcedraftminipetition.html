@@ -649,7 +649,11 @@
 
 {% if costsClaimExplain != "" and costsClaimExplain is not empty %}
 <h3 class="heading-small">Costs details</h3>
-<p class="response-text">costsClaimExplain</p>
+<p class="response-text">
+    {% autoescape false %}
+    {{ costsClaimExplain }}
+    {% endautoescape %}
+</p>
 {% endif %}
 
 {% else %}
