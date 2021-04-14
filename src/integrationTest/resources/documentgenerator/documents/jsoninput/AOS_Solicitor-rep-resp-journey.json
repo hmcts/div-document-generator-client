@@ -1,0 +1,19 @@
+{
+    "template" : "aosinvitation-rep-resp-journey",
+    "values": {
+        "access_code" : "4321",
+        "caseDetails" : {
+            "id": "1517833758870511",
+            "last_modified": "2018-02-05T14:57:11.346",
+            "case_data": {
+                "D8RespondentFirstName": "Wilma",
+                "D8RespondentLastName": "Flintstone",
+                "D8caseReference": "LV17D80100",
+                "D8RespondentSolicitorName": "Saul Goodman",
+                "D8RespondentSolicitorCompany": "Legal Guys LLP",
+                "D8DerivedRespondentSolicitorAddr": "82 Landor Road\nLondon\nSW9 9PE",
+                "D8RespondentSolicitorEmail": "saulg@hmcts.net"
+            }
+        }
+    }
+}

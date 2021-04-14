@@ -431,6 +431,36 @@ public class DocumentGenerateAndStoreE2ETest {
     }
 
     @Test
+    public void givenAllGoesWellForAosInvitationRespJourney_whenGenerateAndStoreDocument_thenReturn() throws Exception {
+        final String template = "aosinvitation-rep-resp-journey";
+        final Map<String, Object> values = Collections.emptyMap();
+        final String securityToken = "securityToken";
+
+        final GenerateDocumentRequest generateDocumentRequest = new GenerateDocumentRequest(template, values);
+
+        final FileUploadResponse fileUploadResponse = getFileUploadResponse(HttpStatus.OK);
+
+        final GeneratedDocumentInfo generatedDocumentInfo = getGeneratedDocumentInfo();
+
+        mockPDFService(HttpStatus.OK, new byte[] {1});
+        mockEMClientAPI(HttpStatus.OK, Collections.singletonList(fileUploadResponse));
+
+        when(serviceTokenGenerator.generate()).thenReturn(securityToken);
+
+        MvcResult result = webClient.perform(post(API_URL)
+            .content(ObjectMapperTestUtil.convertObjectToJsonString(generateDocumentRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertEquals(ObjectMapperTestUtil.convertObjectToJsonString(generatedDocumentInfo),
+            result.getResponse().getContentAsString());
+
+        mockRestServiceServer.verify();
+    }
+
+    @Test
     public void givenAllGoesWellForDivorceMiniPetition_whenGenerateAndStoreDocument_thenReturn() throws Exception {
         final String template = "divorceminipetition";
         final Map<String, Object> values = Collections.emptyMap();

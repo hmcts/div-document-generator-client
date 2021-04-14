@@ -11,5 +11,4 @@ public class CreateUserRequest {
     private String forename;
     private String surname;
     private UserCode[] roles;
-    private UserCode userGroup;
 }
