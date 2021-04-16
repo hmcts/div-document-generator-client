@@ -12,12 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Slf4j
 @RunWith(SpringRunner.class)
