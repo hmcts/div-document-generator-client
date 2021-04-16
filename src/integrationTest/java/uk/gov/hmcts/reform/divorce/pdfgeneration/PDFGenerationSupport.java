@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 
 public class PDFGenerationSupport {
 
+    // The numbers in the comments to the right are the number of the test
     static List<Object[]> getTestScenarios() {
         List<String> basicTestData = Arrays.asList(
-            "mini-petition-resp-confidential-addr",
+            "mini-petition-resp-confidential-addr",                                                             // 0
             "CC--No_FO--No_CN--A_DR-AD-CRK-NO-PL-NO-DT-NO_LP--NO",
             "CC--Res_FO--No_CN--B_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--Corres_FO--No_CN--C_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
@@ -18,7 +19,7 @@ public class PDFGenerationSupport {
             "CC--CoresRes_FO--App_CN--F_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--Res_FO--Child_CN--G_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--Corres_FO--Child_CN--BCDEFG_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
-            "CC--CorresRes_FO--Child_CN--AD_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
+            "CC--CorresRes_FO--Child_CN--AD_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",                               // 10
             "CC--CorresRes_FO--ChildApp_CN--ADEF_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes",
             "CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Special-Chars-Confidential",
@@ -28,7 +29,7 @@ public class PDFGenerationSupport {
             "CC--No_FO--ChildApp_CN--ABCDEFG_DR-DES-CRK-No-PL-No-DT-No_LP--No",
             "CC--cores_FO--ChildApp_CN--BCDE_DR-UB-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Long-SoC-Solicitors",
             "CC--cores_FO--ChildApp_CN--BCDE_DR-AD-CRK-Yes-PL-Yes-DT-Yes_LP--Yes-Petitioner-Solicitor",
-            "5YearSeparationWithMentalSeparationDate",
+            "5YearSeparationWithMentalSeparationDate",                                                          // 20
             "AOS_Co-respondent_Online",
             "AOS_Co-respondent_Paper",
             "Desertion",
@@ -38,7 +39,7 @@ public class PDFGenerationSupport {
             "Resp_5Year_Defend_Response_No_Claim_Costs",
             "Resp_5Year_Undefend_Response",
             "Resp_Adultery_Defend_Response",
-            "Resp_Adultery_Undefend_Response",
+            "Resp_Adultery_Undefend_Response",                                                                  // 30
             "Resp_Behaviour_Defend_Response_No_Claim_Costs",
             "Resp_Behaviour_Undefend_noAdmit_Response",
             "Resp_Behaviour_Undefend_Response",
@@ -48,7 +49,7 @@ public class PDFGenerationSupport {
             "co-respondent-answers-defended-admit-costs",
             "co-respondent-answers-undefended-no-admit-no-costs",
             "AOS_Offline-Invitation-Letter-Respondent",
-            "AOS_Offline-Invitation-Letter-Co-Respondent",
+            "AOS_Offline-Invitation-Letter-Co-Respondent",                                                      // 40
             "AOS_Offline-2-Year-Separation-Form",
             "AOS_Offline-5-Year-Separation-Form",
             "AOS_Offline-Behaviour-Desertion-Form",
@@ -58,7 +59,7 @@ public class PDFGenerationSupport {
             "decree-nisi-refusal-order-clarification",
             "decree-nisi-refusal-order-rejection",
             "DN granted and cost order for respondent",
-            "DN granted for respondent",
+            "DN granted for respondent",                                                                        // 50
             "DA-granted-letter",
             "DA-granted-cover-letter-respondent-solicitor",
             "COE-cover-letter-respondent-costs-claim-granted",
@@ -68,7 +69,7 @@ public class PDFGenerationSupport {
             "cost-order-cover-letter-co-respondent",
             "Cost-Order-notification-letter-co-respondent-solicitor",
             "COE-cover-letter-respondent-solicitor-costs-claim-granted",
-            "COE-cover-letter-respondent-solicitor-costs-claim-not-granted",
+            "COE-cover-letter-respondent-solicitor-costs-claim-not-granted",                                    // 60
             "DN-granted-cover-letter-respondent-solicitor-claim-granted",
             "DN-granted-cover-letter-respondent-solicitor-claim-not-granted",
             "COE-cover-letter-co-respondent-costs-claim-granted",
@@ -78,7 +79,7 @@ public class PDFGenerationSupport {
             "Deemed-service-refusal-order",
             "Dispensed-service-refusal-order",
             "AOS-Overdue-cover-letter-with-HWF",
-            "AOS-Overdue-cover-letter-with-no-HWF",
+            "AOS-Overdue-cover-letter-with-no-HWF",                                                             // 70
             "General-order-document-with-corespondent",
             "General-order-document-without-corespondent",
             "General-letter-with-no-solicitor",
@@ -88,7 +89,7 @@ public class PDFGenerationSupport {
             "Bailiff-certificate-of-service-without-corespondent",
             "AOS_Solicitor",
             "AOS_Solicitor-rep-resp-journey",
-            "AOS_Online-rep-resp-journey",
+            "AOS_Online-rep-resp-journey",                                                                      // 80
             "AOS_Hus_Res-Addr_DivUnit-SC-Sol-Online-Avl",
             "AOS_Same-Sex-Female-Sol-Online-Avl",
             "AOS_Same-Sex-Male-Sol-Online-Avl",
@@ -98,7 +99,7 @@ public class PDFGenerationSupport {
             "AOS_Wife_Sol-Addr_DivUnit-SW_No-Sol-Company",
             "AOS_Hus_Res-Addr_DivUnit-SC",
             "AOS_Same-Sex-Female",
-            "AOS_Same-Sex-Male",
+            "AOS_Same-Sex-Male",                                                                                // 90
             "AOS_Amend_Petition",
             "AOS_Hus_Res-Addr_DivUnit-EM"
         );

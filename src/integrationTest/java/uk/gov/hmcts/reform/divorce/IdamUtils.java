@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce;
 
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import net.serenitybdd.rest.SerenityRest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import uk.gov.hmcts.reform.divorce.model.UserCode;
 import java.util.Base64;
 import java.util.UUID;
 
+@Slf4j
 public class IdamUtils {
     private static final String GENERIC_PASSWORD = "genericPassword123";
 
@@ -66,10 +68,16 @@ public class IdamUtils {
             .roles(new UserCode[] { UserCode.builder().code("caseworker-divorce-courtadmin").build() })
             .build();
 
-        SerenityRest.given()
+        Response response = SerenityRest.given()
             .header("Content-Type", "application/json")
             .body(ResourceLoader.objectToJson(userRequest))
             .post(idamCreateUrl());
+
+        if (response.statusCode() < 300) {
+            log.info("Created test user {}", username);
+        } else {
+            log.info("Failed to create test user {}, response code {} and body {}", username, response.statusCode(), response.body());
+        }
     }
 
     private String idamCreateUrl() {
@@ -86,18 +94,34 @@ public class IdamUtils {
             .relaxedHTTPSValidation()
             .post(idamCodeUrl());
 
-        if (response.getStatusCode() >= 300) {
-            throw new IllegalStateException("Token generation failed with code: " + response.getStatusCode()
-                + " body: " + response.getBody().prettyPrint());
+        if (response.statusCode() >= 300) {
+            throw new IllegalStateException("Token generation failed with code: " + response.statusCode()
+                + " body: " + response.body().prettyPrint());
         }
 
         response = SerenityRest.given()
             .relaxedHTTPSValidation()
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-            .post(idamTokenUrl(response.getBody().path("code")));
+            .post(idamTokenUrl(response.body().path("code")));
 
-        String token = response.getBody().path("access_token");
+        String token = response.body().path("access_token");
         return "Bearer " + token;
+    }
+
+    public void deleteTestUser(String username) {
+        Response response = SerenityRest.given()
+            .relaxedHTTPSValidation()
+            .delete(idamDeleteUserUrl(username));
+
+        if (response.statusCode() < 300) {
+            log.info("Deleted test user {}", username);
+        } else {
+            log.error("Failed to delete test user {}", username);
+        }
+    }
+
+    private String idamDeleteUserUrl(String username) {
+        return idamUserBaseUrl + "/testing-support/accounts/" + username;
     }
 
     private String idamCodeUrl() {

@@ -12,11 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.UUID;
-import javax.annotation.PostConstruct;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -70,6 +71,14 @@ public abstract class IntegrationTest {
         }
     }
 
+    @PreDestroy
+    public void tearDown() {
+        if (username != null) {
+            idamTestSupportUtil.deleteTestUser(username);
+            username = null;
+        }
+    }
+
     public Response readDataFromEvidenceManagement(String uri) {
         getUserToken();
         return EvidenceManagementUtil.readDataFromEvidenceManagement(
@@ -90,11 +99,9 @@ public abstract class IntegrationTest {
     }
 
     private synchronized String getUserToken() {
-        username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
-
         if (userToken == null) {
+            username = "simulate-delivered" + UUID.randomUUID() + "@notifications.service.gov.uk";
             idamTestSupportUtil.createCaseworkerUserInIdam(username, GENERIC_PASSWORD);
-
             userToken = idamTestSupportUtil.generateUserTokenWithNoRoles(username, GENERIC_PASSWORD);
         }
 
