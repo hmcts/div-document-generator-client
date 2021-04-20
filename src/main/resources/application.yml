@@ -82,6 +82,9 @@ document:
             -   templateName: FL-DIV-DEC-ENG-00060.docx
                 filename: CostsOrder.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-DEC-ENG-00711.docx
+                filename: CostsOrder.pdf
+                document-generator: docmosis
             -   templateName: respondentAnswers
                 filename: RespondentAnswers.pdf
                 document-generator: pdfgenerator
@@ -170,6 +173,9 @@ document:
                 filename: AOSOfflineAdulteryFormCoRespondentWelsh.pdf
                 document-generator: docmosis
             -   templateName: FL-DIV-DEC-WEL-00240.docx
+                filename: CostsOrderWelsh.pdf
+                document-generator: docmosis
+            -   templateName: FL-DIV-DEC-WEL-00712.docx
                 filename: CostsOrderWelsh.pdf
                 document-generator: docmosis
             -   templateName: FL-DIV-DEC-WEL-00251.docx
