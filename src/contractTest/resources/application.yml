@@ -172,6 +172,9 @@ document:
             -   templateName: FL-DIV-DEC-WEL-00240.docx
                 filename: CostsOrderWelsh.pdf
                 document-generator: docmosis
+            -   templateName: FL-DIV-DEC-WEL-00712.docx
+                filename: CostsOrderWelsh.pdf
+                document-generator: docmosis
             -   templateName: FL-DIV-DEC-WEL-00251.docx
                 filename: DecreeNisiClarificationOrderWelsh.pdf
                 document-generator: docmosis

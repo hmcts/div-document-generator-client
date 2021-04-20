@@ -56,6 +56,8 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_DOCUMENT_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_JUDGE_DOCUMENT_ID;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_JUDGE_NAME_FOR_PDF_FILE;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_JUDGE_WELSH_DOCUMENT_ID;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_JUDGE_WELSH_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COSTS_ORDER_NAME_FOR_PDF_FILE;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_FILE_NAME;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COST_ORDER_COVER_LETTER_FOR_CO_RESPONDENT_TEMPLATE_ID;
@@ -138,6 +140,8 @@ public class TemplatesConfigurationTest {
                 COSTS_ORDER_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
             new ImmutableTriple<>(COSTS_ORDER_JUDGE_DOCUMENT_ID,
                 COSTS_ORDER_JUDGE_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
+            new ImmutableTriple<>(COSTS_ORDER_JUDGE_WELSH_DOCUMENT_ID,
+                COSTS_ORDER_JUDGE_WELSH_NAME_FOR_PDF_FILE, DOCMOSIS_TYPE),
             new ImmutableTriple<>(DN_ANSWERS_TEMPLATE_ID,
                 DECREE_NISI_ANSWERS_TEMPLATE_NAME, DOCMOSIS_TYPE),
             new ImmutableTriple<>(CASE_LIST_FOR_PRONOUNCEMENT_TEMPLATE_ID,
