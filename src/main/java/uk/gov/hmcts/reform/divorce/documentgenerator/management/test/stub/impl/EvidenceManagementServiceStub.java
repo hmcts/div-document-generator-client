@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @ConditionalOnProperty(value = "evidence-management-api.service.stub.enabled", havingValue = "true")
 public class EvidenceManagementServiceStub implements EvidenceManagementService, DocumentDownloadService {
-    private static final String TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH = "/test/documents/";
+    private static final String TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH = "/documents/";
 
     private static final Map<String, byte[]> DATA_STORE = new ConcurrentHashMap<>();
     private static final String CREATED_BY = "Document Generator Service";
@@ -33,6 +33,7 @@ public class EvidenceManagementServiceStub implements EvidenceManagementService,
         log.info("File stored as {}", fileName);
         FileUploadResponse fileUploadResponse = new FileUploadResponse(HttpStatus.OK);
         fileUploadResponse.setFileUrl(getFileURL(fileName));
+        fileUploadResponse.setFileName(fileName);
         fileUploadResponse.setMimeType(MediaType.APPLICATION_PDF_VALUE);
         fileUploadResponse.setCreatedOn(clock.instant().toString());
         fileUploadResponse.setCreatedBy(CREATED_BY);
@@ -42,12 +43,7 @@ public class EvidenceManagementServiceStub implements EvidenceManagementService,
     }
 
     private String getFileURL(String fileName) {
-        return ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path(TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH + fileName)
-                .build()
-                .toUri()
-                .toString();
+        return "https://dm-store:8080" + TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH + fileName;
     }
 
     @Override

@@ -19,13 +19,13 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 public class EvidenceManagementServiceStubUTest {
-    private static final String TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH = "/test/documents/";
+    private static final String TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH = "/documents/";
     private static final String CREATED_BY = "Document Generator Service";
 
     private static final String EXISTING_FILE_KEY = "EXISTING_FILE_KEY";
     private static final String NON_EXISTING_FILE_KEY = "NON_EXISTING_FILE_KEY";
     private static final String NEW_FILE_NAME = "493410b3-dd0b-4b78-97bf-289f50f6e74f";
-    private static final String EXPECTED_FILE_URL_PREFIX = "http://localhost" + TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH;
+    private static final String EXPECTED_FILE_URL_PREFIX = "https://dm-store:8080" + TEST_DOCUMENTS_DOWNLOAD_CONTEXT_PATH;
     private static final String EXPECTED_FILE_URL = EXPECTED_FILE_URL_PREFIX + NEW_FILE_NAME;
 
     private static final byte[] FILE = {1};
@@ -56,7 +56,7 @@ public class EvidenceManagementServiceStubUTest {
 
         String fileName = entry.getKey();
 
-        assertEquals(testFileName, fileName);
+        assertEquals(testFileName +"0", fileName);
         assertEquals(NEW_FILE, entry.getValue());
         assertEquals(EXPECTED_FILE_URL_PREFIX + fileName, actual.getFileUrl());
         assertEquals(MediaType.APPLICATION_PDF_VALUE, actual.getMimeType());
