@@ -243,16 +243,23 @@
             </div>
 
             <div class="response-text">
-                <strong>You need to respond within 7 days from receipt of this letter.</strong> As you have been named as the co-respondent in the divorce, the applicant is allowed to claim the costs of the divorce from you. This could include the &#xA3;{{ divorceApplicationFee }} application fee, and their legal fees and expenses. If you don't respond, you won't have a say in whether or not you pay these costs.
+                <strong>You need to respond within 7 working days from receipt of this letter.</strong> As you have been named as the co-respondent in the divorce, the applicant is allowed to claim the costs of the divorce from you. This could include the &#xA3;{{ divorceApplicationFee }} application fee, and their legal fees and expenses. If you don't respond, you won't have a say in whether or not you pay these costs.
             </div>
-
 
             <div class="response-text">
                 {% if journeyType == "online" %}
-                    Please contact us if you can't use the online service for any reason, or if the 7 days have passed.
+                    Please contact us if you can't use the online service for any reason, or if the 7 working days have passed.
                 {% else %}
-                    Please contact us if you can't respond for any reason, or if the 7 days have passed.
+                    Please contact us if you can't respond for any reason, or if the 7 working days have passed.
                 {% endif %}
+            </div>
+
+            <div class="response-text">
+                If you live outside of England and Wales, then you may have more days to reply to this divorce. Please refer to the below link:
+            </div>
+
+            <div class="response-text">
+                <a href="https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part06/pd_part06b#7.1">https://www.justice.gov.uk/courts/procedure-rules/civil/rules/part06/pd_part06b#7.1</a>
             </div>
 
             <h2 class="heading-small">
@@ -287,7 +294,7 @@
                         Complete the 'Respond to a divorce application' form included with this letter.
                     </li>
                     <li class="list-bullet-counter">
-                        Return the form to the Courts and Tribunals Service Centre within 7 days.
+                        Return the form to the Courts and Tribunals Service Centre within 7 working days.
                     </li>
                 </ol>
             {% endif %}
