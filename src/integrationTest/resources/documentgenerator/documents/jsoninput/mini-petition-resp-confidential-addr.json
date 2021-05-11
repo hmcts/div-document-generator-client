@@ -13,6 +13,7 @@
                 "D8DivorceClaimFrom": [
                     "respondent"
                 ],
+                "D8DivorceCostsClaimExplain": "I can't afford to pay all the fees.",
                 "D8FinancialOrder": "YES",
                 "D8FinancialOrderFor": [
                     "children"
@@ -171,6 +172,7 @@
                     "classification": "PUBLIC"
                 },
                 "D8DivorceClaimFrom": "PUBLIC",
+                "D8DivorceCostsClaimExplain": "PUBLIC",
                 "D8ScreenHasMarriageBroken": "PUBLIC",
                 "D8InferredRespondentGender": "PUBLIC",
                 "D8ReasonForDivorceEnableAdultery": "PUBLIC",
@@ -307,6 +309,7 @@
                     "classification": "PUBLIC"
                 },
                 "D8DivorceClaimFrom": "PUBLIC",
+                "D8DivorceCostsClaimExplain": "PUBLIC",
                 "D8ScreenHasMarriageBroken": "PUBLIC",
                 "D8InferredRespondentGender": "PUBLIC",
                 "D8ReasonForDivorceEnableAdultery": "PUBLIC",
