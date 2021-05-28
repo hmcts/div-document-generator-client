@@ -17,13 +17,13 @@ buildscript {
 plugins {
     id 'application'
     id 'checkstyle'
-    id 'com.github.ben-manes.versions' version '0.36.0'
+    id 'com.github.ben-manes.versions' version '0.38.0'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'jacoco'
-    id 'org.owasp.dependencycheck' version '6.1.1'
+    id 'org.owasp.dependencycheck' version '6.1.6'
     id 'org.sonarqube' version '3.2.0'
     id 'org.springframework.boot' version '2.3.3.RELEASE'
-    id 'info.solidsoft.pitest' version '1.5.2'
+    id 'info.solidsoft.pitest' version '1.6.0'
     id 'au.com.dius.pact' version '4.2.0'
 }
 
@@ -306,7 +306,7 @@ dependencyManagement {
         //CVE-2017-18640
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
 
-        dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.0'
+        dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
     }
 }
 
