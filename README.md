@@ -28,7 +28,7 @@ The project uses [Gradle](https://gradle.org) as a build tool but you don't have
 To build project please execute the following command:
 
 ```bash
-    ./gradlew build
+./gradlew build
 ```
 
 **Running**
@@ -36,17 +36,18 @@ To build project please execute the following command:
 First you need to create distribution by executing following command:
 
 ```bash
-    ./gradlew installDist
+./gradlew installDist
 ```
 
-To begin download the azure client cli
+To begin download the azure client cli:
 
-```
+```bash
 brew update && brew install azure-cli
 ```
 
 After it has finished downloaded run:
-```
+
+```bash
 az login
 ```
 
@@ -54,7 +55,7 @@ This should open a browser window for you to login, use your HMCTS account
 
 After logging in run the following command:
 
-```
+```bash
 az acr login --name hmcts --subscription <ask the team for the secret>
 ```
 
@@ -64,8 +65,7 @@ When the distribution has been created in `build/install/div-document-generator`
 you can run the application by executing following command:
 
 ```bash
-    docker-compose up
-
+docker-compose up
 ```
 
 As a result the following container(s) will get created and started:
@@ -94,7 +94,7 @@ will output generated PDFs to the folder `src/integrationTest/resources/document
 To run all unit tests please execute following command:
 
 ```bash
-    ./gradlew test
+./gradlew test
 ```
 
 **Coding style tests**
@@ -102,14 +102,15 @@ To run all unit tests please execute following command:
 To run all checks (including unit tests) please execute following command:
 
 ```bash
-    ./gradlew check
+./gradlew check
 ```
+
 **Mutation tests**
 
 To run all mutation tests execute the following command:
 
 ```bash
-    ./gradlew pitest
+./gradlew pitest
 ```
 
 ## Developing
