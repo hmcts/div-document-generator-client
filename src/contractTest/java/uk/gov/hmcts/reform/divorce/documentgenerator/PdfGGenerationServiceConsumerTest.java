@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator;
 
-
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
 import au.com.dius.pact.consumer.junit5.PactTestFor;
@@ -54,6 +53,7 @@ public class PdfGGenerationServiceConsumerTest {
 
     @MockBean
     private AuthTokenGenerator serviceTokenGenerator;
+
     @MockBean
     private TemplateManagementService templateManagementService;
     private final String someServiceAuthToken = "someServiceAuthToken";
@@ -84,8 +84,7 @@ public class PdfGGenerationServiceConsumerTest {
             .path("/pdfs")
             .willRespondWith()
             .withBinaryData("".getBytes(), "application/octet-stream")
-            .matchHeader(org.springframework.http.HttpHeaders.CONTENT_TYPE,
-                "application/pdf")
+            .matchHeader(org.springframework.http.HttpHeaders.CONTENT_TYPE, "application/pdf")
             .status(HttpStatus.SC_OK)
             .toPact();
     }
