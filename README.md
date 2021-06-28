@@ -19,7 +19,6 @@ Store and return the link to the stored data.
 - [JDK 11](https://openjdk.java.net/)
 - [Docker](https://www.docker.com)
 
-
 **Building**
 
 The project uses [Gradle](https://gradle.org) as a build tool but you don't have to install it locally since there is a
@@ -31,63 +30,31 @@ To build project please execute the following command:
 ./gradlew build
 ```
 
-**Running**
+## Running and Testing
 
-First you need to create distribution by executing following command:
-
-```bash
-./gradlew installDist
-```
-
-To begin download the azure client cli:
-
-```bash
-brew update && brew install azure-cli
-```
-
-After it has finished downloaded run:
-
-```bash
-az login
-```
-
-This should open a browser window for you to login, use your HMCTS account
-
-After logging in run the following command:
-
-```bash
-az acr login --name hmcts --subscription <ask the team for the secret>
-```
-
-Make sure you are connected to the VPN to before you run docker-compose up otherwise it won't be able to use the image.
-
-When the distribution has been created in `build/install/div-document-generator` directory,
-you can run the application by executing following command:
-
-```bash
-docker-compose up
-```
-
-As a result the following container(s) will get created and started:
- - long living container for API application exposing port `4007`
-
-## Testing
+To run this locally follow the steps below and configure `application-aat.yml`.
+Then run the service using `./gradlew clean bootRunAat`.
 
 **Integration tests**
 
-To run all integration tests locally:
+To run all integration tests locally (note the location of config files):
 
-* Make a copy of `src/main/resources/example-application-aat.yml` as `src/main/resources/application-aat.yml`
-* Make a copy of `src/integrationTest/resources/example-application-local.properties` as `src/integrationTest/resources/application-local.properties`
-* Replace the `replace_me` secrets in the _newly created_ files. You can get the values from SCM and Azure secrets key vault (the new files are in .gitignore and should ***not*** be committed to git)
-* Assuming you use IntelliJ, run your application
-* And then run your gradle functional tests task
-* Or if using command line:
-    * Start the app with AAT config using `./gradlew clean bootRunAat`
-    * Start the test with AAT config using `./gradlew clean functional`
+1. Make a copy of `src/main/resources/example-application-aat.yml` as `src/main/resources/application-aat.yml`
+2. Make a copy of `src/integrationTest/resources/example-application-local.properties` as `src/integrationTest/resources/application-local.properties`
+3. Replace the `replace_me` secrets in the _newly created_ files. You can get the values from SCM and Azure secrets key vault
+   (the new files are in .gitignore and should ***not*** be committed to git)
+4. Assuming you use IntelliJ, run your application
+5. Then run functional tests
+6. Or using command line:
+    1. Start the app with AAT config using `./gradlew clean bootRunAat`
+    2. Start the test with AAT config using `./gradlew clean functional`
 
-If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates), you can re-generate the PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`. The test
-will output generated PDFs to the folder `src/integrationTest/resources/documentgenerator/documents/regenerated`
+**IMPORTANT:** If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates),
+you will likely need to re-generate PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
+The generated PDFs will be placed into `src/integrationTest/resources/documentgenerator/documents/regenerated`.
+These PDFs are used in integration tests, and you will use them to replace files in `.../documents/pdfoutput`.
+Pipeline uses `pdfoutput` in its tests, so you will need to replace `pdfoutput` PDFs with the newly `regenerated` PDFs of the
+templates you have changed. Make sure you have followed steps above, and are able to run functional tests.
 
 **Unit tests**
 
