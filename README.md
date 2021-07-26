@@ -52,7 +52,9 @@ To run all integration tests locally (note the location of config files):
 **IMPORTANT:** If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates),
 you will likely need to re-generate PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
 The generated PDFs will be placed into `src/integrationTest/resources/documentgenerator/documents/regenerated`.
+
 These PDFs are used in integration tests, and you will use them to replace files in `.../documents/pdfoutput`.
+
 Pipeline uses `pdfoutput` in its tests, so you will need to replace `pdfoutput` PDFs with the newly `regenerated` PDFs of the
 templates you have changed. Make sure you have followed steps above, and are able to run functional tests.
 
