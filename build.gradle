@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.5.7")
     }
 }
 
@@ -153,7 +153,7 @@ def versions = [
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
     restAssured: '3.0.3',
-    serenity: '2.2.13',
+    serenity: '2.5.8',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
@@ -165,9 +165,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.43',
-    tomcatEmbedWebsocket: '9.0.43',
-    tomcatEmbedEl: '9.0.33',
+    tomcatEmbedCore: '9.0.50',
+    tomcatEmbedWebsocket: '9.0.50',
+    tomcatEmbedEl: '9.0.50',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
