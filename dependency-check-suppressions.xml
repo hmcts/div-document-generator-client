@@ -13,7 +13,7 @@
         <cve>CVE-2018-1258</cve>
     </suppress>
 
-    <suppress until="2021-09-20Z">
+    <suppress>
             <notes><![CDATA[
        file name: jakarta.el-3.0.3.jar
        ]]></notes>
