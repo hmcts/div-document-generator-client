@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.response.FileUploadResponse;
@@ -83,7 +84,7 @@ public class EvidenceManagementServiceStubUTest {
         final Clock clock = mock(Clock.class);
         when(clock.instant()).thenReturn(instant);
 
-        Whitebox.setInternalState(classUnderTest, "clock", clock);
+        ReflectionTestUtils.setField(classUnderTest, "clock", clock);
     }
 
     private String getFileURL(String fileName) {
