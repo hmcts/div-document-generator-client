@@ -181,6 +181,7 @@ dependencies {
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
     integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
@@ -271,7 +272,9 @@ dependencies {
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
 
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
-    implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    implementation("org.projectlombok:lombok:$versions.lombok")
+
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
