@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.5.7")
     }
 }
 
@@ -152,8 +152,8 @@ def versions = [
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.1',
-    restAssured: '3.0.3',
-    serenity: '2.2.13',
+    restAssured: '4.2.1',
+    serenity: '2.5.8',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
     sonarPitest: '0.5',
@@ -165,9 +165,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.43',
-    tomcatEmbedWebsocket: '9.0.43',
-    tomcatEmbedEl: '9.0.33',
+    tomcatEmbedCore: '9.0.50',
+    tomcatEmbedWebsocket: '9.0.50',
+    tomcatEmbedEl: '9.0.37',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
@@ -178,6 +178,7 @@ dependencies {
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
     integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
@@ -312,6 +313,8 @@ dependencyManagement {
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
 
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
+
+        dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
     }
 }
 
