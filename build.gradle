@@ -176,13 +176,13 @@ dependencies {
     //integration test
     integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
-    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
-    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
+    integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured-all', version: versions.restAssured
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestCompile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     integrationTestCompile group: 'org.apache.pdfbox', name: 'pdfbox', version: versions.pdfbox
     integrationTestImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
@@ -314,6 +314,7 @@ dependencyManagement {
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
 
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
+
     }
 }
 
