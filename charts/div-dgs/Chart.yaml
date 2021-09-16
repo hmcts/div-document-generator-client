@@ -2,8 +2,8 @@ apiVersion: v2
 appVersion: "1.0"
 description: Divorce - Document Generator Service
 name: div-dgs
-version: 2.0.4
+version: 2.0.5
 dependencies:
     - name: java
-      version: ~3.4.5
+      version: ~3.6.0
       repository: "@hmctspublic"
