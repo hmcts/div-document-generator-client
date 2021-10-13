@@ -343,9 +343,9 @@ azure:
 docmosis:
     service:
         pdf-service:
-            accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:23432}
+            accessKey: ${DOCMOSIS_SERVICE_ACCESS_KEY:ZDYxMTkzZTQtMGY2Mi00NDM1LWIyN2ItNGRkNzdjOTczMjAwOjQ1NTE0ODQ}
             renderEndpoint: "/rs/render"
-            uri: ${DOCMOSIS_SERVICE_BASE_URL:http://localhost:5501}${docmosis.service.pdf-service.renderEndpoint}
+            uri: ${DOCMOSIS_SERVICE_BASE_URL:https://docmosis-development.platform.hmcts.net}${docmosis.service.pdf-service.renderEndpoint}
             devMode: ${DOCMOSIS_SERVICE_DEV_MODE_FLAG:false}
 
 feature-toggle:
