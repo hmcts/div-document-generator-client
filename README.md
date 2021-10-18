@@ -50,13 +50,17 @@ To run all integration tests locally (note the location of config files):
     2. Start the test with AAT config using `./gradlew clean functional`
 
 **IMPORTANT:** If you update content in [templates](https://github.com/hmcts/rdo-docmosis-templates),
-you will likely need to re-generate PDFs by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
-The generated PDFs will be placed into `src/integrationTest/resources/documentgenerator/documents/regenerated`.
+you will most likely need to re-generate PDFs you changed by running the ignored test `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
+The generated PDFs will need to be placed into `src/integrationTest/resources/documentgenerator/documents/regenerated`.
 
 These PDFs are used in integration tests, and you will use them to replace files in `src/integrationTest/resources/documentgenerator/documents/pdfoutput`.
 
 Pipeline uses `pdfoutput` in its tests, so you will need to replace `pdfoutput` PDFs with the newly `regenerated` PDFs of the
 templates you have changed. Make sure you have followed steps above, and are able to run functional tests.
+
+(**NOTE:** In some of the latest IntelliJ versions, it is no longer enough to just remove the `@Ignore` in `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
+Maybe this will change in the future, but right now an additional step is required, each changed PDF needs to be specified in the
+`PDFGenerationTest.testData()` method as strings. Then remove `@Ignore` and run the whole `GenerateDraftPDFTest` test in IntelliJ.)
 
 **Unit tests**
 
