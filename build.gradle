@@ -39,27 +39,21 @@ sourceSets {
         java {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            srcDirs = ['src/integrationTest/java']
-        }
-        resources {
-            srcDirs = ['src/integrationTest/resources']
         }
     }
     contractTest {
         java {
             compileClasspath += main.output
             runtimeClasspath += main.output
-            srcDir file('src/contractTest/java')
         }
-        resources.srcDir file('src/contractTest/resources')
     }
 }
 
 configurations {
-    integrationTestCompile.extendsFrom testCompile
-    integrationTestRuntime.extendsFrom testRuntime
-    contractTestCompile.extendsFrom testCompile
-    contractTestRuntime.extendsFrom testRuntime
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    contractTestImplementation.extendsFrom testImplementation
+    contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 bootJar {
@@ -81,11 +75,11 @@ compileTestJava {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     jcenter()
 
     maven { url "https://dl.bintray.com/hmcts/hmcts-maven" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-    maven { url 'https://repo.spring.io/libs-milestone' }
+
 }
 
 distributions {
@@ -174,66 +168,66 @@ def versions = [
 
 dependencies {
     //integration test
-    integrationTestCompile group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
-    integrationTestCompile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
-    integrationTestCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
-    integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
-    integrationTestCompile group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
-    integrationTestCompile group: 'org.apache.pdfbox', name: 'pdfbox', version: versions.pdfbox
+    integrationTestImplementation group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
+    integrationTestImplementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
+    integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
+    integrationTestImplementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
+    integrationTestImplementation group: 'org.apache.pdfbox', name: 'pdfbox', version: versions.pdfbox
     integrationTestImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-    integrationTestCompile group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
-    integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    integrationTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    integrationTestCompile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
+    integrationTestImplementation group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
+    integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    integrationTestImplementation (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
     }
 
-    integrationTestCompile (group: 'com.google.guava', name:'guava', version: versions.guava) {
+    integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava) {
         force = true
     }
-    compile (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
-        force = true
-    }
-
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcatEmbedCore) {
-        force = true
-    }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcatEmbedWebsocket) {
-        force = true
-    }
-    compile (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcatEmbedEl) {
+    implementation (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils) {
         force = true
     }
 
-    compile (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
+    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcatEmbedCore) {
+        force = true
+    }
+    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-websocket', version: versions.tomcatEmbedWebsocket) {
+        force = true
+    }
+    implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-el', version: versions.tomcatEmbedEl) {
+        force = true
+    }
+
+    implementation (group:  'org.springframework.security', name: 'spring-security-rsa', version: versions.spring_security_rsa) {
         force = true
         exclude group: 'org.springframework.security', module: 'spring-security-crypto'
     }
 
-    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
+    implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
-    compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
-    compile(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
-    compile(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
+    implementation(group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging)
+    implementation(group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging)
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
-    compile group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
-    compile group: 'commons-io', name: 'commons-io', version: versions.commonsIo
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
+    implementation group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
+    implementation group: 'commons-io', name: 'commons-io', version: versions.commonsIo
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: versions.springCloud
-    compile (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign',  version: versions.springCloud) {
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: versions.springCloud
+    implementation (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign',  version: versions.springCloud) {
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
@@ -241,19 +235,19 @@ dependencies {
         exclude group: 'org.bouncycastle'
     }
 
-    compile (group: 'com.google.guava', name:'guava', version: versions.guava) {
+    implementation (group: 'com.google.guava', name:'guava', version: versions.guava) {
         force = true
     }
-    compile group: 'io.github.openfeign', name: 'feign-httpclient', version: versions.feignHttpClient
-    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
-    compile group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
+    implementation group: 'io.github.openfeign', name: 'feign-httpclient', version: versions.feignHttpClient
+    implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
-    compile group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
-    compile (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator) {
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
+    implementation (group: 'uk.gov.hmcts.reform', name:'service-auth-provider-client', version: versions.serviceTokenGenerator) {
         exclude group: 'io.reactivex', module: 'io.reactivex'
         exclude group: 'io.reactivex', module: 'rxnetty'
         exclude group: 'io.reactivex', module: 'rxnetty-contexts'
@@ -261,58 +255,50 @@ dependencies {
         exclude group: 'org.bouncycastle'
     }
 
-    compile group: 'junit', name: 'junit', version: versions.junit
-    compile group: 'org.pitest', name: 'pitest', version: versions.pitest
-    compile group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
-    compile group:'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
+    implementation group: 'junit', name: 'junit', version: versions.junit
+    implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
+    implementation group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
+    implementation group:'org.codehaus.sonar-plugins', name:'sonar-pitest-plugin', version: versions.sonarPitest
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
 
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    testCompile group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
-    testCompile group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
-    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
+    testImplementation group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+    testImplementation group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
+    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
+    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
-    testCompile('org.springframework.security:spring-security-test')
-    runtime('org.springframework.boot:spring-boot-devtools')
+    testImplementation('org.springframework.security:spring-security-test')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
-    runtime("org.springframework.boot:spring-boot-properties-migrator")
+    runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
 
-    contractTestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
-    contractTestCompile group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
-    contractTestCompile group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
-    contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
-    contractTestRuntime group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
+    contractTestImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: versions.httpComponents
+    contractTestImplementation group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
+    contractTestImplementation group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
+    contractTestRuntimeOnly group: 'au.com.dius.pact.consumer', name: 'junit5', version: versions.pact_version
+    contractTestRuntimeOnly group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
 
-    contractTestCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.7.2")
-    contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
-    contractTestImplementation('org.junit.jupiter:junit-jupiter-api:5.7.2')
+    contractTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    contractTestImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    contractTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 
-    contractTestCompile sourceSets.main.runtimeClasspath
-    contractTestCompile sourceSets.test.runtimeClasspath
+    contractTestImplementation sourceSets.main.runtimeClasspath
+    contractTestImplementation sourceSets.test.runtimeClasspath
 
 }
 
 dependencyManagement {
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
-
-        dependencySet(
-            group: 'com.fasterxml.jackson.core',
-            version: versions.jacksonDatabind
-        ) {
+        dependencySet(group: 'com.fasterxml.jackson.core', version: versions.jacksonDatabind) {
             entry 'jackson-core'
             entry 'jackson-databind'
         }
-
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
-
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
-
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
     }
 }
@@ -322,10 +308,6 @@ sourceSets {
         java {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            srcDir('src/integrationTest/java')
-        }
-        resources {
-            srcDir('src/integrationTest/resources')
         }
     }
 
@@ -333,15 +315,21 @@ sourceSets {
         java {
             compileClasspath += main.output
             runtimeClasspath += main.output
-            srcDir file('src/contractTest/java')
         }
-        resources.srcDir file('src/contractTest/resources')
     }
 }
 
 dependencies {
-    integrationTestCompile(sourceSets.test.output)
+    integrationTestImplementation(sourceSets.test.output)
     integrationTestAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+}
+
+processContractTestResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+processIntegrationTestResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
@@ -404,9 +392,9 @@ jacocoTestReport {
     executionData(test)
 
     reports {
-        xml.enabled = true
-        html.enabled = true
-        xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+        xml.required = true
+        html.required = true
+        xml.outputLocation = file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
@@ -455,14 +443,13 @@ task runAndPublishConsumerPactTests(type: Test){
     logger.lifecycle("Runs pact Tests")
     testClassesDirs = sourceSets.contractTest.output.classesDirs
     classpath = sourceSets.contractTest.runtimeClasspath
-
 }
 
 runAndPublishConsumerPactTests.dependsOn contract
 
 runAndPublishConsumerPactTests.finalizedBy pactPublish
 
-def getCheckedOutGitCommitHash() {
+static def getCheckedOutGitCommitHash() {
     'git rev-parse --verify --short HEAD'.execute().text.trim()
 }
 
