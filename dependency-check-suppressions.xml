@@ -14,7 +14,7 @@
     </suppress>
     <suppress>
         <notes><![CDATA[Suppress tomcat CVE as there is no updated version.]]></notes>
-        <vulnerabilityName>CVE-2021-42340</vulnerabilityName>
+        <cve>CVE-2021-42340</cve>
     </suppress>
     <suppress>
         <notes>
