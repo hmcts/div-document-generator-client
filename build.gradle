@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.34")
     }
 }
 
@@ -20,7 +20,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.39.0'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'jacoco'
-    id 'org.owasp.dependencycheck' version '6.2.0'
+    id 'org.owasp.dependencycheck' version '6.2.2'
     id 'org.sonarqube' version '3.2.0'
     id 'org.springframework.boot' version '2.3.11.RELEASE'
     id 'info.solidsoft.pitest' version '1.6.0'
@@ -64,8 +64,7 @@ configurations {
 
 bootJar {
     manifest {
-        attributes 'Implementation-Title': project.name,
-            'Implementation-Version': project.version
+        attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
     }
     archiveName 'div-document-generator.jar'
 }
@@ -165,9 +164,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.43',
-    tomcatEmbedWebsocket: '9.0.43',
-    tomcatEmbedEl: '9.0.33',
+    tomcatEmbedCore: '9.0.50',
+    tomcatEmbedWebsocket: '9.0.50',
+    tomcatEmbedEl: '9.0.50',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
@@ -220,6 +219,7 @@ dependencies {
 
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
+    compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
@@ -312,6 +312,8 @@ dependencyManagement {
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
 
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
+
+        dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
     }
 }
 
@@ -352,9 +354,10 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 }
 
 task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dependsOn: 'classes', group: 'Application') {
+    main = bootJar.mainClassName
     doFirst() {
-        main = bootJar.mainClassName
         classpath = sourceSets.main.runtimeClasspath
+        systemProperties = System.properties
         systemProperty 'spring.profiles.active', 'aat'
     }
 }
