@@ -59,8 +59,8 @@ Pipeline uses `pdfoutput` in its tests, so you will need to replace `pdfoutput` 
 templates you have changed. Make sure you have followed steps above, and are able to run functional tests.
 
 (**NOTE:** In some of the latest IntelliJ versions, it is no longer enough to just remove the `@Ignore` in `PDFGenerationTest.ignoreMe_updateGeneratedPdfs`.
-Maybe this will change in the future, but right now an additional step is required, each changed PDF needs to be specified in the
-`PDFGenerationTest.testData()` method as strings. Then remove `@Ignore` and run the whole `GenerateDraftPDFTest` test in IntelliJ.)
+Maybe this will change in the future, but right now an additional step is required: each changed PDF needs to be specified in the
+`PDFGenerationTest.testData()` method as strings. Then remove `@Ignore` and run the whole `PDFGenerationTest` test in IntelliJ.)
 
 **Unit tests**
 
