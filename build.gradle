@@ -286,7 +286,7 @@ dependencies {
     contractTestRuntimeOnly group: 'au.com.dius.pact.consumer', name: 'java8', version: versions.pact_version
 
     contractTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    contractTestImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    contractTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     contractTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 
     contractTestImplementation sourceSets.main.runtimeClasspath
