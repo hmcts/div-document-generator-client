@@ -18,7 +18,9 @@ def secrets = [
         secret("div-doc-s2s-auth-secret", "IDAM_AUTH_SECRET"),
         secret("idam-secret", "AUTH_IDAM_CLIENT_SECRET"),
         secret("div-doc-s2s-auth-secret", "AUTH_PROVIDER_SERVICE_CLIENT_KEY"),
-        secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY")
+        secret("docmosis-api-key", "DOCMOSIS_SERVICE_ACCESS_KEY"),
+        secret('fortify-on-demand-username', 'FORTIFY_USER_NAME'),
+        secret('fortify-on-demand-password', 'FORTIFY_PASSWORD')
     ]
 ]
 
@@ -40,6 +42,10 @@ withNightlyPipeline(type, product, component) {
     }
 
     loadVaultSecrets(secrets)
+    enableFortifyScan('div-aat')
     enableFullFunctionalTest()
     enableMutationTest()
+    after('fortify-scan') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+    }
 }

@@ -6,7 +6,7 @@ buildscript {
     }
     repositories {
         mavenLocal()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -91,6 +91,12 @@ distributions {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+task fortifyScan(type: JavaExec)  {
+    mainClass.set("uk.gov.hmcts.fortifyclient.FortifyClientMainApp")
+    classpath += sourceSets.test.runtimeClasspath
+    jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
 
 checkstyle {
@@ -268,6 +274,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
     testImplementation('org.springframework.security:spring-security-test')
+    testImplementation group: 'com.github.hmcts', name: 'fortify-client', version: '1.2.2', classifier: 'all',
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
     runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
