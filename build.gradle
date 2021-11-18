@@ -267,8 +267,9 @@ dependencies {
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude(module: 'commons-logging')
     }
-    testImplementation('org.springframework.security:spring-security-test')
-    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile('com.github.hmcts:fortify-client:1.2.2:all')
+    runtime('org.springframework.boot:spring-boot-devtools')
 
     runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
 
@@ -457,4 +458,10 @@ pact {
         tags = [System.getenv("PACT_BRANCH_NAME") ?:'Dev']
         version = project.pactVersion
     }
+}
+
+task fortifyScan(type: JavaExec)  {
+    main = "uk.gov.hmcts.fortifyclient.FortifyClientMainApp"
+    classpath += sourceSets.test.runtimeClasspath
+    jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
 }
