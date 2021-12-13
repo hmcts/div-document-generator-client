@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,6 +73,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
 
+@Slf4j
 @Component
 public class TemplateDataMapper {
 
@@ -133,8 +135,12 @@ public class TemplateDataMapper {
             data.put(ADULTERY_FOUND_OUT_DATE_KEY,
                 formatDateFromCCD((String) data.get(ADULTERY_FOUND_OUT_DATE_KEY)));
         }
-
+        log.info("DANIELBELL1");
+        log.info(String.valueOf(Objects.nonNull(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY))));
+        log.info((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY));
+        log.info(formatDateFromCCD((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)));
         if (Objects.nonNull(data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY))) {
+            log.info("In method DANIELBELL");
             data.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY,
                 formatDateFromCCD((String) data.get(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY)));
         }
