@@ -30,6 +30,9 @@ public class LocalDateToWelshStringConverter {
     }
 
     public String convert(String localDateFormat) {
+        if (localDateFormat.isEmpty()) {
+            return localDateFormat;
+        }
         return convert(LocalDate.parse(localDateFormat));
     }
 
