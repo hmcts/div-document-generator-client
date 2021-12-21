@@ -244,7 +244,7 @@ public class TemplateDataMapper {
     }
 
     private String formatDateFromPattern(String ccdDateString, String fromPattern) {
-        if (Objects.nonNull(ccdDateString) && StringUtils.isNotEmpty(ccdDateString)) {
+        if (StringUtils.isNotBlank(ccdDateString)) {
             DateTimeFormatter ccdFormatter = DateTimeFormatter.ofPattern(fromPattern);
             LocalDate ccdDate = LocalDate.parse(ccdDateString, ccdFormatter);
 
