@@ -223,8 +223,8 @@ public class TemplateDataMapperTest {
             CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
         );
 
-        String expectedFormattedDaGrantedDate = "30 May 2019";
-        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, expectedFormattedDaGrantedDate);
+        String expectedFormattedBehaviourMostRecentDateDate = "30 May 2019";
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, expectedFormattedBehaviourMostRecentDateDate);
 
         Map<String, Object> actual = templateDataMapper.map(requestData);
 
@@ -241,6 +241,39 @@ public class TemplateDataMapperTest {
         );
 
         templateDataMapper.map(requestData);
+    }
+
+    @Test
+    public void givenNullBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_returnFormattedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, null);
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, null);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
+    }
+
+    @Test
+    public void givenEmptyStringBehaviourMostRecentDate_whenTemplateDataMapperIsCalled_returnFormattedDate() {
+        Map<String, Object> caseData = new HashMap<>();
+        caseData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, "");
+
+        Map<String, Object> requestData = Collections.singletonMap(
+            CASE_DETAILS, Collections.singletonMap(CASE_DATA, caseData)
+        );
+
+        String expectedFormattedBehaviourMostRecentDateDate = "";
+        expectedData.put(BEHAVIOUR_MOST_RECENT_DATE_DN_KEY, expectedFormattedBehaviourMostRecentDateDate);
+
+        Map<String, Object> actual = templateDataMapper.map(requestData);
+
+        assertEquals(expectedData, actual);
     }
 
     @Test

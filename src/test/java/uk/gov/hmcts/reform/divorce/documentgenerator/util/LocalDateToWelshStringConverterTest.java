@@ -75,4 +75,11 @@ public class LocalDateToWelshStringConverterTest {
         String welshDate = localDateToWelshStringConverter.convert(localDate);
         Assert.assertEquals("27 Rhagfyr 2020", welshDate);
     }
+
+    @Test
+    public void testEmptyLocalDateConvertedToWelshString() {
+        String localDate = "";
+        String welshDate = localDateToWelshStringConverter.convert(localDate);
+        Assert.assertEquals("", welshDate);
+    }
 }
