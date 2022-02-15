@@ -24,7 +24,7 @@ plugins {
     id 'org.sonarqube' version '3.2.0'
     id 'org.springframework.boot' version '2.3.11.RELEASE'
     id 'info.solidsoft.pitest' version '1.6.0'
-    id 'au.com.dius.pact' version '4.2.0'
+    id 'au.com.dius.pact' version '4.3.5'
 }
 
 apply plugin: 'net.serenity-bdd.aggregator'
@@ -137,10 +137,11 @@ def versions = [
     gradlePitest: '1.4.5',
     guava: '30.0-jre',
     jacksonDatabind: '2.11.2',
-    apacheLogging: '2.16.0',
+    apacheLogging: '2.17.1',
     jsonAssert: '1.2.3',
     junit: '4.13.1',
-    lombok: '1.18.20',
+    lombok: '1.18.22',
+    logbackVersion: '1.2.10',
     nimbus: '5.1',
     pdfbox: '2.0.8',
     pitest: '1.4.10',
@@ -161,9 +162,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.50',
-    tomcatEmbedWebsocket: '9.0.50',
-    tomcatEmbedEl: '9.0.50',
+    tomcatEmbedCore: '9.0.58',
+    tomcatEmbedWebsocket: '9.0.58',
+    tomcatEmbedEl: '9.0.58',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
@@ -258,6 +259,9 @@ dependencies {
         exclude group: 'org.bouncycastle'
     }
 
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
+
     implementation group: 'junit', name: 'junit', version: versions.junit
     implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
     implementation group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
@@ -301,6 +305,24 @@ dependencyManagement {
             entry 'jackson-core'
             entry 'jackson-databind'
         }
+
+        dependencySet(group: 'org.apache.logging.log4j', version: '2.17.1') {
+            entry 'log4j-api'
+            entry 'log4j-to-slf4j'
+        }
+
+        dependencySet(group: 'org.springframework', version: '5.2.19.RELEASE') {
+            entry 'spring-aop'
+            entry 'spring-beans'
+            entry 'spring-context'
+            entry 'spring-context-support'
+            entry 'spring-core'
+            entry 'spring-expression'
+            entry 'spring-jcl'
+            entry 'spring-web'
+            entry 'spring-webmvc'
+        }
+
         dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
