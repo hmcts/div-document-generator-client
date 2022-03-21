@@ -136,7 +136,7 @@ def versions = [
     feignHttpClient: '10.2.0',
     gradlePitest: '1.4.5',
     guava: '30.0-jre',
-    jacksonDatabind: '2.11.2',
+    jacksonDatabind: '2.13.2',
     apacheLogging: '2.17.1',
     jsonAssert: '1.2.3',
     junit: '4.13.1',
