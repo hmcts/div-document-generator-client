@@ -126,7 +126,7 @@
 
 {% set previousCaseId = caseDetails.case_data.PreviousCaseId  %}
 {% set previousIssueDate = caseDetails.case_data.PreviousIssueDate |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
-{% set issueDate = caseDetails.case_data.IssueDate | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
+{% set issueDate = caseDetails.case_data.IssueDate |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd") %}
 {% set referenceNo = caseDetails.case_data.D8caseReference  %}
 
 {% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
