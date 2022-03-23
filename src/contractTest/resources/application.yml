@@ -66,6 +66,8 @@ document:
                 document-generator: pdfgenerator
             -   templateName: divorceminipetition
                 filename: DivorcePetition.pdf
+            -   templateName: rengeneratedivorceminipetition
+                filename: DivorcePetition.pdf
                 document-generator: pdfgenerator
             -   templateName: divorcedraftminipetition
                 filename: DraftDivorcePetition.pdf
