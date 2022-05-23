@@ -162,9 +162,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.58',
-    tomcatEmbedWebsocket: '9.0.58',
-    tomcatEmbedEl: '9.0.58',
+    tomcatEmbedCore: '9.0.63',
+    tomcatEmbedWebsocket: '9.0.63',
+    tomcatEmbedEl: '9.0.63',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
