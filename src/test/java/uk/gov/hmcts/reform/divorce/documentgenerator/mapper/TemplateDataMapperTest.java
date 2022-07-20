@@ -11,6 +11,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.DocmosisBasePdfConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.config.LanguagePreference;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.CcdCollectionMember;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 
@@ -35,6 +36,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_JSON_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.COURT_HEARING_TIME_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CO_RESPONDENT_WISH_TO_NAME;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CTSC_OPENING_HOURS_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.D8_MARRIAGE_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_ELIGIBLE_FROM_DATE_KEY;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.DECREE_ABSOLUTE_GRANTED_DATE_KEY;
@@ -62,6 +64,7 @@ import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConst
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.SOLICITOR_IS_NAMED_CO_RESPONDENT;
 import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.YES_VALUE;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateDataMapperTest {
 
@@ -75,6 +78,7 @@ public class TemplateDataMapperTest {
     private static final String FAMILY_IMG_VAL = "familyImgVal";
     private static final String HMCTS_IMG_KEY = "hmctsImgKey";
     private static final String HMCTS_IMG_VAL = "hmctsImgVal";
+    public static final String CTSC_OPENING_HOURS = "8am to 6pm, Monday to Friday";
 
     @Spy
     private ObjectMapper mapper;
@@ -84,6 +88,9 @@ public class TemplateDataMapperTest {
 
     @Mock
     private WelshTemplateDataMapper welshTemplateDataMapper;
+
+    @Mock
+    private TemplateConfig templateConfig;
 
     @InjectMocks
     private TemplateDataMapper templateDataMapper;
@@ -101,6 +108,7 @@ public class TemplateDataMapperTest {
         expectedData.put(SERVICE_COURT_NAME_KEY, SERVICE_CENTRE_COURT_NAME);
         expectedData.put(COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_CONTACT_DETAILS);
         expectedData.put(DN_COURT_CONTACT_KEY, SERVICE_CENTRE_COURT_ADDRESS);
+        expectedData.put(CTSC_OPENING_HOURS_KEY, CTSC_OPENING_HOURS);
         expectedData.put(docmosisBasePdfConfig.getDisplayTemplateKey(), docmosisBasePdfConfig.getDisplayTemplateVal());
         expectedData.put(docmosisBasePdfConfig.getFamilyCourtImgKey(), docmosisBasePdfConfig.getFamilyCourtImgVal());
         expectedData.put(docmosisBasePdfConfig.getHmctsImgKey(), docmosisBasePdfConfig.getHmctsImgVal());
@@ -112,6 +120,8 @@ public class TemplateDataMapperTest {
 
         Map<String, Map<LanguagePreference, Map<String, String>>> template =
                 ImmutableMap.of(RELATION, relation);
+
+        when(templateConfig.getCtscOpeningHours()).thenReturn(CTSC_OPENING_HOURS);
     }
 
     @Test
