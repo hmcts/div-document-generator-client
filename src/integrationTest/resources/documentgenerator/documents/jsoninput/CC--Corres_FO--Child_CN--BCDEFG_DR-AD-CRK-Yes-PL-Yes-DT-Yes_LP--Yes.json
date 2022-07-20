@@ -1,0 +1,427 @@
+{ "template" : "divorceminipetition",
+  "values": {
+    "caseDetails" : {
+      "id": "1517833758870511",
+      "jurisdiction": "DIVORCE",
+      "state": "Issued",
+      "case_type_id": "DIVORCE",
+      "created_date": "2018-02-05T12:29:17.81",
+      "last_modified": "2018-02-05T14:57:11.346",
+      "security_classification": "PUBLIC",
+      "case_data": {
+        "D8DivorceCostsClaim": "YES",
+        "D8DivorceClaimFrom": [
+          "correspondent"
+        ],
+        "D8FinancialOrder": "YES",
+        "D8FinancialOrderFor": [
+          "children"
+        ],
+        "D8JurisdictionConnection": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ],
+        "D8ReasonForDivorce": "adultery",
+        "D8ReasonForDivorceBehaviourDetails": "My wife is having an affair this week.",
+        "D8ReasonForDivorceAdulteryDetails" : "Adultery Details",
+        "D8ReasonForDivorceAdulteryWishToName" : "YES",
+        "D8ReasonForDivorceAdultery3rdPartyFName": "Ben",
+        "D8ReasonForDivorceAdultery3rdPartyLName" : "Stark",
+        "D8DerivedReasonForDivorceAdultery3rdAddr" : "Headquarters 1120 N Street Sacramento 916-654-5266\t\nP.O. Box 942873 Sacramento, CA 94273-0001",
+        "D8ReasonForDivorceAdulteryKnowWhere" : "YES",
+        "D8ReasonForDivorceAdulteryKnowWhen" : "YES",
+        "D8ReasonForDivorceAdulteryWhenDetails" : "Last Friday",
+        "D8ReasonForDivorceAdulteryWhereDetails" : "On the street",
+        "D8LegalProceedings": "YES",
+
+        "D8LegalProceedingsDetails": "***THIS IS SOME SERIOUSLY LONG TEXT...If you become the Current Maintainer under Clause 2 above, as long as the Maintenance section of LPPL to apply it to software (including a cross-claim or counterclaim in a reasonable royalty and payment arrangement are not derivative works of, publicly display, publicly perform, distribute and sublicense the Contribution causes such combination to be attributed in any documentation for the entire agreement between the parties hereto, such provision shall be reformed to the Program into other languages, the English language version takes precedence. Permission is hereby granted, free of charge, to any person or entity that distributes the Program. If any provision of this license requires that the imported text is available only under the terms applicable to Covered Code. However, You may not occur to you shall terminate as of the Work, you may distribute Covered Code is available under a compatible license which gives you legal permission to use such Original Code and originally made available under this Agreement and any related settlement negotiations. The Indemnified Contributor must: a) promptly notify the Commercial Distributor in connection with its Contributor Version (or portions of the material terms or conditions of merchantability and fitness for a fee, you must show them these terms so they know their rights. Also, for our own protection, we must make available, under the terms and conditions of the United Nations Convention on Contracts for the Work otherwise complies with the license, and which you contribute, and which you wish to incorporate parts of the Covered Code, or any other right or remedy of any updates or upgrades to such Recipient who breached this Agreement. The Eclipse Foundation is the Licensor shall be taken into account in determining the appropriateness of using and distributing the Covered Code. However, You may modify your copy of the Original Code, prior Modifications used by a Contributor shall also apply to those sections when you distribute must include such Notice in a larger work of authorship, whether in Source Code of the Program in a trademark sense to endorse or promote products derived from this software and associated documentation (\"the Software\"). Subject to the extent caused by the Wikimedia community. Text from external sources may attach additional attribution notices cannot be construed under the terms and conditions of this License may be used to create or to build stand-alone binary or bytecode versions of the Initial Developer has attached the notice in Exhibit A as Original Code, to make, have made, and/or otherwise dispose of Licensed Product. Intellectual Property Matters. Third Party Claims. If you find a bug in one of the Derivative Works, you may only do so only on your own Derivative Works, in at least six (6) months after the cause of action arose. Each party waives its rights to work written entirely by you; rather, the intent of this License which applies to it and this permission notice appear in their name, without prior written permission. For written permission, please contact epl@entessa.com. Products derived from the Work. If you do not forfeit any of the Covered Code could lead to death, personal injury, or severe physical or environmental damage. LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THIS EXCLUSION AND LIMITATION MAY NOT APPLY TO YOU. In no event unless required by applicable law (such as a product of your work is M. Y. Name % % The latest version of this Agreement terminate, Recipient agrees that maintenance of standards-based products. For buyers: adequate conformance testing of platforms and middleware greatly reduces the cost of all Your Externally Deployed Your Modifications, or publicly available. Source Code version that you do not accept this License. Work' Any work that is granting the License. You may choose any version ever published by the Licensor. In no event unless required by applicable law or agreed to in writing, Licensor provides the Work that they do not forfeit any of your choice. If you want or need to use the Work or Derivative Works a copy of the Program and Contributions or any other Recipient receiving the Licensed Program or any Modifications made by that Participant. If You distribute the Program in any form whatsoever must retain the following conditions: Redistributions of source code for the Work. A Base Interpreter is a citizen of, or Redistributing the Licensed Program on any Source Code of Your Externally Deployed Modifications either available to a third party. By clicking on the Program, the Contributor Version) or other form of the Work. This license establishes the terms of this Agreement. REQUIREMENTS A Contributor may participate in any medium, provided that in whole or in part pre-release, untested, or not licensed at no charge to all third parties on terms identical to an updated version of the License terms as they appear in the Standard Version, including, but not limited to damages for loss of data, and may be copied, modified, distributed, and/or redistributed. The intent of this license anywhere in your work is unrelated to the extent prohibited by statute or regulation, such description must be made available to a jury trial in any form resulting from mechanical transformation or translation of the Work by combining Covered Code available, directly or indirectly through you, then the only applicable Base Interpreter is a LaTeX package), but it is Recipient's responsibility to serve as the originator of its Contribution, if any, must include the following disclaimer in the United Nations Convention on Contracts for the licensee to freely copy, modify and redistribute the program under these terms. To do so, subject to third party patent license shall not affect any rights to use it under the LPPL license.***",
+        "D8DerivedRespondentHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
+        "D8PetitionerNameChangedHow": [
+          "marriageCertificate"
+        ],
+        "D8DerivedPetitionerHomeAddress": "82 Landor Road\nLondon\nSW9 9PE",
+        "D8RespondentHomeAddress": {
+          "PostCode": "SW9 9PE"
+        },
+        "D8ScreenHasRespondentAddress": "YES",
+        "D8JurisdictionPetitionerDomicile": "NO",
+        "D8ScreenHasMarriageCert": "YES",
+        "D8PetitionerHomeAddress": {
+          "PostCode": "SW9 9PE"
+        },
+        "D8ScreenHasMarriageBroken": "YES",
+        "D8InferredRespondentGender": "female",
+        "D8ReasonForDivorceEnableAdultery": "YES",
+        "D8ReasonForDivorceShowAdultery": "YES",
+        "D8LivingArrangementsLiveTogether": "YES",
+        "D8ReasonForDivorceHasMarriage": "YES",
+        "D8RespondentCorrespondenceUseHomeAddress": "No",
+        "D8JurisdictionRespondentDomicile": "NO",
+        "D8Connections": {
+          "A": "The Petitioner and the Respondent are habitually resident in England and Wales",
+          "B": "The Petitioner and the Respondent were last habitually resident, insofar as one of them still resides there",
+          "C": "The Respondent is habitually resident in England and Wales",
+          "D": "The Petitioner is habitually resident in England and Wales and has resided there for at least a year immediately prior to the presentation of the petition",
+          "E": "The Petitioner is domiciled and habitually resident in England and Wales and has resided there for at least six months immediately prior to the petition",
+          "F": "The Petitioner and Respondent are both domiciled in England and Wales",
+          "G": "The courts of England and Wales have residual jurisdiction, meaning either: no other court in any EU Member State has jurisdiction and either the Petitioner or the Respondent is domiciled in England and Wales; or (for same sex couples only) the Petitioner or the Respondent married each other in England and Wales, no other court in any EU Member State has jurisdiction, and it would be in the interests of justice for the court to assume jurisdiction in this case"
+        },
+        "D8PetitionerCorrespondenceAddress": {
+          "PostCode": "SW9 9PE"
+        },
+        "D8RespondentLastName": "Jamed",
+        "D8PetitionerNameDifferentToMarriageCert": "YES",
+        "D8LegalProceedingsRelated": [
+          "children"
+        ],
+        "D8PetitionerLastName": "Smith",
+        "D8ReasonForDivorceAdulteryIsNamed": "NO",
+        "D8PetitionerPhoneNumber": "01234567890",
+        "D8ClaimsCostsAppliedForFees": "NO",
+        "D8ReasonForDivorceShowTwoYearsSeparation": "YES",
+        "D8PetitionerCorrespondenceUseHomeAddress": "YES",
+        "D8DocumentsGenerated": [
+          {
+            "id": "97a7f408-846b-48ec-9e24-863e8f47ff44",
+            "value": {
+              "DocumentLink": {
+                "document_url": "http://em-api-gateway-web:3404/documents/51400ac5-158d-4177-bdda-ec0058b77c81",
+                "document_filename": "victorian-marriage-certificate.pdf",
+                "document_binary_url": "http://em-api-gateway-web:3404/documents/51400ac5-158d-4177-bdda-ec0058b77c81/binary"
+              },
+              "DocumentType": "petition",
+              "DocumentComment": "",
+              "DocumentFileName": "victorian-marriage-certificate.pdf",
+              "DocumentDateAdded": "2018-02-05",
+              "DocumentEmailContent": ""
+            }
+          }
+        ],
+        "D8ResidualJurisdictionEligible": "YES",
+        "D8ReasonForDivorceLimitReasons": "NO",
+        "D8PetitionerEmail": "email@email.com",
+        "D8ReasonForDivorceClaiming5YearSeparatio": "NO",
+        "D8DivorceUnit": "eastMidlands",
+        "D8ReasonForDivorceShowDesertion": "YES",
+        "D8DerivedRespondentCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
+        "D8MarriagePetitionerName": "John Doe",
+        "D8Cohort": "onlineSubmissionPrivateBeta",
+        "D8MarriageIsSameSexCouple": "YES",
+        "D8ReasonForDivorceShowFiveYearsSeparatio": "YES",
+        "D8MarriageDate": "2001-02-02",
+        "D8caseReference": "LV17D80100",
+        "D8HelpWithFeesNeedHelp": "NO",
+        "D8JurisdictionRespondentResidence": "NO",
+        "D8DivorceWho": "wife",
+        "D8MarriageCanDivorce": "YES",
+        "D8ScreenHasPrinter": "YES",
+        "D8ConnectionSummary": "Manual",
+        "D8RespondentFirstName": "Jane",
+        "D8ReasonForDivorceShowUnreasonableBehavi": "YES",
+        "D8DocumentsUploaded": [
+          {
+            "id": "8a70ad2f-9d63-4d33-9b3b-d32ee9f6a919",
+            "value": {
+              "DocumentLink": {
+                "document_url": "http://em-api-gateway-web:3404/documents/51400ac5-158d-4177-bdda-ec0058b77c81",
+                "document_filename": "victorian-marriage-certificate.pdf",
+                "document_binary_url": "http://em-api-gateway-web:3404/documents/51400ac5-158d-4177-bdda-ec0058b77c81/binary"
+              },
+              "DocumentType": "other",
+              "DocumentComment": "",
+              "DocumentFileName": "victorian-marriage-certificate.pdf",
+              "DocumentDateAdded": "2018-02-05",
+              "DocumentEmailContent": ""
+            }
+          }
+        ],
+        "D8DerivedPetitionerCorrespondenceAddr": "82 Landor Road\nLondon\nSW9 9PE",
+        "D8JurisdictionPetitionerResidence": "NO",
+        "D8ReasonForDivorceClaimingAdultery": "NO",
+        "D8PetitionerFirstName": "John",
+        "D8MarriageRespondentName": "Jenny Benny",
+        "D8PetitionerContactDetailsConfidential": "share",
+        "createdDate": "2018-02-05",
+        "D8MarriagePlaceOfMarriage": "In a church",
+        "D8RespondentCorrespondenceAddress": {
+          "PostCode": "SW9 9PE"
+        },
+        "D8InferredPetitionerGender": "female",
+        "D8JurisdictionHabituallyResLast6Months": "NO"
+      },
+      "data_classification": {
+        "D8DerivedRespondentHomeAddress": "PUBLIC",
+        "D8PetitionerNameChangedHow": "PUBLIC",
+        "D8DerivedPetitionerHomeAddress": "PUBLIC",
+        "D8RespondentHomeAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8ScreenHasRespondentAddress": "PUBLIC",
+        "D8DivorceCostsClaim": "PUBLIC",
+        "D8JurisdictionPetitionerDomicile": "PUBLIC",
+        "D8ScreenHasMarriageCert": "PUBLIC",
+        "D8PetitionerHomeAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8DivorceClaimFrom": "PUBLIC",
+        "D8ScreenHasMarriageBroken": "PUBLIC",
+        "D8InferredRespondentGender": "PUBLIC",
+        "D8ReasonForDivorceEnableAdultery": "PUBLIC",
+        "D8ReasonForDivorceShowAdultery": "PUBLIC",
+        "D8LivingArrangementsLiveTogether": "PUBLIC",
+        "D8ReasonForDivorceHasMarriage": "PUBLIC",
+        "D8RespondentCorrespondenceUseHomeAddress": "PUBLIC",
+        "D8JurisdictionRespondentDomicile": "PUBLIC",
+        "D8FinancialOrderFor": "PUBLIC",
+        "D8Connections": {
+          "value": {
+            "A": "PUBLIC",
+            "B": "PUBLIC",
+            "C": "PUBLIC",
+            "D": "PUBLIC",
+            "E": "PUBLIC",
+            "F": "PUBLIC",
+            "G": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8PetitionerCorrespondenceAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8RespondentLastName": "PUBLIC",
+        "D8PetitionerNameDifferentToMarriageCert": "PUBLIC",
+        "D8JurisdictionConnection": "PUBLIC",
+        "D8LegalProceedingsRelated": "PUBLIC",
+        "D8LegalProceedingsDetails": "PUBLIC",
+        "D8PetitionerLastName": "PUBLIC",
+        "D8ReasonForDivorceAdulteryIsNamed": "PUBLIC",
+        "D8PetitionerPhoneNumber": "PUBLIC",
+        "D8ClaimsCostsAppliedForFees": "PUBLIC",
+        "D8ReasonForDivorceShowTwoYearsSeparation": "PUBLIC",
+        "D8PetitionerCorrespondenceUseHomeAddress": "PUBLIC",
+        "D8DocumentsGenerated": {
+          "value": [
+            {
+              "id": "97a7f408-846b-48ec-9e24-863e8f47ff44",
+              "value": {
+                "DocumentLink": "PUBLIC",
+                "DocumentType": "PUBLIC",
+                "DocumentComment": "PUBLIC",
+                "DocumentFileName": "PUBLIC",
+                "DocumentDateAdded": "PUBLIC",
+                "DocumentEmailContent": "PUBLIC"
+              }
+            }
+          ],
+          "classification": "PUBLIC"
+        },
+        "D8ResidualJurisdictionEligible": "PUBLIC",
+        "D8ReasonForDivorceLimitReasons": "PUBLIC",
+        "D8PetitionerEmail": "PUBLIC",
+        "D8ReasonForDivorceBehaviourDetails": "PUBLIC",
+        "D8ReasonForDivorceClaiming5YearSeparatio": "PUBLIC",
+        "D8DivorceUnit": "PUBLIC",
+        "D8ReasonForDivorceShowDesertion": "PUBLIC",
+        "D8DerivedRespondentCorrespondenceAddr": "PUBLIC",
+        "D8MarriagePetitionerName": "PUBLIC",
+        "D8Cohort": "PUBLIC",
+        "D8MarriageIsSameSexCouple": "PUBLIC",
+        "D8FinancialOrder": "PUBLIC",
+        "D8ReasonForDivorceShowFiveYearsSeparatio": "PUBLIC",
+        "D8MarriageDate": "PUBLIC",
+        "D8caseReference": "PUBLIC",
+        "D8HelpWithFeesNeedHelp": "PUBLIC",
+        "D8JurisdictionRespondentResidence": "PUBLIC",
+        "D8DivorceWho": "PUBLIC",
+        "D8MarriageCanDivorce": "PUBLIC",
+        "D8ScreenHasPrinter": "PUBLIC",
+        "D8ConnectionSummary": "PUBLIC",
+        "D8RespondentFirstName": "PUBLIC",
+        "D8ReasonForDivorceShowUnreasonableBehavi": "PUBLIC",
+        "D8DocumentsUploaded": {
+          "value": [
+            {
+              "id": "8a70ad2f-9d63-4d33-9b3b-d32ee9f6a919",
+              "value": {
+                "DocumentLink": "PUBLIC",
+                "DocumentType": "PUBLIC",
+                "DocumentComment": "PUBLIC",
+                "DocumentFileName": "PUBLIC",
+                "DocumentDateAdded": "PUBLIC",
+                "DocumentEmailContent": "PUBLIC"
+              }
+            }
+          ],
+          "classification": "PUBLIC"
+        },
+        "D8DerivedPetitionerCorrespondenceAddr": "PUBLIC",
+        "D8JurisdictionPetitionerResidence": "PUBLIC",
+        "D8ReasonForDivorceClaimingAdultery": "PUBLIC",
+        "D8PetitionerFirstName": "PUBLIC",
+        "D8MarriageRespondentName": "PUBLIC",
+        "D8PetitionerContactDetailsConfidential": "PUBLIC",
+        "D8LegalProceedings": "PUBLIC",
+        "createdDate": "PUBLIC",
+        "D8MarriagePlaceOfMarriage": "PUBLIC",
+        "D8RespondentCorrespondenceAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8ReasonForDivorce": "PUBLIC",
+        "D8InferredPetitionerGender": "PUBLIC",
+        "D8JurisdictionHabituallyResLast6Months": "PUBLIC"
+      },
+      "after_submit_callback_response": null,
+      "callback_response_status_code": null,
+      "callback_response_status": null,
+      "security_classifications": {
+        "D8DerivedRespondentHomeAddress": "PUBLIC",
+        "D8PetitionerNameChangedHow": "PUBLIC",
+        "D8DerivedPetitionerHomeAddress": "PUBLIC",
+        "D8RespondentHomeAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8ScreenHasRespondentAddress": "PUBLIC",
+        "D8DivorceCostsClaim": "PUBLIC",
+        "D8JurisdictionPetitionerDomicile": "PUBLIC",
+        "D8ScreenHasMarriageCert": "PUBLIC",
+        "D8PetitionerHomeAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8DivorceClaimFrom": "PUBLIC",
+        "D8ScreenHasMarriageBroken": "PUBLIC",
+        "D8InferredRespondentGender": "PUBLIC",
+        "D8ReasonForDivorceEnableAdultery": "PUBLIC",
+        "D8ReasonForDivorceShowAdultery": "PUBLIC",
+        "D8LivingArrangementsLiveTogether": "PUBLIC",
+        "D8ReasonForDivorceHasMarriage": "PUBLIC",
+        "D8RespondentCorrespondenceUseHomeAddress": "PUBLIC",
+        "D8JurisdictionRespondentDomicile": "PUBLIC",
+        "D8FinancialOrderFor": "PUBLIC",
+        "D8Connections": {
+          "value": {
+            "A": "PUBLIC",
+            "B": "PUBLIC",
+            "C": "PUBLIC",
+            "D": "PUBLIC",
+            "E": "PUBLIC",
+            "F": "PUBLIC",
+            "G": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8PetitionerCorrespondenceAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8RespondentLastName": "PUBLIC",
+        "D8PetitionerNameDifferentToMarriageCert": "PUBLIC",
+        "D8JurisdictionConnection": "PUBLIC",
+        "D8LegalProceedingsRelated": "PUBLIC",
+        "D8LegalProceedingsDetails": "PUBLIC",
+        "D8PetitionerLastName": "PUBLIC",
+        "D8ReasonForDivorceAdulteryIsNamed": "PUBLIC",
+        "D8PetitionerPhoneNumber": "PUBLIC",
+        "D8ClaimsCostsAppliedForFees": "PUBLIC",
+        "D8ReasonForDivorceShowTwoYearsSeparation": "PUBLIC",
+        "D8PetitionerCorrespondenceUseHomeAddress": "PUBLIC",
+        "D8DocumentsGenerated": {
+          "value": [
+            {
+              "id": "97a7f408-846b-48ec-9e24-863e8f47ff44",
+              "value": {
+                "DocumentLink": "PUBLIC",
+                "DocumentType": "PUBLIC",
+                "DocumentComment": "PUBLIC",
+                "DocumentFileName": "PUBLIC",
+                "DocumentDateAdded": "PUBLIC",
+                "DocumentEmailContent": "PUBLIC"
+              }
+            }
+          ],
+          "classification": "PUBLIC"
+        },
+        "D8ResidualJurisdictionEligible": "PUBLIC",
+        "D8ReasonForDivorceLimitReasons": "PUBLIC",
+        "D8PetitionerEmail": "PUBLIC",
+        "D8ReasonForDivorceBehaviourDetails": "PUBLIC",
+        "D8ReasonForDivorceClaiming5YearSeparatio": "PUBLIC",
+        "D8DivorceUnit": "PUBLIC",
+        "D8ReasonForDivorceShowDesertion": "PUBLIC",
+        "D8DerivedRespondentCorrespondenceAddr": "PUBLIC",
+        "D8MarriagePetitionerName": "PUBLIC",
+        "D8Cohort": "PUBLIC",
+        "D8MarriageIsSameSexCouple": "PUBLIC",
+        "D8FinancialOrder": "PUBLIC",
+        "D8ReasonForDivorceShowFiveYearsSeparatio": "PUBLIC",
+        "D8MarriageDate": "PUBLIC",
+        "D8caseReference": "PUBLIC",
+        "D8HelpWithFeesNeedHelp": "PUBLIC",
+        "D8JurisdictionRespondentResidence": "PUBLIC",
+        "D8DivorceWho": "PUBLIC",
+        "D8MarriageCanDivorce": "PUBLIC",
+        "D8ScreenHasPrinter": "PUBLIC",
+        "D8ConnectionSummary": "PUBLIC",
+        "D8RespondentFirstName": "PUBLIC",
+        "D8ReasonForDivorceShowUnreasonableBehavi": "PUBLIC",
+        "D8DocumentsUploaded": {
+          "value": [
+            {
+              "id": "8a70ad2f-9d63-4d33-9b3b-d32ee9f6a919",
+              "value": {
+                "DocumentLink": "PUBLIC",
+                "DocumentType": "PUBLIC",
+                "DocumentComment": "PUBLIC",
+                "DocumentFileName": "PUBLIC",
+                "DocumentDateAdded": "PUBLIC",
+                "DocumentEmailContent": "PUBLIC"
+              }
+            }
+          ],
+          "classification": "PUBLIC"
+        },
+        "D8DerivedPetitionerCorrespondenceAddr": "PUBLIC",
+        "D8JurisdictionPetitionerResidence": "PUBLIC",
+        "D8ReasonForDivorceClaimingAdultery": "PUBLIC",
+        "D8PetitionerFirstName": "PUBLIC",
+        "D8MarriageRespondentName": "PUBLIC",
+        "D8PetitionerContactDetailsConfidential": "PUBLIC",
+        "D8LegalProceedings": "PUBLIC",
+        "createdDate": "PUBLIC",
+        "D8MarriagePlaceOfMarriage": "PUBLIC",
+        "D8RespondentCorrespondenceAddress": {
+          "value": {
+            "PostCode": "PUBLIC"
+          },
+          "classification": "PUBLIC"
+        },
+        "D8ReasonForDivorce": "PUBLIC",
+        "D8InferredPetitionerGender": "PUBLIC",
+        "D8JurisdictionHabituallyResLast6Months": "PUBLIC"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{ "template" : "co-respondent-answers",
+    "values": {
+        "caseDetails" : {
+            "id": "1517833758870511",
+            "case_data": {
+                "D8caseReference": "LV17D80100",
+                "D8PetitionerFirstName": "Barney",
+                "D8PetitionerLastName": "Rubble",
+                "D8RespondentFirstName": "Fred",
+                "D8RespondentLastName": "Flintstone",
+                "D8ReasonForDivorceAdultery3rdPartyFName": "Jane",
+                "D8ReasonForDivorceAdultery3rdPartyLName": "Jamed",
+                "CoRespDefendsDivorce": "YES",
+                "CoRespAdmitAdultery": "YES",
+                "CoRespAgreeToCosts": "YES"
+            }
+        }
+    }
+}

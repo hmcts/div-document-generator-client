@@ -1,0 +1,18 @@
+{
+    "template": "FL-DIV-LET-ENG-00537.odt",
+    "values": {
+        "caseDetails": {
+            "case_data": {
+                "caseReference": "1234-5678-9012-3456",
+                "addressee": {
+                    "name": "Mr. Peter Child",
+                    "formattedAddress": "Flat 10\nAustin Court\n10 Farringdon Lane\nGuildford\nSurrey\nGE12 4EH\nUnited Kingdom"
+                },
+                "ctscContactDetails": {
+                    "emailAddress": "divorce@divorce.gov.uk"
+                },
+                "hasHelpWithFeesNumber": false
+            }
+        }
+    }
+}
