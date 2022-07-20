@@ -174,7 +174,7 @@
         </style>
     </head>
     <body>
-
+        {% set ctscOpeningHours = caseDetails.case_data.ctscOpeningHours %}
         {% set previousCaseId = caseDetails.case_data.PreviousCaseId  %}
         {% set issueDate = caseDetails.last_modified | default(current_date) |  date("dd MMMM yyyy", existingFormat="yyyy-MM-dd'T'hh:mm:ss.SSS") %}
         {% set caseId = caseDetails.id  %}
@@ -215,7 +215,7 @@
         {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
         {% set respondentsSolicitorEmail = caseDetails.case_data.D8RespondentSolicitorEmail | default("") %}
 
-        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 (Monday to Friday 8am to 8pm, Saturday 8am to 2pm)" %}
+        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 ({{ ctscOpeningHours }})" %}
 
         <section class="section-header">
             <table class="table">
