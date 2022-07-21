@@ -12,8 +12,7 @@
                 "D8RespondentLastName": "Doe",
                 "RefusalRejectionReason": ["noJurisdiction","noCriteria","insufficentDetails","other"],
                 "RefusalRejectionAdditionalInfo": "The court has decided to make this free text order where you must give more information to us",
-                "FeeToPay": "95",
-                "ctscOpeningHours": "8am to 6pm, Monday to Friday"
+                "FeeToPay": "95"
             }
         }
     }

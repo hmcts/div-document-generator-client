@@ -11,8 +11,7 @@
                 "D8RespondentFirstName": "Jane",
                 "D8RespondentLastName": "Doe",
                 "RefusalClarificationReason": ["jurisdictionDetails","marriageCertTranslation","marriageCertificate","previousProceedingDetails","caseDetailsStatement","other"],
-                "RefusalClarificationAdditionalInfo": "The court has decided to make this free text order where you must give more information to us",
-                "ctscOpeningHours": "8am to 6pm, Monday to Friday"
+                "RefusalClarificationAdditionalInfo": "The court has decided to make this free text order where you must give more information to us"
             }
         }
     }
