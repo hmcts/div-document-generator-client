@@ -197,7 +197,7 @@
         {% endif %}
 
         {% set accessCode = access_code %}
-
+        {% set ctscOpeningHours = caseDetails.case_data.ctscOpeningHours %}
         {% set petitionerFirstName = caseDetails.case_data.D8PetitionerFirstName | default("") %}
         {% set petitionerLastName = caseDetails.case_data.D8PetitionerLastName | default("") %}
         {% set husbandOrWifeNamed = petitionerFirstName + " " + petitionerLastName %}
@@ -214,7 +214,7 @@
         {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
         {% set respondentsSolicitorEmail = caseDetails.case_data.D8RespondentSolicitorEmail | default("") %}
 
-        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 (" + caseDetails.case_data.ctscOpeningHours + ")" %}
+        {% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 " %}
         <section class="section-header">
             <table class="table">
                 <tr>
@@ -227,7 +227,7 @@
                     <td>
                         <div class="address court-address">
                             {% autoescape false %}
-                            {{ rdcServiceCentreContactDetails }}
+                            {{ rdcServiceCentreContactDetails }} ({{ ctscOpeningHours }})
                             {% endautoescape %}
                         </div>
                     </td>

@@ -180,6 +180,7 @@
 {% set caseId = caseDetails.id  %}
 {% set referenceNo = caseDetails.case_data.D8caseReference  %}
 {% set divorceUnit = caseDetails.case_data.D8DivorceUnit %}
+{% set ctscOpeningHours = caseDetails.case_data.ctscOpeningHours %}
 
 {% set respSolicitorToggle = featureToggleRespSolicitor | default(false) %}
 
@@ -215,7 +216,7 @@
 {% set respondentsSolicitorCompany = caseDetails.case_data.D8RespondentSolicitorCompany | default("") %}
 {% set respondentsSolicitorAddress = caseDetails.case_data.D8DerivedRespondentSolicitorAddr %}
 
-{% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 (" + caseDetails.case_data.ctscOpeningHours + ")" %}
+{% set rdcServiceCentreContactDetails = "Courts and Tribunals Service Centre<br/>c/o HMCTS Digital Divorce<br/>PO Box 12706<br/>Harlow<br/>CM20 9QT<br/>Email: divorcecase@justice.gov.uk<br/>Phone: 0300 303 0642 " %}
 
 <section class="section-header">
     <table class="table">
@@ -229,7 +230,7 @@
             <td>
                 <div class="address court-address">
                     {% autoescape false %}
-                    {{ rdcServiceCentreContactDetails }}
+                    {{ rdcServiceCentreContactDetails }} ({{ ctscOpeningHours }})
                     {% endautoescape %}
                 </div>
             </td>
