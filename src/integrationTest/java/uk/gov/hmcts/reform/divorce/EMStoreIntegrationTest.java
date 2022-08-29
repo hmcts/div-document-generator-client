@@ -34,8 +34,8 @@ public class EMStoreIntegrationTest extends IntegrationTest {
         String requestBody = loadJson(filename);
         Response response = callDivDocumentGenerator(requestBody);
         //Assert.assertEquals(OK.value(), response.getStatusCode());
-//        String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
-//        String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
+        //String documentUri = response.getBody().jsonPath().get(DOCUMENT_URL_KEY);
+        //String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
         System.out.println(response);
         //Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
 
