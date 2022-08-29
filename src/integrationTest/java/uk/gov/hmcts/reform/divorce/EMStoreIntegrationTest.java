@@ -90,33 +90,33 @@ public class EMStoreIntegrationTest extends IntegrationTest {
         checkPDFGenerated(DN_REFUSAL_ORDER_INPUT_JSON);
     }
 
-//    @Test
-//    public void givenTemplateIsNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
-//        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
-//        Response response = callDivDocumentGenerator(requestBody);
-//        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void givenTemplateIsNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
-//        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
-//        Response response = callGenerateDraftPdf(requestBody);
-//        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
-//        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
-//        Response response = callDivDocumentGenerator(requestBody);
-//        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void givenRequiredTemplateDataNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
-//        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
-//        Response response = callGenerateDraftPdf(requestBody);
-//        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
-//    }
+    //    @Test
+    //    public void givenTemplateIsNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
+    //        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
+    //        Response response = callDivDocumentGenerator(requestBody);
+    //        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
+    //    }
+    //
+    //    @Test
+    //    public void givenTemplateIsNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
+    //        String requestBody = loadJson(INVALID_TEMPLATE_NAME_JSON);
+    //        Response response = callGenerateDraftPdf(requestBody);
+    //        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
+    //    }
+    //
+    //    @Test
+    //    public void givenRequiredTemplateDataNotPresent_whenGeneratePDF_thenExpectHttpStatus400() throws Exception {
+    //        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
+    //        Response response = callDivDocumentGenerator(requestBody);
+    //        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
+    //    }
+    //
+    //    @Test
+    //    public void givenRequiredTemplateDataNotPresent_whenGenerateDraftPDF_thenExpectHttpStatus400() throws Exception {
+    //        String requestBody = loadJson(INVALID_TEMPLATE_DATA_JSON);
+    //        Response response = callGenerateDraftPdf(requestBody);
+    //        Assert.assertEquals(BAD_REQUEST.value(), response.getStatusCode());
+    //    }
 
     private String loadJson(final String fileName) throws Exception {
         return ResourceLoader.loadJson("documentgenerator/" + fileName);
