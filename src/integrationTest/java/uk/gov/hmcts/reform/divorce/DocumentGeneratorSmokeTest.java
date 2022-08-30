@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.divorce;
 
-import io.restassured.RestAssured;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import uk.gov.hmcts.reform.divorce.documentgenerator.category.SmokeTest;
@@ -13,8 +12,6 @@ public class DocumentGeneratorSmokeTest extends IntegrationTest {
 
     @Test
     public void shouldHaveHealthyService() {
-        RestAssured.useRelaxedHTTPSValidation();
-        
         when().get(divDocumentGeneratorBaseURI + "/health")
         .then()
         .statusCode(200)
