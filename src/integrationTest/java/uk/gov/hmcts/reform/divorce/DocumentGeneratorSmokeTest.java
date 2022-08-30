@@ -13,9 +13,7 @@ public class DocumentGeneratorSmokeTest extends IntegrationTest {
     @Test
     public void shouldHaveHealthyService() {
         when().get(divDocumentGeneratorBaseURI + "/health")
-        .then()
-        .statusCode(200)
-        .body("status", is("UP"));
+            .then().statusCode(200).body("status", is("UP"));
     }
 
 }
