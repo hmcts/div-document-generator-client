@@ -291,7 +291,7 @@ dependencies {
 
     contractTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     contractTestImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
-    contractTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    contractTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 
     contractTestImplementation sourceSets.main.runtimeClasspath
     contractTestImplementation sourceSets.test.runtimeClasspath
