@@ -20,4 +20,7 @@ public class TemplateConfig {
     public static final String MONTHS = "months";
     @Valid
     private Map<String, Map<LanguagePreference,  Map<String, String>>> template;
+
+    @Getter
+    private String ctscOpeningHours;
 }
