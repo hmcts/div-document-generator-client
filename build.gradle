@@ -162,9 +162,9 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.63',
-    tomcatEmbedWebsocket: '9.0.63',
-    tomcatEmbedEl: '9.0.63',
+    tomcatEmbedCore: '9.0.68',
+    tomcatEmbedWebsocket: '9.0.68',
+    tomcatEmbedEl: '9.0.68',
     pact_version: '4.1.11',
     httpComponents: '4.5.13',
     bouncycastle: '1.61'
@@ -325,7 +325,11 @@ dependencyManagement {
             entry 'spring-webmvc'
         }
 
-        dependency group: 'org.yaml',name: 'snakeyaml', version: '1.28'
+        //CVE-2022-25857
+        dependencySet(group: 'org.yaml', version: '1.33') {
+            entry 'snakeyaml'
+        }
+
         dependency group: 'com.netflix.servo',name: 'servo-core', version: '0.13.2'
         dependency group: 'org.glassfish', name: 'jakarta.el', version: '3.0.4'
     }
