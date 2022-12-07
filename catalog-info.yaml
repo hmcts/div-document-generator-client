@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "div-dgs"
+  annotations:
+    # This must match folder-name/job-name in Jenkins.
+    jenkins.io/job-full-name: cft:HMCTS_d_to_i/div-document-generator-client
+    github.com/project-slug: hmcts/div-document-generator-client
+  tags:
+    - java
+  links:
+    - url: https://hmcts-reform.slack.com/app_redirect?channel=div-dev
+      title: "#div-dev on Slack"
+      icon: chat
+spec:
+  type: service
+  lifecycle: production
+  owner: dcd_divorce
