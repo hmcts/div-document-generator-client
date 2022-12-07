@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.divorce;
 
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import net.serenitybdd.junit.spring.integration.SpringIntegrationMethodRule;
@@ -66,6 +67,7 @@ public abstract class IntegrationTest {
 
     @PostConstruct
     public void init() {
+        RestAssured.useRelaxedHTTPSValidation();
         if (!Strings.isNullOrEmpty(httpProxy)) {
             configProxyHost();
         }

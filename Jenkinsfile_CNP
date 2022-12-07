@@ -44,7 +44,7 @@ withPipeline(type, product, component) {
     enableAksStagingDeployment()
     disableLegacyDeployment()
 
-    after('checkout') {
+    afterSuccess('checkout') {
         echo '${product}-${component} checked out'
     }
 
@@ -66,11 +66,11 @@ withPipeline(type, product, component) {
         env.test_environment = 'aat'
     }
 
-    after('functionalTest:preview') {
+    afterSuccess('functionalTest:preview') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
 
-    after('functionalTest:aat') {
+    afterSuccess('functionalTest:aat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
 

@@ -49,6 +49,7 @@ public class PDFGenerationServiceImplUTest {
     private static final String TEST_TEMPLATE_NAME = "testTemplateName";
     private static final byte[] TEST_TEMPLATE_CONTENT = {1, 2, 3};
     private static final byte[] TEST_PDF_FILE_CONTENT = {4, 5, 6};
+    private static final String CTSC_OPENING_HOURS = "8am to 6pm, Monday to Friday";
 
     @Mock
     private RestTemplate restTemplate;
@@ -61,6 +62,7 @@ public class PDFGenerationServiceImplUTest {
 
     @Mock
     private AuthTokenGenerator serviceTokenGenerator;
+
 
     @Captor
     private ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor;
