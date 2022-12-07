@@ -282,6 +282,8 @@ template:
       11: "Tachwedd"
       12: "Rhagfyr"
 
+ctscOpeningHours: ${CTSC_OPENING_HOURS:8am to 6pm, Monday to Friday}
+
 service-auth-provider:
     service:
         stub:
