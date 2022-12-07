@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
+import uk.gov.hmcts.reform.divorce.documentgenerator.config.TemplateConfig;
 import uk.gov.hmcts.reform.divorce.documentgenerator.domain.request.GenerateDocumentRequest;
 import uk.gov.hmcts.reform.divorce.documentgenerator.exception.PDFGenerationException;
 import uk.gov.hmcts.reform.divorce.documentgenerator.service.PDFGenerationService;
@@ -21,6 +22,10 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.util.NullOrEmptyValidator;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DATA;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CASE_DETAILS;
+import static uk.gov.hmcts.reform.divorce.documentgenerator.domain.TemplateConstants.CTSC_OPENING_HOURS_KEY;
 
 @Service
 @Slf4j
@@ -35,6 +40,9 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private TemplateConfig templateConfig;
 
     @Autowired
     private AuthTokenGenerator serviceTokenGenerator;
@@ -74,6 +82,11 @@ public class PDFGenerationServiceImpl implements PDFGenerationService {
         headers.setContentType(API_VERSION);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
         headers.add(SERVICE_AUTHORIZATION_HEADER, serviceAuthToken);
+
+        if (placeholders != null && !placeholders.isEmpty() && placeholders.containsKey(CASE_DETAILS)) {
+            Map<String, Object> data = (Map<String, Object>) ((Map) placeholders.get(CASE_DETAILS)).get(CASE_DATA);
+            data.put(CTSC_OPENING_HOURS_KEY, templateConfig.getCtscOpeningHours());
+        }
 
         // Reform PDF Generator requires formatting for certain characters
         Map<String, Object> formattedPlaceholders = HtmlFieldFormatter.format(placeholders);
