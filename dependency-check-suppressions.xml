@@ -32,4 +32,19 @@
         <cve>CVE-2016-1000027</cve>
         <cve>CVE-2022-22968</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[file name: android-json-0.0.20131108.vaadin1.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.vaadin\.external\.google/android\-json@.*$</packageUrl>
+        <cve>CVE-2022-45688</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: commons-fileupload-1.4.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/commons\-fileupload/commons\-fileupload@.*$</packageUrl>
+        <cve>CVE-2023-24998</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: jackson-core-2.13.3.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
+        <cve>CVE-2022-45688</cve>
+    </suppress>
 </suppressions>
