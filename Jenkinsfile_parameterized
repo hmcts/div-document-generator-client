@@ -31,7 +31,7 @@ withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.E
     loadVaultSecrets(secrets)
     setVaultName('div')
 
-    after('functionalTest:saat') {
+    afterSuccess('functionalTest:saat') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
     }
 }
