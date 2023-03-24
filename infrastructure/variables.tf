@@ -65,8 +65,6 @@ variable "location" {
   default = "UK South"
 }
 
-variable "ilbIp" {}
-
 variable "vault_env" {
     default = "preprod"
 }
