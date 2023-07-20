@@ -220,7 +220,7 @@
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\-boot\-autoconfigure@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-autoconfigure@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
@@ -231,17 +231,17 @@ file name: spring-boot-actuator-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-configuration-metadata-2.3.11.RELEASE.jar ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\-boot\-configuration-metadata@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-configuration-metadata@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-devtools-2.3.11.RELEASE.jar ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\-boot\-devtools@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-devtools@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-properties-migrator-2.3.11.RELEASE.jar ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\-boot\-properties\-migrator@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-properties\-migrator@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
