@@ -218,4 +218,18 @@
         <packageUrl regex="true">^pkg:maven/org\.springframework\.hateoas/spring\-hateoas@.*$</packageUrl>
         <cve>CVE-2023-34036</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[file name: org.springframework.spring-boot-actuator-2.3.11.RELEASE.jar,
+file name:
+]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-boot\-actuator.*@*$</packageUrl>
+        <cve>CVE-2023-20883</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: org.springframework.spring-boot-starter-2.3.11.RELEASE.jar,
+file name:
+]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-boot\-starter.*@*$</packageUrl>
+        <cve>CVE-2023-20883</cve>
+    </suppress>
 </suppressions>
