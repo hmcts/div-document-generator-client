@@ -217,7 +217,7 @@ dependencies {
 
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
-    implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '4.0.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
