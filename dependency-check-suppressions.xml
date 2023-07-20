@@ -219,17 +219,23 @@
         <cve>CVE-2023-34036</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[file name: org.springframework.spring-boot-actuator-2.3.11.RELEASE.jar,
+        <notes><![CDATA[file name: org.springframework.boot.spring-boot-actuator-2.3.11.RELEASE.jar,
 file name:
 ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-boot\-actuator.*@*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-actuator.*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[file name: org.springframework.spring-boot-starter-2.3.11.RELEASE.jar,
-file name:
+        <notes><![CDATA[file name: org.springframework.boot.spring-boot-starter-2.3.11.RELEASE.jar,
+file name: org.springframework.boot.spring-boot-starter-actuator@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-aop@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-json@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-logging@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-tomcat@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-validation@2.3.11.RELEASE,
+file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
 ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-boot\-starter.*@*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-starter.*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
 </suppressions>
