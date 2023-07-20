@@ -210,7 +210,7 @@
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-2.3.11.RELEASE.jar ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot./spring\-boot@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
@@ -221,6 +221,12 @@
     <suppress>
         <notes><![CDATA[file name: spring-boot-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\-boot\-autoconfigure@.*$</packageUrl>
+        <cve>CVE-2023-20883</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-boot-actuator-2.3.11.RELEASE.jar,
+file name: spring-boot-actuator-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-actuator*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
     </suppress>
     <suppress>
