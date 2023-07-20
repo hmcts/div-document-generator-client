@@ -20,6 +20,7 @@
         <notes><![CDATA[file name: jackson-databind-2.13.3.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
         <cve>CVE-2022-42003</cve>
+        <cve>CVE-2023-35116</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: jackson-databind-2.13.3.jar]]></notes>
@@ -206,5 +207,15 @@
         <notes><![CDATA[file name: guava-30.0-jre.jar]]></notes>
         <packageUrl regex="true">pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
         <cve>CVE-2023-2976</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-boot-2.3.11.RELEASE.jar ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-boot@.*$</packageUrl>
+        <cve>CVE-2023-20883</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-hateoas-0.25.1.RELEASE.jar ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.hateoas/spring\-hateoas@.*$</packageUrl>
+        <cve>CVE-2023-34036</cve>
     </suppress>
 </suppressions>
