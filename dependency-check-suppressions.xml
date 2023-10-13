@@ -118,6 +118,16 @@
         <cve>CVE-2021-22053</cve>
     </suppress>
     <suppress>
+        <notes><![CDATA[file name: spring-plugin-core-1.2.0.RELEASE.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.plugin/spring\-plugin\-core@.*$</packageUrl>
+        <cve>CVE-2023-34047</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-plugin-metadata-1.2.0.RELEASE.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.plugin/spring\-plugin\-metadata@.*$</packageUrl>
+        <cve>CVE-2023-34047</cve>
+    </suppress>
+    <suppress>
         <notes><![CDATA[file name: spring-cloud-netflix-ribbon-2.2.5.RELEASE.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.cloud/spring\-cloud\-netflix\-ribbon@.*$</packageUrl>
         <cve>CVE-2021-22053</cve>
@@ -239,6 +249,7 @@ file name: spring-boot-actuator-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
         <notes><![CDATA[file name: spring-boot-configuration-metadata-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-configuration-metadata@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-devtools-2.3.11.RELEASE.jar ]]></notes>
