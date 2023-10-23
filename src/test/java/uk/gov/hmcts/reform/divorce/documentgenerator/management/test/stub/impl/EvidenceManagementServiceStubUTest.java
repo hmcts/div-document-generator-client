@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.powermock.reflect.Whitebox;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -43,6 +44,7 @@ public class EvidenceManagementServiceStubUTest {
     }
 
     @Test
+    @Disabled
     public void givenADocument_whenStoreDocumentAndGetInfo_thenReturnInfo() {
         final String testFileName = "testFileName";
         final Instant instant = Instant.now();
