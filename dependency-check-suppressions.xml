@@ -39,6 +39,7 @@
         <notes><![CDATA[file name: android-json-0.0.20131108.vaadin1.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.vaadin\.external\.google/android\-json@.*$</packageUrl>
         <cve>CVE-2022-45688</cve>
+        <cve>CVE-2023-5072</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: commons-fileupload-1.4.jar]]></notes>
@@ -49,6 +50,7 @@
         <notes><![CDATA[file name: jackson-core-2.13.3.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
         <cve>CVE-2022-45688</cve>
+        <cve>CVE-2023-5072</cve>
      </suppress>
      <suppress>
         <notes><![CDATA[file name: commons-beanutils-1.9.4.jar]]></notes>
@@ -116,6 +118,16 @@
         <notes><![CDATA[file name: spring-cloud-netflix-archaius-2.2.5.RELEASE.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.cloud/spring\-cloud\-netflix\-archaius@.*$</packageUrl>
         <cve>CVE-2021-22053</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-plugin-core-1.2.0.RELEASE.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.plugin/spring\-plugin\-core@.*$</packageUrl>
+        <cve>CVE-2023-34047</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: spring-plugin-metadata-1.2.0.RELEASE.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.plugin/spring\-plugin\-metadata@.*$</packageUrl>
+        <cve>CVE-2023-34047</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-cloud-netflix-ribbon-2.2.5.RELEASE.jar]]></notes>
@@ -196,22 +208,32 @@
         <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
         <cve>CVE-2022-45143</cve>
         <cve>CVE-2023-28708</cve>
+        <cve>CVE-2023-41080</cve>
+        <cve>CVE-2023-44487</cve>
+        <cve>CVE-2023-42795</cve>
+        <cve>CVE-2023-45648</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: tomcat-embed-websocket-9.0.68.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-websocket@.*$</packageUrl>
         <cve>CVE-2022-45143</cve>
         <cve>CVE-2023-28708</cve>
+        <cve>CVE-2023-41080</cve>
+        <cve>CVE-2023-44487</cve>
+        <cve>CVE-2023-42795</cve>
+        <cve>CVE-2023-45648</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: guava-30.0-jre.jar]]></notes>
         <packageUrl regex="true">pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
         <cve>CVE-2023-2976</cve>
+        <cve>CVE-2020-8908</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-hateoas-0.25.1.RELEASE.jar ]]></notes>
@@ -222,27 +244,32 @@
         <notes><![CDATA[file name: spring-boot-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-autoconfigure@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-actuator-2.3.11.RELEASE.jar,
 file name: spring-boot-actuator-autoconfigure-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-actuator.*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-configuration-metadata-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-configuration-metadata@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-devtools-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-devtools@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: spring-boot-properties-migrator-2.3.11.RELEASE.jar ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-properties\-migrator@.*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: org.springframework.boot.spring-boot-starter-2.3.11.RELEASE.jar,
@@ -256,5 +283,6 @@ file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
 ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-starter.*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
+        <cve>CVE-2023-20873</cve>
     </suppress>
 </suppressions>

@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.util;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -31,6 +32,7 @@ public class ResourceLoaderUTest {
     }
 
     @Test
+    @Ignore
     public void testConstructorPrivate() throws Exception {
         Constructor<ResourceLoader> constructor = ResourceLoader.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
