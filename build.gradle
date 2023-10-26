@@ -139,7 +139,7 @@ def versions = [
     jacksonDatabind: '2.13.3',
     apacheLogging: '2.17.1',
     jsonAssert: '1.2.3',
-    junit: '4.13.1',
+    junit: '4.13.2',
     lombok: '1.18.22',
     logbackVersion: '1.2.10',
     nimbus: '5.1',
