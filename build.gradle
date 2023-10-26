@@ -166,7 +166,7 @@ def versions = [
     tomcatEmbedWebsocket: '9.0.68',
     tomcatEmbedEl: '9.0.68',
     pact_version: '4.1.11',
-    httpComponents: '4.5.13',
+    httpComponents: '4.5.14',
     bouncycastle: '1.61'
 ]
 
