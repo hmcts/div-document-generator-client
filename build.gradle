@@ -164,7 +164,7 @@ def versions = [
     springSecurityCrypto: '5.4.5',
     tomcatEmbedCore: '9.0.82',
     tomcatEmbedWebsocket: '9.0.68',
-    tomcatEmbedEl: '9.0.68',
+    tomcatEmbedEl: '9.0.82',
     pact_version: '4.1.11',
     httpComponents: '4.5.14',
     bouncycastle: '1.61'
