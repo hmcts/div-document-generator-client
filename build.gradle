@@ -158,7 +158,7 @@ def versions = [
     springBoot: '2.3.11.RELEASE',
     springCloud: '2.2.5.RELEASE',
     springfoxSwagger: '2.9.2',
-    springHateoas: '0.25.1.RELEASE',
+    springHateoas: '0.25.2.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
