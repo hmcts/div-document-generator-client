@@ -156,7 +156,7 @@ def versions = [
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.9.RELEASE',
     springBoot: '2.3.11.RELEASE',
-    springCloud: '2.2.5.RELEASE',
+    springCloud: '2.2.10.RELEASE',
     springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
