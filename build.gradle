@@ -100,7 +100,7 @@ task fortifyScan(type: JavaExec)  {
 }
 
 checkstyle {
-    toolVersion = '8.29'
+    toolVersion = '8.45.1'
     configFile = project(':').file('checkstyle.xml')
     configProperties = ["suppressionFile": project(':').file('suppressions.xml')]
 }
