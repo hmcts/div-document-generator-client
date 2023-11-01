@@ -147,7 +147,7 @@ def versions = [
     pitest: '1.4.10',
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
-    reformPropertiesVolume: '0.0.4',
+    reformPropertiesVolume: '0.1.1',
     reformsJavaLogging: '5.1.5',
     restAssured: '3.0.3',
     serenity: '2.2.13',
