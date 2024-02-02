@@ -139,11 +139,11 @@ def versions = [
     jacksonDatabind: '2.13.3',
     apacheLogging: '2.17.1',
     jsonAssert: '1.2.3',
-    junit: '4.13.1',
-    lombok: '1.18.22',
+    junit: '4.13.2',
+    lombok: '1.18.30',
     logbackVersion: '1.2.10',
     nimbus: '5.1',
-    pdfbox: '2.0.8',
+    pdfbox: '2.0.29',
     pitest: '1.4.10',
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
@@ -162,11 +162,11 @@ def versions = [
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
-    tomcatEmbedCore: '9.0.68',
-    tomcatEmbedWebsocket: '9.0.68',
-    tomcatEmbedEl: '9.0.68',
+    tomcatEmbedCore: '9.0.82',
+    tomcatEmbedWebsocket: '9.0.82',
+    tomcatEmbedEl: '9.0.82',
     pact_version: '4.1.11',
-    httpComponents: '4.5.13',
+    httpComponents: '4.5.14',
     bouncycastle: '1.61'
 ]
 
@@ -217,7 +217,7 @@ dependencies {
 
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurityCrypto
 
-    implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.9'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: versions.springBoot
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
