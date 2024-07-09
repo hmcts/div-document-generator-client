@@ -247,7 +247,7 @@ dependencies {
     implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging', version: versions.reformsJavaLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging', version: versions.reformLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-spring', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
@@ -258,7 +258,6 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'org.bouncycastle'
     }
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
     implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
