@@ -148,7 +148,8 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
-    reformsJavaLogging: '6.0.1',
+    reformsJavaLogging: '5.1.5',
+    reformLogging: '6.0.1',
     restAssured: '3.0.3',
     serenity: '2.2.13',
     serenityCucumber: '1.9.51',
@@ -257,6 +258,7 @@ dependencies {
         exclude group: 'io.reactivex', module: 'rxnetty-servo'
         exclude group: 'org.bouncycastle'
     }
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
     implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
