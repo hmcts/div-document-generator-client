@@ -148,7 +148,7 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
-    reformsJavaLogging: '5.1.7',
+    reformsJavaLogging: '6.0.1',
     restAssured: '3.0.3',
     serenity: '2.2.13',
     serenityCucumber: '1.9.51',
