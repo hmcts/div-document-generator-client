@@ -148,7 +148,7 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
-    reformsJavaLogging: '5.1.5',
+    reformsJavaLogging: '5.1.7',
     javaLogging: '6.0.1',
     restAssured: '3.0.3',
     serenity: '2.2.13',
@@ -248,9 +248,15 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.javaLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-spring', version: versions.reformsJavaLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
+//    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging, {
+        exclude group: 'ch.qos.logback', module: 'logback-core'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
+//    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-spring', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
+//    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
+    implementation group: 'uk.gov.hmcts.reform', name: 'logging-httpcomponents', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
     implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
         exclude group: 'io.reactivex', module: 'io.reactivex'
