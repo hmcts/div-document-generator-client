@@ -149,6 +149,7 @@ def versions = [
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
     reformsJavaLogging: '5.1.5',
+    javaLogging: '6.0.1',
     restAssured: '3.0.3',
     serenity: '2.2.13',
     serenityCucumber: '1.9.51',
@@ -246,7 +247,7 @@ dependencies {
     implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging', version: versions.reformsJavaLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.javaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-spring', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
