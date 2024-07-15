@@ -148,6 +148,7 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
+    javaloggingversion: '6.1.5',
     reformsJavaLogging: '5.1.5',
     restAssured: '3.0.3',
     serenity: '2.2.13',
@@ -246,8 +247,8 @@ dependencies {
     implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging', version: versions.reformsJavaLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.reformsJavaLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging', version: versions.javaLoggingVersion
+    implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-appinsights', version: versions.javaLoggingVersion
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-spring', version: versions.reformsJavaLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'java-logging-httpcomponents', version: versions.reformsJavaLogging
     implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
