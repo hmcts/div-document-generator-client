@@ -41,7 +41,7 @@ public class EMStoreIntegrationTest extends IntegrationTest {
 
         String mimeType = response.getBody().jsonPath().get(MIME_TYPE_KEY);
         Assert.assertNotNull(mimeType);
-//        Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
+        //Assert.assertEquals(mimeType, APPLICATION_PDF_MIME_TYPE);
     }
 
     public void checkDataPresentInEvidenceManagement(String documentUri) {
