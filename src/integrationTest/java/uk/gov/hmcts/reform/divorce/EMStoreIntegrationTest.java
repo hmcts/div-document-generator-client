@@ -28,9 +28,6 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String DN_REFUSAL_ORDER_INPUT_JSON
         = "documents/jsoninput/decree-nisi-refusal-order-clarification.json";
 
-    @Value("${divorce.document.generator.uri}")
-    private String divDocumentGeneratorURI;
-
     public void checkPDFGenerated(String filename) throws Exception {
         String requestBody = loadJson(filename);
         Response response = callDivDocumentGenerator(requestBody);
