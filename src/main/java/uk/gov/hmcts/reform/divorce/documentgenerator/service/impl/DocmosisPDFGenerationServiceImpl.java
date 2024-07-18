@@ -57,10 +57,6 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
             HttpEntity<PdfDocumentRequest> httpEntity = new HttpEntity<>(request(templateName, placeholders), headers);
 
-            log.info("*******************************************************************************************");
-            log.info(headers.toString());
-            log.info("*******************************************************************************************");
-
             ResponseEntity<byte[]> response =
                 restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
 
@@ -71,12 +67,15 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     }
 
     private PdfDocumentRequest request(String templateName, Map<String, Object> placeholders) {
+        log.info("*******************************************************************************************");
+        log.info(pdfServiceAccessKey);
+        log.info("*******************************************************************************************");
         return PdfDocumentRequest.builder()
             .accessKey(pdfServiceAccessKey)
             .templateName(templateName)
             .outputName("result.pdf")
-            .devMode(docmosisDevMode)
+            .devMode(docmosisDevMode)q
             .data(templateDataMapper.map(placeholders)).build();
     }
-
+q
 }
