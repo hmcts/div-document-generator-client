@@ -24,7 +24,7 @@ java:
                   alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
                 - name: AppInsightsInstrumentationKey
                   alias: azure.application-insights.instrumentation-key
-                - name docmosis-api-key:
+                - name: docmosis-api-key
                   alias: DOCMOSIS_SERVICE_ACCESS_KEY
 
 
