@@ -248,6 +248,7 @@ dependencies {
     implementation group: 'io.github.openfeign', name: 'feign-httpclient', version: versions.feignHttpClient
     implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
+    implementation group: 'com.github.hmcts', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: '6.0.1'
     implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: '5.1.7'
