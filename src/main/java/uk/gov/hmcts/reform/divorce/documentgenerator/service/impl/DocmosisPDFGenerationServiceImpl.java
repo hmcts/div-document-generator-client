@@ -57,6 +57,10 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
 
             HttpEntity<PdfDocumentRequest> httpEntity = new HttpEntity<>(request(templateName, placeholders), headers);
 
+            log.info("*******************************************************************************************");
+            log.info(headers.toString());
+            log.info("*******************************************************************************************");
+
             ResponseEntity<byte[]> response =
                 restTemplate.exchange(pdfServiceEndpoint, HttpMethod.POST, httpEntity, byte[].class);
 
