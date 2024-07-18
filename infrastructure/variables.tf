@@ -7,11 +7,11 @@ variable "reform_team" {
 }
 
 variable "capacity" {
-    default = "1"
+  default = "1"
 }
 
 variable "instance_size" {
-    default = "I2"
+  default = "I2"
 }
 
 variable "component" {}
@@ -31,8 +31,8 @@ variable "jenkins_AAD_objectId" {
 }
 
 variable "appinsights_instrumentation_key" {
-    description = "Instrumentation key of the App Insights instance this webapp should use. Module will create own App Insights resource if this is not provided"
-    default = ""
+  description = "Instrumentation key of the App Insights instance this webapp should use. Module will create own App Insights resource if this is not provided"
+  default     = ""
 }
 
 variable "idam_s2s_url_prefix" {
@@ -66,15 +66,15 @@ variable "location" {
 }
 
 variable "vault_env" {
-    default = "preprod"
+  default = "preprod"
 }
 
 variable "common_tags" {
-    type = map(string)
+  type = map(string)
 }
 
 variable "health_check_ttl" {
-    default = "5000"
+  default = "5000"
 }
 
 variable "feature_resp_solicitor_details" {
