@@ -19,10 +19,16 @@ java:
         EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT: "/health"
     keyVaults:
         "div":
-            resourceGroup: div
             secrets:
                 - div-doc-s2s-auth-secret
                 - docmosis-api-key
                 - AppInsightsInstrumentationKey
+                - name: div-doc-s2s-auth-secret
+                  alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+                - name: AppInsightsInstrumentationKey
+                  alias: azure.application-insights.instrumentation-key
+                - name docmosis-api-key:
+                  alias: DOCMOSIS_SERVICE_ACCESS_KEY
+
 
 

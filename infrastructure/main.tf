@@ -39,7 +39,3 @@ data "azurerm_key_vault_secret" "idam-secret" {
   key_vault_id = data.azurerm_key_vault.div_key_vault.id
 }
 
-data "azurerm_key_vault_secret" "docmosis-api-key" {
-  name         = "docmosis-api-key"
-  key_vault_id = data.azurerm_key_vault.div_key_vault.id
-}
