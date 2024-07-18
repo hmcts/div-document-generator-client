@@ -74,8 +74,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
             .accessKey(pdfServiceAccessKey)
             .templateName(templateName)
             .outputName("result.pdf")
-            .devMode(docmosisDevMode)q
+            .devMode(docmosisDevMode)
             .data(templateDataMapper.map(placeholders)).build();
     }
-q
 }
