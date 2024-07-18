@@ -20,9 +20,6 @@ java:
     keyVaults:
         "div":
             secrets:
-                - div-doc-s2s-auth-secret
-                - docmosis-api-key
-                - AppInsightsInstrumentationKey
                 - name: div-doc-s2s-auth-secret
                   alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
                 - name: AppInsightsInstrumentationKey
