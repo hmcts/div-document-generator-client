@@ -288,4 +288,24 @@ file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
         <cve>CVE-2023-20883</cve>
         <cve>CVE-2023-20873</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[file name: logback-classic-1.2.10.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/ch\.qos\.logback/logback\-classic@.*$</packageUrl>
+        <cve>CVE-2023-6378</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: logback-core-1.2.10.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/ch\.qos\.logback/logback\-core@.*$</packageUrl>
+        <cpe>cpe:/a:qos:logback</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: tomcat-embed-core-9.0.82.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+        <cve>CVE-2023-46589</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: tomcat-embed-websocket-9.0.82.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-websocket@.*$</packageUrl>
+        <cve>CVE-2023-46589</cve>
+    </suppress>
 </suppressions>
