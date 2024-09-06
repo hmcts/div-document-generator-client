@@ -267,7 +267,6 @@ dependencies {
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
     implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
-qq
     implementation group: 'junit', name: 'junit', version: versions.junit
     implementation group: 'org.pitest', name: 'pitest', version: versions.pitest
     implementation group:'info.solidsoft.gradle.pitest', name: 'gradle-pitest-plugin', version: versions.gradlePitest
