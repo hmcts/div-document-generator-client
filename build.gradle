@@ -76,7 +76,10 @@ compileTestJava {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
+    jcenter()
+    maven { url 'https://repo.spring.io/libs-milestone' }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://jitpack.io" }
 }
 
 distributions {
