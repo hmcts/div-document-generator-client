@@ -165,7 +165,8 @@ def versions = [
     tomcatEmbedEl: '9.0.82',
     pact_version: '4.1.11',
     httpComponents: '4.5.14',
-    bouncycastle: '1.61'
+    bouncycastle: '1.61',
+    hmctsLogging: '5.1.9'
 ]
 
 dependencies {
@@ -244,10 +245,10 @@ dependencies {
     implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: versions.springHateoas
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: '6.0.1'
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: '6.0.1'
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-httpcomponents', version: '5.1.9'
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-spring', version: '5.1.9'
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.hmctsLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.hmctsLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-httpcomponents', version: versions.hmctsLogging
+    implementation group: 'com.github.hmcts.java-logging', name: 'logging-spring', version: versions.hmctsLogging
 
     implementation group: 'com.github.hmcts', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
     implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
