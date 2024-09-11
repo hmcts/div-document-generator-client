@@ -246,7 +246,6 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version : versions.commonsLang3
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.hmctsLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.hmctsLogging
 
     implementation group: 'com.github.hmcts', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
     implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
