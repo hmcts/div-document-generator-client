@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.config;
 
-import com.microsoft.applicationinsights.boot.dependencies.google.common.collect.Sets;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
