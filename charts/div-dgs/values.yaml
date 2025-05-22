@@ -23,4 +23,4 @@ java:
             secrets:
                 - div-doc-s2s-auth-secret
                 - docmosis-api-key
-                - AppInsightsInstrumentationKey
+                - app-insights-connection-string
