@@ -136,7 +136,6 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
-    restAssured: '3.0.3',
     serenity: '2.2.13',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '5.3.2',
@@ -162,7 +161,7 @@ dependencies {
     //integration test
     integrationTestImplementation group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestImplementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
-    integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
+    integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured'
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
