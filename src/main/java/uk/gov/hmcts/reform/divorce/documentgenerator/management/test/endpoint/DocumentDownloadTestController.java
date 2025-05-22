@@ -1,10 +1,11 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.management.test.endpoint;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
@@ -18,19 +19,30 @@ import uk.gov.hmcts.reform.divorce.documentgenerator.management.test.stub.Docume
 @RestController
 @RequestMapping("/test")
 @ConditionalOnProperty(value = "evidence-management-api.service.stub.enabled", havingValue = "true")
-@Api(value = "Document Download Test when the Evidence Management is stubbed", tags = {"Document Generation Test"})
+@Tag(
+    name = "Document Generation Test",
+    description = "Document Download Test when the Evidence Management is stubbed"
+)
 public class DocumentDownloadTestController {
     @Autowired
     private DocumentDownloadService documentDownloadService;
 
-    @ApiOperation(value = "Returns the generated document given name of the file", tags = {"Document Generation Test"})
+    @Operation(
+        summary = "Returns the generated document given name of the file",
+        tags = {"Document Generation Test"}
+    )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Returns the PDF document.", response = byte[].class),
-        })
+        @ApiResponse(
+            responseCode = "200",
+            description = "Returns the PDF document",
+            content = @Content(mediaType = "application/pdf")
+        )
+    })
+
     @GetMapping(value = "/documents/{fileName}", produces = "application/pdf")
-    public ResponseEntity downloadDocument(@PathVariable
-                                               @ApiParam(value = "Name of the file to download", required = true)
-                                                       String fileName) {
+    public ResponseEntity<byte[]> downloadDocument(
+        @Parameter(description = "Name of the file to download", required = true)
+        @PathVariable String fileName) {
         byte[] document = documentDownloadService.getDocument(fileName);
 
         return ResponseEntity
