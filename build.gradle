@@ -88,11 +88,11 @@ repositories {
     maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-task fortifyScan(type: JavaExec)  {
+tasks.register('fortifyScan', JavaExec) {
     mainClass.set("uk.gov.hmcts.fortifyclient.FortifyClientMainApp")
     classpath += sourceSets.test.runtimeClasspath
     jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
