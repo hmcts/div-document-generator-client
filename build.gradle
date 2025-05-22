@@ -235,6 +235,7 @@ dependencies {
 
     testImplementation group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator
     testImplementation group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+    testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
@@ -363,6 +364,11 @@ task printVersion {
     doLast {
         print project.version
     }
+}
+
+test {
+    jvmArgs += ['--add-opens', 'java.base/java.lang=ALL-UNNAMED']
+    jvmArgs += ['--add-opens', 'java.base/java.util=ALL-UNNAMED']
 }
 
 pitest {
