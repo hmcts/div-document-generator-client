@@ -185,7 +185,7 @@ dependencies {
     integrationTestImplementation group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    integrationTestImplementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator)
+    integrationTestImplementation 'io.github.openfeign:feign-jackson:13.6'
 
     integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava)
 
@@ -231,13 +231,7 @@ dependencies {
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
 
-    implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
-        exclude group: 'io.reactivex', module: 'io.reactivex'
-        exclude group: 'io.reactivex', module: 'rxnetty'
-        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
-        exclude group: 'io.reactivex', module: 'rxnetty-servo'
-        exclude group: 'org.bouncycastle'
-    }
+    implementation group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
     implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
@@ -250,6 +244,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${versions.lombok}")
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    testImplementation group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator
     testImplementation group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
     testImplementation group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
