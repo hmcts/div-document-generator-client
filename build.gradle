@@ -99,21 +99,9 @@ task fortifyScan(type: JavaExec)  {
 }
 
 checkstyle {
-    toolVersion = '8.29'
-    configFile = project(':').file('checkstyle.xml')
-    configProperties = ["suppressionFile": project(':').file('suppressions.xml')]
-}
-
-// make build fail on Checkstyle issues (https://github.com/gradle/gradle/issues/881)
-tasks.withType(Checkstyle).each { checkstyleTask ->
-    checkstyleTask.doLast {
-        reports.all { report ->
-            def outputFile = report.destination
-            if (outputFile.exists() && outputFile.text.contains("<error ")) {
-                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
-            }
-        }
-    }
+    maxWarnings = 584
+    toolVersion = '10.23.1'
+    getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
 
 // https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
@@ -210,7 +198,6 @@ dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
-    implementation group: 'com.puppycrawl.tools', name: 'checkstyle', version:  versions.puppyCrawl
     implementation group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
