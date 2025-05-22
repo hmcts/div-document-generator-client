@@ -131,7 +131,7 @@ def versions = [
     feignHttpClient: '10.2.0',
     gradlePitest: '1.4.5',
     guava: '30.0-jre',
-    jacksonDatabind: '2.13.3',
+    jacksonDatabind: '2.19.0',
     apacheLogging: '2.17.1',
     jsonAssert: '1.2.3',
     junit: '4.13.2',
@@ -184,6 +184,11 @@ dependencies {
     integrationTestImplementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator)
 
     integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava)
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jacksonDatabind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jacksonDatabind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksonDatabind
+
     implementation (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils)
 
     implementation (group: 'org.apache.tomcat.embed', name:'tomcat-embed-core', version: versions.tomcatEmbedCore)
@@ -274,11 +279,6 @@ dependencyManagement {
     }
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
-        dependencySet(group: 'com.fasterxml.jackson.core', version: versions.jacksonDatabind) {
-            entry 'jackson-core'
-            entry 'jackson-databind'
-            entry 'jackson-annotations'
-        }
 
         dependencySet(group: 'org.apache.logging.log4j', version: '2.19.0') {
             entry 'log4j-api'
