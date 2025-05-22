@@ -347,6 +347,10 @@ task functional(type: Test, description: 'Runs the functional tests.', group: 'V
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 
     //finalizedBy aggregate
+    jvmArgs += [
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED"
+    ]
 }
 
 task contract(type: Test) {
