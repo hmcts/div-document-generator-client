@@ -144,7 +144,7 @@ def versions = [
     springSecurityRsa: '1.1.1',
     springBoot: '2.7.17',
     springCloud: '2.2.5.RELEASE',
-    springfoxSwagger: '2.9.2',
+    springfoxSwagger: '3.0.0',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
