@@ -69,7 +69,7 @@ public class DocmosisPDFGenerationServiceImpl implements PDFGenerationService {
     private PdfDocumentRequest request(String templateName, Map<String, Object> placeholders) {
         log.info("XXXXXX key = {}", pdfServiceAccessKey);
         return PdfDocumentRequest.builder()
-            .accessKey(pdfServiceAccessKey)
+            .accessKey("dyVv8pXwQ03RRyJZQIPX2RWP9LgJJGTU08kc9dA8ATJoA9EZXQEWe7L1Uwe")
             .templateName(templateName)
             .outputName("result.pdf")
             .devMode(docmosisDevMode)
