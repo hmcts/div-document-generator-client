@@ -31,6 +31,11 @@ plugins {
 
 apply plugin: 'net.serenity-bdd.aggregator'
 
+project.ext {
+    pactVersion = getCheckedOutGitCommitHash()
+    restAssuredBomVersion = "5.5.2"
+}
+
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
 
@@ -84,6 +89,7 @@ compileTestJava {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
@@ -259,6 +265,7 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudBomVersion}"
+        mavenBom "io.rest-assured:rest-assured-bom:${restAssuredBomVersion}"
     }
     dependencies {
         dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
@@ -429,10 +436,6 @@ run {
     if (debug == 'true') {
         jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5010']
     }
-}
-
-project.ext {
-    pactVersion = getCheckedOutGitCommitHash()
 }
 
 task runAndPublishConsumerPactTests(type: Test){
