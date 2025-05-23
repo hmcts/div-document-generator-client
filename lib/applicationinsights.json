@@ -1,7 +1,7 @@
 {
   "connectionString": "${file:/mnt/secrets/div/app-insights-connection-string}",
   "role": {
-    "name": "div-case-orchestration-service"
+    "name": "div-document-generator-client"
   },
   "sampling": {
     "overrides": [
