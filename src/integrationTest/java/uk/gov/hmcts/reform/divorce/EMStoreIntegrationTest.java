@@ -5,7 +5,6 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -27,9 +26,6 @@ public class EMStoreIntegrationTest extends IntegrationTest {
     private static final String DN_SUBMISSION_INPUT_JSON = "dn-submission.json";
     private static final String DN_REFUSAL_ORDER_INPUT_JSON
         = "documents/jsoninput/decree-nisi-refusal-order-clarification.json";
-
-    @Value("${divorce.document.generator.uri}")
-    private String divDocumentGeneratorURI;
 
     public void checkPDFGenerated(String filename) throws Exception {
         String requestBody = loadJson(filename);
