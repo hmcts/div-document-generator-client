@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    propertiesvolume:
-      enabled: true
-      prefixed: true
-      paths: /mnt/secrets/div
-      aliases:
-        div.div-doc-s2s-auth-secret: AUTH_PROVIDER_SERVICE_CLIENT_KEY
-        div.AppInsightsInstrumentationKey: azure.application-insights.instrumentation-key
