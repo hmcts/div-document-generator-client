@@ -41,6 +41,7 @@ env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
 
 withPipeline(type, product, component) {
     loadVaultSecrets(secrets)
+    echo 'debug: Check secret loaded: ' + env.DOCMOSIS_SERVICE_ACCESS_KEY
     enableAksStagingDeployment()
     disableLegacyDeployment()
 
