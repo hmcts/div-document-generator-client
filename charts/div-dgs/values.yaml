@@ -21,6 +21,9 @@ java:
         "div":
             resourceGroup: div
             secrets:
-                - div-doc-s2s-auth-secret
-                - docmosis-api-key
-                - app-insights-connection-string
+                - name: div-doc-s2s-auth-secret
+                  alias: div-doc-s2s-auth-secret
+                - name: app-insights-connection-string
+                  alias: app-insights-connection-string
+                - name: docmosis-api-key
+                  alias: DOCMOSIS_SERVICE_ACCESS_KEY
