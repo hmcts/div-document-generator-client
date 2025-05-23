@@ -206,7 +206,6 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 
-
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: versions.springCloud
     implementation (group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign',  version: versions.springCloud) {
         exclude group: 'io.reactivex', module: 'io.reactivex'
