@@ -71,6 +71,12 @@ configurations {
     contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'org.seleniumhq.selenium:selenium-java:4.32.0'
+    }
+}
+
 bootJar {
     manifest {
         attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
@@ -177,7 +183,7 @@ dependencies {
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestImplementation 'io.github.openfeign:feign-jackson:13.6'
-    integrationTestImplementation 'org.seleniumhq.selenium:selenium-java:4.25.0'
+    integrationTestImplementation 'org.seleniumhq.selenium:selenium-java:4.32.0'
 
     integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava)
 
