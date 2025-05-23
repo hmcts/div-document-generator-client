@@ -48,13 +48,13 @@ java {
 sourceSets {
     integrationTest {
         java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir('src/integrationTest/java')
+            srcDir 'src/integrationTest/java'
         }
         resources {
-            srcDir('src/integrationTest/resources')
+            srcDir 'src/integrationTest/resources'
         }
+        compileClasspath += sourceSets.main.output + configurations.testCompileClasspath
+        runtimeClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
     }
     contractTest {
         java {
@@ -69,12 +69,6 @@ configurations {
     integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
     contractTestImplementation.extendsFrom testImplementation
     contractTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'org.seleniumhq.selenium:selenium-java:4.32.0'
-    }
 }
 
 bootJar {
@@ -184,6 +178,7 @@ dependencies {
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestImplementation 'io.github.openfeign:feign-jackson:13.6'
     integrationTestImplementation 'org.seleniumhq.selenium:selenium-java:4.32.0'
+    integrationTestImplementation 'org.seleniumhq.selenium:selenium-api:4.32.0'
 
     integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava)
 
