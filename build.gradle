@@ -99,9 +99,9 @@ task fortifyScan(type: JavaExec)  {
 }
 
 checkstyle {
-    toolVersion = '8.29'
-    configFile = project(':').file('checkstyle.xml')
-    configProperties = ["suppressionFile": project(':').file('suppressions.xml')]
+    maxWarnings = 584
+    toolVersion = '10.23.1'
+    getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
 
 // make build fail on Checkstyle issues (https://github.com/gradle/gradle/issues/881)
