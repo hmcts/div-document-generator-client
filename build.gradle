@@ -60,7 +60,7 @@ bootJar {
     manifest {
         attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
     }
-    archiveFileName 'div-document-generator.jar'
+    archiveFileName = 'div-document-generator.jar'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
