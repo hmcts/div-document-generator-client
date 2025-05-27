@@ -162,7 +162,7 @@ dependencies {
     integrationTestImplementation group: 'org.apache.pdfbox', name: 'pdfbox', version: versions.pdfbox
     integrationTestImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     integrationTestImplementation group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
-    integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    integrationTestImplementation (group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot)
     integrationTestImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     integrationTestImplementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator){
         exclude group: 'io.reactivex', module: 'io.reactivex'
