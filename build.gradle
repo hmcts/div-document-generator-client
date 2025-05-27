@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 buildscript {
     ext {
-        springBootVersion = '2.3.11.RELEASE'
+        springBootVersion = '2.7.18'
     }
     repositories {
         mavenCentral()
@@ -60,7 +60,7 @@ bootJar {
     manifest {
         attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
     }
-    archiveName 'div-document-generator.jar'
+    archiveFileName 'div-document-generator.jar'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
