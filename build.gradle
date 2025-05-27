@@ -233,9 +233,11 @@ dependencies {
     implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testImplementation group: 'com.github.tomakehurst', name:'wiremock', version: versions.wiremockVersion
+    testImplementation('org.mockito:mockito-core:2.23.4')
     testImplementation group: 'org.powermock', name:'powermock-api-mockito2', version:versions.powerMock
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: versions.powerMock
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
+        exclude group: 'org.mockito', module: 'mockito-core'
         exclude(module: 'commons-logging')
     }
     testImplementation('org.springframework.security:spring-security-test')
