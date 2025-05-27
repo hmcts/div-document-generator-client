@@ -1,17 +1,6 @@
 #!groovy
 import uk.gov.hmcts.contino.AppPipelineDsl
 
-properties([
-    [
-        $class       : 'GithubProjectProperty',
-        displayName  : 'Divorce Document Generator Client',
-        projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
-    ],
-    pipelineTriggers([
-        [$class: 'GitHubPushTrigger']
-    ])
-])
-
 @Library("Infrastructure")
 
 def type = "java"
@@ -36,11 +25,23 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
+properties([
+    [
+        $class       : 'GithubProjectProperty',
+        displayName  : 'Divorce Document Generator Client',
+        projectUrlStr: 'https://github.com/hmcts/div-document-generator-client'
+    ],
+    pipelineTriggers([
+        [$class: 'GitHubPushTrigger']
+    ])
+])
+
 // Vars for Kubernetes
 env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
 
 withPipeline(type, product, component) {
     loadVaultSecrets(secrets)
+    echo "DOCMOSIS_SERVICE_ACCESS_KEY Secret length: ${env.DOCMOSIS_SERVICE_ACCESS_KEY?.length()}"
     enableAksStagingDeployment()
     disableLegacyDeployment()
 
@@ -62,7 +63,6 @@ withPipeline(type, product, component) {
 
     // Kubernetes does not retrieve variables from the output terraform
     before('functionalTest:preview') {
-        echo 'ASHLEY ' + env.DOCMOSIS_SERVICE_ACCESS_KEY
         env.FEATURE_RESP_SOLICITOR_DETAILS = 'true'
         env.test_environment = 'aat'
     }
