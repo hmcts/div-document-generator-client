@@ -18,9 +18,11 @@ java:
         AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS: "900"
         EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT: "/health"
     keyVaults:
-        "div":
+        div:
             secrets:
                 - name: div-doc-s2s-auth-secret
                   alias: div-doc-s2s-auth-secret
                 - name: app-insights-connection-string
                   alias: app-insights-connection-string
+                - name: docmosis-api-key
+                  alias: DOCMOSIS_SERVICE_ACCESS_KEY
