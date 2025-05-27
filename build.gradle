@@ -78,11 +78,11 @@ repositories {
     maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-task fortifyScan(type: JavaExec)  {
+tasks.register('fortifyScan', JavaExec) {
     mainClass.set("uk.gov.hmcts.fortifyclient.FortifyClientMainApp")
     classpath += sourceSets.test.runtimeClasspath
     jvmArgs = ['--add-opens=java.base/java.lang.reflect=ALL-UNNAMED']
@@ -337,7 +337,7 @@ processIntegrationTestResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
+tasks.register('smoke', Test) {
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 
@@ -346,7 +346,8 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
     }
 }
 
-task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dependsOn: 'classes', group: 'Application') {
+tasks.register('bootRunAat', BootRun) {
+    dependsOn 'classes'
     main = bootJar.mainClassName
     doFirst() {
         classpath = sourceSets.main.runtimeClasspath
@@ -355,14 +356,14 @@ task bootRunAat(type: BootRun, description: 'Runs the app using AAT config', dep
     }
 }
 
-task functional(type: Test, description: 'Runs the functional tests.', group: 'Verification') {
+tasks.register('functional', Test) {
     setTestClassesDirs(sourceSets.integrationTest.output.classesDirs)
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 
     //finalizedBy aggregate
 }
 
-task contract(type: Test) {
+tasks.register('contract', Test) {
     group = 'Delivery pipeline'
     description = 'Runs the consumer Pact tests'
     useJUnitPlatform()
@@ -372,7 +373,7 @@ task contract(type: Test) {
 }
 
 
-task printVersion {
+tasks.register('printVersion') {
     doLast {
         print project.version
     }
@@ -389,7 +390,7 @@ pitest {
     mutationThreshold = 80
 }
 
-task developAddRelaseSuffix() {
+tasks.register('developAddRelaseSuffix') {
     version = "${version}-SNAPSHOT"
 }
 
@@ -444,7 +445,7 @@ project.ext {
     pactVersion = getCheckedOutGitCommitHash()
 }
 
-task runAndPublishConsumerPactTests(type: Test){
+tasks.register('runAndPublishConsumerPactTests', Test) {
     logger.lifecycle("Runs pact Tests")
     testClassesDirs = sourceSets.contractTest.output.classesDirs
     classpath = sourceSets.contractTest.runtimeClasspath
