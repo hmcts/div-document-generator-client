@@ -133,7 +133,7 @@ def versions = [
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
-    restAssured: '3.0.3',
+    restAssured: '4.5.1',
     serenity: '2.2.13',
     serenityCucumber: '1.9.51',
     serviceTokenGenerator: '3.0.0',
