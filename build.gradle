@@ -342,6 +342,10 @@ tasks.register('functional', Test) {
     setClasspath(sourceSets.integrationTest.runtimeClasspath)
 
     //finalizedBy aggregate
+    jvmArgs += [
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED"
+    ]
 }
 
 tasks.register('contract', Test) {
