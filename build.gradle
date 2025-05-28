@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.34")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.5.8")
     }
 }
 
@@ -134,7 +134,7 @@ def versions = [
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
     restAssured: '4.5.1',
-    serenity: '2.2.13',
+    serenity: '2.6.0',
     serenityCucumber: '1.9.51',
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.9.RELEASE',
@@ -158,10 +158,12 @@ dependencies {
     integrationTestImplementation group: 'com.mashape.unirest', name: 'unirest-java', version: versions.unirest
     integrationTestImplementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: versions.nimbus
     integrationTestImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.restAssured
-    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: versions.serenityCucumber
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
-    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
+    integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity, {
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
     integrationTestImplementation group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
     integrationTestImplementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang3
     integrationTestImplementation group: 'org.apache.pdfbox', name: 'pdfbox', version: versions.pdfbox
