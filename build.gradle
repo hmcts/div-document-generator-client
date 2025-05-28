@@ -141,7 +141,6 @@ def versions = [
     spring_security_rsa: '1.0.9.RELEASE',
     springBoot: '2.7.18',
     springCloud: '2021.0.8',
-    springfoxSwagger: '2.9.2',
     springHateoas: '0.25.1.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
@@ -196,8 +195,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'commons-io', name: 'commons-io', version: versions.commonsIo
-    implementation group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
-    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.15'
 
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: '2.2.10.RELEASE'
