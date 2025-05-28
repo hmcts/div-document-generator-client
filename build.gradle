@@ -7,7 +7,6 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        maven { url "https://jitpack.io" }
         maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
     }
     dependencies {
@@ -27,14 +26,20 @@ plugins {
     id 'org.springframework.boot' version '2.7.18'
     id 'info.solidsoft.pitest' version '1.9.11'
     id 'au.com.dius.pact' version '4.2.0'
+    id 'uk.gov.hmcts.java' version '0.12.65'
 }
 
 apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'java'
 
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
-sourceCompatibility = 11
-targetCompatibility = 11
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 sourceSets {
     integrationTest {
@@ -77,7 +82,6 @@ compileTestJava {
 
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io" }
     maven { url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
 
@@ -148,7 +152,7 @@ def versions = [
     pact_version: '4.1.11',
     httpComponents: '4.5.14',
     bouncycastle: '1.61',
-    hmctsLogging: '6.0.1'
+    hmctsLogging: '6.1.9'
 ]
 
 dependencies {
@@ -167,12 +171,8 @@ dependencies {
     integrationTestImplementation group: 'org.skyscreamer', name:'jsonassert', version: versions.jsonAssert
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-web'
-    integrationTestImplementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator){
-        exclude group: 'io.reactivex', module: 'io.reactivex'
-        exclude group: 'io.reactivex', module: 'rxnetty'
-        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
-        exclude group: 'io.reactivex', module: 'rxnetty-servo'
-    }
+    integrationTestImplementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.2'
+    integrationTestImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feignHttpClient
 
     integrationTestImplementation (group: 'com.google.guava', name:'guava', version: versions.guava)
     implementation (group: 'commons-beanutils', name: 'commons-beanutils', version: versions.commonsBeanUtils)
@@ -210,14 +210,7 @@ dependencies {
 
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.hmctsLogging
 
-    implementation group: 'com.github.hmcts', name: 'properties-volume-spring-boot-starter', version: versions.reformPropertiesVolume
-    implementation (group: 'com.github.hmcts', name:'service-auth-provider-java-client', version: versions.serviceTokenGenerator) {
-        exclude group: 'io.reactivex', module: 'io.reactivex'
-        exclude group: 'io.reactivex', module: 'rxnetty'
-        exclude group: 'io.reactivex', module: 'rxnetty-contexts'
-        exclude group: 'io.reactivex', module: 'rxnetty-servo'
-        exclude group: 'org.bouncycastle'
-    }
+    implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.2'
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logbackVersion
     implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logbackVersion
@@ -239,7 +232,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
     testImplementation('org.springframework.security:spring-security-test')
-    testImplementation group: 'com.github.hmcts', name: 'fortify-client', version: '1.2.2', classifier: 'all'
+    testImplementation group: 'com.github.hmcts', name: 'fortify-client', version: '1.4.9', classifier: 'all'
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
     runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
