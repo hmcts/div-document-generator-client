@@ -74,7 +74,9 @@ bootJar {
     archiveFileName = 'div-document-generator.jar'
 }
 
-mainClassName = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
+springBoot {
+    mainClass = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
+}
 
 compileJava {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
