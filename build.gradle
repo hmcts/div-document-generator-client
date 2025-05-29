@@ -82,6 +82,10 @@ processTestResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+processIntegrationTestResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 compileJava {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
 }
@@ -338,7 +342,7 @@ tasks.register('smoke', Test) {
 
 tasks.register('bootRunAat', BootRun) {
     dependsOn 'classes'
-    main = bootJar.mainClassName
+    main = bootJar.mainClass
     doFirst() {
         classpath = sourceSets.main.runtimeClasspath
         systemProperties = System.properties
