@@ -199,8 +199,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
     implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.15'
 
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon', version: '2.2.10.RELEASE'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-ribbon'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
 
     implementation (group: 'com.google.guava', name:'guava', version: versions.guava)
