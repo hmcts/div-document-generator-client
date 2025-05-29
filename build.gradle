@@ -29,8 +29,12 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.65'
 }
 
-apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'checkstyle'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 apply plugin: 'java'
+apply plugin: 'org.owasp.dependencycheck'
 
 group = 'uk.gov.hmcts.reform.divorce'
 version = '3.0.0'
