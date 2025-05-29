@@ -187,7 +187,7 @@ dependencies {
 
     implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.9'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: versions.bouncycastle
 
     implementation group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: versions.apacheLogging
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: versions.apacheLogging
