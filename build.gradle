@@ -78,6 +78,10 @@ springBoot {
     mainClass = 'uk.gov.hmcts.reform.divorce.documentgenerator.DocumentGeneratorApplication'
 }
 
+processTestResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 compileJava {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
 }
