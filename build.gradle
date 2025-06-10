@@ -152,7 +152,7 @@ def versions = [
     serenityCucumber: '1.9.51',
     sonarPitest: '0.5',
     spring_security_rsa: '1.0.9.RELEASE',
-    springHateoas: '0.25.1.RELEASE',
+    springHateoas: '0.25.2.RELEASE',
     unirest: '1.4.9',
     wiremockVersion: '2.27.2',
     springSecurityCrypto: '5.4.5',
