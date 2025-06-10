@@ -26,7 +26,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.18'
     id 'info.solidsoft.pitest' version '1.9.11'
     id 'au.com.dius.pact' version '4.2.0'
-    id 'uk.gov.hmcts.java' version '0.12.65'
+    id 'uk.gov.hmcts.java' version '0.12.66'
 }
 
 apply plugin: 'checkstyle'
