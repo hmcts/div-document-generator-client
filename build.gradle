@@ -209,7 +209,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'commons-io', name: 'commons-io', version: versions.commonsIo
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.15'
+    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.32'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
