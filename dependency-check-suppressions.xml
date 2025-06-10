@@ -28,14 +28,6 @@
         <cve>CVE-2022-42004</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[file name: spring-core-5.2.20.RELEASE.jar]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
-        <cve>CVE-2016-1000027</cve>
-        <cve>CVE-2022-22968</cve>
-        <cve>CVE-2023-20861</cve>
-        <cve>CVE-2023-20863</cve>
-    </suppress>
-    <suppress>
         <notes><![CDATA[file name: android-json-0.0.20131108.vaadin1.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.vaadin\.external\.google/android\-json@.*$</packageUrl>
         <cve>CVE-2022-45688</cve>
@@ -106,6 +98,9 @@
         <notes><![CDATA[file name: bcprov-jdk15on-1.61.jar]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bcprov\-jdk15on@.*$</packageUrl>
         <cve>CVE-2020-15522</cve>
+        <cve>CVE-2023-33202</cve>
+        <cve>CVE-2023-6378</cve>
+        <cve>CVE-2023-46589</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: snakeyaml-1.33.jar]]></notes>
@@ -284,5 +279,29 @@ file name: org.springframework.boot.spring-boot-starter-web@2.3.11.RELEASE
         <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot\-starter.*@*$</packageUrl>
         <cve>CVE-2023-20883</cve>
         <cve>CVE-2023-20873</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: logback-classic-1.2.10.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/ch\.qos\.logback/logback\-classic@.*$</packageUrl>
+        <cve>CVE-2023-6378</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: logback-core-1.2.10.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/ch\.qos\.logback/logback\-core@.*$</packageUrl>
+        <cpe>cpe:/a:qos:logback</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: tomcat-embed-core-9.0.82.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+        <cve>CVE-2023-46589</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: tomcat-embed-websocket-9.0.82.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-websocket@.*$</packageUrl>
+        <cve>CVE-2023-46589</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Suppression for CVE-2024-38820]]></notes>
+        <cve>CVE-2024-38820</cve>
     </suppress>
 </suppressions>

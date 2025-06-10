@@ -2,8 +2,6 @@ package uk.gov.hmcts.reform.divorce.documentgenerator.management.monitoring.heal
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import com.jayway.jsonpath.JsonPath;
-import com.netflix.loadbalancer.Server;
-import com.netflix.loadbalancer.ServerList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -20,8 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.cloud.netflix.ribbon.StaticServerList;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -40,7 +36,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.client.ExpectedCount.once;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -53,9 +48,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
         classes = {DocumentGeneratorApplication.class, HealthCheckITest.LocalRibbonClientConfiguration.class})
 @PropertySource(value = "classpath:application.properties")
 @TestPropertySource(properties = {
-        "management.endpoint.health.cache.time-to-live=0",
-        "feign.hystrix.enabled=true",
-        "eureka.client.enabled=false"
+        "management.endpoint.health.cache.time-to-live=0"
     })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class HealthCheckITest {
@@ -238,9 +231,6 @@ public class HealthCheckITest {
 
     @TestConfiguration
     public static class LocalRibbonClientConfiguration {
-        @Bean
-        public ServerList<Server> ribbonServerList(@Value("${auth.provider.service.client.port}") int serverPort) {
-            return new StaticServerList<>(new Server("localhost", serverPort));
-        }
+
     }
 }

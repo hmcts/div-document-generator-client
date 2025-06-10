@@ -304,6 +304,8 @@ documentation:
 spring:
     application:
         name: "div-dgs"
+    config:
+        import: optional:configtree:/mnt/secrets/div/
     resources:
         static-locations:
 

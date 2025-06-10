@@ -17,13 +17,17 @@ java:
         AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: "divorce_document_generator"
         AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS: "900"
         EVIDENCE_MANAGEMENT_CLIENT_API_HEALTH_ENDPOINT: "/health"
-    aadIdentityName: divorce
     keyVaults:
-        "div":
+        div:
             resourceGroup: div
             secrets:
-                - div-doc-s2s-auth-secret
-                - docmosis-api-key
-                - AppInsightsInstrumentationKey
-
-
+                - name: div-doc-s2s-auth-secret
+                  alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+                - name: docmosis-api-key
+                  alias: DOCMOSIS_SERVICE_ACCESS_KEY
+                - name: idam-secret
+                  alias: OAUTH2_CLIENT_DIV
+                - name: app-insights-connection-string
+                  alias: app-insights-connection-string
+                - name: AppInsightsInstrumentationKey
+                  alias: azure.application-insights.instrumentation-key
