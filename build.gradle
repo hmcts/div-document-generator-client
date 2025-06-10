@@ -142,7 +142,7 @@ def versions = [
     lombok: '1.18.30',
     logbackVersion: '1.2.10',
     nimbus: '5.1',
-    pdfbox: '2.0.29',
+    pdfbox: '2.0.34',
     pitest: '1.4.10',
     powerMock: '2.0.0',
     puppyCrawl: '8.29',
