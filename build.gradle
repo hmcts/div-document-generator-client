@@ -144,7 +144,7 @@ def versions = [
     nimbus: '5.1',
     pdfbox: '2.0.34',
     pitest: '1.4.10',
-    powerMock: '2.0.0',
+    powerMock: '2.0.9',
     puppyCrawl: '8.29',
     reformPropertiesVolume: '0.0.4',
     restAssured: '4.5.1',
