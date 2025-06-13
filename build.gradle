@@ -112,7 +112,7 @@ tasks.register('fortifyScan', JavaExec) {
 checkstyle {
     ignoreFailures = true
     maxWarnings = 584
-    toolVersion = '10.23.1'
+    toolVersion = '10.25.0'
     getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
 
