@@ -159,7 +159,7 @@ def versions = [
     tomcatEmbedCore: '9.0.104',
     tomcatEmbedWebsocket: '9.0.104',
     tomcatEmbedEl: '9.0.106',
-    pact_version: '4.1.11',
+    pact_version: '4.6.17',
     httpComponents: '4.5.14',
     bouncycastle: '1.61',
     hmctsLogging: '6.1.9'
