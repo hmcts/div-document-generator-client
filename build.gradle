@@ -268,7 +268,7 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudBomVersion}"
     }
     dependencies {
-        dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+        dependency group: 'commons-beanutils', name: 'commons-beanutils', version: '1.11.0'
         dependencySet(group: 'com.fasterxml.jackson.core', version: versions.jacksonDatabind) {
             entry 'jackson-core'
             entry 'jackson-databind'
