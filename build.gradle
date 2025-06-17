@@ -129,7 +129,7 @@ dependencyCheck {
 }
 
 def versions = [
-    commonsIo: '2.7',
+    commonsIo: '2.19.0',
     commonsLang3: '3.9',
     commonsBeanUtils: '1.11.0',
     feignHttpClient: '10.2.0',
