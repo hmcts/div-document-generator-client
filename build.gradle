@@ -131,7 +131,7 @@ dependencyCheck {
 def versions = [
     commonsIo: '2.7',
     commonsLang3: '3.9',
-    commonsBeanUtils: '1.9.4',
+    commonsBeanUtils: '1.11.0',
     feignHttpClient: '10.2.0',
     gradlePitest: '1.4.5',
     guava: '33.4.8-jre',
@@ -141,7 +141,7 @@ def versions = [
     junit: '4.13.2',
     lombok: '1.18.30',
     logbackVersion: '1.2.10',
-    nimbus: '5.1',
+    nimbus: '5.14',
     pdfbox: '2.0.34',
     pitest: '1.4.10',
     powerMock: '2.0.9',
